@@ -1,1 +1,4 @@
+#+TITLE: Workbook for DM1
 #+AUTHOR: Bryan Muller
+#+EMAIL: mul13001@byui.edu
+#+DATE: September 17
