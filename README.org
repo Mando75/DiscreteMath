@@ -2,4 +2,4 @@
 #+AUTHOR: Bryan Muller
 #+EMAIL: mul13001@byui.edu
 #+DATE: September 17
-#+STARTUP showeverything entitiespretty
+#+STARTUP donotshoweverything entitiespretty
