@@ -2682,17 +2682,15 @@ The set is transitive because, if the first three bits of a agree with the first
 **** How Would You?
 #+BEGIN_SRC emacs-lisp :results raw
 (defun shuffle-ice (set1 set2)
-   (let (v sequence)
-   (make-sequence (loop for i across set1
+   (vconcat(append '[] (loop for i across set1
          for j across set2 
-         (append (list i j))))))
-
+         append (list i j))) '()))
 
 (shuffle-ice [A B C] [1 2 3])
 #+END_SRC
 
 #+RESULTS:
-shuffle-ice
+[A 1 B 2 C 3]
 
 ** Week 5 Day Two
 ** DONE JKM
