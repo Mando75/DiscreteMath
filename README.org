@@ -1,7 +1,7 @@
 #+TITLE: Workbook for DM1
 #+AUTHOR: Bryan Muller
 #+EMAIL: mul13001@byui.edu
-#+DATE: September 17
+#+DATE: October 31
 #+STARTUP donotshoweverything entitiespretty
 
 * Track Pick
@@ -3144,8 +3144,25 @@ get it to work.
 
 #+RESULTS:
 : 0.2214199759326113
-
 * Week 6 MNO
+#+BEGIN: clocktable :maxlevel 2 :scope subtree
+#+CAPTION: Clock summary at [2017-10-28 Sat 14:05]
+| Headline           | Time    |      |
+|--------------------+---------+------|
+| *Total time*       | *10:06* |      |
+|--------------------+---------+------|
+| Week 6 MNO         | 10:06   |      |
+| \_  Week 6 Day One |         | 1:01 |
+| \_  Week 6 Day Two |         | 1:03 |
+| \_  MNQ            |         | 2:37 |
+| \_  MNR            |         | 0:30 |
+| \_  MNS            |         | 1:37 |
+| \_  MNT            |         | 0:37 |
+| \_  MNU            |         | 1:49 |
+| \_  MNV            |         | 0:18 |
+| \_  MNW            |         | 0:34 |
+#+END:
+
 ** Week 6 Day One
    :LOGBOOK:
    CLOCK: [2017-10-24 Tue 10:14]--[2017-10-24 Tue 11:15] =>  1:01
@@ -3175,13 +3192,31 @@ get it to work.
      \pi(\rho(n)) = n
      \rho(\pi(n)) = n
 ** Week 6 Day Two
-** MNQ
+   :LOGBOOK:
+   CLOCK: [2017-10-26 Thu 10:13]--[2017-10-26 Th 11:16] =>  1:02
+   :END:
+*** 5 EPPS to beware of
+**** FJY in MNT
+**** IYJ in MNT
+**** FOY in MNU
+**** FQL in MNV
+**** FVF in MNX
+
+** TODO MNQ
    :LOGBOOK:
    CLOCK: [2017-10-23 Mon 16:08]--[2017-10-23 Mon 16:22] =>  0:14
    :END:
-*** TODO FAB
-*** TODO ISM
+*** DONE FAB
+    CLOSED: [2017-10-24 Tue 14:25]
     :LOGBOOK:
+    CLOCK: [2017-10-24 Tue 14:20]--[2017-10-24 Tue 14:25] =>  0:05
+    :END:
+    The reduntant word is evenly. By the definition of the word divides, a/b is an integer, so saying
+    a divides b evenly is redundant.
+*** DONE ISM
+    CLOSED: [2017-10-25 Wed 23:52]
+    :LOGBOOK:
+    CLOCK: [2017-10-25 Wed 23:28]--[2017-10-25 Wed 23:51] =>  0:23
     CLOCK: [2017-10-23 Mon 22:47]--[2017-10-23 Mon 23:04] =>  0:17
     CLOCK: [2017-10-23 Mon 16:23]--[2017-10-23 Mon 17:24] =>  1:01
     :END:
@@ -3270,7 +3305,24 @@ function isDivisibleBy10(num) {
 }
 
 function isDivisibleBy11(num) {
+    num = num + '';
+    let oddInd = [];
+    let evenInd = [];
+    for(let i = 0; i < num.length; i++ ) {
+        if(i % 2) {
+            evenInd.push(num[i])
+        } else {
+            oddInd.push(num[i]);
+        }
+    }
+    let sums = []
+    oddInd.forEach((t, i) => {
+        sums[i] = t - evenInd[i];
+    })
 
+    return sums.reduce((sum, val) => {
+        return sum + val;
+    }) ? true : false;
 }
 
 console.log(isDivisibleBy3(13097034951));
@@ -3280,29 +3332,24 @@ console.log(isDivisibleBy3(13097034951));
 #+RESULTS:
 : true
 
-
-*** TODO FBH
+*** DONE FBH
+    CLOSED: [2017-10-25 Wed 23:55]
     :LOGBOOK:
+    CLOCK: [2017-10-25 Wed 23:53]--[2017-10-25 Wed 23:55] =>  0:02
     CLOCK: [2017-10-23 Mon 22:06]--[2017-10-23 Mon 22:25] =>  0:19
     :END:
 
     #+BEGIN_SRC emacs-lisp :results silent
-    (defun sum-of-digits (num)
-    (let ((remainder (% num 10)))
-            (if (>= num 10)
-            ;; true
-               (let* ((rest (floor (/ num 10)))
-                       (sum (+ remainder (sum-of-digits rest)))))
-            ;;false
-             (remainder))))
+    (defun sum-of-digits(number)
+     (if (= number 0) 0
+        (+ (mod number 10)
+           (sum-of-digits (/ (- number (mod x 10)) 10)))))
     #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :results raw
 (sum-of-digits '123)
 #+END_SRC
 
-#+RESULTS:
-nil
 *** DONE ITT
     CLOSED: [2017-10-23 Mon 22:29]
     :LOGBOOK:
@@ -3316,3 +3363,464 @@ nil
     :LOGBOOK:
     CLOCK: [2017-10-23 Mon 22:29]--[2017-10-23 Mon 22:41] =>  0:12
     :END:
+** DONE MNR
+   CLOSED: [2017-10-26 Thu 10:18]
+   :LOGBOOK:
+   CLOCK: [2017-10-24 Tue 14:27]--[2017-10-24 Tue 14:40] =>  0:13
+   :END:
+*** DONE IVO
+    CLOSED: [2017-10-26 Thu 10:17]
+    :LOGBOOK:
+    CLOCK: [2017-10-26 Thu 00:01]--[2017-10-26 Thu 00:18] =>  0:17
+    :END:
+    composite(n) \harr \not [\forall x \forall y [(x > 1 ∧ y > 1) → xy ≠ n]]
+    composite(n) \harr \exists x \not [\forall y [(x > 1 \land y > 1)] \rarr xy \ne n]]
+    composite(n) \harr \exists x \exists y \not [(x > 1 \land y > 1)] \rarr xy \ne n]
+    composite(n) \harr \exists x \exists y \not (p \rarr q) where p = (x >1 \land y > 1) and q = (xy \ne n)
+    composite(n) \harr \exists x \exist y [(x > 1 \land y > 1)] \land \not (xy \ne n)]
+    composite(n) \harr \exists x \exists y [(x > 1 \land y > 1) \land (xy = n)]
+
+** DONE MNS
+   CLOSED: [2017-10-24 Tue 23:22]
+   :LOGBOOK:
+   CLOCK: [2017-10-24 Tue 15:09]--[2017-10-24 Tue 15:18] =>  0:09
+   :END:
+*** DONE FDZ
+    CLOSED: [2017-10-24 Tue 22:49]
+    :LOGBOOK:
+    CLOCK: [2017-10-24 Tue 19:32]--[2017-10-24 Tue 19:52] =>  0:20
+    :END:
+
+#+BEGIN_SRC emacs-lisp :results raw
+(defun prime-power-list-to-number (prime-power-list)
+    (reduce #'* (loop with number = 1
+          with primes = [2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71]
+          for prime across primes
+          for power in prime-power-list
+          collect (* number (expt prime power)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(prime-power-list-to-number '(6 5 4 3 2 1))
+#+END_SRC
+
+#+RESULTS:
+: 5244319080000
+*** DONE IWC
+    CLOSED: [2017-10-24 Tue 23:21]
+    :LOGBOOK:
+    CLOCK: [2017-10-24 Tue 22:13]--[2017-10-24 Tue 23:21] =>  1:08
+    :END:
+#+BEGIN_SRC emacs-lisp :results silent
+;;(defun prime-powers-to-number (collection-of-primes)
+    ;;   (let* ((collection-of-primes-list (append collection-of-primes '()))
+           ;;   (primes [2 3 5 7 11 13 17 19 23 29 31 41 43 47 53 59 61 57 71])
+         ;;     (number 1))
+       ;;(apply #'* )
+       ;;(mapcar*
+      ;; primes collection-of-primes-list)
+    ;;   ))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun prime-powers-to-number (collection-of-prime-powers)
+       (let* ((primes [2 3 5 7 11 13 17 19 23 29 31 41 43 47 53 59 61 57 71]))
+        (apply #'* (mapcar* #'expt
+                  primes collection-of-prime-powers))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(prime-powers-to-number '(0 1 2 3))
+#+END_SRC
+
+#+RESULTS:
+25725
+376639725
+5244319080000
+5244319080000
+*** DONE FJH
+    CLOSED: [2017-10-24 Tue 23:24]
+#+BEGIN_SRC emacs-lisp :results raw
+(prime-powers-to-number [2 0 0 0 0 1])
+#+END_SRC
+
+#+RESULTS:
+52
+** TODO MNT
+*** DONE IWK
+    CLOSED: [2017-10-24 Tue 23:44]
+    :LOGBOOK:
+    CLOCK: [2017-10-24 Tue 23:25]--[2017-10-24 Tue 23:43] =>  0:18
+    :END:
+****  Values where 4k + 11 is non-prime
+     k = 1 -> 4 + 11 = 15;
+     k = 4 -> 16 + 11 = 27;
+     k = 6 -> 24 + 11 = 35;
+     k = 7 -> 28 + 11 = 39;
+     k = 10 -> f(k) = 51;
+     k = 11 -> f(k) = 55
+     k = 13 -> f(k) = 63
+     k = 16 -> f(k) = 75
+     k = 19 -> f(k) = 87
+     k = 20 -> f(k) = 91
+**** Values where 4k + 11 is prime
+     k = 2 -> 8 + 11 = 19;
+     k = 3 -> 12 + 11 = 23;
+     k = 5 -> 20 + 11 = 31;
+     k = 8 -> 32 + 11 = 43
+     k = 9 -> 36 + 11 = 47
+     k = 12 -> f(k) = 59
+     k = 14 -> f(k) = 67
+     k = 15 -> f(k) = 71
+     k = 17 -> f(k) = 79
+     k = 18 -> f(k) = 83!
+*** TODO FJY
+*** DONE IXT
+    CLOSED: [2017-10-26 Thu 20:10]
+    ∀q∃p∀x∀y[p>q∧((x>1∧y>1)→xy≠p)]
+
+for all q there exists a p for all x and all y that if p > q and x and y > 1 then xy \ne p
+
+if p implies q, then there is no largest p
+
+prime(n) = (x > 1 \land y > 1) \rarr xy \ne p
+
+∀q∃p∀x∀y([p>q∧prime(p) \land prime(q + 2)])
+*** DONE FMD
+    CLOSED: [2017-10-26 Thu 20:08]
+    :LOGBOOK:
+    CLOCK: [2017-10-26 Thu 19:49]--[2017-10-26 Thu 20:08] =>  0:19
+    :END:
+
+I know that this is noe the most effecient solution, but I was pressed for time, and it works :)
+    #+BEGIN_SRC js :results output
+const testPrime = (n) => {
+  if (n===1){
+    return false;
+  }
+  else if(n === 2) {
+    return true;
+  } else {
+    for(let x = 2; x < n; x++) {
+      if(n % x === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+const squares = () => {
+  let coll = [];
+  for(let i = 1; i <= 100; i++ ) {
+    const range = {
+      min: i * i,
+      max: (i + 1) * (i + 1)
+    }
+    coll.push(range);
+  }
+  return coll
+}
+
+const primes = (ranges) => {
+  const primeList = [];
+  ranges.forEach((item) => {
+    for(let i = item.min; i < item.max; i++) {
+      if(testPrime(i)) {
+        item.lowestPrime = i;
+        primeList.push(item);
+        return;
+      }
+    }
+  });
+  return primeList;
+}
+
+console.log(primes(squares()));
+    #+END_SRC
+*** TODO IYJ
+** TODO MNU
+*** DONE FOJ
+    CLOSED: [2017-10-26 Thu 21:07]
+    :LOGBOOK:
+    CLOCK: [2017-10-26 Thu 20:35]--[2017-10-26 Thu 21:07] =>  0:32
+    :END:
+**** CCS of length 2
+     (8 9)
+**** CCS of length 3
+     (8 9 10)
+**** CCS of length 4
+     (24 25 26 27)
+**** CCS of length 10
+      (114, 115, 116, 117, 118, 119, 120, 121, 122, 123)
+*** DONE IZL
+    CLOSED: [2017-10-26 Thu 21:54]
+    :LOGBOOK:
+    CLOCK: [2017-10-26 Thu 21:08]--[2017-10-26 Thu 21:54] =>  0:46
+    :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun factorial (n)
+  (if (zerop n)
+      1
+    (* n (factorial (- n 1)))))
+
+(defun consecutive-composite-sequence-of-length (r)
+  (let ((r+1-factorial (factorial (1+ r))))
+    (loop for n from 1 to r
+          collect (+ r+1-factorial n 1))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results raw
+(consecutive-composite-sequence-of-length 4)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun all-composite (r)
+   (every #'identity (mapcar (lambda (x)
+             (or (and (= (mod x 3) 0) (/= x 3))
+                 (and (= (mod x 2) 0) (/= x 2))
+                 (and (= (mod x 5) 0 (/= x 5)))
+                  ))
+             r))
+)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(all-composite [4 7 9])
+#+END_SRC
+
+#+RESULTS:
+nil
+(t t t)
+
+I think if you are able to know the prime distribution in the range that the composite sequence covers, you could
+use that knowledge to manage a guess at whether or not a certain range contains a prime number. It may not be 100 percent
+accurate, but if you have a large sequence, you may not have to brute force the entire list before making an educated guess
+on where a prime may be hiding.
+*** TODO FOY
+*** DONE VAO
+    CLOSED: [2017-10-28 Sat 12:50]
+    :LOGBOOK:
+    CLOCK: [2017-10-28 Sat 12:38]--[2017-10-28 Sat 12:50] =>  0:12
+    CLOCK: [2017-10-26 Thu 22:16]--[2017-10-26 Thu 22:35] =>  0:19
+    :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun maybe-find-factorization (number limit)
+  (mapc (lambda (n)
+          (let* ((a (floor (sqrt number)))
+                 (s (+ a n))
+                 (x (sqrt (- (* s s) number))))
+            (when (= x (floor x))
+              (princ (format "n = %d, a = %d, s = %d, x = %d,
+ factor1 = s - x = %d,
+ factor2 = s + x = %d\n"
+                             n a s x (- s x) (+ s x))))))
+        (number-sequence 1 limit)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results output
+(maybe-find-factorization 125 10)
+#+END_SRC
+
+#+RESULTS:
+: n = 4, a = 11, s = 15, x = 10,
+:  factor1 = s - x = 5,
+:  factor2 = s + x = 25
+
+It assumes that x and s are close, otherwise it will take very long to factor.
+
+
+#+RESULTS:
+*** TODO FQI
+** TODO MNV
+*** VAR
+    :LOGBOOK:
+    CLOCK: [2017-10-28 Sat 12:51]--[2017-10-28 Sat 13:09] =>  0:18
+    :END:
+
+    720720, yes it is divisible it has 10 prime factors.
+*** TODO FQL
+** MNW
+   :LOGBOOK:
+   CLOCK: [2017-10-28 Sat 13:10]--[2017-10-28 Sat 13:17] =>  0:07
+   :END:
+*** VAY
+    :LOGBOOK:
+    CLOCK: [2017-10-28 Sat 13:20]--[2017-10-28 Sat 13:34] =>  0:14
+    :END:
+**** 1. 57/43
+     57/43 = 1 r 14
+     43 / 14 = 3 r 1
+     14 / 1 = 14 r = 0
+     b = 1 gcd = 1
+**** 2. 501/39
+     501/39 = 12 r 33
+     39 / 33 = 1 r 6
+     33 / 6 = 5 r 3
+     6 / 3 = 2 r 0
+     b = 3 gcd = 3
+**** 3. 765/110
+     765/110 = 6 r 105
+     110 / 105 = 1 r 5
+     105 / 5 = 21 r = 0
+     gcd = 5
+**** DONE 4. 899 / 493
+     CLOSED: [2017-10-28 Sat 13:40]
+     899/493 = 1 r 406
+     493/406 = 1 r 87
+     406 / 87 = 4 r 58
+     87 / 58 = 1 r 29
+     58 /29 = 2 r 0
+     gcd = 29
+*** DONE FQW
+    CLOSED: [2017-10-28 Sat 13:40]
+    :LOGBOOK:
+    CLOCK: [2017-10-28 Sat 13:34]--[2017-10-28 Sat 13:40] =>  0:06
+    :END:
+
+I predict that this will return true.
+
+#+BEGIN_SRC emacs-lisp :results raw
+(and (= (gcd 56 8) 8)
+     (= (gcd 65 15) 5)
+     (= (lcm 5 7) 35)
+     (= (lcm 4 6) 12))
+#+END_SRC
+
+#+RESULTS:
+t
+
+Some of these it was easy to tell that it would be true. For instance, the first one, we know that the gcd can't be more than 8,
+and we also know that both are divisible by 8, so its pretty easy to assert that it is true. With lcm 5 7, we know that all multiples
+of 5 must end in 0 or 5, so we can mentally check the multiples of 7 and find the first that ends with a 0 or a 5, 35.
+Some of the others take a bit more work to predict.
+*** VCR
+    :LOGBOOK:
+    CLOCK: [2017-10-28 Sat 13:58]--[2017-10-28 Sat 14:05] =>  0:07
+    :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(and (= (* (gcd 35 72) (lcm 35 72)) (* 35 72))
+(= (* (gcd 10 2) (lcm 10 2)) (* 10 2))
+(= (* (gcd 13 64) (lcm 13 64)) (* 13 64)))
+#+END_SRC
+
+#+RESULTS:
+t
+t
+
+I believe it will. After doing some research, I think I have found some evidence to backup that claim.
+You can find a series of proofs here that show that gcd(a,b) * lcm(a,b) = a * b
+https://math.stackexchange.com/questions/470807/prove-that-gcdm-n-times-mboxlcmm-n-m-times-n
+* Week 7 MNO & PQR
+
+** Week 7 Day 1
+   :LOGBOOK:
+   CLOCK: [2017-10-31 Tue 10:15]
+   :END:
+*** ICE
+    see next top tier heading
+*** Why?
+    Why is X the unknown? Because you can't say 'SH' in Spanish.
+*** What is Understanding?
+   * Knowing why something is the way it is
+   * Being able to explain something to someone, and teach them to equivelant fluency.
+*** Label Learning
+    AVOID IT!
+** Week 7 Day 2
+** DONE MNU
+   CLOSED: [2017-10-30 Mon 22:33]
+*** DONE FQL
+    CLOSED: [2017-10-30 Mon 22:33]
+    :LOGBOOK:
+    CLOCK: [2017-10-30 Mon 22:25]--[2017-10-30 Mon 22:32] =>  0:07
+    :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun reconstitute-primes (rle-list)
+  (loop for b in rle-list
+        for n from 2
+        unless (or (zerop b) (and (> b 1) (incf n (- b 1))))
+        collect n))
+
+(defun prime-list-from-rle-list (rle-list limit)
+  (mapcar 'first
+          (remove-if
+           (lambda (x)
+             (zerop (second x)))
+           (mapcar* 'list
+                    (number-sequence 2 limit)
+                    (apply 'append
+                           (mapcar (lambda (x)
+                                     (if (> x 1)
+                                         (make-list x 0)
+                                       (list x)))
+                                   rle-list))))))
+#+END_SRC
+
+Set the limit to 97 or more
+#+BEGIN_SRC emacs-lisp :results raw
+;;(prime-list-from-rle-list '(1 1 0 1 0 1 3 1 0 1 3 1 0 1 3 1 5 1 0 1 5 1 3 1 0
+  ;;                  1 3 1 5 1 5 1 0 1 5 1 3 1 0 1 5 1 3 1 5 1 7 1 3) 50)
+
+(setq limit 97
+      p100rle (list 1 1 0 1 0 1 3 1 0 1 3 1 0 1 3 1 5 1 0 1 5 1 3 1 0
+                    1 3 1 5 1 5 1 0 1 5 1 3 1 0 1 5 1 3 1 5 1 7 1 3)
+      got-it-right (equal (reconstitute-primes p100rle)
+                          (prime-list-from-rle-list p100rle limit)))
+#+END_SRC
+
+#+RESULTS:
+t
+nil
+t
+t
+
+** MNW
+*** DONE FRM
+    CLOSED: [2017-10-30 Mon 22:25]
+    :LOGBOOK:
+    CLOCK: [2017-10-30 Mon 22:02]--[2017-10-30 Mon 22:25] =>  0:23
+    :END:
+
+    272160
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun gcd-lcm-ab (a-in-csf b-in-csf)
+  (let* ((a-csf-powers (prime-powers-to-number a-in-csf))
+         (b-csf-powers (prime-powers-to-number b-in-csf))
+         (gcd-of-a-and-b-in-csf (gcd a-csf-powers b-csf-powers))
+         (lcm-of-a-and-b-in-csf (lcm a-csf-powers b-csf-powers))
+         (product-of-a-and-b-in-csf (* b-csf-powers a-csf-powers)))
+    (list gcd-of-a-and-b-in-csf
+          lcm-of-a-and-b-in-csf
+          product-of-a-and-b-in-csf)))
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp :results raw
+    (gcd-lcm-ab '(3 2 1 0) '(2 3 0 1))
+    #+END_SRC
+
+    #+RESULTS:
+    (36 7560 272160)
+*** VEM
+    :LOGBOOK:
+    CLOCK: [2017-10-30 Mon 22:33]--[2017-10-30 Mon 22:46] =>  0:13
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun gcdi (a b)
+  (let ((x a) (y b) r)
+    (while (not (zerop y))
+      (setq r (mod x y) x y y r))
+    x))
+    #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(gcdi 10 7)
+#+END_SRC
+
+
+* Halloween ICE
+  1. Modular Multiplicative Inverse
+  2. Modular Exponentiation
+  3. Modular Arithmetic
+  4. The Division Theorem
+  5. Euclidean GCD, plain versus extended
+  6. Alternate Base Representation
