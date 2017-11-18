@@ -1,4 +1,0 @@
-* Tasks
-** TODO 
-   [2017-11-14 Tue]
-   [[file:c:/Users/starw/OneDrive/Documents/Fall%202017/CS237/mul13001/README.org::*Balanced%20Binary%20Tree][Balanced Binary Tree]]
