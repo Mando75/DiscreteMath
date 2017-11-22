@@ -1,7 +1,7 @@
 #+TITLE: Workbook for DM1
 #+AUTHOR: Bryan Muller
 #+EMAIL: mul13001@byui.edu
-#+DATE: October 31
+#+DATE: November 21
 #+STARTUP donotshoweverything entitiespretty
 
 * Track Pick
@@ -5235,7 +5235,8 @@ I used this site to help build a visual representation of the tree: https://www.
 ***** Other options
       Traverse the unbalanced tree and store the result in an array. Sort the array, and then insert it as a balanced binary tree. 
 ** STH
-*** TODO LTI   
+*** DONE LTI   
+    CLOSED: [2017-11-20 Mon 23:10]
      :LOGBOOK:
        CLOCK: [2017-11-18 Sat 13:25]--[2017-11-18 Sat 13:48] =>  0:23
      :END:
@@ -5272,6 +5273,7 @@ I used this site to help build a visual representation of the tree: https://www.
    (if (equal encoded "")
        ""
        (let ((leaf-cell (find-leaf encoded tree)))
+       ;;   (print leaf-cell)
           (cons (car leaf-cell) (huffman-decoder (cdr leaf-cell) tree)))))
 
       #+END_SRC
@@ -5289,13 +5291,324 @@ I used this site to help build a visual representation of the tree: https://www.
  (n e i t h e r   h e r e   n o r   t h e r e . )
 
 
-**** TODO Decode second message
+**** DONE Decode second message
+     CLOSED: [2017-11-20 Mon 23:10]
 
 #+BEGIN_SRC emacs-lisp :results raw
 (huffman-decoder encode2 huff-tree)
 #+END_SRC
 
 #+RESULTS:
-(t . )
+(n e i  t h e r   h e r e   n o r   t h e r e  . )
+
+There are extra spaces in the message, which would account for the longer encoding, and the very close result
+
+* Week 10 STU Pt 2
+
+#+BEGIN: clocktable :maxlevel 2 :scope subtree
+#+CAPTION: Clock summary at [2017-11-22 Wed 14:04]
+| Headline          | Time   |      |
+|-------------------+--------+------|
+| *Total time*      | *3:29* |      |
+|-------------------+--------+------|
+| Week 10 STU Pt 2  | 3:29   |      |
+| \_  Reading       |        | 0:10 |
+| \_  Week 10 Day 1 |        | 1:05 |
+| \_  STI           |        | 0:46 |
+| \_  STJ           |        | 1:07 |
+| \_  STK           |        | 0:21 |
+#+END:
+
+** Reading
+   :LOGBOOK:
+   CLOCK: [2017-11-22 Wed 13:39]--[2017-11-22 Wed 13:40] =>  0:01
+   CLOCK: [2017-11-20 Mon 23:25]--[2017-11-20 Mon 23:27] =>  0:02
+   CLOCK: [2017-11-20 Mon 23:04]--[2017-11-20 Mon 23:11] =>  0:07
+   :END:
+
+** Week 10 Day 1
+   :LOGBOOK:
+   CLOCK: [2017-11-21 Tue 10:10]--[2017-11-21 Tue 11:15] =>  1:05
+   :END:
+   
+*** Answer why draw all 14 valid BSTs with 4 orderable keys?
+    BST Optimization
+
+*** Huffman Trees discussion
+
+    
+**** Count Chars
+     | Char | Count |
+     |------+-------|
+     | A    |     1 |
+     | E    |     4 |
+     | H    |     2 |
+     | L    |     4 |
+     | S    |     6 |
+
+**** Build  Huffman tree
+
+     A1 H2 E4 L4 S6
+     AH3 E4 L4 S6
+     L4 S6 AHE7
+     AHE7 LS10
+     AHELS17
+
+     | CHAR | CODE |
+     |------+------|
+     | A    |  000 |
+     | H    |  001 |
+     | E    |   01 |
+     | L    |   10 |
+     | S    |   11 |
+   
+**** Create the Code 
+     | CHAR | CODE | Length of Code | Count | Weighted |
+     |------+------+----------------+-------+----------|
+     | A    |  000 |              3 |     1 |        3 |
+     | H    |  001 |              3 |     2 |        6 |
+     | E    |   01 |              2 |     4 |        8 |
+     | L    |   10 |              2 |     4 |        8 |
+     | S    |   11 |              2 |     6 |       12 |
+     |------+------+----------------+-------+----------|
+     |      |      |             12 |    17 |       37 |
+
+**** Average # of bits 
+
+#+BEGIN_SRC emacs-lisp 
+(/ 37 (float 17))
+#+END_SRC
+
+#+RESULTS:
+: 2.176470588235294
+
+**** Encode the Message
+     
+     1100101110110101111010001100101101011 
+ 
+** STI
+*** DONE YDQ 
+    CLOSED: [2017-11-22 Wed 11:30]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:20]--[2017-11-22 Wed 13:31] =>  0:11
+    CLOCK: [2017-11-22 Wed 11:08]--[2017-11-22 Wed 11:30] =>  0:22
+    CLOCK: [2017-11-20 Mon 23:12]--[2017-11-20 Mon 23:25] =>  0:13
+    :END:
+    
+**** Tie Breaking Rule
+     Sort first by subtree weight. Then alphabetical.
+     The tiebreaker is the alphabetical order of the letters. We see that that H,F,P, and W all have an occurance
+     of 1. So we order them in alphabetical order as so, F, H, P, W
+
+**** Implement in elisp
+     #+BEGIN_SRC emacs-lisp :results silent
+     (defun huffman-tiebreaker (n1 n2)
+     "Returns the smaller of two cons cell with a string and weight sorted lexicographically"
+     (cond ((and (not (stringp (car n1))) (not (stringp (car n2))))  nil)
+           ((< (cdr n1) (cdr n2)) n1)
+           ((> (cdr n1) (cdr n2)) n2)
+           ((< (length (car n1)) (length (car n2))) n1)
+           ((> (length (car n1)) (length (car n2))) n2)
+           ((string-lessp (car n1) (car n2)) n1)
+           (t n2)
+     ))
+     #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(huffman-tiebreaker '("AC" . 3) '("BC" . 2))
+#+END_SRC
+
+#+RESULTS:
+(BC . 2)
+
+**** Does it matter which tiebreaker you use?
+     Yes. Depending on the tie breaker, your average number of bits per character could change. This was demonstrated in class
+** STJ
+*** DONE LND
+    CLOSED: [2017-11-22 Wed 12:05]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 11:30]--[2017-11-22 Wed 12:05] =>  0:35
+    :END:
+
+    When looking at the ASCII binary values of these 17 char, we see
+    that their values range from 01000000 to 01010111 (This range includes
+    some numbers we aren't using, but that is irrelevant). Each of these numbers has
+    a leading 010, which we could chop off by fixed-length encoding rules, leaving a 
+    5-bit number. Additionally, 17 in binary is a 5 bit length (10001). 
+    
+    The general case is a little more difficult to predict when using ASCII. It depends on which range of 
+    characters you need to be able to represent. In order to shorten a fixed length encoding,
+    you need to be able to eliminate preceding bits that are common amongst all characters
+    being represented. For instance, lets look at trying to encode my name with its real spelling: Bryan Müller
+    We would need the characters ranging from binary values of 00100000 (space) to 11111100 (ü). This would give
+    us a fixed length encoding of 7 bits because all seven bits would be needed to represent all of the ASCII values
+    within the string. Now assuming you were not restricted to ASCII code values, you could represent my 12 char name with
+    a 4 bit fixed-length encoding (12 in binary is 1100). So for the optimal general case where you are allowed to create your own encoding scheme,
+    a message with n characters could be represented with a fixed length encoding of the length of n when represented in binary. This would provide 
+    the possibility for a message of length n to consist of completely unique characters, and still have room to represent each character with a unique 
+    binary number. 
+*** DONE YTR
+    CLOSED: [2017-11-22 Wed 13:20]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 12:54]--[2017-11-22 Wed 13:20] =>  0:26
+    CLOCK: [2017-11-22 Wed 12:05]--[2017-11-22 Wed 12:05] =>  0:00
+    :END:
+**** Count Chars 
+     | Char | Count |
+     |------+-------|
+     | c    |     1 |
+     | b    |     1 |
+     | k    |     3 |
+     | n    |     1 |
+     | o    |     6 |
+**** Build Huffman Tree
+
+     c1 b1 n1 k3 o6
+     n1 bc2 k3 o6
+     k3 bcn3 o6
+     o6 bcnk6
+     bcnko12
+ | Char | code | Length of Code | Count | Weighted |
+ |------+------+----------------+-------+----------|
+ | c    | 1111 |              4 |     1 |        4 |
+ | b    | 1110 |              4 |     1 |        4 |
+ | k    |   10 |              2 |     3 |        6 |
+ | n    |  110 |              3 |     1 |        3 |
+ | o    |    0 |              1 |     6 |        6 |
+ |------+------+----------------+-------+----------|
+ |      |      |             14 |    12 |       23 |
+**** Bitstring encoding
+
+     #+BEGIN_SRC js :results output
+     String.prototype.replaceAll = function(search, replacement) {
+       let target = this;
+       return target.split(search).join(replacement);
+    };
+
+    let msg = 'cookbooknook';
+    msg = msg.replaceAll('c','1111');
+    msg = msg.replaceAll('b','1110');
+    msg = msg.replaceAll('k','10');
+    msg = msg.replaceAll('n','110');
+    msg = msg.replaceAll('o','0');
+
+    console.log(msg);
+     #+END_SRC
+
+     #+RESULTS:
+     : 11110010111000101100010
+
+**** Average # bits
+     #+BEGIN_SRC emacs-lisp
+     (setq ytr-avg-bits (/ 23 (float 12)))
+     #+END_SRC
+
+     #+RESULTS:
+     : 1.9166666666666667
+
+**** Compression Ratio
+
+     #+BEGIN_SRC emacs-lisp
+    (* (/ (- 3 ytr-avg-bits) 3) 100 )
+     #+END_SRC
+
+     #+RESULTS:
+     : 36.11111111111111
+
+     So about 36.1%
+*** DONE LGO
+    CLOSED: [2017-11-22 Wed 13:37]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:31]--[2017-11-22 Wed 13:37] =>  0:06
+    :END:
+          
+          n        b 
+        _____   _______
+    1 0 1 1 0 0 1 1 1 0
+    ___       _
+     k        o
+
+     knob
+** STK
+*** YIV
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:50]--[2017-11-22 Wed 14:04] =>  0:14
+    CLOCK: [2017-11-22 Wed 13:40]--[2017-11-22 Wed 13:47] =>  0:07
+    :END:
+    
+    #+BEGIN_SRC emacs-lisp :results silent
+    (require 'cl)
+
+(defun get-value (node)
+  (and (symbolp node) (symbol-value node)))
+
+(defun set-value (node new-value)
+  (and (symbolp node) (set node new-value)))
+
+(defun get-parent (node)
+  (and (symbolp node) (get node :parent)))
+
+(defun set-parent (node parent)
+  (and (symbolp node) (symbolp parent) (put node :parent parent)))
+
+(defun get-left (node)
+  (and (symbolp node) (get node :left)))
+
+(defun set-left (node left)
+  (and (symbolp node) (symbolp left) (put node :left left)))
+
+(defun get-right (node)
+  (and (symbolp node) (get node :right)))
+
+(defun set-right (node right)
+  (and (symbolp node) (symbolp right) (put node :right right)))
+
+(defun try-it-out ()
+  (setq a 1 b 2 c 3)
+  (put 'a :right 'b)
+  (put 'a :left 'c)
+  (put 'c :parent 'a)
+  (put 'b :parent 'a)
+  (list a (symbol-plist 'a)))
+
+(defvar node-counter 0)
+
+(defun make-node ()
+  (let ((symbol (intern (concat "n" (number-to-string node-counter)))))
+    (set symbol node-counter)
+    (incf node-counter)
+    (setf (symbol-plist symbol) nil)
+    symbol))
+
+(defun build-tree (height)
+  (let ((root (make-node)))
+    (if (> height 0)
+        (let ((left (build-tree (1- height)))
+              (right (build-tree (1- height))))
+          (set-left root left)
+          (set-right root right)
+          (set-parent left root)
+          (set-parent right root)))
+    root))
+    #+END_SRC
 
 
+#+BEGIN_SRC emacs-lisp :results raw 
+(try-it-out)
+#+END_SRC
+
+#+RESULTS:
+(1 (:right b :left c))
+
+
+#+BEGIN_SRC emacs-lisp :results raw 
+(build-tree 2)
+#+END_SRC
+
+#+RESULTS:
+n41
+n10
+n3
+n0
+
+I drew out these trees on paper. 
