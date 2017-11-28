@@ -5303,24 +5303,29 @@ I used this site to help build a visual representation of the tree: https://www.
 
 There are extra spaces in the message, which would account for the longer encoding, and the very close result
 
-* Week 10 STU Pt 2
+* Week 10 STU Pt 2 VWX Pt 1
 
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
-#+CAPTION: Clock summary at [2017-11-22 Wed 14:04]
-| Headline          | Time   |      |
-|-------------------+--------+------|
-| *Total time*      | *3:29* |      |
-|-------------------+--------+------|
-| Week 10 STU Pt 2  | 3:29   |      |
-| \_  Reading       |        | 0:10 |
-| \_  Week 10 Day 1 |        | 1:05 |
-| \_  STI           |        | 0:46 |
-| \_  STJ           |        | 1:07 |
-| \_  STK           |        | 0:21 |
+#+CAPTION: Clock summary at [2017-11-24 Fri 23:09]
+| Headline                  | Time   |      |
+|---------------------------+--------+------|
+| *Total time*              | *4:14* |      |
+|---------------------------+--------+------|
+| Week 10 STU Pt 2 VWX Pt 1 | 4:14   |      |
+| \_  Reading               |        | 0:31 |
+| \_  Week 10 Day 1         |        | 1:05 |
+| \_  STI                   |        | 0:46 |
+| \_  STJ                   |        | 1:07 |
+| \_  STK                   |        | 0:21 |
+| \_  VWD                   |        | 0:21 |
+| \_  VWF                   |        | 0:03 |
 #+END:
 
 ** Reading
    :LOGBOOK:
+   CLOCK: [2017-11-24 Fri 23:05]--[2017-11-24 Fri 23:09] =>  0:04
+   CLOCK: [2017-11-24 Fri 22:56]--[2017-11-24 Fri 23:01] =>  0:05
+   CLOCK: [2017-11-24 Fri 22:22]--[2017-11-24 Fri 22:34] =>  0:12
    CLOCK: [2017-11-22 Wed 13:39]--[2017-11-22 Wed 13:40] =>  0:01
    CLOCK: [2017-11-20 Mon 23:25]--[2017-11-20 Mon 23:27] =>  0:02
    CLOCK: [2017-11-20 Mon 23:04]--[2017-11-20 Mon 23:11] =>  0:07
@@ -5611,4 +5616,236 @@ n10
 n3
 n0
 
-I drew out these trees on paper. 
+I drew out these trees on paper.  
+** VWD
+*** DONE HST
+    CLOSED: [2017-11-24 Fri 23:01]
+    :LOGBOOK:
+    CLOCK: [2017-11-24 Fri 22:34]--[2017-11-24 Fri 22:36] =>  0:02
+    :END:
+    Cycles imply the existence of more than one path, because if a node is gone through twice, then it could just
+    as easily have only been touched once, skipping the redundant step (unless there are some special path rules). This indeicates that their may
+    be more than one valid path to the destination node. 
+*** TODO KDB
+    :LOGBOOK:
+    CLOCK: [2017-11-24 Fri 22:37]--[2017-11-24 Fri 22:56] =>  0:19
+    :END:
+List in lisp form all the simple paths (in both representations) from MT to NM, identifying the shortest path(s) and the longest path(s).
+    #+BEGIN_SRC emacs-lisp
+    (setq kdb-arcs '([ID MT] [ID WY] [ID NV] [ID UT] [MT WY] [WY UT] [WY CO]
+                     [UT CO] [UT NV] [UT AZ] [CO NM] [AZ NM] [NV AZ])
+          MT-NM-paths '(([MT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO NM])
+                        ([MT ID] [ID UT] [UT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO UT] [UT NV] [NV AZ] [AZ NM])
+                        ())           
+    )
+
+ 
+    #+END_SRC
+
+    #+RESULTS:
+    | [MT WY] | [WY CO] | [CO NM] |         |         |         |         |
+    | [MT ID] | [ID WY] | [CO NM] |         |         |         |         |
+    | [MT ID] | [ID WY] | [WY CO] | [CO UT] | [UT NV] | [NV AZ] | [AZ NM] |
+
+
+    Shortest path is [MT WY CO NM] Longest path is [MT ID WY CO UT NV AZ NM]
+** DONE VWF
+   CLOSED: [2017-11-24 Fri 23:05]
+*** DONE HTC
+    CLOSED: [2017-11-24 Fri 23:04]
+    :LOGBOOK:
+    CLOCK: [2017-11-24 Fri 23:01]--[2017-11-24 Fri 23:02] =>  0:01
+    :END:
+    D. D has three arrows pointed at it, and is pointing three directions. Abu said that he 
+    won as many games as he lost, which would indicate that this is the correct node. 
+*** DONE ABR
+    CLOSED: [2017-11-24 Fri 23:04]
+    :LOGBOOK:
+    CLOCK: [2017-11-24 Fri 23:02]--[2017-11-24 Fri 23:04] =>  0:02
+    :END:
+    This graph is reflexive, every node loops to itself
+    It is Antisymmetric, there are no bidirectional arrows
+    It is Transitive. 
+* Week 11 VWX
+#+BEGIN: clocktable :maxlevel 2 :scope subtree
+#+CAPTION: Clock summary at [2017-11-27 Mon 22:09]
+| Headline     | Time   |      |
+|--------------+--------+------|
+| *Total time* | *1:37* |      |
+|--------------+--------+------|
+| Week 11 VWX  | 1:37   |      |
+| \_  Reading  |        | 0:14 |
+| \_  VWH      |        | 0:45 |
+| \_  VWI      |        | 0:25 |
+| \_  VWJ      |        | 0:13 |
+#+END:
+
+** Reading
+   :LOGBOOK:
+   CLOCK: [2017-11-27 Mon 21:41]--[2017-11-27 Mon 21:49] =>  0:08
+   CLOCK: [2017-11-27 Mon 18:18]--[2017-11-27 Mon 18:24] =>  0:06
+   :END:
+
+** Week 11 Day 1
+   :LOGBOOK:
+   CLOCK: [2017-11-28 Tue 10:13]--[2017-11-28 Tue 11:15] =>  1:02
+   :END:
+   
+*** ICE - TSP 
+
+   #+BEGIN_SRC emacs-lisp
+   (retrieve-package 'bftsp)
+   #+END_SRC 
+
+   #+RESULTS:
+   : 1559
+
+   #+BEGIN_SRC emacs-lisp :results silent
+   (defun distance (c1 c2)
+    (sqrt (+ (expt (- (car c1) (car c2)) 2) (expt (- (cdr c1) (cdr c2)) 2)))
+   )
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp :results raw
+   (require 'bftsp)
+   (bfTSP (build-distance-matrix cities-coords))
+   #+END_SRC
+
+   #+RESULTS:
+   (2083.567653450519 1 6 4 3 5 9 7 2 8)
+
+** Week 11 Day 2
+** TODO VWD
+*** TODO KDB
+** VWH
+*** KWD
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:27] =>  0:02
+    :END:
+    [2 2 2 1 1 1 1]
+*** HRR
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:36] =>  0:11
+    :END:
+    This is a graph representation of the seven bridges of Koningsberg that were at the center
+    of the problem which later gave birth to graph theory. You can see how this graph maps to the
+    bridges by looking at this article -> http://mathworld.wolfram.com/KoenigsbergBridgeProblem.html
+
+    The nodes represent land masses, and the links represent bridges from one landmass to the other. 
+
+    A Eulerian graph meets the criteria for a Eulerian cycle. This means that you can begin at one vertex, 
+    traverse the entire graph using each link exactly once, and end up back at the beginning vertex. Euler showed
+    that if no graph vertices have an odd degree, it can be traveresed with an Eulerian cycle. 
+
+    It is not a Eulerian graph. Loenhard Euler proved that it had no solution.
+*** KEO
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:36]--[2017-11-27 Mon 18:45] =>  0:09
+    :END:
+
+    Although you can always construct a graph from a given degree sequence, it is possible however, that
+    two or more distinct graphs have the same degree sequence. For this reason, I conclude that just having the
+    degree sequence is not enough to reconstruct specific graphs. If you are looking to build a graph in general, than
+    yes, it is enough.
+*** HMO
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:49]--[2017-11-27 Mon 19:12] =>  0:23
+    :END:
+  | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   | 4 |   |
+  | 3 | 1 |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 2 | 2 |   |   | 1 | 3 | 1 |   |   |   |   |   |   |   |
+  | 3 | 3 |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 | 1 |   |   |   | 1 |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 |   | 1 |   |   | 2 | 2 |   |   | 1 | 1 |   |   | 1 |
+  |   | 3 |   |   |   |   |   |   |   |   |   |   |   | 1 |
+  |   | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 0 |
+
+
+  https://photos.app.goo.gl/qnLz1J6gcjbTmGKJ3 
+  For your viewing pleasure. :)
+** VWI
+*** HIJ
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 19:13]--[2017-11-27 Mon 19:15] =>  0:02
+    :END:
+    Every degree represents a link from that node to another. That means that each link is 
+    counted twice in the degree sequence. Logically then, if each link is counted twice in the 
+    degree sequence, then the number of links is half the sum of the degree sequence. 
+*** KLE
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 19:16]--[2017-11-27 Mon 19:28] =>  0:12
+    :END:
+    
+
+    Let G = (v,e) be the graph of vertices and edges
+    Suppose V = {v_1 v_2 ... v_n } is the set of vertices in G
+    The handshake theorem says:
+
+    2|E(G)| = deg(v_1) + deg(v_2) + ... deg(v_n)
+       \uparrow                   \uparrow
+   This side          Which implies that this     
+   of the             side of the equation must 
+   equation           also always be even
+   is always 
+   even
+
+   A sum with an odd number of odds cannot be even, so that implies that
+   there cannot be an odd number of vertices with odd degrees.
+*** HAB
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 21:49]--[2017-11-27 Mon 21:55] =>  0:06
+    CLOCK: [2017-11-27 Mon 19:28]--[2017-11-27 Mon 19:33] =>  0:05
+    :END:
+    No. It is not possible, because there is no way to connect the 3 node three ways 
+    (only two linking options: node 1 node 2) without either linking to the same node
+    twice, or linking to itself. Both of these
+    violate the rules of a simple graph, hence, it is not possible. 
+** VWJ
+*** KOV
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 21:55]--[2017-11-27 Mon 22:04] =>  0:09
+    :END:
+   
+**** D is adjacent to E F and G
+**** E is adjacent from D
+**** F is adjacent from D
+**** G is adjacent from D
+**** k comes from D
+**** k goes to E
+**** j goes to F 
+**** k goes to G
+**** k connects D to E
+**** j connects D to F
+**** l connects D to G
+**** k goes from D to E
+**** j goes from D to F
+**** l goes from D to G
+**** D is the intial node of k
+**** D is the initial node of j
+**** D is the initial node of l
+**** E is the terminal node of k
+**** F is the terminal node of j
+**** G is the terminal node of l
+*** HBT
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 22:04]--[2017-11-27 Mon 22:08] =>  0:04
+    :END:
+    
+    #+BEGIN_SRC emacs-lisp
+    (list [A F] [A B F] [A B C F] [A B C D F] [A B C D E F]
+          [A B E F] [A B D F] [A C F] [A C E F] [A C D F] [A C D E F]
+          [A D F] [A D E F] [A E F])
+    #+END_SRC
+
+    #+RESULTS:
+    | [A F] | [A B F] | [A B C F] | [A B C D F] | [A B C D E F] | [A B E F] | [A B D F] | [A C F] | [A C E F] | [A C D F] | [A C D E F] | [A D F] | [A D E F] | [A E F] |
+
+    Zero of the paths cross the node G
+    
