@@ -1,7 +1,7 @@
 #+TITLE: Workbook for DM1
 #+AUTHOR: Bryan Muller
 #+EMAIL: mul13001@byui.edu
-#+DATE: November 21
+#+DATE: November 30
 #+STARTUP donotshoweverything entitiespretty
 
 * Track Pick
@@ -5670,24 +5670,35 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     It is Transitive. 
 * Week 11 VWX
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
-#+CAPTION: Clock summary at [2017-11-27 Mon 22:09]
-| Headline     | Time   |      |
-|--------------+--------+------|
-| *Total time* | *1:37* |      |
-|--------------+--------+------|
-| Week 11 VWX  | 1:37   |      |
-| \_  Reading  |        | 0:14 |
-| \_  VWH      |        | 0:45 |
-| \_  VWI      |        | 0:25 |
-| \_  VWJ      |        | 0:13 |
+#+CAPTION: Clock summary at [2017-12-02 Sat 14:21]
+| Headline          | Time   |      |
+|-------------------+--------+------|
+| *Total time*      | *7:36* |      |
+ |-------------------+--------+------|
+| Week 11 VWX       | 7:36   |      |
+| \_  Reading       |        | 0:46 |
+| \_  Week 11 Day 1 |        | 1:02 |
+| \_  Week 11 Day 2 |        | 1:01 |
+| \_  VWD           |        | 0:13 |
+| \_  VWI           |        | 0:25 |
+| \_  VWJ           |        | 0:16 |
+| \_  VWM           |        | 0:05 |
+| \_  VWO           |        | 0:08 |
+| \_  VWP           |        | 0:11 |
+| \_  VWQ           |        | 0:32 |
+| \_  VWR           |        | 2:49 |
+| \_  VWS           |        | 0:08 |
 #+END:
 
 ** Reading
    :LOGBOOK:
+   CLOCK: [2017-12-02 Sat 13:54]--[2017-12-02 Sat 13:57] =>  0:03
+   CLOCK: [2017-12-01 Fri 15:07]--[2017-12-01 Fri 15:22] =>  0:15
+   CLOCK: [2017-12-01 Fri 14:05]--[2017-12-01 Fri 14:19] =>  0:14
    CLOCK: [2017-11-27 Mon 21:41]--[2017-11-27 Mon 21:49] =>  0:08
    CLOCK: [2017-11-27 Mon 18:18]--[2017-11-27 Mon 18:24] =>  0:06
    :END:
-
+   
 ** Week 11 Day 1
    :LOGBOOK:
    CLOCK: [2017-11-28 Tue 10:13]--[2017-11-28 Tue 11:15] =>  1:02
@@ -5717,59 +5728,87 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
    (2083.567653450519 1 6 4 3 5 9 7 2 8)
 
 ** Week 11 Day 2
-** TODO VWD
-*** TODO KDB
-** VWH
-*** KWD
-    :LOGBOOK:
-    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:27] =>  0:02
-    :END:
-    [2 2 2 1 1 1 1]
-*** HRR
-    :LOGBOOK:
-    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:36] =>  0:11
-    :END:
-    This is a graph representation of the seven bridges of Koningsberg that were at the center
-    of the problem which later gave birth to graph theory. You can see how this graph maps to the
-    bridges by looking at this article -> http://mathworld.wolfram.com/KoenigsbergBridgeProblem.html
+   :LOGBOOK:
+   CLOCK: [2017-11-30 Thu 10:14]--[2017-11-30 Thu 11:15] =>  1:01
 
-    The nodes represent land masses, and the links represent bridges from one landmass to the other. 
-
-    A Eulerian graph meets the criteria for a Eulerian cycle. This means that you can begin at one vertex, 
-    traverse the entire graph using each link exactly once, and end up back at the beginning vertex. Euler showed
-    that if no graph vertices have an odd degree, it can be traveresed with an Eulerian cycle. 
-
-    It is not a Eulerian graph. Loenhard Euler proved that it had no solution.
-*** KEO
+   :END:
+   
+   
+   
+*** A whole new world
+    
+** DONE VWD
+   CLOSED: [2017-12-01 Fri 18:56]
+*** DONE KDB
+    CLOSED: [2017-12-01 Fri 18:56]
     :LOGBOOK:
-    CLOCK: [2017-11-27 Mon 18:36]--[2017-11-27 Mon 18:45] =>  0:09
+    CLOCK: [2017-12-01 Fri 18:43]--[2017-12-01 Fri 18:56] =>  0:13
     :END:
 
-    Although you can always construct a graph from a given degree sequence, it is possible however, that
-    two or more distinct graphs have the same degree sequence. For this reason, I conclude that just having the
-    degree sequence is not enough to reconstruct specific graphs. If you are looking to build a graph in general, than
-    yes, it is enough.
-*** HMO
-    :LOGBOOK:
-    CLOCK: [2017-11-27 Mon 18:49]--[2017-11-27 Mon 19:12] =>  0:23
-    :END:
-  | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
-  |   |   |   |   |   |   |   |   |   |   |   |   | 4 |   |
-  | 3 | 1 |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
-  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-  | 2 | 2 |   |   | 1 | 3 | 1 |   |   |   |   |   |   |   |
-  | 3 | 3 |   |   |   |   |   |   |   |   |   |   |   |   |
-  | 1 | 1 |   |   |   | 1 |   |   |   |   |   |   |   |   |
-  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-  | 1 |   | 1 |   |   | 2 | 2 |   |   | 1 | 1 |   |   | 1 |
-  |   | 3 |   |   |   |   |   |   |   |   |   |   |   | 1 |
-  |   | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 0 |
 
+I started working on this last week. So I carried my work over
 
-  https://photos.app.goo.gl/qnLz1J6gcjbTmGKJ3 
-  For your viewing pleasure. :)
+    #+BEGIN_SRC emacs-lisp
+        (setq kdb-arcs '([ID MT] [ID WY] [ID NV] [ID UT] [MT WY] [WY UT] [WY CO]
+                     [UT CO] [UT NV] [UT AZ] [CO NM] [AZ NM] [NV AZ])
+          MT-NM-paths '(([MT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO NM])
+                        ([MT ID] [ID UT] [UT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO UT] [UT NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID UT] [UT NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID UT] [UT AZ] [AZ NM])
+                         ([MT ID] [ID UT] [UT CO] [CO NM])
+                         ([MT ID] [ID WY] [WY UT] [UT NV] [NV AZ] [AZ NM])
+                         ([MT ID] [ID WY] [WY UT] [UT NV] [NV CO] [CO NM])           
+    )
+    
+    MT-NM-Simple-Paths '((MT ID NV AZ NM)
+    (MT ID UT NV AZ NM)
+    (MT ID UT AZ NM)
+    (MT ID UT CO NM)
+    (MT ID WY UT NV AZ NM)
+    (MT ID WY UT AZ NM)
+    (MT ID WY UT CO NM)
+    (MT ID WY CO UT NV AZ NM)
+    (MT ID WY CO UT AZ NM)
+    (MT ID WY CO NM)
+    (MT WY ID NV AZ NM)
+    (MT WY ID NV UT CO NM)
+    (MT WY ID NV UT AZ NM)
+    (MT WY UT NV AZ NM)
+    (MT WY UT AZ NM)
+    (MT WY UT CO NM)
+    (MT WY CO UT NV AZ NM)
+    (MT WY CO NM)
+    (MT ID UT WY CO NM)
+    (MT ID NV AZ UT WY CO NM)
+    (MT ID NV AZ UT CO NM)))
+    #+END_SRC
+
+    #+RESULTS:
+    | MT | ID | NV | AZ | NM |    |    |    |
+    | MT | ID | UT | NV | AZ | NM |    |    |
+    | MT | ID | UT | AZ | NM |    |    |    |
+    | MT | ID | UT | CO | NM |    |    |    |
+    | MT | ID | WY | UT | NV | AZ | NM |    |
+    | MT | ID | WY | UT | AZ | NM |    |    |
+    | MT | ID | WY | UT | CO | NM |    |    |
+    | MT | ID | WY | CO | UT | NV | AZ | NM | LARGEST
+    | MT | ID | WY | CO | UT | AZ | NM |    |
+    | MT | ID | WY | CO | NM |    |    |    |
+    | MT | WY | ID | NV | AZ | NM |    |    |
+    | MT | WY | ID | NV | UT | CO | NM |    |
+    | MT | WY | ID | NV | UT | AZ | NM |    |
+    | MT | WY | UT | NV | AZ | NM |    |    |
+    | MT | WY | UT | AZ | NM |    |    |    |
+    | MT | WY | UT | CO | NM |    |    |    |
+    | MT | WY | CO | UT | NV | AZ | NM |    |
+    | MT | WY | CO | NM |    |    |    |    | SMALLEST
+    | MT | ID | UT | WY | CO | NM |    |    |
+    | MT | ID | NV | AZ | UT | WY | CO | NM | LARGEST
+    | MT | ID | NV | AZ | UT | CO | NM |    |
+
 ** VWI
 *** HIJ
     :LOGBOOK:
@@ -5783,7 +5822,6 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     CLOCK: [2017-11-27 Mon 19:16]--[2017-11-27 Mon 19:28] =>  0:12
     :END:
     
-
     Let G = (v,e) be the graph of vertices and edges
     Suppose V = {v_1 v_2 ... v_n } is the set of vertices in G
     The handshake theorem says:
@@ -5807,32 +5845,24 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     (only two linking options: node 1 node 2) without either linking to the same node
     twice, or linking to itself. Both of these
     violate the rules of a simple graph, hence, it is not possible. 
-** VWJ
-*** KOV
+** DONE VWJ
+   CLOSED: [2017-12-01 Fri 19:01]
+*** DONE KOV
+    CLOSED: [2017-12-01 Fri 19:01]
     :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 18:58]--[2017-12-01 Fri 19:01] =>  0:03
     CLOCK: [2017-11-27 Mon 21:55]--[2017-11-27 Mon 22:04] =>  0:09
     :END:
-   
-**** D is adjacent to E F and G
-**** E is adjacent from D
-**** F is adjacent from D
-**** G is adjacent from D
-**** k comes from D
-**** k goes to E
-**** j goes to F 
-**** k goes to G
-**** k connects D to E
-**** j connects D to F
-**** l connects D to G
-**** k goes from D to E
-**** j goes from D to F
-**** l goes from D to G
-**** D is the intial node of k
-**** D is the initial node of j
-**** D is the initial node of l
-**** E is the terminal node of k
-**** F is the terminal node of j
-**** G is the terminal node of l
+    
+    D is adjacent to E F G
+    D is adjacent from A B C
+    k comes from D
+    k,i,j go to E F G
+    k,i,j connect D to E F G
+    k,i,j go from D to E F G
+    D is the initial node of k,i,and j
+    E F G are terminal nodes of k, i, and j
+
 *** HBT
     :LOGBOOK:
     CLOCK: [2017-11-27 Mon 22:04]--[2017-11-27 Mon 22:08] =>  0:04
@@ -5848,4 +5878,238 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     | [A F] | [A B F] | [A B C F] | [A B C D F] | [A B C D E F] | [A B E F] | [A B D F] | [A C F] | [A C E F] | [A C D F] | [A C D E F] | [A D F] | [A D E F] | [A E F] |
 
     Zero of the paths cross the node G
+** VWM
+*** AGA
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 13:45]--[2017-12-01 Fri 13:50] =>  0:05
+    :END:
+    0 Nodes and 0 links
+** VWO
+
+*** KNF
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 13:55]--[2017-12-01 Fri 14:03] =>  0:08
+    :END:
+    W_5 = [5 3 3 3 3 3]
+
+    W_n = [n 3_1 3_2 ... 3_n]
+** VWP
+*** HJS
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:19]--[2017-12-01 Fri 14:30] =>  0:11
+    :END:
+    Q_1 = 2 nodes 1 link
+    Q_2 = 4 nodes 4 links
+    Q_3 = 8 nodes 12 links
+    Q_4 = 16 nodes 
+
+    so n*2^(n-1)
+** VWQ
+*** HAX
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:30]--[2017-12-01 Fri 14:40] =>  0:10
+    :END:
+    m is the set of nodes on the upper/top portion of the graph
+    n is the set of nodes on the lower/bottom portion of the graph
+*** KHQ
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:40]--[2017-12-01 Fri 14:47] =>  0:07
+    :END:
+
+    They are both complete graphs, 
     
+*** HKE
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:49]--[2017-12-01 Fri 14:54] =>  0:05
+    :END:
+    Bipartite graphs are good for data representation. Data to be searched for can be kept
+    in set m, and set n can contain the data. You can then use matching algorithms to match data between sets
+*** KBB
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:54]--[2017-12-01 Fri 15:04] =>  0:10
+    :END:
+
+    A tripartite would follow the same idea as a bipartite, three sets of nodes composed so that no two nodes within 
+    the same set are adjacent. For an example of what a complete tripartite graph would look like, check this page out: 
+    http://mathworld.wolfram.com/CompleteTripartiteGraph.html
+
+    An npartite would follow the above principles. N sets of nodes composed so that no two nodes within the same set are adjacent. 
+    Examples of these graphs can be found here: 
+    http://mathworld.wolfram.com/Completek-PartiteGraph.html
+** VWR
+*** HRL 
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 15:04]--[2017-12-01 Fri 15:22] =>  0:18
+    :END:
+
+         d
+       / |\
+      t--e \
+    / |  |  \
+   p--q  m--c
+    \ | / /
+      n--/
+*** AGD
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 12:07]--[2017-12-02 Sat 12:53] =>  0:46
+    CLOCK: [2017-12-01 Fri 18:02]--[2017-12-01 Fri 18:40] =>  0:38
+    CLOCK: [2017-12-01 Fri 15:25]--[2017-12-01 Fri 15:38] =>  0:13
+    :END:
+    #+BEGIN_SRC emacs-lisp :results silent
+(defun make-adjacency-list (node links)
+  "Make the adjacency list of a node by collecting
+all the nodes it's connected to in links."
+  (loop for link in links
+        if (= node (car link))
+        collect (cdr link)))
+
+(defun make-adjacency-list-in-reverse (node links)
+  "Make the reverse adjacency list of a node by collecting
+all the nodes connected to it in links."
+  (loop for link in links
+        if (= node (cdr link))
+        collect (car link)))
+
+(defun make-adjacency-lists (nodes links)
+  "Make adjacency lists given a graph's nodes and links
+by collecting the adjacency lists and reverse adjacency lists
+for each of the graph's nodes, removing any duplicates found."
+  (let ((alists nil) the-nodes-alist)
+    (loop for node in nodes
+          do (setq the-nodes-alist
+                   (remove-duplicates
+                    (nconc (make-adjacency-list node links)
+                           (make-adjacency-list-in-reverse node links)))
+                   alists (nconc alists (list (cons node the-nodes-alist)))))
+    alists))
+
+
+
+
+(defun make-adj-list-table (nodes links)
+"Generate an adjacency list table"
+(let ((alists nil) the-nodes-alist)
+      (mapcar (lambda (node) 
+         (progn
+         (setq 
+            AL (format "%s" (make-adjacency-list node links))
+            AL-R (format "%s" (make-adjacency-list-in-reverse node links))
+            merge (sort (remove-duplicates 
+                         (nconc (make-adjacency-list node links) (make-adjacency-list-in-reverse node links)) 
+                        )#'<)
+            row (list node AL AL-R merge)
+            alists (nconc alists (list row))
+         ))
+      ) nodes)
+alists))
+
+
+    #+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+(setq graph-11-27-links '(
+   (1 . 2) (1 . 9) (1 . 10) (1 . 11) (2 . 3) (2 . 4) (2 . 5)
+   (2 . 9) (2 . 10) (2 . 11) (3 . 4) (3 . 10) (3 . 11)
+   (4 . 5) (4 . 10) (4 . 11) (5 . 6) (5 . 7) (5 . 9) (6 . 7)
+   (6 . 9) (7 . 8) (7 . 9) (8 . 10) (8 . 9) (9 . 10) (10 . 11))
+      graph-11-27-nodes '(1 2 3 4 5 6 7 8 9 10 11))
+
+(make-adj-list-table graph-11-27-nodes graph-11-27-links)
+#+END_SRC
+
+#+RESULTS:
+|  1 | (2 9 10 11)     | nil           | (2 9 10 11)       |
+|  2 | (3 4 5 9 10 11) | (1)           | (1 3 4 5 9 10 11) |
+|  3 | (4 10 11)       | (2)           | (2 4 10 11)       |
+|  4 | (5 10 11)       | (2 3)         | (2 3 5 10 11)     |
+|  5 | (6 7 9)         | (2 4)         | (2 4 6 7 9)       |
+|  6 | (7 9)           | (5)           | (5 7 9)           |
+|  7 | (8 9)           | (5 6)         | (5 6 8 9)         |
+|  8 | (10 9)          | (7)           | (7 9 10)          |
+|  9 | (10)            | (1 2 5 6 7 8) | (1 2 5 6 7 8 10)  |
+| 10 | (11)            | (1 2 3 4 8 9) | (1 2 3 4 8 9 11)  |
+| 11 | nil             | (1 2 3 4 10)  | (1 2 3 4 10)      |
+
+*** HSG
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 12:55]--[2017-12-02 Sat 13:42] =>  0:47
+    CLOCK: [2017-12-01 Fri 19:01]--[2017-12-01 Fri 19:08] =>  0:07
+    :END:
+   #+BEGIN_SRC emacs-lisp :results raw 
+(setq adjacency-matrix (make-vector 12 nil))
+(dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
+
+(mapcar (lambda (j) (aset (aref adjacency-matrix 0) j j))
+(number-sequence 1 11))
+
+(mapcar (lambda (k) 
+(progn 
+   (aset (aref adjacency-matrix k) 0 k)
+   (mapcar (lambda (l) (aset (aref adjacency-matrix k) l 1)) 
+   (remove-duplicates
+      (nconc (make-adjacency-list k graph-11-27-links)
+             (make-adjacency-list-in-reverse k graph-11-27-links))))
+)
+) (number-sequence 1 11))
+   
+   #+END_SRC 
+
+   #+RESULTS:
+   ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
+
+
+   #+BEGIN_SRC emacs-lisp
+   (setq adjacency-matrix (make-vector 12 nil))
+(dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
+
+   (loop for i from 1 to 11
+      do (aset (aref adjacency-matrix 0) i i))
+
+   (loop for i from 1 to 11
+      do (progn 
+          (aset (aref adjacency-matrix i) 0 i)
+          (loop for j in (remove-duplicates
+                         (nconc (make-adjacency-list i graph-11-27-links)
+                                (make-adjacency-list-in-reverse i graph-11-27-links)))
+                          do (aset (aref adjacency-matrix i) j 1))))
+      adjacency-matrix
+   #+END_SRC
+
+   #+RESULTS:
+   : [[0 1 2 3 4 5 6 7 8 9 10 11] [1 0 1 0 0 0 0 0 0 1 1 1] [2 1 0 1 1 1 0 0 0 1 1 1] [3 0 1 0 1 0 0 0 0 0 1 1] [4 0 1 1 0 1 0 0 0 0 1 1] [5 0 1 0 1 0 1 1 0 1 0 0] [6 0 0 0 0 1 0 1 0 1 0 0] [7 0 0 0 0 1 1 0 1 1 0 0] [8 0 0 0 0 0 0 1 0 1 1 0] [9 1 1 0 0 1 1 1 1 0 1 0] [10 1 1 1 1 0 0 0 1 1 0 1] [11 1 1 1 1 0 0 0 0 0 1 0]]
+   
+** VWS
+   
+*** KHO
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 14:10]--[2017-12-02 Sat 14:18] =>  0:08
+    :END:
+    
+    [EI]
+    [GH]
+    [ABCDEGH]
+    [DE] [DH]
+    [AB] [AC] [AG]
+    [BD] [BE]
+    [CD] [CH]
+
+*** ANA
+
+    #+BEGIN_SRC emacs-lisp
+    (defun link-exists (graph-representation node1 node2)
+  "Given a graph representation, is there a link between node1 and node2?"
+  (not
+   (null
+    (or
+     (member node2 (get-adjacency-list graph-representation node1))
+     (member node1 (get-adjacency-list graph-representation node2))))))
+
+(defun check-clique-or-anti-clique (graph-representation nodes anti)
+  "Checks if the represented graph contains a subgraph consisting of
+the given nodes that is a clique (if anti is nil) or an anti-clique
+(if anti is t). Returns t or nil appropriately."
+   ;; ... your code goes here
+  )
+    #+END_SRC
+
