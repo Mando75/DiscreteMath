@@ -1,7 +1,7 @@
 #+TITLE: Workbook for DM1
 #+AUTHOR: Bryan Muller
 #+EMAIL: mul13001@byui.edu
-#+DATE: November 30
+#+DATE: December 5
 #+STARTUP donotshoweverything entitiespretty
 
 * Track Pick
@@ -5303,7 +5303,7 @@ I used this site to help build a visual representation of the tree: https://www.
 
 There are extra spaces in the message, which would account for the longer encoding, and the very close result
 
-* Week 10 STU Pt 2 VWX Pt 1
+* Week 10 STU Pt 2 VWX Pt 0
 
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
 #+CAPTION: Clock summary at [2017-11-24 Fri 23:09]
@@ -5668,7 +5668,7 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     This graph is reflexive, every node loops to itself
     It is Antisymmetric, there are no bidirectional arrows
     It is Transitive. 
-* Week 11 VWX
+* Week 11 VWX Pt 1 
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
 #+CAPTION: Clock summary at [2017-12-04 Mon 18:08]
 | Headline          | Time   |      |
@@ -6099,6 +6099,8 @@ alists))
     CLOCK: [2017-12-02 Sat 12:55]--[2017-12-02 Sat 13:42] =>  0:47
     CLOCK: [2017-12-01 Fri 19:01]--[2017-12-01 Fri 19:08] =>  0:07
     :END:
+
+Trying with maps... Will come back
    #+BEGIN_SRC emacs-lisp :results raw 
 (setq adjacency-matrix (make-vector 12 nil))
 (dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
@@ -6119,6 +6121,7 @@ alists))
    #+END_SRC 
 
    #+RESULTS:
+   ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
    ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
 
 
@@ -6176,3 +6179,92 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
   )
     #+END_SRC
 
+* Week 12 VWX pt 2
+
+** Reading
+
+** Week 12 Day 1
+   :LOGBOOK:
+   CLOCK: [2017-12-05 Tue 10:08]--[2017-12-05 Tue 11:17] =>  1:09
+   :END:
+
+*** ICE
+    
+**** Representation:
+     
+***** Easiest
+      A positive integer or nonnegative integer
+
+***** More Versatile
+      
+      Nodes: Give them property list
+      Node value = symbol value
+         - name
+         - function
+         - properties
+      
+**** Example
+
+**** THR - Notes
+     If there are no links in a subset of nodes, then it is an anti-clique
+     
+     Funtions map from Domain to Codomain - DEF
+
+#+BEGIN_SRC emacs-lisp :results output
+(setf links '((4 . 6) (3 . 0) (18 . 23) (19 . 4) (9 . 21) (5 . 9))
+             ns27 (number-sequence 0 26)
+             alphabet (apply 'string (mapcar (lambda (n) (if (= n 0) ? (+ n ?@))) ns27))
+             (symbol-function 'node-value) `(lambda (n) (string (elt ,alphabet n))))
+
+(setq degrees [2 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+
+(print (length degrees))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(setq case-statement (cons 'case (cons 'ch (append (mapcar (lambda (n) (list (car n) (cdr n))) links) '((t ch))))))
+#+END_SRC
+
+#+RESULTS:
+(case ch (4 6) (3 0) (18 23) (19 4) (9 21) (5 9) (t ch))
+(case ch (4 . 6) (3 . 0) (18 . 23) (19 . 4) (9 . 21) (5 . 9) (t ch))
+((4 6) (3 0) (18 23) (19 4) (9 21) (5 9))
+
+** Week 12 Day 2
+
+** VWS
+
+*** ANA
+
+
+#+BEGIN_SRC emacs-lisp :results output
+(setf links '((4 . 6) (3 . 0) (18 . 23) (19 . 4) (9 . 21) (5 . 9))
+             ns27 (number-sequence 0 26)
+             alphabet (apply 'string (mapcar (lambda (n) (if (= n 0) ? (+ n ?@))) ns27))
+             (symbol-function 'node-value) `(lambda (n) (string (elt ,alphabet n))))
+
+(setq degrees [2 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+
+(print (length degrees))
+#+END_SRC
+
+#+RESULTS:
+: 
+: 27
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun link-exists (graph-representation node1 node2)
+  "Given a graph representation, is there a link between node1 and node2?"
+  (not
+   (null
+    (or
+     (member node2 (get-adjacency-list graph-representation node1))
+     (member node1 (get-adjacency-list graph-representation node2))))))
+
+(defun check-clique-or-anti-clique (graph-representation nodes anti)
+  "Checks if the represented graph contains a subgraph consisting of
+the given nodes that is a clique (if anti is nil) or an anti-clique
+(if anti is t). Returns t or nil appropriately."
+   ;; ... your code goes here
+  )
+#+END_SRC
