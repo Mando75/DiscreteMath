@@ -5670,16 +5670,17 @@ List in lisp form all the simple paths (in both representations) from MT to NM, 
     It is Transitive. 
 * Week 11 VWX
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
-#+CAPTION: Clock summary at [2017-12-02 Sat 14:21]
+#+CAPTION: Clock summary at [2017-12-04 Mon 18:08]
 | Headline          | Time   |      |
 |-------------------+--------+------|
-| *Total time*      | *7:36* |      |
- |-------------------+--------+------|
-| Week 11 VWX       | 7:36   |      |
+| *Total time*      | *8:37* |      |
+|-------------------+--------+------|
+| Week 11 VWX       | 8:37   |      |
 | \_  Reading       |        | 0:46 |
 | \_  Week 11 Day 1 |        | 1:02 |
 | \_  Week 11 Day 2 |        | 1:01 |
 | \_  VWD           |        | 0:13 |
+| \_  VWH           |        | 1:01 |
 | \_  VWI           |        | 0:25 |
 | \_  VWJ           |        | 0:16 |
 | \_  VWM           |        | 0:05 |
@@ -5809,6 +5810,68 @@ I started working on this last week. So I carried my work over
     | MT | ID | NV | AZ | UT | WY | CO | NM | LARGEST
     | MT | ID | NV | AZ | UT | CO | NM |    |
 
+** VWH
+*** KWD
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:27] =>  0:02
+    :END:
+    [2 2 2 1 1 1 1]
+*** HRR
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:36] =>  0:11
+    :END:
+    This is a graph representation of the seven bridges of Koningsberg that were at the center
+    of the problem which later gave birth to graph theory. You can see how this graph maps to the
+    bridges by looking at this article -> http://mathworld.wolfram.com/KoenigsbergBridgeProblem.html
+
+    The nodes represent land masses, and the links represent bridges from one landmass to the other. 
+
+    A Eulerian graph meets the criteria for a Eulerian cycle. This means that you can begin at one vertex, 
+    traverse the entire graph using each link exactly once, and end up back at the beginning vertex. Euler showed
+    that if no graph vertices have an odd degree, it can be traveresed with an Eulerian cycle. 
+
+    It is not a Eulerian graph. Loenhard Euler proved that it had no solution.
+*** KEO
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:36]--[2017-11-27 Mon 18:45] =>  0:09
+    :END:
+
+    Although you can always construct a graph from a given degree sequence, it is possible however, that
+    two or more distinct graphs have the same degree sequence. For this reason, I conclude that just having the
+    degree sequence is not enough to reconstruct specific graphs. If you are looking to build a graph in general, than
+    yes, it is enough.
+*** HMO
+    :LOGBOOK:
+    CLOCK: [2017-12-04 Mon 17:52]--[2017-12-04 Mon 18:08] =>  0:16
+    CLOCK: [2017-11-27 Mon 18:49]--[2017-11-27 Mon 19:12] =>  0:23
+    :END:
+  | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   | 4 |   |
+  | 3 | 1 |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 2 | 2 |   |   | 1 | 3 | 1 |   |   |   |   |   |   |   |
+  | 3 | 3 |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 | 1 |   |   |   | 1 |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 |   | 1 |   |   | 2 | 2 |   |   | 1 | 1 |   |   | 1 |
+  |   | 3 |   |   |   |   |   |   |   |   |   |   |   | 1 |
+  |   | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 0 |
+
+  *                 *--*           *--*          *  *
+  |                 |  |           |  |          | /
+  |                 |  |           |  |          *
+  *--*              *--*           *--*          | \ 
+                                                 *  *
+
+  *--*     *--*--*     *   *      *--*    *   *   *
+  |  |        |         \ /       |  |    |   |   |
+  *--*        |          *        |  |    |   |   * 
+  |  |        *          |        *--*    *---*   * 
+                         *
+  
+  For your viewing pleasure. :)
 ** VWI
 *** HIJ
     :LOGBOOK:
@@ -5885,7 +5948,7 @@ I started working on this last week. So I carried my work over
     :END:
     0 Nodes and 0 links
 ** VWO
-
+   
 *** KNF
     :LOGBOOK:
     CLOCK: [2017-12-01 Fri 13:55]--[2017-12-01 Fri 14:03] =>  0:08
