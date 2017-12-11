@@ -49,6 +49,7 @@ I will begin to be able to solve all the problems just in LISP.
    TALK OF MANY THINGS OF SHOES AND SHIPS
    AND SEALING WAX OF CABBAGES AND KINGS
    AND WHY THE SEA IS BOILING HOT AND WHETHER PIGS HAVE WINGS
+
  
 ** CHJ
 
@@ -149,6 +150,7 @@ getLimit(10000000)
     ( 7 - 7 / 7 )                         = 6 
     ( ^[adic(8+8)]! / 8)!                 = 6 
     (^[adic(9)]* ^[adic(9)] - ^[adic(9)]) = 6 
+
 
 ** OQP
    I worked through the entire primer notebook.
@@ -6047,8 +6049,6 @@ for each of the graph's nodes, removing any duplicates found."
     alists))
 
 
-
-
 (defun make-adj-list-table (nodes links)
 "Generate an adjacency list table"
 (let ((alists nil) the-nodes-alist)
@@ -6124,10 +6124,11 @@ Trying with maps... Will come back
    ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
    ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
 
+This solution works
 
    #+BEGIN_SRC emacs-lisp
    (setq adjacency-matrix (make-vector 12 nil))
-(dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
+   (dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
 
    (loop for i from 1 to 11
       do (aset (aref adjacency-matrix 0) i i))
@@ -6180,8 +6181,35 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
     #+END_SRC
 
 * Week 12 VWX pt 2
+#+BEGIN: clocktable :maxlevel 2 :scope subtree
+#+CAPTION: Clock summary at [2017-12-10 Sun 17:34]
+| Headline          | Time   |      |
+|-------------------+--------+------|
+| *Total time*      | *9:04* |      |
+|-------------------+--------+------|
+| Week 12 VWX pt 2  | 9:04   |      |
+| \_  Reading       |        | 2:01 |
+| \_  Week 12 Day 1 |        | 1:09 |
+| \_  Week 12 Day 2 |        | 0:55 |
+| \_  VWS           |        | 1:00 |
+| \_  VWV           |        | 1:54 |
+| \_  VWW           |        | 0:43 |
+| \_  YZH           |        | 0:44 |
+| \_  YZI           |        | 0:24 |
+| \_  YZM           |        | 0:09 |
+| \_  YZN           |        | 0:05 |
+#+END:
 
 ** Reading
+   :LOGBOOK:
+   CLOCK: [2017-12-10 Sun 17:09]--[2017-12-10 Sun 17:17] =>  0:08
+   CLOCK: [2017-12-08 Fri 16:28]--[2017-12-08 Fri 16:59] =>  0:31
+   CLOCK: [2017-12-08 Fri 16:04]--[2017-12-08 Fri 16:15] =>  0:11
+   CLOCK: [2017-12-08 Fri 14:46]--[2017-12-08 Fri 15:18] =>  0:32
+
+   CLOCK: [2017-12-07 Thu 21:34]--[2017-12-07 Thu 22:10] =>  0:36
+   CLOCK: [2017-12-05 Tue 22:31]--[2017-12-05 Tue 22:34] =>  0:03
+   :END:
 
 ** Week 12 Day 1
    :LOGBOOK:
@@ -6231,11 +6259,24 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
 ((4 6) (3 0) (18 23) (19 4) (9 21) (5 9))
 
 ** Week 12 Day 2
+   :LOGBOOK:
+   CLOCK: [2017-12-07 Thu 10:10]--[2017-12-07 Thu 11:05] =>  0:55
+   :END:
 
-** VWS
+** DONE VWS
+   CLOSED: [2017-12-07 Thu 10:30]
 
-*** ANA
+*** DONE ANA
+    CLOSED: [2017-12-07 Thu 10:30]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 20:03]--[2017-12-06 Wed 21:02] =>  0:59
+    CLOCK: [2017-12-05 Tue 22:30]--[2017-12-05 Tue 22:31] =>  0:01
+    :END:
 
+How to verify if G is a complete Graph. I think perhaps the easiest method would be to count the number of nodes in the graph, 
+and then compare that to the degree sequence of the graph. If there are the same amount of items in the degree sequence as nodes, 
+and they all are n degree (meaning that the node has a link to every other node), then you know the graph is complete. This solution does not 
+work if the degree sequence or set of nodes is uknown. 
 
 #+BEGIN_SRC emacs-lisp :results output
 (setf links '((4 . 6) (3 . 0) (18 . 23) (19 . 4) (9 . 21) (5 . 9))
@@ -6252,6 +6293,26 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
 : 
 : 27
 
+
+My graph representation is below. It consists of a symbol with 
+each node listed as the property. When accessed, the property returns
+a list with all of the links associated with that node. 
+
+#+BEGIN_SRC emacs-lisp :results silent
+   (setf 
+   (get 'graph-test 'ID) '(MT WY UT NV)
+   (get 'graph-test 'MT) '(MT ID WY)
+   (get 'graph-test 'WY) '(WY MT ID UT CO)
+   (get 'graph-test 'NV) '(NV ID UT AZ)
+   (get 'graph-test 'UT) '(UT NV AZ CO WY ID)
+   (get 'garph-test 'CO) '(CO WY UT NM)
+   (get 'graph-test 'AZ) '(AZ NV UT NM)
+   (get 'graph-test 'NM) '(NM AZ CO))
+ 
+#+END_SRC
+
+#+RESULTS:
+| NM | AZ | CO |
 #+BEGIN_SRC emacs-lisp :results silent
 (defun link-exists (graph-representation node1 node2)
   "Given a graph representation, is there a link between node1 and node2?"
@@ -6264,7 +6325,405 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
 (defun check-clique-or-anti-clique (graph-representation nodes anti)
   "Checks if the represented graph contains a subgraph consisting of
 the given nodes that is a clique (if anti is nil) or an anti-clique
-(if anti is t). Returns t or nil appropriately."
-   ;; ... your code goes here
-  )
+(if anti is t). Returns array of t if condition is met nil if not."
+   (if anti
+   ;; anticlique
+      (reduce (lambda (x y) (and x y))(apply #'append (catch 'not-anti (apply #'append (mapcar (lambda (node1) 
+            (mapcar (lambda (node2) 
+            (if (eq node1 node2)
+            t
+            (if (not (link-exists 'graph-test node1 node2))
+               t
+               (throw 'not-anti nil)))) nodes)) nodes)))))
+   ;; normal clique
+   (reduce (lambda (x y) (and x y)) (apply #'append (catch 'not-clique (mapcar (lambda (node1) 
+            (mapcar (lambda (node2) 
+            (if (eq node1 node2)
+            t
+            (if (link-exists 'graph-test node1 node2)
+               t
+               (throw 'not-clique nil)))) nodes)) nodes))))))
+
+
+  (defun get-adjacency-list (graph node)
+  "Returns the adjacency list of a given node within a graph"
+  (get graph node))
 #+END_SRC
+
+
+#+RESULTS:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun better-check-clique (graph-representation nodes anti) 
+
+)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(check-clique-or-anti-clique 'graph-test '(ID UT WY) 'nil)
+#+END_SRC
+
+#+RESULTS:
+t
+(t t t t t t t t t)
+nil
+nil
+(t t t t t t t t t)
+(t t t t)
+Graph is not anti-clique
+(t t t t)
+
+#+BEGIN_SRC emacs-lisp
+(link-exists 'graph-test 'ID 'MT)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** DONE VWV
+   CLOSED: [2017-12-08 Fri 14:26]
+   
+*** DONE HLX
+    CLOSED: [2017-12-06 Wed 18:50]
+    :LOGBOOK:
+    CLOCK: [2017-12-05 Tue 22:34]--[2017-12-05 Tue 22:58] =>  0:24
+    :END:
+    
+    Let G and H be graphs where G = (N_1 , L_1) and H = (N_2 , L_2).
+    
+    G \cap H = {n: n \in N_1 and n \in N_2 and l: l \in N_2 and l \in L_2 }
+
+    Given a graph G: 
+
+     1---2   
+      \ / \
+       3   4
+
+    and the graph H:
+
+       2
+      / \
+     3   4--5
+
+     G \cap H would be 
+
+     2
+    / \
+   3   4 
+
+*** DONE KSI
+    CLOSED: [2017-12-06 Wed 19:06]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:06]--[2017-12-06 Wed 19:07] =>  0:01
+    CLOCK: [2017-12-06 Wed 18:50]--[2017-12-06 Wed 19:06] =>  0:16
+    :END:
+    
+   https://webmailbyui-my.sharepoint.com/:i:/r/personal/mando0975_byui_edu/Documents/Capture.PNG?csf=1&e=4e73d2b9936c44ee8a2cfed45df9eb41
+
+   Where A = A_1 B= A_2 ... E = A_5
+
+   Degree sequence is [4 4 4 3 3]
+   
+*** DONE HTR
+    CLOSED: [2017-12-07 Thu 11:03]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:07]--[2017-12-06 Wed 19:12] =>  0:05
+    CLOCK: [2017-12-06 Wed 19:06]--[2017-12-06 Wed 19:06] =>  0:00
+    :END:
+    Look at HMO
+   
+    [2 1 1]   [2 2 2 1 1]  [4 1 1 1 1]
+ 
+    *     *   *   *   *   *   *
+     \   /     \ / \ /     \ /
+      \ /       *   *       *
+       *                   / \
+                          *   *
+*** DONE KSQ
+    CLOSED: [2017-12-08 Fri 14:26]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 13:57]--[2017-12-08 Fri 14:26] =>  0:29
+    CLOCK: [2017-12-07 Thu 11:06]--[2017-12-07 Thu 11:14] =>  0:08
+    CLOCK: [2017-12-06 Wed 19:32]--[2017-12-06 Wed 19:58] =>  0:26
+    CLOCK: [2017-12-06 Wed 19:12]--[2017-12-06 Wed 19:13] =>  0:01
+    :END:
+
+    https://photos.app.goo.gl/vGg1rNy2n6iVY4pH3
+    
+    Degree Seq
+
+    [4 3 3 3 3 2 2 2]
+
+    Probability:
+
+    4/8, 3/8, 3/8, 3/8, 3/8, 2/8, 2/8, 2/8
+
+    11/28
+    
+    
+*** DONE HBE
+    CLOSED: [2017-12-06 Wed 20:03]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:59]--[2017-12-06 Wed 20:03] =>  0:04
+    :END:
+    
+    No. Not without moving the location of nodes, or using curved edges. 
+    If c and m or e and d were swappe, than you could make it a planar graph. 
+
+** VWW
+
+*** KSC
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 14:27]--[2017-12-08 Fri 14:46] =>  0:19
+    CLOCK: [2017-12-07 Thu 22:10]--[2017-12-07 Thu 22:34] =>  0:24
+    :END:
+    
+    Here's a great quote :) 
+
+  "Erdős asks us to imagine an alien force, 
+   vastly more powerful than us, landing on Earth and demanding the value of R(5, 5)
+   or they will destroy our planet. In that case, he claims, we should marshal all our
+   computers and all our mathematicians and attempt to find the value. But suppose, instead, 
+   that they ask for R(6, 6). In that case, he believes, we should attempt to destroy the aliens." - Joel Spencer
+
+There is no efficient alogrithm for calculating Ramsey numbers. There have been some algorithms that help calculate the lower
+and upper bounds, but even looking at R(5,5) shows how difficult it is to calculate. If we assume that the R(5,5) = 43, than for a K_43
+graph colored with 2 colors, we would have to show that it holds true for 43 choose 2 = 903 edges, equals 2^903 possible graphs. That number
+is larger than the total number of atoms in the universe. 
+** YZH
+   :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:19]--[2017-12-08 Fri 15:31] =>  0:12
+    :END:
+*** code
+     #+BEGIN_SRC emacs-lisp :results silent
+     (setq the t es "" hungry t sleepy t cat t dog t
+        chases t runs t slowly t quickly t
+        productions
+        '((SENTENCE NOUN-PHRASE VERB-PHRASE NOUN-PHRASE)
+          (SENTENCE NOUN-PHRASE VERB-PHRASE)
+          (NOUN-PHRASE ARTICLE ADJECTIVE NOUN)
+          (NOUN-PHRASE ARTICLE NOUN)
+          (VERB-PHRASE VERB ADVERB)
+          (VERB-PHRASE VERB)
+          (ARTICLE the es)
+          (ADJECTIVE hungry sleepy)
+          (NOUN cat dog)
+          (VERB chases runs)
+          (ADVERB slowly quickly))
+        reverse-productions (reverse productions))
+
+  (defun is-terminal (sym)
+    (and (symbolp sym) (boundp sym)))
+
+  (defun nonterminals-remain (derivation)
+    (notevery 'is-terminal derivation))
+
+  (defun derive (LHS)
+    (let* ((rules (if (zerop (random 2)) productions reverse-productions))
+           (RHS (cdr (assoc LHS rules))))
+      (if (null RHS)
+          (list LHS)
+        (if (nonterminals-remain RHS)
+            RHS
+          (list (nth (random (length RHS)) RHS))))))
+
+  (defun transform-terminal (terminal)
+    (or (and (boundp terminal)
+             (stringp (symbol-value terminal))
+             (symbol-value terminal))
+        (symbol-name terminal)))
+
+  (defun find-derivation (start-symbol)
+    (let ((derivation (list start-symbol)))
+      (while (nonterminals-remain derivation)
+        (setq derivation (apply 'append (mapcar 'derive derivation))))
+      (mapconcat 'transform-terminal derivation " ")))
+     #+END_SRC
+
+     #+BEGIN_SRC emacs-lisp :results raw
+     (find-derivation 'SENTENCE)
+     #+END_SRC
+
+     #+RESULTS:
+      dog chases quickly  sleepy cat
+     the sleepy cat runs
+      dog
+     the cat
+     the cat
+     the sleepy cat
+      sleepy dog
+     the dog chases quickly  hungry cat
+
+     #+BEGIN_SRC emacs-lisp :results silent
+      (add-function :override
+                (symbol-function 'random)
+                (lambda (&rest args)
+                  (string-to-number
+                   (read-from-minibuffer
+                    (format "Enter random value less than %d: " (car args)))))
+                '((name . interactive-random)))
+
+        ;;        (remove-function (symbol-function 'random) 'interactive-random)
+
+     #+END_SRC
+
+*** BAO
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:31]--[2017-12-08 Fri 15:41] =>  0:10
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the sleepy cat runs slowly
+
+    the sleepy cat runs slowly
+
+    S \rarr NOUN-PHRASE VERB-PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB ADVERB
+    the ADJECTIVE NOUN VERB ADVERB
+    the sleepy NOUN VERB ADVERB
+    the sleepy cat VERB ADVERB
+    the sleepy cat runs ADVERB
+    the sleepy cat runs slowly.
+    
+    [1 0 0 0 0 1 1 1 0 1 1 1 0]
+
+*** NCO
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:41]--[2017-12-08 Fri 15:44] =>  0:03
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the hungry dog runs quickly
+    
+    the hungry dog runs quickly
+
+    S \rarr NOUN PHRASE VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB ADVER
+        the ADJECTRIVE NOUN VERV ADVERB
+        the hungry NOUN VERB ADVERB
+        the hungry dog runs ADVERB
+        the hungry dog runs quickly
+
+
+*** PDQ
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:44]--[2017-12-08 Fri 15:57] =>  0:13
+    :END:
+
+    the hungry dog chases the sleepy cat
+
+    S \rightarrow NOUN PHRASE VERB PHRASE NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB PHRASE NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB ARTICLE ADJECTIVE NOUN
+    the ADJECTIVE NOUN VERB ARTICLE ADJECTIVE NOUN
+    the hungry NOUN VERB ARTICLE ADJECTIVE NOUN
+    the hungry dog VERB ARTICLE ADJECTIVE NOUN
+    the hungry dog chases ARTICLE ADJECTIVE NOUN
+    the hungry dog chases ARTICLE ADJECTIVE NOUN
+    the hungry dog chases the ADJECTIVE NOUN
+    the hungry dog chases the sleepy NOUN
+    the hungry dog chases the sleepy cat.
+ 
+
+    0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the hungry dog chases the sleepy cat
+
+*** NTC
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:58]--[2017-12-08 Fri 16:04] =>  0:06
+    :END:
+    
+    288 combonations
+    
+** YZI
+*** PTW 
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:04]--[2017-12-08 Fri 16:17] =>  0:13
+    :END:
+                  SENTANCE
+NP                   VP    PP
+ART   ADJ  ADJ   N    V   PREP NP
+ART  ADJ   ADJ   N    V   PREP ART ADJ NOUN
+the quick brown fox jumps over the lazy dog
+*** NTM
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:18]--[2017-12-08 Fri 16:20] =>  0:02
+    :END:
+    
+         SENTENCE
+     NP            VP
+  ART  N            V
+ the   cat         runs
+*** PMV
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:20]--[2017-12-08 Fri 16:22] =>  0:02
+    :END:
+
+             SENTENCE
+     NP         VP           NP
+ ART    N        V       ART  ADJ    N  
+ the   cat     chases    the  hungry dog
+*** NES
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:22]--[2017-12-08 Fri 16:25] =>  0:03
+    :END:
+    
+          SENTENCE
+    NP               VP
+ART N            V      ADV
+the dog          runs quickly
+*** BRZ
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:25]--[2017-12-08 Fri 16:29] =>  0:04
+    :END:
+           SENTANCE
+    NP                 VP             NP 
+ART   ADJ    N       V    ADV    ART ADJ   N
+the sleepy dog    chases quickly the hungry cat
+** YZM
+*** BRE
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:17]--[2017-12-10 Sun 17:20] =>  0:03
+    :END:
+    Adding a transition from S to R with a 0 value will make this a valid state machine.
+    This indicates if the first input is 0, and thus rejected. 
+*** NGP
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:20]--[2017-12-10 Sun 17:26] =>  0:06
+    :END:
+
+    Both of these state machines contain a loop allowing unlimited inputs of 0 or 1.
+    1(0 \cup 1)* must start with a 1, and (0 \cup \1)*1 must end with a one. 
+** YZN
+*** BRQ
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:28]--[2017-12-10 Sun 17:31] =>  0:03
+    :END:
+    
+   0
+   __
+  |  |   1
+   \rarr S_0  --->    S_2
+*** PIQ 
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:31]--[2017-12-10 Sun 17:33] =>  0:02
+    :END:
+
+    
