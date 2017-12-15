@@ -3,7 +3,35 @@
 #+EMAIL: mul13001@byui.edu
 #+DATE: December 5
 #+STARTUP donotshoweverything entitiespretty
+#+OPTIONS H:5 num:nil toc:t \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t |:t
+#+OPTIONS html-postamble:t
+#+Track: A
+#+Striving4: A
+#+Achieved: A
 
+For final submission:
+
+* Grade Justification
+  I believe that I have put forth the effort and skill required to receive an A
+  in this class. I have had perfect attendance, and have sought to be an active
+  participant both in and outside of class. I have worked with classmates both
+  in person and through mediums such as Slack to solve the assignments.
+  Additionally, when I have faced problems that I am unsure of how to solve, I
+  have approached Bro. Neff for help. I completed all of the EPPs and ICEs that
+  were assigned, and have often spent 10 hours or more a week on the
+  homework. Futhermore, I believe that I have demonstrated a strong grasp of
+  the concepts presented in this class, especially with learning LISP. Although
+  I did complete some of the EPPs in JavaScript, as my understanding of LISP
+  grew, I began to be able to complete all of the assignments with only LISP.
+
+
+  Although my learning curve for this class was not linear, I firmly believe
+  that through the course of the semester, I have mastered the topics presented
+  and that the effort and results that I have put forth in diving into this
+  material are worthy of an A grade.
+  
+
+  
 * Track Pick
 I will strive for track A. I believe that with diligent work and 
 effort, I can master the topics. I will most likely attempt most 
@@ -6180,7 +6208,7 @@ the given nodes that is a clique (if anti is nil) or an anti-clique
   )
     #+END_SRC
 
-* Week 12 VWX pt 2
+* Week 12 VWX pt 2 YZ@ Pt 1   
 #+BEGIN: clocktable :maxlevel 2 :scope subtree
 #+CAPTION: Clock summary at [2017-12-10 Sun 17:34]
 | Headline          | Time   |      |
@@ -6725,5 +6753,157 @@ the sleepy dog    chases quickly the hungry cat
     :LOGBOOK:
     CLOCK: [2017-12-10 Sun 17:31]--[2017-12-10 Sun 17:33] =>  0:02
     :END:
+* Week 13 YZ@
+
+  #+BEGIN: clocktable :maxlevel 2 :scope subtree
+  #+CAPTION: Clock summary at [2017-12-14 Thu 17:03]
+  | Headline          | Time   |      |
+  |-------------------+--------+------|
+  | *Total time*      | *4:44* |      |
+  |-------------------+--------+------|
+  | Week 13 YZ@       | 4:44   |      |
+  | \_  Reading       |        | 0:31 |
+  | \_  Week 13 Day 1 |        | 1:05 |
+  | \_  YZN           |        | 0:29 |
+  | \_  YZP           |        | 2:17 |
+  | \_  YZQ           |        | 0:22 |
+  #+END:
+
+** Reading
+   :LOGBOOK:
+   CLOCK: [2017-12-14 Thu 10:37]--[2017-12-14 Thu 11:06] =>  0:29
+   CLOCK: [2017-12-11 Mon 18:49]--[2017-12-11 Mon 18:51] =>  0:03
+   :END:
+   
+** Week 13 Day 1
+   :LOGBOOK:
+   CLOCK: [2017-12-12 Tue 10:10]--[2017-12-12 Tue 11:15] =>  1:05
+   :END:
+
+** YZN
+*** PIQ
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 9:07]--[2017-12-14 Thu 9:28] =>  0:21
+    CLOCK: [2017-12-11 Mon 18:41]--[2017-12-11 Mon 18:49] =>  0:08
+    :END:
+
+    S \rarr AB
+    A \rarr 0A
+    A \rarr 0B
+    A \rarr \lambda
+    B \rarr 1A
+    B \rarr 1B
+    B \rarr \lambda
+** YZP
+*** PRK 
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 9:01]--[2017-12-14 Thu 9:07] =>  0:06
+    CLOCK: [2017-12-11 Mon 18:52]--[2017-12-11 Mon 18:53] =>  0:01
+    :END:
+    
+    0111
+*** NIO
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:47]--[2017-12-14 Thu 8:58] =>  0:11
+    CLOCK: [2017-12-11 Mon 18:53]--[2017-12-11 Mon 19:00] =>  0:07
+    :END:
+    
+    {0^n 10 | n \ge 1}
+*** PFA
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:46]--[2017-12-14 Thu 8:53] =>  0:07
+    CLOCK: [2017-12-11 Mon 19:00]--[2017-12-11 Mon 19:03] =>  0:03
+    :END:
+    
+    011
+    0101
+*** BGT
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:33]--[2017-12-14 Thu 8:46] =>  0:13
+    CLOCK: [2017-12-11 Mon 19:03]--[2017-12-11 Mon 19:07] =>  0:04
+    :END:
+    S \rarr AA {0^2n 0^2n | n \ge 1}
+    S \rarr B {1^n | n \ge 1}
+*** NGI
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:24]--[2017-12-14 Thu 8:33] =>  0:09
+    CLOCK: [2017-12-11 Mon 19:07]--[2017-12-11 Mon 19:19] =>  0:12
+    :END:
+
+    {0^n 1^n 1^m 0^m | n \ge 0 m \ge 0}
+*** NLR
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:07]--[2017-12-14 Thu 8:23] =>  0:16
+    CLOCK: [2017-12-11 Mon 19:19]--[2017-12-11 Mon 19:22] =>  0:03
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (setq es "" a "0" b "1"
+      productions
+      '((S A B)
+        (A a A b)
+        (B b B a)
+        (A es)
+        (B es))
+      reverse-productions (reverse productions))
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'S)
+    #+END_SRC
+
+  {0^n 1^n 1^m 0^m | n \ge 0 m \ge 0}
+
+  This is the same grammar as the one above in NGI. 
+*** BSP 
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:02]--[2017-12-14 Thu 8:07] =>  0:05
+    CLOCK: [2017-12-11 Mon 19:22]--[2017-12-11 Mon 19:33] =>  0:11
+    :END:
+
+    S \rarr A1
+    A \rarr 00A
+    A \rarr \lambda
+
+    {0^2n 1 | n \ge 0}
+*** NBO
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:59]--[2017-12-14 Thu 10:10] =>  0:11
+    CLOCK: [2017-12-11 Mon 19:33]--[2017-12-11 Mon 19:40] =>  0:07
+    :END:
+    
+    {0^n 1^2n | n \ge 0}
+
+    S \rarr AB
+    A \rarr 0A
+    A \rarr \lambda
+    B \rarr 11B
+    B \rarr \lambda
+*** PBI 
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:25]--[2017-12-14 Thu 09:36] =>  0:11
+    :END:
+
+
+    {0^n 1^m 0^n | m \ge \land n \ge 0}
 
     
+    s \rarr ABA
+    A \rarr 0A
+    A \rarr \lambda
+    B \rarr 1B
+    B \rarr \lambda 
+** YZQ
+*** BJO
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:36]--[2017-12-14 Thu 09:58] =>  0:22
+    :END:
+
+    [[1 3 2] [3 1 4] [3 5 4] [5 2 3] [5 4 3] [7 1 4] [7 5 4] [9 3 2]]
+
+    
+    This set of triples represents the graph found in VWH. Each triple provides
+    the x coordinate, y coordinate, and the degree sequence of the node.
+
+
+
