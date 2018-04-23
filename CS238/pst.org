@@ -1,0 +1,46 @@
+* PST - Org MIME Type
+
+** Why?
+   Linux recognizes org files as plain text. It can be difficult to switch between 
+   default text editors when opening org files and other plain text files.
+
+** Step 1: 
+   Create MIME type xml file place in ~/.local/share/mime/packages
+
+   looks something like this:
+
+#+BEGIN_SRC xml
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+<mime-type type="application/emacsorgmode">
+<comment>Emacs Org-mode File</comment>
+<comment xml:lang="bg">Emacs Org-mode</comment>
+    <comment xml:lang="cs">Emacs Org-mode</comment>
+    <comment xml:lang="de">Emacs Org-mode</comment>
+    <comment xml:lang="es">Emacs Org-mode</comment>
+    <comment xml:lang="eu">Emacs Org-mode</comment>
+    <comment xml:lang="hu">Emacs Org-mode</comment>
+    <comment xml:lang="it">Emacs Org-mode</comment>
+    <comment xml:lang="ko">Emacs Org-mode</comment>
+    <comment xml:lang="nb">Emacs Org-mode</comment>
+    <comment xml:lang="nl">Emacs Org-mode</comment>
+    <comment xml:lang="nn">Emacs Org-mode</comment>
+    <comment xml:lang="sv">Emacs Org-mode</comment>
+    <comment xml:lang="uk">Emacs Org-mode</comment>
+    <comment xml:lang="vi">Emacs Org-mode</comment>
+<glob pattern="*.org"/>
+<alias type="application/emacsorgmode"/>
+</mime-type>
+</mime-info>
+
+#+END_SRC
+
+** Step 2
+   fun the following command 
+#+BEGIN_SRC bash
+ update-mime-database ~/.local/share/mime
+#+END_SRC
+
+  
+
+
