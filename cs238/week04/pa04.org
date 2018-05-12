@@ -1,0 +1,34 @@
+#+TITLE: Preparation Assessment 04
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+* DONE Reread (review) section ONE subsection GHI from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-02-05 Mon 20:39]
+  :LOGBOOK:
+  CLOCK: [2018-02-05 Mon 20:27]--[2018-02-05 Mon 20:39] =>  0:12
+  CLOCK: [2018-02-05 Mon 18:03]--[2018-02-05 Mon 18:04] =>  0:01
+  :END:
+
+* DONE Study the Following Explanation of Cantor's Diagonal Argument
+  CLOSED: [2018-02-05 Mon 20:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-05 Mon 20:39]--[2018-02-05 Mon 20:59] =>  0:20
+  :END:
+  [[http://www.coopertoons.com/education/diagonal/diagonalargument.html]]
+ 
+* DONE Answer What is True
+  CLOSED: [2018-02-05 Mon 21:15]
+  :LOGBOOK:
+  CLOCK: [2018-02-05 Mon 21:01]--[2018-02-05 Mon 21:15] =>  0:14
+  :END:
+  
+  You know what to do:
+
+  - [X] I will ponder the question in the [[file:infinite-binary-tree.org][Infinite Binary Tree]] file.
+  - [X] I will find a counterargument to Cantor\rsquo{}s proof that the Reals are more
+    infinite than the Counting Numbers, and come prepared to rebut it.
+   
+
+  https://vimeo.com/147535699

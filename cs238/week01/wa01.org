@@ -1,0 +1,223 @@
+#+TITLE: Weekly Assignment 01
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-01-19 Fri 18:36]
+| Headline                            |   Time |
+|-------------------------------------+--------|
+| *Total time*                        | *5:00* |
+|-------------------------------------+--------|
+| Answer a What Question and a Why... |   0:47 |
+| Answer a Fuzzy Question             |   1:53 |
+| Day 2                               |   1:03 |
+| Day 3                               |   1:01 |
+| Day 4                               |   0:16 |
+#+END:
+
+
+* DONE Answer a What Question and a Why Question
+  CLOSED: [2018-01-15 Mon 17:08]
+  :LOGBOOK:
+  CLOCK: [2018-01-15 Mon 16:21]--[2018-01-15 Mon 17:08] =>  0:47
+  :END:
+
+  What is the cardinality of the /Power Set/ of a set of size n? Why?
+  
+
+  The cardinality of a power set of size n is 2^n.
+
+  You can prove this by using the following Theorem and Proof.
+
+  Sources: 
+
+  https://proofwiki.org/wiki/Cardinality_of_Power_Set
+
+  http://www.math.tamu.edu/~joel.zinn/433sum11/additional-material/induction-practice.pdf
+   
+
+** Thoerem
+
+   Let the set S be such that |S| = n  (|S| represents the cardinality of S)
+   
+   Then |P(S)| = 2^n 
+   
+   P(S) represents the power set of S, so |P(S)| is the cardinality of the power set of S which is equal to 2^n
+
+** Proof
+   Given that x \in S, than for each subset S' of S, x \in S' or x \not \in S'
+
+   This means that for any element in S, there are two possibilities. 
+   
+   If we examine this, we can see that the total possible combinations of the elements of S are
+   2\times2\times2\times2\times...2 = 2^|S|.
+
+   Given that |S| = n, we could rewrite the above as 2^n.
+
+   This shows that |P(S)| = 2^|S| = 2^n
+  
+* DONE Answer a Fuzzy Question
+  CLOSED: [2018-01-18 Thu 15:56]
+  :LOGBOOK:
+  CLOCK: [2018-01-18 Thu 15:58]--[2018-01-18 Thu 16:17] =>  0:19
+  CLOCK: [2018-01-16 Tue 21:06]--[2018-01-16 Tue 22:07] =>  1:01   
+   CLOCK: [2018-01-18 Thu 15:55]--[2018-01-18 Thu 15:58] =>  0:03
+   CLOCK: [2018-01-18 Thu 15:25]--[2018-01-18 Thu 15:55] =>  0:30
+   :END:
+  
+  Investigate and report on some application of *fuzzy sets* and *fuzzy logic*.
+
+** Fuzzy Logic
+   
+   Fuzzy logic allows us to model logical reasoning of statements which are not
+   intrinsically true or false. A good example of this would be water
+   temperature. Is the water hot or cold? Although there are certainly cases
+   where it is easy to say yes, the water is cold, or yes the water is hot,
+   there is temperature spectrum where the answer may not be so clear.
+
+   To overcome this vagueness, fuzzy logic measures statements on a 'degree' of
+   truthfullness, for instance, on a scale from 0.0 being false, to 1.0 being
+   true. These values are then piped into functions which use definded rules to
+   make inferences based on the truthfullness rating of the inputs.
+
+   Fuzzy logic is oftened used when converting analog data to digital data, as
+   analog signals are rarely 'crisply' true or false.
+
+   An example from the Scientific American article: 
+
+   "One prominent application
+   of fuzzy logic is in the anti-lock braking system found in many modern
+   automobiles. The control rules that describe an anti-lock braking system may
+   consist of parameters such as the car's speed, the brake pressure, the brake
+   temperature, the interval between applications of the brakes and the angle of
+   the car's lateral motion to its forward motion. The range of values of these
+   parameters are all continuous, open to interpretation by a design engineer.
+   One such rule in an anti-lock braking system could be:
+
+#+BEGIN_SRC 
+    IF brake temperature is 'warm' AND speed is 'not very fast,'
+    then brake
+    pressure is 'slightly decreased.'
+#+END_SRC
+  
+
+  "The temperature might have a range of states such as cold, cool, warm and hot;
+  the range of these linguistic terms can be precisely determined by defining
+  membership functions by an expert.
+   
+
+   Sources: https://plato.stanford.edu/entries/logic-fuzzy/
+            https://www.youtube.com/watch?v=r804UF8Ia4c
+            https://www.scientificamerican.com/article/what-is-fuzzy-logic-are-t/
+            
+
+  
+
+
+** Fuzzy Sets
+
+   Fuzzy logic is an extension of something called fuzzy sets. Just like in fuzzy logic has a degree of truthfulness,
+   fuzzy sets have a degree of membership. 
+
+   The concept of fuzzy sets (and by extension, fuzzy logic) was first proposed in a paper called, conviently, fuzzy sets by Lofti Zadeh.
+   In his paper, he defines a fuzzy set as follows:
+#+BEGIN_SRC 
+    Let X be a space of points, with a generic element of X denoted by x. Thus X = {x}.
+
+    A fuzzy set A in X is characterized by a membership function fA(x) which associates 
+    with each point in X a real number in the interval [0,1], with the values of fA(x) at 
+    x representing the "grade of membership" of x in A. Thus, the nearer the value of fA(x)
+    to unity, the higher the grade of membership of x in A.
+                                                                
+    from Fuzzy Sets, by Lofti A. Zadeh
+#+END_SRC
+
+
+  Because of the ambiguity in this degree of membership, membership functions need to be defined to interpret at what degree of 
+  membership an item is considered part of the set. This allows for great flexibility when it comes to building fuzzy sets, as you 
+  are able to take several data points and algorithmically decide whether an item is a member of a set or not. 
+  
+  Since the idea of fuzzy sets was first proposed, thousands of research papers have been written on its applications, both in the 
+  real world, and in more formal mathematical theory. Fuzzy sets are used in fields such as bioinformatics (the study of DNA with computers), 
+  image analysis, and artificial intelligence. 
+
+  With fuzzy sets, several of the set operators have to be defined:
+  
+  let \mu(x) be the membership function for fuzzy sets A and B
+
+  Intersection: A \cap B 
+  
+     \mu_{A \cap B}(x) = min(\mu_A(x),\mu_B(x))
+
+  Union: A \cup B
+
+     \mu_{A \cup B}(x) = max(\mu_A(x),\mu_B(x))
+
+  Complement A^c: 
+  
+     \mu_A^c(x)= 1 - \mu_A(x)
+  
+ I would highly recommend reading this [http://www.it.uu.se/edu/course/homepage/bild2/ht11/Lectures/Fuzzy_lecture.pdf]
+ article on using fuzzy sets on image analysis. It goes pretty in depth, and I did not understand /all/ of it,
+ but the parts I did get were pretty interesting. 
+
+  
+ Sources: 
+ http://www.it.uu.se/edu/course/homepage/bild2/ht11/Lectures/Fuzzy_lecture.pdf
+ https://www.calvin.edu/~pribeiro/othrlnks/Fuzzy/fuzzysets.htm
+ http://www.mv.helsinki.fi/home/niskanen/zimmermann_review.pdf
+
+
+* DONE Day 1
+  CLOSED: [2018-01-18 Thu 15:57]
+  Holiday
+* DONE Day 2
+  CLOSED: [2018-01-18 Thu 15:57]
+  :LOGBOOK:
+  CLOCK: [2018-01-16 Tue 15:12]--[2018-01-16 Tue 16:15] =>  1:03
+  :END  
+
+  Russell's Paradox - Set Theory
+
+  Squeeze if |S| \le |T| and |T| \le |S|, then |T| = |S| i
+
+* DONE Day 3  
+  CLOSED: [2018-01-18 Thu 15:57]
+  :LOGBOOK:
+  CLOCK: [2018-01-17 Wed 15:13]--[2018-01-17 Wed 16:14] =>  1:01
+  :END:
+
+  9\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow9
+
+** Sizes of Infinity
+
+   |     | 1 | 2 | 3 | 4 | 5 | ... |
+   |-----+---+---+---+---+---+-----|
+   |   1 | 0 | 0 | 0 | 0 | 0 | ... |
+   |   2 | 0 | 1 | 0 | 1 | 0 | ... |
+   |   3 | 1 | 0 | 1 | 0 | 1 | ... |
+   |   4 | 0 | 1 | 1 | 0 | 1 | ... |
+   |   5 | 0 | 0 | 1 | 0 | 0 | ... |
+   | ... |   |   |   |   |   |     |
+
+   |P(Z^{+})| > |Z^{+}|
+
+   |S| \le |T| if there is a one-to-one /mapping/ between S and T |
+
+   | Z^{+} | \ne | P(Z^{+}) | must be argued for and proven to conclude | Z^{+} | \lt | P (Z^{+}) | 
+** Cantor Diagonalization Theorem 
+
+   Flip the bit along the diagonal. This will produce a bitstring which will differ from every other bitstring by at 
+   least one bit. If the table was really complete, than this bitstring would have already existed. So this a proof by contradiction.
+   You cannot make a complete list of the subsets, therefore, it is not a countable infinity. 
+* DONE Day 4
+  CLOSED: [2018-01-18 Thu 15:57]
+  :LOGBOOK:
+  CLOCK: [2018-01-18 Thu 15:15]--[2018-01-18 Thu 15:25] =>  0:10
+  CLOCK: [2018-01-18 Thu 15:09]--[2018-01-18 Thu 15:15] =>  0:06
+  :END:
+
+  
+

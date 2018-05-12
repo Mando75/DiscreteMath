@@ -1,0 +1,1425 @@
+#+TITLE: Weekly Assignment 07
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 93
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-03-02 Fri 21:41]
+| Headline                                |    Time |      |
+|-----------------------------------------+---------+------|
+| *Total time*                            | *21:37* |      |
+|-----------------------------------------+---------+------|
+| Reread (review) section TWO...          |    1:02 |      |
+| Answer a Probability Question           |    0:08 |      |
+| Answer Another Probability Question     |    0:12 |      |
+| Answer Yet Another Probability Question |    0:34 |      |
+| Use the Designated RSA Players          |    4:29 |      |
+| \_  Second Attempt                      |         | 0:14 |
+| Test The Limits                         |    4:07 |      |
+| Day 1                                   |    1:04 |      |
+| Day 2                                   |    1:01 |      |
+| Day 3                                   |    0:49 |      |
+| Day 4                                   |    1:04 |      |
+| PQR                                     |    7:07 |      |
+| \_  GMQ                                 |         | 0:19 |
+| \_  JPZ                                 |         | 0:08 |
+| \_  GMY                                 |         | 0:47 |
+| \_  JQA                                 |         | 0:05 |
+| \_  GXF                                 |         | 0:06 |
+| \_  XAJ                                 |         | 0:21 |
+| \_  GYI                                 |         | 0:53 |
+| \_  XFO                                 |         | 2:48 |
+| \_  XGG                                 |         | 1:40 |
+#+END:
+
+
+* DONE Reread (review) section TWO subsection PQR from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-03-01 Thu 14:38]
+  :LOGBOOK:
+  CLOCK: [2018-03-01 Thu 13:48]--[2018-03-01 Thu 14:38] =>  0:50
+  CLOCK: [2018-03-01 Thu 13:03]--[2018-03-01 Thu 13:15] =>  0:12
+  :END:
+
+  In addition to all the section PQR exercises/problems/puzzles (EPPs) that you
+  did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following tasks:
+
+  I completed all of these EPPs in DM1 last Fall 2017 Semester. 
+  
+* DONE Answer a Probability Question
+  CLOSED: [2018-02-27 Tue 11:54]
+  :LOGBOOK:
+  CLOCK: [2018-02-27 Tue 11:46]--[2018-02-27 Tue 11:54] =>  0:08
+  :END:
+  A dark room contains two barrels. The first barrel is filled with green
+  marbles, the second is filled with a half-and-half mixture of green and blue
+  marbles. So there\rsquo{}s a 100% chance of choosing a green marble from the first
+  barrel, and a 50% chance of choosing either color in the second barrel. You
+  reach into one of the barrels (it\rsquo{}s dark so you don\rsquo{}t know which one) and
+  select a marble at random. It\rsquo{}s green. You selec@Brendon Ok, i'm not sure what I need to do, because most of the functions in the api look like they are already describing what a model function would dot another. It\rsquo{}s green too. You
+  select a third, a fourth, a fifth, etc. Green each time. What is the *minimum*
+  number of marbles you need to select to *exceed* a probability of 99% that you
+  are picking them out of the all-green barrel? (Note that there are enough
+  marbles so that the answer does not depend on how many marbles are in the
+  second barrel.)
+
+  Hint: This looks like a Bayes\rsquo{} Theorem question, but it\rsquo{}s not really, because
+  there\rsquo{}s more than one \ldquo{}experiment\rdquo happening. The most you can say with Bayes\rsquo{}
+  Theorem is: given that you chose one green marble, there is a conditional
+  probability of 2/3 that you chose it from the all-green barrel, and
+  consequently a 1/3 conditional probability that you chose it from the
+  half-green-half-blue barrel. But since they\rsquo{}re all independent events, the
+  probability of choosing n green marbles in a row from the half-and-half barrel
+  is (1/2)^n. Compute the complementary probability --- that of choosing at least
+  one blue marble --- to be 1 - (1/2)^n. That probability first exceeds 99% when
+  n equals what? In other words, after how many green marbles in a row are you
+  99+% sure that you are picking marbles out of the all-green barrel?
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun probT (n)
+      (- 1 (expt .5 n)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (loop for n from 1 to 11
+      collect (list n (format "%.3f" (probT n))))
+#+END_SRC
+
+#+RESULTS:
+|  1 | 0.500 |
+|  2 | 0.750 |
+|  3 | 0.875 |
+|  4 | 0.938 |
+|  5 | 0.969 |
+|  6 | 0.984 |
+|  7 | 0.992 |
+|  8 | 0.996 |
+|  9 | 0.998 |
+| 10 | 0.999 |
+| 11 | 1.000 |
+
+After pulling out 10 Green marbles, you are 99% sure that you are pulling from the all green barrel.
+
+:Feedback:
+I am not sure how you got this wrong with the table you have.
+Clearly 7 is the first to be above 0.99, 10 would be 3 above.
+-5 points
+:END:
+
+* DONE Answer Another Probability Question
+  CLOSED: [2018-02-28 Wed 21:29]
+  :LOGBOOK:
+  CLOCK: [2018-02-28 Wed 21:19]--[2018-02-28 Wed 21:29] =>  0:10
+  CLOCK: [2018-02-27 Tue 11:56]--[2018-02-27 Tue 11:58] =>  0:02
+  :END:
+  Take a deep breath. Suppose Shakespeare\rsquo{}s account is accurate and Julius
+  Caesar gasped \ldquo{}You too, Brutus\rdquo before breathing his last. What is the
+  probability that you just inhaled a molecule that Julius Caesar exhaled in his
+  dying breath?
+
+  Assume that after more than two thousand years the exhaled molecules are
+  uniformly spread about the world and the vast majority are still free in the
+  atmosphere. Assume further that there are 10^{44} molecules of air in the world,
+  and that your inhaled quantity and Caesar\rsquo{}s exhaled quantity were each about
+  2.2 x 10^{22} molecules.
+
+    (Note that if a number x is small, then (1 - x) is approximately equal to e^{-x}, 
+     where e = 2.718281828 (approximately).)
+** My Work
+
+   let A = total number of air molecules
+   let B = number of air molecules inhaled/exhaled
+
+   Then the probabililty that a single molecule was inhaled is B/A.
+   
+   The probability that any given molecule is not part of Caeser's last breath is 1 - B/A.
+
+   If we inhale n molecules, then the probability that none of them were in Ceaser's breath is (1 - B/A)^n.
+   
+   The probability that one molucule of n was exhaled by Caeser is 1 - (1 - B/A)^n.
+
+   So:
+   P = 1 - (1 - (2.2 x 10^22)/(10^44))^{2.2x10^22 }
+   thus 
+   P = 0.992092945948406559506368564033893226202302163522743605107
+
+   So there is a 99.21% probability that every breath we take contains at least one molecule from Caeser's last breath.
+   
+
+
+
+ #+BEGIN_SRC emacs-lisp
+   (exp 1)
+ #+END_SRC
+
+ #+RESULTS:
+ : 2.718281828459045
+
+* DONE Answer Yet Another Probability Question
+  CLOSED: [2018-03-01 Thu 14:57]
+  :LOGBOOK:
+  CLOCK: [2018-03-01 Thu 14:38]--[2018-03-01 Thu 14:57] =>  0:19
+  CLOCK: [2018-02-28 Wed 21:29]--[2018-02-28 Wed 21:44] =>  0:15
+  :END:
+  If students Art, Bill, Cathy, and Diane each speak the truth once in three
+  times (independently), and Art affirms that Bill denies that Cathy declares
+  that Diane is a liar, what is the probability that Diane was speaking the
+  truth?
+
+  You may assume that:
+
+  1. All four students made statements.
+  2. Art, Bill, and Cathy each made a statement that either affirmed or denied
+     the statement that follows.
+  3. A lying affirmation is taken to be a denial and a lying denial is taken to
+     be an affirmation.
+    
+** My Work
+
+   I am familiar with this one, it's Eddington's Problem :)
+   
+   I used the proof as a refresher: http://www.bernardleong.com/2009/05/23/a-mathematical-solution-to-eddingtons-controversy-problem/
+
+   P(A == T) = 1/3
+   P(A == T) = 2/3
+
+   P(B == T) = 1/3
+   P(B == F) = 2/3
+
+   P(C == T) = 1/3
+   P(C == F) = 2/3
+
+   P(D == T) = 1/3
+   P(D == F) = 2/3
+
+   let p be the event that Diane lied.
+   let q be the event that Cathy declared that Diane lied.
+   let r be the event that Bill denied that Cathy declared that D lied.
+   let s be the event that Art affirmed that Bill denied that Cathy declared that Diane lied.
+   let T mean the statement is True
+   let F mean the statement is False
+*** p
+    p = (d = F) \rarr p = \not d
+
+*** q
+    :LOGBOOK:
+    CLOCK: [2018-03-01 Thu 14:38]--[2018-03-01 Thu 14:38] =>  0:00
+    :END:
+    q = (P = T \land c = T) \lor (p = F \land c = F)
+      = (p \land c) || (\not p \land \not c)
+      = (p = c) = (\not d = c)
+      = d \oplus c
+
+*** r 
+   r = (q = F \land b = T) \lor (q = T \land b = F)
+     = (\not q \land b) \lor (q \land \not b)
+     = q \oplus b
+     = (d \oplus c) \oplus b
+
+*** s
+    s = (r = T \land a = T) \lor (r = F \land a = F)
+      = (r = a)
+      = ((d \oplus c) \oplus b) = a)
+      = \not (((d \oplus c) \oplus b) \oplus a)
+
+    s = \not (d \oplus c \oplus b \oplus b \oplus a)
+
+*** P(D|s)
+    \(P(D|s) = \frac{P(D \land s)}{P(s)}\)
+
+
+    \(P(s) = \frac{16+4+4+4+4+4+4+1}{81} = \frac{41}{81}\)
+
+    \(P(D \land s) = \frac{4+4+4+1}{81} = \frac{13}{81}\)
+
+    \P(D|s) = \frac{13}{41} = 0.3902 \)
+   
+:Feedback:
+The probability is indeed 13/41, but that is about 0.317.
+-2 points
+:END:
+ 
+* DONE Use the Designated RSA Players
+  CLOSED: [2018-03-01 Thu 16:14]
+  :LOGBOOK:
+  CLOCK: [2018-02-28 Wed 21:47]--[2018-02-28 Wed 23:04] =>  1:17
+  CLOCK: [2018-02-27 Tue 20:14]--[2018-02-27 Tue 21:33] =>  1:19
+  CLOCK: [2018-02-27 Tue 16:46]--[2018-02-27 Tue 18:25] =>  1:39
+  :END:
+  
+  In the source block below is encoded private and public keys, and the
+  corresponding primes and exponents, all together dubbed \ldquo{}the designated RSA
+  players\rdquo. Your task is to figure out how to extract these numbers from that
+  file, produced by tangling, and use them for the following task.
+
+#+BEGIN_SRC sh :tangle id_rsa
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAzU6g/of54RvchTm5Qq0ec9Ve/BYikcYbsdvNk8/FFzhOicQ6
+BseSOuvgbnuLxcJVW5gWgpOWqlu/tMOESquIoPbdnI1joIaVnDRfzzj5ZABuncnM
+joU8FrD73q03LQILT6MgQBQKAY1BZnnfDikUe2cQXY/ZddVz2EexNejAd/qr1XlV
+IPOPvZt5Irj23a366Hz/J0tbPmzdEeYZGJCDW4qPqG73Z4CKv+AN4K5vMNI2uRnJ
+RXlvCGgNs2KM8WCDelzL0MNwEfIbxIjigA+zZ4AsHsfdGc4l9ukiytd463wscaPz
+l2/A1g7rBd2jSDoN+FqgNQTDQKwRLGz76cLsTwIDAQABAoIBAAon+5rbyyaxpCUL
+B/kea0U7puk9hxRDApe30eGgA5X0eR4jkONI+BjmFkIg5ncv990CFwr6lhdzVnZw
+vZicB7Q+whO+gtEsFzaU+LBdlyi1RMOVegMK4EAXHT6UvwgA8+JKpYvF8gDFphiV
+qs0ehx7bqFmYhh9oIcTvNvr9upe0vgN69jvTjrlnZRZ5LJazgtCPuShq0Y0cl3fi
+u3idx3NzqMRLz5LJo6Os8QI7b2IhG4UhAuDAZimSxNGtWPIPGpeMqGrVDof+Ss7J
+I4hS3V5gFIrIk+QuMa+r51kDVl+4EKqOCUDLEaG8kzttCRGampYZZs3D9bRnD51P
++Z7yJeECgYEA/XOnrI15kviSSyZRMxIU0B4f75nyiU+1Cch9ktF3ElIOMhz+FoGO
+rQcqq5OV2qJqzO4+ixII1MdDNI0k4rdFVX0caXB6WXGBMxHE2zBxQzP6ixUAaWcG
+JZA0QFUYMCtJ5NT/PxKW4LR9MaazgfZ6VEWw3+/DX5EXu7X/TNlkNskCgYEAz18O
+pBeFKB+tOighZ0KCdr9sj03csRbR/tZDdmDmlWvJaqf66szlg5lkoRBCTa5spwyr
+jGTFLesocxfbOiVBgSpR6rUiSd7B3MTGDnXOUISVCJH7W1FVW2C828Euq9h7hwy3
+WxEPpIdqe05nNXvIjeWEQEHg8A31nZsZl8ai3lcCgYBNTLzS78MohA96RBF31gfr
+AYUT+ovyPREmDrPd12zNdaFGv3jvPExbkVf+RGDr8aVJI1CH8dQnsS5aFMIvM14+
+GI5VyixGo0uYW88CWt/wcyXyzVD21KkXQ8fr5wgdiNZcqGnAvtatad7VCdatyJK+
+qRKs+d9IgmQOqA9ZTOQ3oQKBgB+PQfUrNzKyD3UIYn0KnDxiSa1NlkbFSFRWW5IK
+kU0wSEkZI5DUeiGbGLuCc/TKlPKfdQQ62d9xKIjLmquwu9VikXD8/Cjt4+crc1EE
+ENAkPWI+hViSekEb6eIv9mBk4/fbsZQEdrL9gPEfL4nuOsmNoqD85bTjCvxffHei
+3WqlAoGAPkZAcTwNY6Yo5XdTFzh355ekB6SX+MFAQOOU+evYcPBhxS5Zk3SqkbaW
+ENIxtkNfhpcb7H5ZGvegKyNrXj2cVg4B9q1KRakqt57Hl48dkntp/FsB8LHxXUm2
+JSh2OHzk62JR/F7mlFk99QaSgHpImS4+To4mzYnqdyk1cOneVic=
+-----END RSA PRIVATE KEY-----
+#+END_SRC
+
+#+RESULTS:
+** First attempt at decode
+ #+BEGIN_SRC sh 
+ openssl rsa -in id_rsa -inform PEM -text -out decrypt.txt
+ #+END_SRC
+ OUPUT:
+ #+BEGIN_EXAMPLE
+ modulus:
+     00:cd:4e:a0:fe:87:f9:e1:1b:dc:85:39:b9:42:ad:
+     1e:73:d5:5e:fc:16:22:91:c6:1b:b1:db:cd:93:cf:
+     c5:17:38:4e:89:c4:3a:06:c7:92:3a:eb:e0:6e:7b:
+     8b:c5:c2:55:5b:98:16:82:93:96:aa:5b:bf:b4:c3:
+     84:4a:ab:88:a0:f6:dd:9c:8d:63:a0:86:95:9c:34:
+     5f:cf:38:f9:64:00:6e:9d:c9:cc:8e:85:3c:16:b0:
+     fb:de:ad:37:2d:02:0b:4f:a3:20:40:14:0a:01:8d:
+     41:66:79:df:0e:29:14:7b:67:10:5d:8f:d9:75:d5:
+     73:d8:47:b1:35:e8:c0:77:fa:ab:d5:79:55:20:f3:
+     8f:bd:9b:79:22:b8:f6:dd:ad:fa:e8:7c:ff:27:4b:
+     5b:3e:6c:dd:11:e6:19:18:90:83:5b:8a:8f:a8:6e:
+     f7:67:80:8a:bf:e0:0d:e0:ae:6f:30:d2:36:b9:19:
+     c9:45:79:6f:08:68:0d:b3:62:8c:f1:60:83:7a:5c:
+     cb:d0:c3:70:11:f2:1b:c4:88:e2:80:0f:b3:67:80:
+     2c:1e:c7:dd:19:ce:25:f6:e9:22:ca:d7:78:eb:7c:
+     2c:71:a3:f3:97:6f:c0:d6:0e:eb:05:dd:a3:48:3a:
+     0d:f8:5a:a0:35:04:c3:40:ac:11:2c:6c:fb:e9:c2:
+     ec:4f
+ publicExponent: 65537 (0x10001)
+ privateExponent:
+     0a:27:fb:9a:db:cb:26:b1:a4:25:0b:07:f9:1e:6b:
+     45:3b:a6:e9:3d:87:14:43:02:97:b7:d1:e1:a0:03:
+     95:f4:79:1e:23:90:e3:48:f8:18:e6:16:42:20:e6:
+     77:2f:f7:dd:02:17:0a:fa:96:17:73:56:76:70:bd:
+     98:9c:07:b4:3e:c2:13:be:82:d1:2c:17:36:94:f8:
+     b0:5d:97:28:b5:44:c3:95:7a:03:0a:e0:40:17:1d:
+     3e:94:bf:08:00:f3:e2:4a:a5:8b:c5:f2:00:c5:a6:
+     18:95:aa:cd:1e:87:1e:db:a8:59:98:86:1f:68:21:
+     c4:ef:36:fa:fd:ba:97:b4:be:03:7a:f6:3b:d3:8e:
+     b9:67:65:16:79:2c:96:b3:82:d0:8f:b9:28:6a:d1:
+     8d:1c:97:77:e2:bb:78:9d:c7:73:73:a8:c4:4b:cf:
+     92:c9:a3:a3:ac:f1:02:3b:6f:62:21:1b:85:21:02:
+     e0:c0:66:29:92:c4:d1:ad:58:f2:0f:1a:97:8c:a8:
+     6a:d5:0e:87:fe:4a:ce:c9:23:88:52:dd:5e:60:14:
+     8a:c8:93:e4:2e:31:af:ab:e7:59:03:56:5f:b8:10:
+     aa:8e:09:40:cb:11:a1:bc:93:3b:6d:09:11:9a:9a:
+     96:19:66:cd:c3:f5:b4:67:0f:9d:4f:f9:9e:f2:25:
+     e1
+ prime1:
+     00:fd:73:a7:ac:8d:79:92:f8:92:4b:26:51:33:12:
+     14:d0:1e:1f:ef:99:f2:89:4f:b5:09:c8:7d:92:d1:
+     77:12:52:0e:32:1c:fe:16:81:8e:ad:07:2a:ab:93:
+     95:da:a2:6a:cc:ee:3e:8b:12:08:d4:c7:43:34:8d:
+     24:e2:b7:45:55:7d:1c:69:70:7a:59:71:81:33:11:
+     c4:db:30:71:43:33:fa:8b:15:00:69:67:06:25:90:
+     34:40:55:18:30:2b:49:e4:d4:ff:3f:12:96:e0:b4:
+     7d:31:a6:b3:81:f6:7a:54:45:b0:df:ef:c3:5f:91:
+     17:bb:b5:ff:4c:d9:64:36:c9
+ prime2:
+     00:cf:5f:0e:a4:17:85:28:1f:ad:3a:28:21:67:42:
+     82:76:bf:6c:8f:4d:dc:b1:16:d1:fe:d6:43:76:60:
+     e6:95:6b:c9:6a:a7:fa:ea:cc:e5:83:99:64:a1:10:
+     42:4d:ae:6c:a7:0c:ab:8c:64:c5:2d:eb:28:73:17:
+     db:3a:25:41:81:2a:51:ea:b5:22:49:de:c1:dc:c4:
+     c6:0e:75:ce:50:84:95:08:91:fb:5b:51:55:5b:60:
+     bc:db:c1:2e:ab:d8:7b:87:0c:b7:5b:11:0f:a4:87:
+     6a:7b:4e:67:35:7b:c8:8d:e5:84:40:41:e0:f0:0d:
+     f5:9d:9b:19:97:c6:a2:de:57
+ exponent1:
+     4d:4c:bc:d2:ef:c3:28:84:0f:7a:44:11:77:d6:07:
+     eb:01:85:13:fa:8b:f2:3d:11:26:0e:b3:dd:d7:6c:
+     cd:75:a1:46:bf:78:ef:3c:4c:5b:91:57:fe:44:60:
+     eb:f1:a5:49:23:50:87:f1:d4:27:b1:2e:5a:14:c2:
+     2f:33:5e:3e:18:8e:55:ca:2c:46:a3:4b:98:5b:cf:
+     02:5a:df:f0:73:25:f2:cd:50:f6:d4:a9:17:43:c7:
+     eb:e7:08:1d:88:d6:5c:a8:69:c0:be:d6:ad:69:de:
+     d5:09:d6:ad:c8:92:be:a9:12:ac:f9:df:48:82:64:
+     0e:a8:0f:59:4c:e4:37:a1
+ exponent2:
+     1f:8f:41:f5:2b:37:32:b2:0f:75:08:62:7d:0a:9c:
+     3c:62:49:ad:4d:96:46:c5:48:54:56:5b:92:0a:91:
+     4d:30:48:49:19:23:90:d4:7a:21:9b:18:bb:82:73:
+     f4:ca:94:f2:9f:75:04:3a:d9:df:71:28:88:cb:9a:
+     ab:b0:bb:d5:62:91:70:fc:fc:28:ed:e3:e7:2b:73:
+     51:04:10:d0:24:3d:62:3e:85:58:92:7a:41:1b:e9:
+     e2:2f:f6:60:64:e3:f7:db:b1:94:04:76:b2:fd:80:
+     f1:1f:2f:89:ee:3a:c9:8d:a2:a0:fc:e5:b4:e3:0a:
+     fc:5f:7c:77:a2:dd:6a:a5
+ coefficient:
+     3e:46:40:71:3c:0d:63:a6:28:e5:77:53:17:38:77:
+     e7:97:a4:07:a4:97:f8:c1:40:40:e3:94:f9:eb:d8:
+     70:f0:61:c5:2e:59:93:74:aa:91:b6:96:10:d2:31:
+     b6:43:5f:86:97:1b:ec:7e:59:1a:f7:a0:2b:23:6b:
+     5e:3d:9c:56:0e:01:f6:ad:4a:45:a9:2a:b7:9e:c7:
+     97:8f:1d:92:7b:69:fc:5b:01:f0:b1:f1:5d:49:b6:
+     25:28:76:38:7c:e4:eb:62:51:fc:5e:e6:94:59:3d:
+     f5:06:92:80:7a:48:99:2e:3e:4e:8e:26:cd:89:ea:
+     77:29:35:70:e9:de:56:27
+
+ #+END_EXAMPLE
+** Second Attempt
+   :LOGBOOK:
+   CLOCK: [2018-02-28 Wed 15:11]--[2018-02-28 Wed 15:25] =>  0:14
+   :END:
+
+#+BEGIN_SRC sh
+#set env variable. replace rsa.txt with the file where you have the 
+#encoded private key as given in the workbook
+KEY=`grep -v -- ----- rsa.txt | tr \d '\n'`
+
+#Then run this
+echo $KEY | base64 -d | openssl asn1parse -inform DEF -i > decoded.txt
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+   0:d=0  hl=4 l=1186 cons: SEQUENCE          
+    4:d=1  hl=2 l=   1 prim:  INTEGER           :00
+    7:d=1  hl=4 l= 257 prim:  INTEGER           :CD4EA0FE87F9E11BDC8539B942AD1E73D55EFC162291C61BB1DBCD93CFC517384E89C43A06C7923AEBE06E7B8BC5C2555B9816829396AA5BBFB4C3844AAB88A0F6DD9C8D63A086959C345FCF38F964006E9DC9CC8E853C16B0FBDEAD372D020B4FA32040140A018D416679DF0E29147B67105D8FD975D573D847B135E8C077FAABD5795520F38FBD9B7922B8F6DDADFAE87CFF274B5B3E6CDD11E6191890835B8A8FA86EF767808ABFE00DE0AE6F30D236B919C945796F08680DB3628CF160837A5CCBD0C37011F21BC488E2800FB367802C1EC7DD19CE25F6E922CAD778EB7C2C71A3F3976FC0D60EEB05DDA3483A0DF85AA03504C340AC112C6CFBE9C2EC4F
+  268:d=1  hl=2 l=   3 prim:  INTEGER           :010001
+  273:d=1  hl=4 l= 256 prim:  INTEGER           :0A27FB9ADBCB26B1A4250B07F91E6B453BA6E93D8714430297B7D1E1A00395F4791E2390E348F818E6164220E6772FF7DD02170AFA961773567670BD989C07B43EC213BE82D12C173694F8B05D9728B544C3957A030AE040171D3E94BF0800F3E24AA58BC5F200C5A61895AACD1E871EDBA85998861F6821C4EF36FAFDBA97B4BE037AF63BD38EB9676516792C96B382D08FB9286AD18D1C9777E2BB789DC77373A8C44BCF92C9A3A3ACF1023B6F62211B852102E0C0662992C4D1AD58F20F1A978CA86AD50E87FE4ACEC9238852DD5E60148AC893E42E31AFABE75903565FB810AA8E0940CB11A1BC933B6D09119A9A961966CDC3F5B4670F9D4FF99EF225E1
+  533:d=1  hl=3 l= 129 prim:  INTEGER           :FD73A7AC8D7992F8924B2651331214D01E1FEF99F2894FB509C87D92D17712520E321CFE16818EAD072AAB9395DAA26ACCEE3E8B1208D4C743348D24E2B745557D1C69707A5971813311C4DB30714333FA8B1500696706259034405518302B49E4D4FF3F1296E0B47D31A6B381F67A5445B0DFEFC35F9117BBB5FF4CD96436C9
+  665:d=1  hl=3 l= 129 prim:  INTEGER           :CF5F0EA41785281FAD3A282167428276BF6C8F4DDCB116D1FED6437660E6956BC96AA7FAEACCE5839964A110424DAE6CA70CAB8C64C52DEB287317DB3A2541812A51EAB52249DEC1DCC4C60E75CE5084950891FB5B51555B60BCDBC12EABD87B870CB75B110FA4876A7B4E67357BC88DE5844041E0F00DF59D9B1997C6A2DE57
+  797:d=1  hl=3 l= 128 prim:  INTEGER           :4D4CBCD2EFC328840F7A441177D607EB018513FA8BF23D11260EB3DDD76CCD75A146BF78EF3C4C5B9157FE4460EBF1A549235087F1D427B12E5A14C22F335E3E188E55CA2C46A34B985BCF025ADFF07325F2CD50F6D4A91743C7EBE7081D88D65CA869C0BED6AD69DED509D6ADC892BEA912ACF9DF4882640EA80F594CE437A1
+  928:d=1  hl=3 l= 128 prim:  INTEGER           :1F8F41F52B3732B20F7508627D0A9C3C6249AD4D9646C54854565B920A914D304849192390D47A219B18BB8273F4CA94F29F75043AD9DF712888CB9AABB0BBD5629170FCFC28EDE3E72B73510410D0243D623E8558927A411BE9E22FF66064E3F7DBB1940476B2FD80F11F2F89EE3AC98DA2A0FCE5B4E30AFC5F7C77A2DD6AA5
+ 1059:d=1  hl=3 l= 128 prim:  INTEGER           :3E4640713C0D63A628E57753173877E797A407A497F8C14040E394F9EBD870F061C52E599374AA91B69610D231B6435F86971BEC7E591AF7A02B236B5E3D9C560E01F6AD4A45A92AB79EC7978F1D927B69FC5B01F0B1F15D49B6252876387CE4EB6251FC5EE694593DF50692807A48992E3E4E8E26CD89EA77293570E9DE5627
+#+END_EXAMPLE
+** DECODED RSA PLAYERS 
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'calc-math)       
+(setq modulus-str "25917625865764614624507472751051103464428082986161080917325091381217018533586661301320669088349902902177733085775047172358486320715824906656398649217984618175709283947623838618438741621369178069406446397074531354687624880196917763646414868349698726051879996914421772243243204533332912677707592777579924307583300353717924471535363990028443240100883027021565162972138614363715385332043557983711232731557512311123057439497171145626527059340721442610742860541066026291672440695589372721662512134639537223476118733688390730619624279959344239164602032337463835460472300522928416214570267590796482170746195043253636122733647"
+        publicExp-str "65537"
+        privateExp-str "1282099318809357776716255346734023184333671743307356521262309020216146208796373894729414058996145463003497423807661365835882213890790001791050008709045365703734523987338396398995657420029584437813993610011377247232819321323808038050897615136330977460979217083427001321583143401392576756658498493750310734473412127994427246550627780142546002138546655543230546395502748472358091575440470145662211341028173724375798216436973128946136871189307605154819611405020453473033745994199655405599844873798447330929315593290467099660955817434589553928138613543786824912448451851412687420728126959767482757051304538388727023674849"
+        prime1-str "177979890619473945197204479753610471412080471556695548170777130366743840076039502662876748076963100473304963352590545433016597654993502523750394723485226239613519787056873595194902850137382499662419928837003477175462658073618318069595209725376131494946301812427316858866682753117975608975871345623801742505673"
+        prime2-str "145621091099427821970355196426414899695448605313736047637292312641594120085318624088348378001393944019065335296367166589879330552584041557870666727258326498014315349660563186678271377614788059065223777868863406904969330950903096977665577757319923494479055778350175391403999223156138440588539141065367091338839"
+        exp1-str "54281734801746268773390956884129058433932961006381595386384687760661548063534760199972236149996772086919138921396765523523135845827702342870788863283682531659902551286949195427860875056014181351792873302012992687842708845010954751896929245934634119977824444615975851427853805778752406613206531521561091127201"
+        exp2-str "22161904918224714227571032075881749386795312409771630363525238053118997722370080361584856221461208136566483883088425157810953246738075140732746844342501922443730736797754813676687653086499169951577612043029794169250409797584684823156941461334954559011460737190665568363878240562725251482827858964950659459749"
+        coeff-str "43730585457387558703081548603868969345719466937803669894625610998718699133145196373906281259397355973527316295918640272091505594696464469209984321455121736920581807218163183976411219653099286997679985659125384607661310988461803552032393610504836149482382434862662215386466297019673959363474045101767370102311"
+        
+        modulus-big (math-read-number modulus-str)
+        publicExp-big (math-read-number publicExp-str)
+        privateExp-big (math-read-number privateExp-str)
+        prime1-big (math-read-number prime1-str)
+        prime2-big (math-read-number prime2-str)
+        )
+#+END_SRC
+
+
+** XGG
+**** RSA Encrypt
+     #+BEGIN_SRC emacs-lisp :results silent
+   (require 'calc-math)
+
+  (defun pow-mod (base exponent modulus)
+     (let ((calc-display-working-message nil))
+        (math-pow-mod base exponent modulus)))
+   
+
+ (defun rsa-encrypt (message n e &optional encoder)
+  (let* ((message-encoded (funcall (or encoder 'identity) message))
+         (encrypted (pow-mod message-encoded e n)))
+    encrypted))
+
+(defun rsa-decrypt (encrypted n d &optional decoder)
+  (let* ((decrypted (pow-mod encrypted d n))
+         (message-decoded (funcall (or decoder 'identity) decrypted)))
+    message-decoded))
+
+(defun round-trip (message n e d &optional encoder decoder)
+  (equal message
+         (rsa-decrypt (rsa-encrypt message n e encoder)
+                      n d decoder)))
+
+
+(defun abr (n b)
+  (let ((d (math-quotient n b))
+        (m (math-mod n b)))
+    (if (math-zerop d)
+        (list m)
+      (append (abr d b) (list m)))))
+
+(defun to-base-27 (num-base-10)
+   (mapconcat (lambda (n) (char-to-string (+ ?@ n))) (abr num-base-10 27) ""))
+
+(defun from-base-27 (string-base-27) 
+    (reconstruct-number-from-abr (reverse (mapcar (lambda (n) (- n ?@)) string-base-27)) 27))
+
+(defun reconstruct-number-from-abr (list-of-coeff base)
+   (if (null list-of-coeff)
+      0
+      (math-add (car list-of-coeff)
+         (math-mul base (reconstruct-number-from-abr (cdr list-of-coeff) base)))))
+
+     #+END_SRC
+
+**** Test RSA
+
+#+BEGIN_SRC emacs-lisp :results silent
+(setf (get 'rsa-players :p) prime1-big)
+(setf (get 'rsa-players :q) prime2-big)
+(setf (get 'rsa-players :n) modulus-big)
+(setf (get 'rsa-players :t) (math-mul (math-sub prime1-big 1) (math-sub prime2-big 1)))
+(setf (get 'rsa-players :e) publicExp-big)
+(setf (get 'rsa-players :d) privateExp-big)
+
+
+(defun test-rsa (message-with-spaces)
+  (let* ((message (mapconcat 'identity
+                             (split-string message-with-spaces " ") "@"))
+          (n (get 'rsa-players :n))
+          (e (get 'rsa-players :e))
+          (d (get 'rsa-players :d))
+          (encrypted (rsa-encrypt message n e 'from-base-27))
+          (decrypted (rsa-decrypt encrypted n d 'to-base-27))
+          (decrypted-message-with-spaces
+           (mapconcat 'identity (split-string decrypted "@") " "))
+          (success (string= message-with-spaces
+                            decrypted-message-with-spaces)))
+     (princ (format (concat "\"%s\"\nwas encoded and encrypted as\n%s\n"
+                            "then decrypted and decoded as\n\"%s\"\n")
+                    message-with-spaces
+                    encrypted
+                    decrypted-message-with-spaces))
+     (princ (if success "" "un"))
+     (princ "successfully.\n")
+     success))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(let ((max-specpdl-size 10000)
+       (max-lisp-eval-depth 10000))
+(test-rsa "BBBBBBBBBBBBBBBBB"))
+#+END_SRC
+
+#+RESULTS:
+: t
+
+* DONE Test The Limits
+  CLOSED: [2018-03-02 Fri 21:40]
+  :LOGBOOK:
+  CLOCK: [2018-03-02 Fri 19:42]--[2018-03-02 Fri 21:40] =>  1:58
+  CLOCK: [2018-03-01 Thu 19:43]--[2018-03-01 Thu 21:43] =>  2:00
+  CLOCK: [2018-03-01 Thu 16:04]--[2018-03-01 Thu 16:13] =>  0:09
+  :END:
+
+  The limits of the code supplied in XGG, that is.
+
+  Specifically, answer the question: What is the longest message (a substring of
+  [[file:the-title-page-of-the-book-of-mormon.org][The Title Page of the Book of Mormon]]) you can successfully encrypt and then
+  decrypt again with the designated players and the supplied code, augmented
+  where necessary to use the calc and calc-math packages?
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (require 'calc-math)
+
+  (defun pow-mod (base exponent modulus)
+     (let ((calc-display-working-message nil))
+        (math-pow-mod base exponent modulus)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (pow-mod 23453757 9273539991111 156623578)
+#+END_SRC
+
+#+RESULTS:
+: 78190595
+
+Between 400 and 450
+
+** Define Test function
+
+   The test function makes sure that when a substring is turned into base 27, that it is less than the value of the rsa modulus.
+   If it is bigger, than rsa can't encrypt it without losing data. 
+ #+BEGIN_SRC emacs-lisp :results silent
+  (setq bom "THE BOOK OF MORMON AN ACCOUNT WRITTEN BY THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI WHEREFORE IT IS AN ABRIDGMENT OF THE RECORD OF THE PEOPLE OF NEPHI AND ALSO OF THE LAMANITES WRITTEN TO THE LAMANITES WHO ARE A REMNANT OF THE HOUSE OF ISRAEL AND ALSO TO JEW AND GENTILE WRITTEN BY WAY OF COMMANDMENT AND ALSO BY THE SPIRIT OF PROPHECY AND OF REVELATION WRITTEN AND SEALED UP AND HID UP UNTO THE LORD THAT THEY MIGHT NOT BE DESTROYED TO COME FORTH BY THE GIFT AND POWER OF GOD UNTO THE INTERPRETATION THEREOF SEALED BY THE HAND OF MORONI AND HID UP UNTO THE LORD TO COME FORTH IN DUE TIME BY WAY OF THE GENTILE THE INTERPRETATION THEREOF BY THE GIFT OF GOD AN ABRIDGMENT TAKEN FROM THE BOOK OF ETHER ALSO WHICH IS A RECORD OF THE PEOPLE OF JARED WHO WERE SCATTERED AT THE TIME THE LORD CONFOUNDED THE LANGUAGE OF THE PEOPLE WHEN THEY WERE BUILDING A TOWER TO GET TO HEAVEN WHICH IS TO SHOW UNTO THE REMNANT OF THE HOUSE OF ISRAEL WHAT GREAT THINGS THE LORD HATH DONE FOR THEIR FATHERS AND THAT THEY MAY KNOW THE COVENANTS OF THE LORD THAT THEY ARE NOT CAST OFF FOREVER AND ALSO TO THE CONVINCING OF THE JEW AND GENTILE THAT JESUS IS THE CHRIST THE ETERNAL GOD MANIFESTING HIMSELF UNTO ALL NATIONS AND NOW IF THERE ARE FAULTS THEY ARE THE MISTAKES OF MEN WHEREFORE CONDEMN NOT THE THINGS OF GOD THAT YE MAY BE FOUND SPOTLESS AT THE JUDGMENT SEAT OF CHRIST")
+
+
+ (defun test-bom (start end)
+   "Tests if a substring is less than the modulus of the rsa key"
+   (let* ((max-specpdl-size 10000)
+        (max-lisp-eval-depth 10000)
+        (msg (substring bom start end))
+        (message (mapconcat 'identity
+                              (split-string msg " ") "@")))
+        (math-lessp (from-base-27 message) modulus-big)
+        ))
+
+ #+END_SRC
+
+
+** Find possible solutions
+
+This loop tests substrings of length j by encoding them into base-27. All of the substrings produced 
+should potentially be able to be encrypted and decrypted successfully.
+
+432 is the biggest number we could go before test-bom returns nil
+meaning that no substring was small enough to be encrypted 
+ #+BEGIN_SRC emacs-lisp 
+ (defun find-possible-substrings (max)
+ (loop for i from 0 to (length bom)
+       for j from max to (length bom)
+       when (test-bom i j) collect (list i j)))
+ #+END_SRC
+
+ #+RESULTS:
+ : find-possible-substrings
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (length (find-possible-substrings 432))
+#+END_SRC
+
+#+RESULTS:
+58
+((3 435) (18 450) (21 453) (37 469) (44 476) (77 509) (118 550) (121 553) (169 601) (173 605) (224 656) (228 660) (261 693) (265 697) (277 709) (281 713) (297 729) (307 739) (319 751) (323 755) (328 760) (354 786) (380 812) (394 826) (398 830) (439 871) (442 874) (455 887) (460 892) (466 898) (473 905) (478 910) (491 923) (534 966) (541 973) (556 988) (560 992) (584 1016) (589 1021) (598 1030) (607 1039) (621 1053) (656 1088) (663 1095) (671 1103) (675 1107) (678 1110) (695 1127) (704 1136) (712 1144) (718 1150) (732 1164) (783 1215) (804 1236) (857 1289) (866 1298) (877 1309) (884 1316))
+((1 432) (2 433) (3 434) (4 435) (8 439) (10 441) (11 442) (18 449) (19 450) (21 452) (22 453) (23 454) (24 455) (29 460) (35 466) (37 468) (38 469) (40 471) (42 473) (43 474) (44 475) (45 476) (46 477) (48 479) (49 480) (51 482) (52 483) (59 490) (64 495) (67 498) (69 500) (71 502) (73 504) (75 506) (77 508) (78 509) (82 513) (84 515) (85 516) (86 517) (89 520) (91 522) (93 524) (95 526) (96 527) (98 529) (100 531) (102 533) (104 535) (105 536) (107 538) (108 539) (111 542) (112 543) (115 546) (118 549) (119 550) (121 552) (122 553) (123 554) (126 557) (127 558) (129 560) (132 563) (134 565) (135 566) (137 568) (138 569) (139 570) (141 572) (142 573) (145 576) (146 577) (148 579) (149 580) (151 582) (152 583) (153 584) (155 586) (159 590) (160 591) (162 593) (163 594) (165 596) (167 598) (169 600) (170 601) (172 603) (173 604) (174 605) (178 609) (180 611) (181 612) (183 614) (184 615) (185 616) (187 618) (189 620) (193 624) (195 626) (201 632) (203 634) (206 637) (208 639) (209 640) (210 641) (212 643) (214 645) (218 649) (220 651) (224 655) (225 656) (227 658) (228 659) (229 660) (230 661) (232 663) (235 666) (238 669) (240 671) (241 672) (243 674) (244 675) (245 676) (250 681) (251 682) (253 684) (254 685) (258 689) (259 690) (261 692) (262 693) (264 695) (265 696) (266 697) (270 701) (273 704) (275 706) (277 708) (278 709) (280 711) (281 712) (282 713) (283 714) (288 719) (289 720) (295 726) (297 728) (298 729) (300 731) (302 733) (304 735) (306 737) (307 738) (308 739) (312 743) (314 745) (316 747) (319 750) (320 751) (322 753) (323 754) (324 755) (328 759) (329 760) (331 762) (333 764) (334 765) (335 766) (342 773) (344 775) (345 776) (350 781) (351 782) (352 783) (354 785) (355 786) (357 788) (358 789) (360 791) (361 792) (363 794) (365 796) (367 798) (372 803) (378 809) (380 811) (381 812) (383 814) (384 815) (386 817) (387 818) (389 820) (390 821) (391 822) (394 825) (395 826) (397 828) (398 829) (399 830) (401 832) (402 833) (405 836) (410 841) (412 843) (413 844) (414 845) (418 849) (419 850) (421 852) (422 853) (424 855) (426 857) (427 858) (429 860) (432 863) (435 866) (439 870) (440 871) (441 872) (442 873) (443 874) (444 875) (450 881) (451 882) (452 883) (455 886) (456 887) (459 890) (460 891) (461 892) (465 896) (466 897) (467 898) (469 900) (471 902) (472 903) (473 904) (474 905) (476 907) (478 909) (479 910) (481 912) (482 913) (486 917) (488 919) (490 921) (491 922) (492 923) (494 925) (495 926) (500 931) (502 933) (503 934) (504 935) (508 939) (512 943) (514 945) (519 950) (521 952) (522 953) (524 955) (526 957) (527 958) (529 960) (530 961) (532 963) (533 964) (534 965) (535 966) (537 968) (539 970) (540 971) (541 972) (542 973) (543 974) (545 976) (546 977) (548 979) (549 980) (556 987) (557 988) (559 990) (560 991) (561 992) (563 994) (564 995) (567 998) (572 1003) (574 1005) (575 1006) (576 1007) (580 1011) (581 1012) (584 1015) (585 1016) (588 1019) (589 1020) (590 1021) (594 1025) (595 1026) (598 1029) (599 1030) (601 1032) (602 1033) (606 1037) (607 1038) (608 1039) (610 1041) (612 1043) (614 1045) (616 1047) (617 1048) (619 1050) (620 1051) (621 1052) (622 1053) (623 1054) (628 1059) (629 1060) (631 1062) (632 1063) (633 1064) (637 1068) (641 1072) (643 1074) (648 1079) (650 1081) (651 1082) (653 1084) (655 1086) (656 1087) (657 1088) (659 1090) (661 1092) (662 1093) (663 1094) (664 1095) (666 1097) (668 1099) (670 1101) (671 1102) (672 1103) (674 1105) (675 1106) (676 1107) (678 1109) (679 1110) (680 1111) (683 1114) (684 1115) (686 1117) (689 1120) (691 1122) (693 1124) (695 1126) (696 1127) (700 1131) (702 1133) (703 1134) (704 1135) (705 1136) (709 1140) (711 1142) (712 1143) (713 1144) (715 1146) (716 1147) (718 1149) (719 1150) (723 1154) (725 1156) (727 1158) (728 1159) (729 1160) (732 1163) (733 1164) (734 1165) (736 1167) (737 1168) (740 1171) (741 1172) (743 1174) (744 1175) (746 1177) (747 1178) (748 1179) (750 1181) (754 1185) (755 1186) (757 1188) (758 1189) (760 1191) (762 1193) (763 1194) (764 1195) (768 1199) (770 1201) (772 1203) (773 1204) (775 1206) (776 1207) (779 1210) (781 1212) (782 1213) (783 1214) (784 1215) (786 1217) (788 1219) (789 1220) (790 1221) (794 1225) (795 1226) (797 1228) (798 1229) (799 1230) (803 1234) (804 1235) (805 1236) (808 1239) (812 1243) (813 1244) (814 1245) (815 1246) (817 1248) (818 1249) (819 1250) (821 1252) (823 1254) (825 1256) (826 1257) (827 1258) (828 1259) (830 1261) (831 1262) (833 1264) (834 1265) (835 1266) (837 1268) (841 1272) (842 1273) (844 1275) (845 1276) (847 1278) (849 1280) (850 1281) (852 1283) (854 1285) (856 1287) (857 1288) (858 1289) (862 1293) (865 1296) (866 1297) (867 1298) (868 1299) (872 1303) (874 1305) (877 1308) (878 1309) (879 1310) (881 1312) (884 1315) (885 1316) (886 1317) (887 1318) (889 1320) (891 1322) (893 1324) (895 1326) (896 1327) (897 1328) (900 1331) (903 1334) (908 1339) (913 1344) (915 1346) (916 1347) (917 1348) (919 1350) (922 1353) (925 1356) (927 1358) (928 1359) (930 1361) (931 1362) (932 1363) (937 1368) (938 1369) (940 1371) (941 1372))
+
+#+BEGIN_SRC emacs-lisp :results output
+ (let* ((max-specpdl-size 10000)
+        (max-lisp-eval-depth 10000))
+        (test-rsa (substring bom 1 432)))
+
+#+END_SRC
+
+#+RESULTS:
+: "HE BOOK OF MORMON AN ACCOUNT WRITTEN BY THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI WHEREFORE IT IS AN ABRIDGMENT OF THE RECORD OF THE PEOPLE OF NEPHI AND ALSO OF THE LAMANITES WRITTEN TO THE LAMANITES WHO ARE A REMNANT OF THE HOUSE OF ISRAEL AND ALSO TO JEW AND GENTILE WRITTEN BY WAY OF COMMANDMENT AND ALSO BY THE SPIRIT OF PROPHECY AND OF REVELATION WRITTEN AND SEALED UP AND HID UP UNTO THE LORD THAT THEY MI"
+: was encoded and encrypted as
+: (bigpos 774380331 568175953 816279447 711967745 458099607 404816433 873873372 418065170 976575101 190911081 37588093 417495354 689292009 719929627 292232896 788966727 492619076 244761679 508067024 872888567 926885306 54442612 569437004 616089625 349041212 276003042 419561352 863121295 400650193 169429964 810269738 826498161 377628590 526470595 833743867 104815056 827189097 222578235 791815104 492365270 717236430 944944919 332220082 441848861 961159415 483724887 849466824 649247214 582275754 492692062 23185467 949036401 286621603 139089892 231213355 88305273 70462860 145747748 495355244 241951248 386881301 344929779 274920533 903137167 222230380 567571491 308057186 30782664 9500)
+: then decrypted and decoded as
+: "HE BOOK OF MORMON AN ACCOUNT WRITTEN BY THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI WHEREFORE IT IS AN ABRIDGMENT OF THE RECORD OF THE PEOPLE OF NEPHI AND ALSO OF THE LAMANITES WRITTEN TO THE LAMANITES WHO ARE A REMNANT OF THE HOUSE OF ISRAEL AND ALSO TO JEW AND GENTILE WRITTEN BY WAY OF COMMANDMENT AND ALSO BY THE SPIRIT OF PROPHECY AND OF REVELATION WRITTEN AND SEALED UP AND HID UP UNTO THE LORD THAT THEY MI"
+: successfully.
+
+ #+BEGIN_SRC emacs-lisp
+    (let* ((max-specpdl-size 10000)
+        (max-lisp-eval-depth 10000))
+        (-filter (lambda (x) (test-rsa (substring bom (car x) (cadr x)))) (find-possible-substrings 432)))
+ #+END_SRC
+
+** Results
+
+Substrings of size 431 which pass test-rsa successfully:
+
+((1 432) (2 433) (3 434) (4 435) (8 439) (10 441) (11 442) (18 449) (19 450) (21 452) (22 453) (23 454) (24 455) (29 460) (35 466) (37 468) (38 469) (40 471) (42 473) (43 474) (44 475) (45 476) (46 477) (48 479) (49 480) (51 482) (52 483) (59 490) (64 495) (67 498) (69 500) (71 502) (73 504) (75 506) (77 508) (78 509) (82 513) (84 515) (85 516) (86 517) (89 520) (91 522) (93 524) (95 526) (96 527) (98 529) (100 531) (102 533) (104 535) (105 536) (107 538) (108 539) (111 542) (112 543) (115 546) (118 549) (119 550) (121 552) (122 553) (123 554) (126 557) (127 558) (129 560) (132 563) (134 565) (135 566) (137 568) (138 569) (139 570) (141 572) (142 573) (145 576) (146 577) (148 579) (149 580) (151 582) (152 583) (153 584) (155 586) (159 590) (160 591) (162 593) (163 594) (165 596) (167 598) (169 600) (170 601) (172 603) (173 604) (174 605) (178 609) (180 611) (181 612) (183 614) (184 615) (185 616) (187 618) (189 620) (193 624) (195 626) (201 632) (203 634) (206 637) (208 639) (209 640) (210 641) (212 643) (214 645) (218 649) (220 651) (224 655) (225 656) (227 658) (228 659) (229 660) (230 661) (232 663) (235 666) (238 669) (240 671) (241 672) (243 674) (244 675) (245 676) (250 681) (251 682) (253 684) (254 685) (258 689) (259 690) (261 692) (262 693) (264 695) (265 696) (266 697) (270 701) (273 704) (275 706) (277 708) (278 709) (280 711) (281 712) (282 713) (283 714) (288 719) (289 720) (295 726) (297 728) (298 729) (300 731) (302 733) (304 735) (306 737) (307 738) (308 739) (312 743) (314 745) (316 747) (319 750) (320 751) (322 753) (323 754) (324 755) (328 759) (329 760) (331 762) (333 764) (334 765) (335 766) (342 773) (344 775) (345 776) (350 781) (351 782) (352 783) (354 785) (355 786) (357 788) (358 789) (360 791) (361 792) (363 794) (365 796) (367 798) (372 803) (378 809) (380 811) (381 812) (383 814) (384 815) (386 817) (387 818) (389 820) (390 821) (391 822) (394 825) (395 826) (397 828) (398 829) (399 830) (401 832) (402 833) (405 836) (410 841) (412 843) (413 844) (414 845) (418 849) (419 850) (421 852) (422 853) (424 855) (426 857) (427 858) (429 860) (432 863) (435 866) (439 870) (440 871) (441 872) (442 873) (443 874) (444 875) (450 881) (451 882) (452 883) (455 886) (456 887) (459 890) (460 891) (461 892) (465 896) (466 897) (467 898) (469 900) (471 902) (472 903) (473 904) (474 905) (476 907) (478 909) (479 910) (481 912) (482 913) (486 917) (488 919) (490 921) (491 922) (492 923) (494 925) (495 926) (500 931) (502 933) (503 934) (504 935) (508 939) (512 943) (514 945) (519 950) (521 952) (522 953) (524 955) (526 957) (527 958) (529 960) (530 961) (532 963) (533 964) (534 965) (535 966) (537 968) (539 970) (540 971) (541 972) (542 973) (543 974) (545 976) (546 977) (548 979) (549 980) (556 987) (557 988) (559 990) (560 991) (561 992) (563 994) (564 995) (567 998) (572 1003) (574 1005) (575 1006) (576 1007) (580 1011) (581 1012) (584 1015) (585 1016) (588 1019) (589 1020) (590 1021) (594 1025) (595 1026) (598 1029) (599 1030) (601 1032) (602 1033) (606 1037) (607 1038) (608 1039) (610 1041) (612 1043) (614 1045) (616 1047) (617 1048) (619 1050) (620 1051) (621 1052) (622 1053) (623 1054) (628 1059) (629 1060) (631 1062) (632 1063) (633 1064) (637 1068) (641 1072) (643 1074) (648 1079) (650 1081) (651 1082) (653 1084) (655 1086) (656 1087) (657 1088) (659 1090) (661 1092) (662 1093) (663 1094) (664 1095) (666 1097) (668 1099) (670 1101) (671 1102) (672 1103) (674 1105) (675 1106) (676 1107) (678 1109) (679 1110) (680 1111) (683 1114) (684 1115) (686 1117) (689 1120) (691 1122) (693 1124) (695 1126) (696 1127) (700 1131) (702 1133) (703 1134) (704 1135) (705 1136) (709 1140) (711 1142) (712 1143) (713 1144) (715 1146) (716 1147) (718 1149) (719 1150) (723 1154) (725 1156) (727 1158) (728 1159) (729 1160) (732 1163) (733 1164) (734 1165) (736 1167) (737 1168) (740 1171) (741 1172) (743 1174) (744 1175) (746 1177) (747 1178) (748 1179) (750 1181) (754 1185) (755 1186) (757 1188) (758 1189) (760 1191) (762 1193) (763 1194) (764 1195) (768 1199) (770 1201) (772 1203) (773 1204) (775 1206) (776 1207) (779 1210) (781 1212) (782 1213) (783 1214) (784 1215) (786 1217) (788 1219) (789 1220) (790 1221) (794 1225) (795 1226) (797 1228) (798 1229) (799 1230) (803 1234) (804 1235) (805 1236) (808 1239) (812 1243) (813 1244) (814 1245) (815 1246) (817 1248) (818 1249) (819 1250) (821 1252) (823 1254) (825 1256) (826 1257) (827 1258) (828 1259) (830 1261) (831 1262) (833 1264) (834 1265) (835 1266) (837 1268) (841 1272) (842 1273) (844 1275) (845 1276) (847 1278) (849 1280) (850 1281) (852 1283) (854 1285) (856 1287) (857 1288) (858 1289) (862 1293) (865 1296) (866 1297) (867 1298) (868 1299) (872 1303) (874 1305) (877 1308) (878 1309) (879 1310) (881 1312) (884 1315) (885 1316) (886 1317) (887 1318) (889 1320) (891 1322) (893 1324) (895 1326) (896 1327) (897 1328) (900 1331) (903 1334) (908 1339) (913 1344) (915 1346) (916 1347) (917 1348) (919 1350) (922 1353) (925 1356) (927 1358) (928 1359) (930 1361) (931 1362) (932 1363) (937 1368) (938 1369) (940 1371) (941 1372))
+
+Substrings of size 432 which do encrypt successfully, but are missing a leading space after decryption:
+((3 435) (18 450) (21 453) (37 469) (44 476) (77 509) (118 550) (121 553) (169 601) (173 605) (224 656) (228 660) (261 693) (265 697) (277 709) (281 713) (297 729) (307 739) (319 751) (323 755) (328 760) (354 786) (380 812) (394 826) (398 830) (439 871) (442 874) (455 887) (460 892) (466 898) (473 905) (478 910) (491 923) (534 966) (541 973) (556 988) (560 992) (584 1016) (589 1021) (598 1030) (607 1039) (621 1053) (656 1088) (663 1095) (671 1103) (675 1107) (678 1110) (695 1127) (704 1136) (712 1144) (718 1150) (732 1164) (783 1215) (804 1236) (857 1289) (866 1298) (877 1309) (884 1316))
+
+I would say that the largest substring would be of size 432. As listed above, there are actually
+quite a few, 58 in fact. 
+
+* DONE Day 1
+  CLOSED: [2018-03-01 Thu 16:04]
+  :LOGBOOK:
+  CLOCK: [2018-02-26 Mon 15:12]--[2018-02-26 Mon 16:16] =>  1:04
+  :END:
+
+  Where is the threshold?
+
+  (elr)
+#+BEGIN_SRC emacs-lisp :results raw
+  (loop for max from 999999 to 100000000 
+    with sum-square-recips = (loop for n from 1 to max sum (/ 1 (float (* n n))))
+    with pi-squared-over-6 = (/ (* pi pi) 6.0)
+    never (< (abs (- sum-square-recips pi-squared-over-6)) 0.00001))
+#+END_SRC
+
+#+RESULTS:
+nil
+t
+
+** Why should you care that the sum of the reciprocals of the squares of the positive integesrs is \pi^2/6? 
+
+   Because the probability that any randomly chosen number is prime is 6/\pi^2
+
+** RSA and RNS
+   
+   MMI, in particular TUMMI (The unique MMI) between 1 and the modulus. Smallest possible MMI
+
+   What is TUMMI (mod 53) of 29?
+
+   What multiple of 53 is one more than a multiple of 29?
+   
+#+BEGIN_SRC emacs-lisp
+     (require 'cl) ;; for destructuring-bind
+
+(defun egcd (a b)
+  "Computes the greatest common divisor of a and b recursively.
+   This extended version returns a list of d, x and y, where
+   d = ax + by = gcd(a, b)."
+  (if (zerop b)
+      (list a 1 0)
+      (destructuring-bind (d x y) (egcd b (% a b))
+        (list d y (- x (* (/ a b) y))))))
+
+        (egcd 53 29)
+#+END_SRC
+
+#+RESULTS:
+| 1 | -6 | 11 |
+
+Add a multiple of the modulus -6 + 29 = 23
+53-11 = 43
+   
+* DONE Day 2 
+  CLOSED: [2018-03-01 Thu 16:04]
+  :LOGBOOK:
+  CLOCK: [2018-02-27 Tue 15:16]--[2018-02-27 Tue 16:17] =>  1:01
+  :END:
+  
+** Link Types in Org Mode 
+   [[ur][text-to-display]/]
+
+   
+#+BEGIN_SRC emacs-lisp
+  (org-open-file (org-html-export-to-html))
+#+END_SRC
+
+#+RESULTS:
+
+* DONE Day 3
+  CLOSED: [2018-03-01 Thu 16:04]
+  :LOGBOOK:
+  CLOCK: [2018-02-28 Wed 15:25]--[2018-02-28 Wed 16:14] =>  0:49
+  :END:
+
+** PST
+
+ #+BEGIN_SRC emacs-lisp
+ (-filter (lambda (x) (> x 5)) '(1 2 3 4 5 6 7 8 9))
+ #+END_SRC
+
+ #+RESULTS:
+ | 6 | 7 | 8 | 9 |
+
+** More RSA
+* DONE Day 4
+  CLOSED: [2018-03-01 Thu 16:04]
+  :LOGBOOK:
+  CLOCK: [2018-03-01 Thu 15:00]--[2018-03-01 Thu 16:04] =>  1:04
+  :END:
+  Worked on RSA 
+
+* DONE PQR
+  CLOSED: [2018-03-01 Thu 13:02]
+I completed all of these EPPs in DM1 last semester.
+** DONE GMQ
+   CLOSED: [2017-11-03 Fri 21:50]
+    :LOGBOOK:
+    CLOCK: [2017-11-03 Fri 21:30]--[2017-11-03 Fri 21:49] =>  0:19
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+   (defun printf (format-directive &rest args)
+  (princ (apply 'format format-directive args)))
+    #+END_SRC
+#+BEGIN_SRC emacs-lisp :results output
+(printf "%s" '"hello there" '"my name is bryan" '"these are rest args")
+#+END_SRC
+
+#+RESULTS:
+: hello there
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun mystery (&rest numbers)
+  (loop for n from 0 to (apply 'lcm numbers)
+        do (printf "%3d <--> %s\n" n
+                   (loop for m in numbers collect (mod n m)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results output
+(mystery 4 6)
+#+END_SRC
+
+
+#+begin_example
+  0 <--> (0 0)
+  1 <--> (1 1)
+  2 <--> (2 2)
+  3 <--> (3 3)
+  4 <--> (0 4)
+  5 <--> (1 5)
+  6 <--> (2 0)
+  7 <--> (3 1)
+  8 <--> (0 2)
+  9 <--> (1 3)
+ 10 <--> (2 4)
+ 11 <--> (3 5)
+ 12 <--> (0 0)
+#+end_example
+
+#+begin_example
+  0 <--> (0 0)
+  1 <--> (1 1)
+  2 <--> (2 2)
+  3 <--> (0 3)
+  4 <--> (1 4)
+  5 <--> (2 0)
+  6 <--> (0 1)
+  7 <--> (1 2)
+  8 <--> (2 3)
+  9 <--> (0 4)
+ 10 <--> (1 0)
+ 11 <--> (2 1)
+ 12 <--> (0 2)
+ 13 <--> (1 3)
+ 14 <--> (2 4)
+ 15 <--> (0 0)
+#+end_example
+
+#+begin_example 
+with '*
+  0 <--> (0 0)
+  1 <--> (1 1)
+  2 <--> (2 2)
+  3 <--> (0 3)
+  4 <--> (1 4)
+  5 <--> (2 0)
+  6 <--> (0 1)
+  7 <--> (1 2)
+  8 <--> (2 3)
+  9 <--> (0 4)
+ 10 <--> (1 0)
+ 11 <--> (2 1)
+ 12 <--> (0 2)
+ 13 <--> (1 3)
+ 14 <--> (2 4)
+ 15 <--> (0 0)
+#+end_example
+
+The function lists all the numbers from 0 to the lcm of the provided inputs along with the 
+modulus of that number and the inputs. Although multiplication works, after the function passes
+the lcm, the remainders repeat, so its best to just stop at the lcm. You could say that this function 
+generates all possible combinations of mods of two numbers. So I would call it something like
+gen-all-possible-mod-combos. We can use this for the Chinese Remainer theorem I believe.... 
+** DONE JPZ
+   CLOSED: [2017-11-03 Fri 21:58]
+    :LOGBOOK:
+    CLOCK: [2017-11-03 Fri 21:50]--[2017-11-03 Fri 21:58] =>  0:08
+    :END:
+#+BEGIN_SRC emacs-lisp
+(let* ((p 3)
+       (q 5)
+       (z-pq (number-sequence 0 (* p q))))
+    (mapcar* 'list z-pq
+             (mapcar (lambda (n) (mod n p)) z-pq)
+             (mapcar (lambda (n) (mod n q)) z-pq)))
+#+END_SRC
+
+#+RESULTS:
+|  0 | 0 | 0 |
+|  1 | 1 | 1 |
+|  2 | 2 | 2 |
+|  3 | 0 | 3 |
+|  4 | 1 | 4 |
+|  5 | 2 | 0 |
+|  6 | 0 | 1 |
+|  7 | 1 | 2 |
+|  8 | 2 | 3 |
+|  9 | 0 | 4 |
+| 10 | 1 | 0 |
+| 11 | 2 | 1 |
+| 12 | 0 | 2 |
+| 13 | 1 | 3 |
+| 14 | 2 | 4 |
+| 15 | 0 | 0 |
+
+It creates a table just like the previous function. The left most column lists the numbers from 0 to pq (z).
+then middle column lists p%z, and the right column lists q%z from 0 to z.
+It does this by creating a number sequence from 0 to pq and then mapping over that sequence, collecting the 
+results of p % z_n and q % z_n. 
+
+This function would be more functional. It uses a map instead of a loop, which means that there are no variables, 
+only constant values that are used to generate new values. 
+** DONE GMY
+   CLOSED: [2017-11-04 Sat 13:50]
+    :LOGBOOK:
+    CLOCK: [2017-11-04 Sat 13:24]--[2017-11-04 Sat 13:50] =>  0:26
+    CLOCK: [2017-11-03 Fri 22:17]--[2017-11-03 Fri 22:38] =>  0:21
+    :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'cl) ;; for destructuring-bind
+
+(defun egcd (a b)
+  "Computes the greatest common divisor of a and b recursively.
+   This extended version returns a list of d, x and y, where
+   d = ax + by = gcd(a, b)."
+  (if (zerop b)
+      (list a 1 0)
+    (let ((q (/ a b))
+          (r (% a b)))
+      (destructuring-bind (d x y) (egcd b r)
+        (list d y (- x (* q y)))))))
+
+(defun chinese-remainder-theorem (r1 r2 r3 m1 m2 m3)
+(let* ((m (* m1 m2 m3))
+       (o1 (/ m m1))
+       (o2 (/ m m2))
+       (o3 (/ m m3))
+       (y1 (find-y o1 m1))
+       (y2 (find-y o2 m2))
+       (y3 (find-y o3 m3))
+       ;;(y1 (nth 1 (egcd o1 m1)))
+       ;;(y2 (nth 1 (egcd o2 m2)))
+       ;;(y3 (nth 1 (egcd o3 m3)))
+       )
+  (mod (+ (* r1 o1 y1) (* r2 o2 y2) (* r3 o3 y3)) m)))
+
+(defun find-y (o m)
+   (let* ((equat (egcd o m)))
+         (if (= (nth 0 equat) 1)
+             (mod (nth 1 equat) m)
+             ("no solutions"))
+   ))
+#+END_SRC
+
+#+RESULTS:
+893
+
+#+BEGIN_SRC emacs-lisp :results raw
+(find-y 65537 167605130703687120)
+#+END_SRC
+
+#+RESULTS:
+95501447973935153
+28194
+
+#+BEGIN_SRC emacs-lisp
+(chinese-remainder-theorem 4 2 9 7 11 13)
+#+END_SRC
+
+#+RESULTS:
+: 893
+
+** DONE JQA
+   CLOSED: [2017-11-04 Sat 13:51]
+    :LOGBOOK:
+    CLOCK: [2017-11-04 Sat 13:50]--[2017-11-04 Sat 13:51] =>  0:01
+    CLOCK: [2017-11-04 Sat 13:20]--[2017-11-04 Sat 13:24] =>  0:04
+    :END:
+   
+#+BEGIN_SRC emacs-lisp 
+(chinese-remainder-theorem 3 5 4 7 11 13)
+#+END_SRC 
+
+#+RESULTS:
+: 654
+
+** DONE GRZ
+   CLOSED: [2017-11-04 Sat 13:51]
+    :LOGBOOK:
+    CLOCK: [2017-11-04 Sat 13:51]--[2017-11-04 Sat 13:51] =>  0:00
+    :END:
+#+BEGIN_SRC emacs-lisp
+(chinese-remainder-theorem 3 2 1 7 11 13)
+#+END_SRC
+
+#+RESULTS:
+: 794
+
+** DONE JYA
+   CLOSED: [2017-11-04 Sat 13:53]
+   #+BEGIN_SRC emacs-lisp
+   (chinese-remainder-theorem 2 3 4 7 11 13)
+   #+END_SRC
+
+   #+RESULTS:
+   : 212
+
+** DONE GXF 
+   CLOSED: [2018-03-01 Thu 13:01]
+    :LOGBOOK:
+    CLOCK: [2017-11-04 Sat 13:53]--[2017-11-04 Sat 13:59] =>  0:06
+    :END:
+#+BEGIN_SRC emacs-lisp
+(chinese-remainder-theorem 0 8 12 7 11 13)
+#+END_SRC
+
+#+RESULTS:
+: 987
+
+** DONE XAJ
+   CLOSED: [2017-11-08 Wed 20:53]
+    :LOGBOOK:
+    CLOCK: [2017-11-08 Wed 20:32]--[2017-11-08 Wed 20:53] =>  0:21
+    :END:
+#+BEGIN_SRC emacs-lisp
+(chinese-remainder-theorem 0 9 2 7 11 13)
+#+END_SRC
+
+#+RESULTS:
+: 119
+
+No there are not. You can analyize the rns-alist, and you will find no result where d_1 = r_1 d_2 = r_2 d_3 = r_3
+** DONE GYI
+   CLOSED: [2017-11-10 Fri 19:05]
+    :LOGBOOK:
+    CLOCK: [2017-11-09 Thu 21:03]--[2017-11-09 Thu 21:13] =>  0:10
+    CLOCK: [2017-11-08 Wed 22:36]--[2017-11-08 Wed 22:48] =>  0:12
+    CLOCK: [2017-11-08 Wed 20:53]--[2017-11-08 Wed 21:24] =>  0:31
+    :END:
+
+The set up triples is the cartesian product of [1 2] [1 4] [3 4]. Each of these adds up to one of the first three odd primes: 3 5 7.
+Still working out how it relates to 2^4 
+#+BEGIN_SRC emacs-lisp :results raw
+(chinese-remainder-theorem 2 4 4 3 5 7)
+#+END_SRC
+
+#+RESULTS:
+74
+59
+11
+101
+4
+94
+46
+31
+
+4, 11, 31, 46, 59, 74, 94, 101
+
+#+BEGIN_SRC emacs-lisp
+(mapcar (lambda (n) (mod (* n n) (* 15 7))) '(4 11 31 46 59 74 94 101))
+#+END_SRC
+
+#+RESULTS:
+| 16 | 16 | 16 | 16 | 16 | 16 | 16 | 16 |
+
+** DONE XFO
+   CLOSED: [2017-11-10 Fri 18:56]
+   :LOGBOOK:
+   CLOCK: [2017-11-10 Fri 18:42]--[2017-11-10 Fri 18:56] =>  0:14
+   CLOCK: [2017-11-10 Fri 13:52]--[2017-11-10 Fri 14:09] =>  0:17
+   CLOCK: [2017-11-09 Thu 20:21]--[2017-11-09 Thu 21:01] =>  0:40
+   CLOCK: [2017-11-09 Thu 15:10]--[2017-11-09 Thu 15:54] =>  0:44
+   CLOCK: [2017-11-09 Thu 14:59]--[2017-11-09 Thu 15:01] =>  0:02
+   CLOCK: [2017-11-09 Thu 10:14]--[2017-11-09 Thu 10:18] =>  0:04
+   CLOCK: [2017-11-08 Wed 22:01]--[2017-11-08 Wed 22:22] =>  0:21
+   CLOCK: [2017-11-08 Wed 21:25]--[2017-11-08 Wed 21:51] =>  0:26
+   :END:
+
+*** Create a-list
+     #+BEGIN_SRC emacs-lisp :results silent
+   (defalias 'magic-remainder-finder '%)  
+
+     (defun create-rns-alist-loop ()
+       (loop for n from 0 to 1001
+          collect (list n (mod n 7) (mod n 11) (mod n 13))))
+
+     (defun create-rns-alist-with-mod ()
+     (let* ((z-pqy (number-sequence 0 1001)))
+        (mapcar* 'list z-pqy 
+           (mapcar (lambda (n) (magic-remainder-finder n 7)) z-pqy)
+           (mapcar (lambda (n) (magic-remainder-finder n 11)) z-pqy)
+           (mapcar (lambda (n) (magic-remainder-finder n 13)) z-pqy))))
+           
+(defun test-rns-a-list ()
+       (let* ((test (number-sequence 0 10001))
+              (tests (apply #'append (make-list 143 '(0 1 2 3 4 5 6)))))
+               (mapcar* 'list test tests)))
+           
+     (defun create-rns-alist ()
+        "Hey look at this function! It makes an rns-alist table without using 
+        any + - * / or % operators."
+        (let* ((z-pqy (number-sequence 0 1001))
+               (mod-7 (apply #'append (make-list 143 (number-sequence 0 6))))
+               (mod-11 (apply #'append (make-list 91 (number-sequence 0 10))))
+               (mod-13 (apply #'append (make-list 77 (number-sequence 0 12))))
+               (last-term '(1001 0 0 0)))
+               (append (mapcar* 'list z-pqy mod-7 mod-11 mod-13) last-term)))
+
+     #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(create-rns-alist)
+#+END_SRC
+
+
+
+
+
+#+BEGIN_SRC emacs-lisp :results silent 
+  (setq rns-alist (create-rns-alist-with-mod)) 
+#+END_SRC
+
+*** alist result
+
+  #+BEGIN_SRC emacs-lisp
+  (retrieve-package 'test-rns-1001)
+  #+END_SRC
+
+  #+RESULTS:
+  : 3235
+
+#+BEGIN_SRC emacs-lisp :results raw 
+(require 'test-rns-1001)
+(do-test-rns-add2)
+#+END_SRC
+
+#+RESULTS:
+t
+
+*** Helper functions
+
+ #+BEGIN_SRC emacs-lisp :results silent
+ (defun to-rns (n)
+ (cdr (assoc n rns-alist)))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp :results raw
+ (to-rns 123)
+ #+END_SRC
+
+ #+RESULTS:
+ (4 2 6)
+
+
+ #+BEGIN_SRC emacs-lisp :results silent
+ (defun from-rns (rns)
+ (car (rassoc rns rns-alist)))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp :results raw
+ (from-rns '(4 2 6))
+ #+END_SRC
+
+ #+RESULTS:
+ 123
+*** DONE My add and mul
+    CLOSED: [2017-11-10 Fri 18:54]
+
+ADDING 2 RNS numbers...
+
+#+BEGIN_SRC emacs-lisp :results silent
+    (defun add2 (i j)
+    (list (a7 (nth 0 i) (nth 0 j)) (a11 (nth 1 i) (nth 1 j)) (a13 (nth 2 i) (nth 2 j))))
+    
+
+    (defun mul2 (i j)
+     (list (a7 (nth 0 i) (nth 0 j)) (a11 (nth 1 i) (nth 1 j)) (a13 (nth 2 i) (nth 2 j))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add2 '(1 2 3) '(2 4 5))
+#+END_SRC
+
+#+RESULTS:
+| 3 | 6 | 8 |
+
+*** Provided helper functions
+
+     #+BEGIN_SRC emacs-lisp :results silent
+     (defun a7 (i j)
+  "Add two nonnegative integers in the Z_7 residue set to produce
+   a sum in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal addition/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 7) (< j 7))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[0 1 2 3 4 5 6]
+               [1 2 3 4 5 6 0]
+               [2 3 4 5 6 0 1]
+               [3 4 5 6 0 1 2]
+               [4 5 6 0 1 2 3]
+               [5 6 0 1 2 3 4]
+               [6 0 1 2 3 4 5]] i) j))
+
+(defun a11 (i j)
+  "Add two nonnegative integers in the Z_11 residue set to produce
+   a sum in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal addition/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 11) (< j 11))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[ 0  1  2  3  4  5  6  7  8  9 10]
+               [ 1  2  3  4  5  6  7  8  9 10  0]
+               [ 2  3  4  5  6  7  8  9 10  0  1]
+               [ 3  4  5  6  7  8  9 10  0  1  2]
+               [ 4  5  6  7  8  9 10  0  1  2  3]
+               [ 5  6  7  8  9 10  0  1  2  3  4]
+               [ 6  7  8  9 10  0  1  2  3  4  5]
+               [ 7  8  9 10  0  1  2  3  4  5  6]
+               [ 8  9 10  0  1  2  3  4  5  6  7]
+               [ 9 10  0  1  2  3  4  5  6  7  8]
+               [10  0  1  2  3  4  5  6  7  8  9]] i) j))
+
+(defun a13 (i j)
+  "Add two nonnegative integers in the Z_13 residue set to produce
+   a sum in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal addition/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 13) (< j 13))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[ 0  1  2  3  4  5  6  7  8  9 10 11 12]
+               [ 1  2  3  4  5  6  7  8  9 10 11 12  0]
+               [ 2  3  4  5  6  7  8  9 10 11 12  0  1]
+               [ 3  4  5  6  7  8  9 10 11 12  0  1  2]
+               [ 4  5  6  7  8  9 10 11 12  0  1  2  3]
+               [ 5  6  7  8  9 10 11 12  0  1  2  3  4]
+               [ 6  7  8  9 10 11 12  0  1  2  3  4  5]
+               [ 7  8  9 10 11 12  0  1  2  3  4  5  6]
+               [ 8  9 10 11 12  0  1  2  3  4  5  6  7]
+               [ 9 10 11 12  0  1  2  3  4  5  6  7  8]
+               [10 11 12  0  1  2  3  4  5  6  7  8  9]
+               [11 12  0  1  2  3  4  5  6  7  8  9 10]
+               [12  0  1  2  3  4  5  6  7  8  9 10 11]] i) j))
+
+(defun m7 (i j)
+  "Multiply two nonnegative integers in the Z_7 residue set to produce
+   a product in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal multiplication/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 7) (< j 7))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[0  0  0  0  0  0  0]
+               [0  1  2  3  4  5  6]
+               [0  2  4  6  1  3  5]
+               [0  3  6  2  5  1  4]
+               [0  4  1  5  2  6  3]
+               [0  5  3  1  6  4  2]
+               [0  6  5  4  3  2  1]] i) j))
+
+(defun m11 (i j)
+  "Multiply two nonnegative integers in the Z_11 residue set to produce
+   a product in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal multiplication/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 11) (< j 11))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[0  0  0  0  0  0  0  0  0  0  0]
+               [0  1  2  3  4  5  6  7  8  9 10]
+               [0  2  4  6  8 10  1  3  5  7  9]
+               [0  3  6  9  1  4  7 10  2  5  8]
+               [0  4  8  1  5  9  2  6 10  3  7]
+               [0  5 10  4  9  3  8  2  7  1  6]
+               [0  6  1  7  2  8  3  9  4 10  5]
+               [0  7  3 10  6  2  9  5  1  8  4]
+               [0  8  5  2 10  7  4  1  9  6  3]
+               [0  9  7  5  3  1 10  8  6  4  2]
+               [0 10  9  8  7  6  5  4  3  2  1]] i) j))
+
+(defun m13 (i j)
+  "Multiply two nonnegative integers in the Z_13 residue set to produce
+   a product in that set. Error check to ensure the inputs are valid,
+   and use table lookup instead of normal multiplication/mod."
+  (unless (and (integerp i) (integerp j) (<= 0 i) (<= 0 j) (< i 13) (< j 13))
+    (error "bad parameters %s and/or %s" i j))
+  (aref (aref [[0  0  0  0  0  0  0  0  0  0  0  0  0]
+               [0  1  2  3  4  5  6  7  8  9 10 11 12]
+               [0  2  4  6  8 10 12  1  3  5  7  9 11]
+               [0  3  6  9 12  2  5  8 11  1  4  7 10]
+               [0  4  8 12  3  7 11  2  6 10  1  5  9]
+               [0  5 10  2  7 12  4  9  1  6 11  3  8]
+               [0  6 12  5 11  4 10  3  9  2  8  1  7]
+               [0  7  1  8  2  9  3 10  4 11  5 12  6]
+               [0  8  3 11  6  1  9  4 12  7  2 10  5]
+               [0  9  5  1 10  6  2 11  7  3 12  8  4]
+               [0 10  7  4  1 11  8  5  2 12  9  6  3]
+               [0 11  9  7  5  3  1 12 10  8  6  4  2]
+               [0 12 11 10  9  8  7  6  5  4  3  2  1]] i) j))
+     #+END_SRC
+     
+*** Testing RNS
+#+BEGIN_SRC emacs-lisp :results output
+(require 'test-rns-1001)
+(if (and (do-test-rns-add2) (do-test-rns-mul2)) 
+(print "test passed") (print "test failed"))
+#+END_SRC
+
+#+RESULTS:
+: 
+: "test passed"
+
+** DONE GYN
+   CLOSED: [2017-11-10 Fri 18:40]
+    #+BEGIN_SRC emacs-lisp :results silent
+(defun pow-mod (base power modulus)
+   (let* ((result 1)
+      (base (mod base modulus)))
+      (while (> power 0)
+        (when (oddp power)
+        (setq result (mod (* result base) modulus)))
+        (setq base (mod (* base base) modulus)
+              power (/ power 2))
+      ) result ))
+
+#+END_SRC
+** DONE XGG
+   CLOSED: [2017-11-10 Fri 18:40]
+   :LOGBOOK:
+   CLOCK: [2017-11-10 Fri 18:21]--[2017-11-10 Fri 18:40] =>  0:19
+   CLOCK: [2017-11-10 Fri 14:09]--[2017-11-10 Fri 14:57] =>  0:48
+   CLOCK: [2017-11-09 Thu 21:14]--[2017-11-09 Thu 21:40] =>  0:26
+   CLOCK: [2017-11-09 Thu 15:01]--[2017-11-09 Thu 15:08] =>  0:07
+   :END:
+
+*** RSA Encrypt
+     #+BEGIN_SRC emacs-lisp :results silent
+ (defun pow-mod (base power modulus)
+   (let* ((result 1)
+      (base (mod base modulus)))
+      (while (> power 0)
+        (when (oddp power)
+        (setq result (mod (* result base) modulus)))
+        (setq base (mod (* base base) modulus)
+              power (/ power 2))
+      ) result ))
+   
+
+ (defun rsa-encrypt (message n e &optional encoder)
+  (let* ((message-encoded (funcall (or encoder 'identity) message))
+         (encrypted (pow-mod message-encoded e n)))
+    encrypted))
+
+(defun rsa-decrypt (encrypted n d &optional decoder)
+  (let* ((decrypted (pow-mod encrypted d n))
+         (message-decoded (funcall (or decoder 'identity) decrypted)))
+    message-decoded))
+
+(defun round-trip (message n e d &optional encoder decoder)
+  (equal message
+         (rsa-decrypt (rsa-encrypt message n e encoder)
+                      n d decoder)))
+
+(defalias 'div '/)
+
+(defun abr (n b)
+  (let ((d (div n b))
+        (m (mod n b)))
+    (if (zerop d)
+        (list m)
+      (append (abr d b) (list m)))))
+
+(defun to-base-27 (num-base-10)
+   (mapconcat (lambda (n) (char-to-string (+ ?@ n))) (abr num-base-10 27) ""))
+
+(defun from-base-27 (string-base-27) 
+    (reconstruct-number-from-abr (reverse (mapcar (lambda (n) (- n ?@)) string-base-27)) 27))
+
+(defun reconstruct-number-from-abr (list-of-coeff base)
+   (if (null list-of-coeff)
+      0
+      (+ (car list-of-coeff)
+         (* base (reconstruct-number-from-abr (cdr list-of-coeff) base)))))
+
+     #+END_SRC
+*** First Three Functions
+#+BEGIN_SRC emacs-lisp
+(rsa-encrypt 25 (* 3 11) 3)
+#+END_SRC
+
+#+RESULTS:
+: 16
+
+#+BEGIN_SRC emacs-lisp
+(rsa-decrypt 16 (* 3 11) 7)
+#+END_SRC
+
+#+RESULTS:
+: 25
+
+#+BEGIN_SRC emacs-lisp :results raw
+(round-trip 83 (* 11 17) 3 107)
+#+END_SRC
+
+#+RESULTS:
+t
+t
+t
+*** Test RSA
+
+This was for testing purposes...
+#+BEGIN_SRC emacs-lisp
+(egcd 65537 167605130703687120)
+#+END_SRC
+
+#+RESULTS:
+| 1 | -72103682729751967 | 28194 |
+
+
+This will encrypt very small messages... I tried to some larger ones, but I had problems with overflow that
+messed up the encryption. To encrypt larger messages, simply make p and q larger primes. You will then need to find 
+the coprimes e and d. 
+#+BEGIN_SRC emacs-lisp
+(setf (get 'rsa-players :p) 11)
+(setf (get 'rsa-players :q) 17)
+(setf (get 'rsa-players :n) (* (get 'rsa-players :p) (get 'rsa-players :q)))
+(setf (get 'rsa-players :t) (* (- (get 'rsa-players :p) 1) (- (get 'rsa-players :q) 1)))
+(setf (get 'rsa-players :e) '13)
+(setf (get 'rsa-players :d) '37)
+
+
+(defun test-rsa (message-with-spaces)
+  (let* ((message (mapconcat 'identity
+                             (split-string message-with-spaces " ") "@"))
+          (n (get 'rsa-players :n))
+          (e (get 'rsa-players :e))
+          (d (get 'rsa-players :d))
+          (encrypted (rsa-encrypt message n e 'from-base-27))
+          (decrypted (rsa-decrypt encrypted n d 'to-base-27))
+          (decrypted-message-with-spaces
+           (mapconcat 'identity (split-string decrypted "@") " "))
+          (success (string= message-with-spaces
+                            decrypted-message-with-spaces)))
+     (princ (format (concat "\"%s\"\nwas encoded and encrypted as\n%s\n"
+                            "then decrypted and decoded as\n\"%s\"\n")
+                    message-with-spaces
+                    encrypted
+                    decrypted-message-with-spaces))
+     (princ (if success "" "un"))
+     (princ "successfully.\n")
+     success))
+
+#+END_SRC
+
+#+RESULTS:
+: test-rsa
+
+#+BEGIN_SRC emacs-lisp :results output
+(test-rsa "BJ")
+#+END_SRC
+
+#+RESULTS:
+: "BJ"
+: was encoded and encrypted as
+: 47
+: then decrypted and decoded as
+: "BJ"
+: successfully.
+
+#+BEGIN_SRC emacs-lisp
+(get 'rsa-players :t)
+#+END_SRC
+
+#+RESULTS:
+: 160
+
+#+BEGIN_SRC emacs-lisp
+most-positive-fixnum
+#+END_SRC
+
+#+RESULTS:
+: 2305843009213693951
+
+#+BEGIN_SRC emacs-lisp
+(from-base-27 "AB")
+#+END_SRC
+
+#+RESULTS:
+: 29

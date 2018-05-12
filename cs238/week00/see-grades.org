@@ -1,0 +1,79 @@
+#+TITLE: See Grades
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* Decrypt
+#+BEGIN_SRC emacs-lisp :results silent
+  (require 'org-crypt)
+  (org-decrypt-entries)
+#+END_SRC
+
+  In the following table, your weighted scores are calculable with an org-mode
+  table formula. Put your cursor on the "#+tblfm:" line at the bottom of the
+  table and type , , to update these weighted scores after changing any raw
+  score. You are welcome to change any scores and play "what if" with your
+  grade, but your official scores will need to be merged in when you pull from
+  the grading branch, which is where edits will be made by me or my graders.
+
+  The source code block at the bottom of this file will tell you your letter
+  grade once you know how to use it. The [[file:grading.org][grading.org]] file has some information
+  on how to maximize your grade.
+
+  Note: All raw scores are normalized to 100 total possible.
+
+* Gradebook                                                           :crypt:
+#+tblname: grades-as-table
+| Grade Item    | Raw Score | Timeliness | Weight | Weighted Score |
+|---------------+-----------+------------+--------+----------------|
+| [[file:wa00.org][00 Assignment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week01/pa01.org][01 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week01/wa01.org][01 Assignment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week02/pa02.org][02 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week02/wa02.org][02 Assignment]] |       100 |        1.0 |    3.0 |             3. |
+| [[file:../week03/pa03.org][03 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week03/wa03.org][03 Assignment]] |       100 |        1.0 |    3.5 |            3.5 |
+| [[file:../week04/pa04.org][04 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week04/wa04.org][04 Assignment]] |       100 |        1.0 |    4.0 |             4. |
+| [[file:../week05/pa05.org][05 Assessment]] |        96 |        1.0 |    2.5 |            2.4 |
+| [[file:../week05/wa05.org][05 Assignment]] |       100 |        1.0 |    4.5 |            4.5 |
+| [[file:../week06/pa06.org][06 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week06/wa06.org][06 Assignment]] |        95 |        1.0 |    5.0 |           4.75 |
+| [[file:../week07/pa07.org][07 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week07/wa07.org][07 Assignment]] |        93 |        1.0 |    5.5 |          5.115 |
+| [[file:../week08/pa08.org][08 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week08/wa08.org][08 Assignment]] |       100 |        1.0 |    6.0 |             6. |
+| [[file:../week09/pa09.org][09 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week09/wa09.org][09 Assignment]] |       100 |        1.0 |    7.0 |             7. |
+| [[file:../week10/pa10.org][10 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week10/wa10.org][10 Assignment]] |       100 |        1.0 |    8.0 |             8. |
+| [[file:../week11/pa11.org][11 Assessment]] |        95 |        1.0 |    2.5 |          2.375 |
+| [[file:../week11/wa11.org][11 Assignment]] |       100 |        1.0 |    8.5 |            8.5 |
+| [[file:../week12/pa12.org][12 Assessment]] |       100 |        1.0 |    2.5 |            2.5 |
+| [[file:../week12/wa12.org][12 Assignment]] |       100 |        1.0 |   10.0 |            10. |
+#+tblfm: $5=$2*$3*$4/100
+
+* Computing Your Final Grade
+#+BEGIN_SRC emacs-lisp
+  (defun compute-final-grade (grades)
+    "Compute weighted percentage and convert to letter grade, returning both."
+    (let* ((weighted-percentage (apply '+ (mapcar 'fifth grades)))
+           (number (ceiling weighted-percentage))
+           (tensDigit (/ number 10))
+           (onesDigit (mod number 10))
+           (index (min (max (- tensDigit 5) 0) 4))
+           (letter (substring "FDCBA" index (+ index 1)))
+           (sign (if (<= onesDigit 2) "-" (if (>= onesDigit 7) "+")))
+           (letter-grade (concat letter (if (and (< number 95) (>= number 60)) sign))))
+      (list (format "%2.2f" weighted-percentage) letter-grade)))
+#+END_SRC
+
+#+RESULTS:
+: compute-final-grade
+
+#+BEGIN_SRC emacs-lisp :var grades=grades-as-table
+(compute-final-grade grades)
+#+END_SRC
+
+#+RESULTS:
+| 99.14 | A |

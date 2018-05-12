@@ -1,0 +1,28 @@
+#+TITLE: README for Discrete Mathematics Two (aka DM2 aka CS 238)
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+  Welcome to Discrete Mathematics Two!
+
+  This is a blurb for those who are coming back after a few semesters' gap since DM1:
+
+  In case you're new to them, since .org files are "plain old text" files
+  (marked up in clever ways), any old editor will allow you to view and edit
+  them. But org-mode can only be used to full advantage within emacs.
+
+* Course Metamaterial
+
+   [[file:syllabus.org][syllabus.org]]
+
+   [[file:schedule.org][schedule.org]]
+
+   [[file:grading.org][grading.org]]
+
+   [[file:see-grades.org][see-grades.org]]
+
+* Course Material
+
+   [[https://rickneff.github.io/metaphors-be-with-you.html][The Book]]
+
+   [[file:wa00.org][wa00.org]]

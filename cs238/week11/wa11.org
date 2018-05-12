@@ -1,0 +1,215 @@
+#+TITLE: Weekly Assignment 11
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-03-26 Mon 22:15]
+| Headline                    | Time   |
+|-----------------------------+--------|
+| *Total time*                | *1:12* |
+|-----------------------------+--------|
+| Implement a Graph Algorithm | 1:12   |
+#+END:
+
+
+* DONE Reread (review) section THR subsection VWX from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-03-31 Sat 15:38]
+  :LOGBOOK:
+  CLOCK: [2018-03-31 Sat 15:12]--[2018-03-31 Sat 15:38] =>  0:26
+  CLOCK: [2018-03-29 Thu 15:38]--[2018-03-29 Thu 15:47] =>  0:09
+  :END:
+
+  In addition to the second half of the section VWX exercises/problems/puzzles
+  (EPPs) that you did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following
+  task:
+
+I completed all the EPPs in VWX last semester. I submitted them all in last week's assignment.
+
+* DONE Implement a Graph Algorithm
+  CLOSED: [2018-03-29 Thu 15:37]
+  :LOGBOOK:
+  CLOCK: [2018-03-29 Thu 15:15]--[2018-03-29 Thu 15:37] =>  0:22
+  CLOCK: [2018-03-28 Wed 19:18]--[2018-03-28 Wed 20:32] =>  1:14
+  CLOCK: [2018-03-28 Wed 15:13]--[2018-03-28 Wed 16:37] =>  1:24
+  CLOCK: [2018-03-27 Tue 19:39]--[2018-03-27 Tue 21:37] =>  1:58
+  CLOCK: [2018-03-26 Mon 22:14]--[2018-03-26 Mon 22:35] =>  0:21
+  CLOCK: [2018-03-26 Mon 21:02]--[2018-03-26 Mon 22:14] =>  1:12
+  :END:
+  Specifically, implement Hierholzer’s Algorithm in elisp to find an Eulerian
+  circuit in a simple, connected graph. Use an alist (association list) for the
+  graph\rsquo{}s adjacency list. Test your implementation on a graph with at least 12
+  nodes and 17 links, like the below: 
+
+  #+tblname: graph-adjacencies
+  | Node | Adjacent Nodes |
+  |------+----------------|
+  |    1 | 2 9            |
+  |    2 | 1 3 7 9        |
+  |    3 | 2 4 6 7        |
+  |    4 | 3 5            |
+  |    5 | 4 6            |
+  |    6 | 3 5            |
+  |    7 | 2 3 8 12       |
+  |    8 | 7 11           |
+  |    9 | 1 2 10 11      |
+  |   10 | 9 11           |
+  |   11 | 9 8 10 12      |
+  |   12 | 7 11           |
+
+#+BEGIN_SRC emacs-lisp :var table=graph-adjacencies :results raw
+  (stringp (cadr (first table)))
+  (random (length table))
+(stringp (cadr (first table)))
+#+END_SRC
+
+#+RESULTS:
+t
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun hierholzer (assoc-list)
+   "Given an adjacency list in alist form, will use the hierholzer algorithm to find an Eulerian circuit
+    if it exists"
+     (setq edge-list (make-edge-list assoc-list))
+     (if (not (check-degree assoc-list))
+         (let* ((curr-node (pick-random-node assoc-list))
+                (path (walk curr-node (make-edge-list assoc-list)))
+                (circuit (car path))
+                (not-visited (cadr path))
+                (circuit-to-add nil))
+         (progn (while (not (zerop (length not-visited)))
+                   (setq curr-node (car (first not-visited))
+                     path (walk curr-node not-visited)
+                     circuit-to-add (car path)
+                     not-visited (cadr path)
+                     circuit (insert-circuit circuit circuit-to-add)))        
+             circuit))))
+                
+
+(defun walk (vertex edges)
+   "Given a vertex, walks along edges, never repeating a path. Returns the chosen path."
+   (let ((path (list vertex))
+         (adj (outgoing vertex edges))
+         (e nil))
+         (progn (while adj
+               (setq e (first adj)
+                     edges (remove-edge e edges)
+                     path (append path (list (cdr e)))
+                     vertex (cdr e)
+                     adj (outgoing vertex edges)))
+             (list path edges)))) 
+
+(defun outgoing (vertex edges)
+   "Given a vertex and an edge list of cons cells, returns a list of all edges leaving the vertex"
+  (-filter (lambda (edge) (string-equal vertex (car edge))) edges))
+
+(defun remove-edge (edge edges)
+   "Removes edge from list of edges. Importantly, it removes both the given edge and its inverse"
+   (let ((edge-reverse (cons (cdr edge) (car edge)))
+         (edges (remove edge edges)))
+         (remove edge-reverse edges)))
+
+(defun check-degree (assoc-list) 
+   "Checks that the degree sequence of the graph is even"
+   (loop for i from 0 to below (length assoc-list)
+      when (not (= (% (length (split-string (cadr (elt assoc-list i)))) 2) 0))
+         collect (elt assoc-list i)))
+
+(defun make-edge-list (assoc-list)
+   "Given an association list, creates a list of possible edges"
+   (apply 'append 
+    (loop for node in assoc-list
+         collect (loop for edge in (split-string (cadr node))
+                  collect (cons (number-to-string (car node)) edge)))))
+
+(defun pick-random-node (assoc-list)
+   "Picks a random node from an alist"
+   (number-to-string (car (elt assoc-list (random (length assoc-list))))))
+
+
+(defun insert-circuit (circuit to-add) 
+   "Given a circuit and a circuit to add, finds the appropriate place to insert the new circuit. 
+    Returns a new list"
+    (let* ((index (+ 1 (-find-index (lambda (x) (string-equal (car to-add) x)) circuit)))
+           (front-sub (subseq circuit 0 index))
+           (end-sub (subseq circuit index)))
+           (append front-sub (cdr to-add) end-sub)))
+#+END_SRC
+
+
+
+#+BEGIN_SRC emacs-lisp :var table=graph-adjacencies :results raw
+(hierholzer table)
+#+END_SRC
+
+#+RESULTS:
+(3 2 1 9 2 7 8 11 9 10 11 12 7 3 4 5 6 3)
+(9 1 2 3 4 5 6 3 7 8 11 12 7 2 9 10 11 9)
+(9 1 2 3 4 5 6 3 7 8 11 12 7 2 9 10 11 9)
+(7 2 1 9 2 3 4 5 6 3 7 8 11 9 10 11 12 7)
+(7 2 1 9 2 3 4 5 6 3 7 8 11 9 10 11 12 7)
+(3 2 1 9 2 7 8 11 9 10 11 12 7 3 4 5 6 3)
+** Testing Functions
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (insert-circuit '("5" "4" "3" "2" "1" "7") '("5" "2" "4" "6" "5"))
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC emacs-lisp :var table=graph-adjacencies
+ (cdr (walk "2" (make-edge-list table)))
+#+END_SRC
+
+#+RESULTS:
+| (7 . 8) | (7 . 12) | (8 . 7) | (8 . 11) | (9 . 10) | (9 . 11) | (10 . 9) | (10 . 11) | (11 . 9) | (11 . 8) | (11 . 10) | (11 . 12) | (12 . 7) | (12 . 11) |
+
+#+BEGIN_SRC emacs-lisp :var table=graph-adjacencies
+  (remove-edges '("2" . "3") edge-list)
+#+END_SRC
+
+#+RESULTS:
+: ((1 . 2) (1 . 9) (2 . 1) (2 . 7) (2 . 9) (3 . 4) (3 . 6) (3 . 7) (4 . 3) (4 . 5) (5 . 4) (5 . 6) (6 . 3) (6 . 5) (7 . 2) (7 . 3) (7 . 8) (7 . 12) (8 . 7) (8 . 11) (9 . 1) (9 . 2) (9 . 10) (9 . 11) (10 . 9) (10 . 11) (11 . 9) (11 . 8) (11 . 10) (11 . 12) (12 . 7) (12 . 11))
+
+ #+BEGIN_SRC emacs-lisp  :var table=graph-adjacencies :results raw
+ (setq edge-list (make-edge-list table))
+ (outgoing "3" edge-list)
+ 
+ #+END_SRC
+
+ #+RESULTS:
+ ((3 . 2) (3 . 4) (3 . 6) (3 . 7))
+ ((3 . 2) (3 . 4) (3 . 6) (3 . 7))
+
+#+BEGIN_SRC emacs-lisp
+  (remove '("1" . "2") edge-list)
+#+END_SRC
+ #+RESULTS:
+ : ((1 . 9) (2 . 1) (2 . 3) (2 . 7) (2 . 9) (3 . 2) (3 . 4) (3 . 6) (3 . 7) (4 . 3) (4 . 5) (5 . 4) (5 . 6) (6 . 3) (6 . 5) (7 . 2) (7 . 3) (7 . 8) (7 . 12) (8 . 7) (8 . 11) (9 . 1) (9 . 2) (9 . 10) (9 . 11) (10 . 9) (10 . 11) (11 . 9) (11 . 8) (11 . 10) (11 . 12) (12 . 7) (12 . 11))
+
+ #+BEGIN_SRC emacs-lisp
+   (incoming "3" edge-list)
+ #+END_SRC
+
+ #+RESULTS:
+ : ((2 . 3) (4 . 3) (6 . 3) (7 . 3))
+
+
+** Notes
+
+   Create a list of of all edges from the adjacency list. 
+      These take the form of (start-vertex . end-vertex)
+   Pick a random node, add it to the path
+   Get it's outgoing nodes and save it as adj
+
+   While there are adj nodes
+     save the edge
+     remove the edge from the edge list
+     append the first edge to the visited edges
+     reset the vertex to the new node
+     reset adj to the outgoing of the new node
+   
+

@@ -1,0 +1,90 @@
+#+TITLE: Syllabus
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* Catalog Description
+
+  What this course is about: /Mathematics for computer science./
+
+  This course delves deeper into the mathematical topics needed to provide a
+  solid theoretical foundation for computer science. The following topics will
+  be covered:
+
+  - Sets and Logic
+  - Functions and Relations
+  - Combinatorics and Probability
+  - Number Theory and Practice
+  - Trees and Graphs
+  - Languages and Grammars
+
+* Objectives
+
+  - Master more advanced terminology and operations of sets and logic, functions
+    and relations, combinatorics and probability, number theory and practice,
+    trees and graphs, and languages and grammars.
+  - Demonstrate logical reasoning through solving more complex problems.
+  - Learn more advanced functional programming by way of lisp, reading and
+    writing lisp code.
+  - Discern between effective and ineffective approaches to problem solving.
+  - Solve problems using limited or constrained resources.
+
+* Prerequisite
+
+  You must have successfully completed the following course:
+
+  - CS 237 Discrete Mathematics I
+  - CS 165 Object-Oriented Software Development
+
+* Requirements
+
+  You are required to...
+
+  - attend class, as attendance and participation factor into your
+    grade.
+  - read assigned portions of the course materials *before* the class
+    meeting when they will be discussed.
+  - take weekly preparation assessments.
+  - do weekly homework assignments to deepen your understanding of selected
+    topics.
+
+* Assessments
+
+  There will be weekly preparation assessments that you will take before class.
+  These will be on any current or previously discussed course content, to
+  encourage steady knowledge accumulation and retention.
+
+* Assignments
+
+  Homework assignments are of two types: Exercises and Problems.
+
+** Exercises
+
+   Exercises are individual and group learning activities that will require
+   either a small amount of preparation before class, or participation during
+   class, or both. Although time will be given during class, some time outside
+   of class may also be required.
+
+** Problems
+
+   Problems are weightier assignments that invite you to explore certain topics
+   in discrete mathematics, as well as increase your lisp/functional programming
+   prowess. All involve some writing in the form of a report on what you
+   learned.
+
+* Late Policy
+
+  Work is due as stated in [[file:schedule.org][the schedule]]. Late work is accepted *only if* the
+  reason is extraordinary, and acceptance is reached through private and
+  prolonged negotiation. And you must come talk to me in person --- NOT by
+  email, nor any other means of communication.
+
+* Grade Category Weighting
+
+   - Assignments: 70%
+   - Assessments: 30%
+
+* Grade Calculating
+
+  Your weighted percentage will determine your final grade in
+  a reasonably standard way, as computed in [[file:see-grades.org][see-grades.org]].

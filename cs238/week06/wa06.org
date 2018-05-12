@@ -1,0 +1,1551 @@
+#+TITLE: Weekly Assignment 06
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 95
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-02-22 Thu 21:18]
+| Headline                         |   Time |      |
+|----------------------------------+--------+------|
+| *Total time*                     | *9:13* |      |
+|----------------------------------+--------+------|
+| Apply Bayes\rsquo{} Theorem             |   0:14 |      |
+| Compute Four Leaves              |   0:22 |      |
+| Apply Your Probability Knowledge |   0:15 |      |
+| Apply Bayes\rsquo{} Theorem Generalized |   0:10 |      |
+| Apply Bayes\rsquo{} Theorem...          |   0:04 |      |
+| MNO                              |   6:05 |      |
+| \_  FAB                          |        | 0:01 |
+| \_  ISM                          |        | 1:55 |
+| \_  FDK                          |        | 0:09 |
+| \_  FDZ                          |        | 0:01 |
+| \_  IWC                          |        | 0:01 |
+| \_  IWK                          |        | 0:03 |
+| \_  FJY                          |        | 0:23 |
+| \_  IXT                          |        | 0:02 |
+| \_  FMD                          |        | 0:01 |
+| \_  IYJ                          |        | 0:17 |
+| \_  IZL                          |        | 0:02 |
+| \_  FOY                          |        | 1:49 |
+| \_  VAO                          |        | 0:04 |
+| \_  FQI                          |        | 0:12 |
+| \_  FQL                          |        | 0:38 |
+| \_  VCR                          |        | 0:03 |
+| \_  FUA                          |        | 0:01 |
+| \_  VFJ                          |        | 0:05 |
+| \_  FVF                          |        | 0:05 |
+| \_  VGU                          |        | 0:10 |
+| \_  FVH                          |        | 0:01 |
+| \_  VIB                          |        | 0:01 |
+| \_  VIW                          |        | 0:01 |
+| Day 2                            |   0:55 |      |
+| Day 3                            |   1:08 |      |
+#+END:
+
+
+* DONE Apply Bayes\rsquo{} Theorem
+  CLOSED: [2018-02-20 Tue 22:06]
+  :LOGBOOK:
+  CLOCK: [2018-02-20 Tue 21:52]--[2018-02-20 Tue 22:06] =>  0:14
+  :END:
+
+  Automating the process of finding bugs in source code requires the use of
+  heuristics, or pattern-matching on the code. There is no deep understanding of
+  the code involved, hence such a tool cannot be perfect at detecting bugs. A
+  certain bug-detection tool is correct 80% of the time and incorrect the rest
+  of the time. This means that on average out of every 100 bugs, the tool will
+  detect 80 of them, and fail to detect 20 of them. Also, out of 100 non-bugs,
+  the tool will report 20 bugs and 80 non-bugs, on average. The tool is run on
+  source code that is 10% buggy. That is, one line out of every ten contains a
+  bug. Given that the tool detects a bug in some line of code, what is the
+  probability that this line of code actually contains a bug?
+
+   /P(H) = 0.1/
+
+  /P(!H) = 0.9/
+
+  /P(T | H) = 0.8/
+
+  /P(!T | H) = 0.2/
+
+  /P(!T | !H) = 0.8/
+
+  /P(T | !H) = 0.2\)/
+  
+
+ \( P(T | H ) = \frac{P(T|H)P(H)}{P(T|H) + P(T|!H)P(!H)}\) 
+
+\(\rightarrow P(T | H) = \frac{(0.8)(0.1)}{(0.8)(0.1)+(0.2)(0.9)}\)
+
+\(\rightarrow P(T | H) = \frac{0.08}{0.08 + 0.18}\)
+
+\(\rightarrow P(T | H) = \frac{0.08}{0.26}\)
+
+\(\rightarrow P(T | H) = 0.307692308\)
+
+\(\rightarrow P(T | H) = 30.77\%\) 
+
+* DONE Compute Four Leaves
+  CLOSED: [2018-02-21 Wed 19:42]
+  :LOGBOOK:
+  CLOCK: [2018-02-21 Wed 19:20]--[2018-02-21 Wed 19:42] =>  0:22
+  :END:
+
+  Using the information in the previous task, calculate to two-decimal-digit
+  precision the values that go at the leaves of the binary tree shown below,
+  where the arrow pointing to the topmost leaf is labeled to show what goes
+  there. Hint: The four leaves correspond to the four quadrants of trutH versus
+  tesT described in the file on [[file:~/mebewiyo/W17/2dm/week07/bayes-theorem.org][Bayes\rsquo{} Theorem]].
+
+:
+:            /<---------------------- p(H) * p(T | H) goes here
+:           / p(T | H)
+:          /
+:         /\
+:        /  \ p(!T | H)
+:  p(H) /    \
+:      /
+:     /
+:     \
+:      \
+: p(!H) \    /
+:        \  / p(T | !H)
+:         \/
+:          \
+:           \ p(!T | !H)
+:            \
+:
+
+p(H) = 0.1
+p(!H) = 0.9
+p(T | H) = 0.8
+p(!T | H) = 0.2
+p(T | !H) = 0.2
+p(!T | !H) = 0.8
+
+p(H)*p(T | H) = 0.1 * 0.8 = .08 = 8%
+p(H)*p(!T | H) = 0.1 * 0.2 = .02 = 2%
+p(!H)*p(T | !H) = 0.9 * 0.2 = .18 = 18%
+p(!H)8p(!T | !H) = 0.9 * 0.8 = .72 = 72%
+
+:Feedback:
+You didn't put the values on the tree as instructed by the question, and hinted
+at by the big arrow.
+-5 points.
+:END:
+
+* DONE Apply Your Probability Knowledge
+  CLOSED: [2018-02-21 Wed 19:57]
+  :LOGBOOK:
+  CLOCK: [2018-02-21 Wed 19:42]--[2018-02-21 Wed 19:57] =>  0:15
+  :END:
+
+  There are three sheets of paper in a folder. One sheet has writing on both
+  sides, one has writing on one side and is blank on the other side, and the
+  third sheet of paper is blank on both sides. Without looking you randomly pull
+  one sheet of paper out of the folder and see that it is blank on the side
+  you\rsquo{}re looking at. What is the probability that the other side is blank as
+  well?
+
+  Sheets A B C
+
+  6 sides 1/2 of the sides are written on. 
+
+  
+  1. Probability of each sheet getting picked:
+   P(A) probability of picking A = 1/3 (Writing on both sides)
+   P(B) probability of picking B = 1/3 (Writing on one side)
+   P(C) probability of picking C = 1/3 (Both sides blank)
+
+  2. Probability of the side being blank given picking up a sheet
+   P(H | A) = 1 (Both sides have writing)
+   P(H | B) = 1/2 (One side has writing)
+   P(H | C) = 0 (Neither side has writing)
+
+  3. Use Bayes' Theorem:
+  
+  \(P(A|H) = \frac{P(H | A)*P(A)}{P(H | A)P(A) + P(H|B)P(B) + P(H|C)P(C)}\)
+  
+  \(\rightarrow P(A|H) = \frac{1 * 1/3}{(1 * 1/3) + (1/2 * 1/3) + (0 * 1/3)}\)
+
+  \(\rightarrow P(A|H) = \frac{1/3}{1/3 + 1/6 + 0}\)
+
+  \(\rightarrow P(A|H) = \frac{1/3}{1/2}\)
+
+  \(\rightarrow P(A|H) = 2/3 = .66667 = 66.667\%\)
+
+* DONE Apply Bayes\rsquo{} Theorem Generalized
+  CLOSED: [2018-02-21 Wed 20:07]
+  :LOGBOOK:
+  CLOCK: [2018-02-21 Wed 19:57]--[2018-02-21 Wed 20:07] =>  0:10
+  :END:
+
+  Three different vegetables, turnips, eggplant and asparagus, make Bill sick
+  sometimes. There is a 50% chance he will be sick if he eats turnips. If he
+  eats eggplant, there is a 20% chance he will be sick. The probability that he
+  will be sick when he eats asparagus is only 5%.
+
+  Bill gets sick after dinner where he ate one of those three vegetables. What
+  is the probability that he ate turnips?
+
+  (Assume that for each of the three vegetables, there is a 1/3 chance he ate
+  it.)
+
+  1. Probability of veggies getting picked
+
+  P(T) = 1/3
+  P(E) = 1/3
+  P(A) = 1/3
+
+  2. Probability of getting sick from eating veggies
+
+  P(S|T) = .5
+  P(S|E) = .2
+  P(S|A) = .05
+
+  3. Use Bayes' Theorem: 
+
+ \(P(T|S) = \frac{P(S | T)*P(T)}{P(S | T)P(T) + P(S|E)P(E) + P(S|A)P(A)}\)
+
+ \(\rightarrow P(T|S) = \frac{.5 * 1/3}{(.5 * 1/3) + (.2 * 1/3) + (.05 * 1/3)}\)
+
+ \(\rightarrow P(T|S) = \frac{1/6}{(1/6) + (1/15) + (1/60)}\)
+
+ \(\rightarrow P(T|S) = \frac{1/6}{1/4}\)
+
+ \(\rightarrow P(T|S) = 2/3 = .66667 = 66.667\%\)
+* DONE Apply Bayes\rsquo{} Theorem Generalized With Different Priors
+  CLOSED: [2018-02-21 Wed 20:11]
+  :LOGBOOK:
+  CLOCK: [2018-02-21 Wed 20:07]--[2018-02-21 Wed 20:11] =>  0:04
+  :END:
+
+
+  Change the prior probabilities of Bill eating these vegetables to a 30% chance
+  he ate turnips, a 10% chance he ate eggplant, and a 60% chance he ate
+  asparagus?
+
+  Now what is the probability that Bill ate turnips, given that he got sick?
+
+ 1. Probability of veggies getting picked
+
+  P(T) = .3
+  P(E) = .1
+  P(A) = .6
+
+  2. Probability of getting sick from eating veggies
+
+  P(S|T) = .5
+  P(S|E) = .2
+  P(S|A) = .05
+
+  3. Use Bayes' Theorem: 
+
+ \(P(T|S) = \frac{P(S | T)*P(T)}{P(S | T)P(T) + P(S|E)P(E) + P(S|A)P(A)}\)
+
+ \(\rightarrow P(T|S) = \frac{.5 * .3}{(.5 * .3) + (.2 * .1) + (.05 * .6)}\)
+
+ \(\rightarrow P(T|S) = \frac{.15}{(.15) + (.02) + (.03)}\)
+
+ \(\rightarrow P(T|S) = \frac{.15}{.2}\)
+
+ \(\rightarrow P(T|S) = .75 = 75\%\)
+
+
+* DONE MNO
+  CLOSED: [2018-02-22 Thu 21:18]
+** DONE FAB
+   CLOSED: [2018-02-19 Mon 22:28]
+   :LOGBOOK:
+   CLOCK: [2018-02-19 Mon 22:27]--[2018-02-19 Mon 22:28] =>  0:01
+   :END:
+   The reduntant word is evenly. By the definition of the word divides, a | b is an integer, so saying
+   a divides b evenly is redundant.
+** DONE ISM
+   CLOSED: [2018-02-21 Wed 20:48]
+   :LOGBOOK:
+   CLOCK: [2018-02-21 Wed 20:11]--[2018-02-21 Wed 20:48] =>  0:37
+   CLOCK: [2018-02-20 Tue 19:08]--[2018-02-20 Tue 19:31] =>  0:23
+   CLOCK: [2018-02-20 Tue 15:12]--[2018-02-20 Tue 15:44] =>  0:32
+   CLOCK: [2018-02-19 Mon 22:28]--[2018-02-19 Mon 22:51] =>  0:23
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results silent
+ (defun num-digits (num)
+     (cond ((< num 10) 1)
+          (t (1+ (num-digits (truncate num 10))))))
+
+(defun sum-of-digits (number)
+  (apply '+ (mapcar (lambda (d) (- d ?0)) (number-to-string number))))
+
+ (defun is-divisible-by-2 (n)
+  (let* ((digits-as-string (number-to-string n))
+         (last-digit (elt digits-as-string (- (length digits-as-string) 1))))
+    (or (= last-digit ?0)
+        (= last-digit ?2)
+        (= last-digit ?4)
+        (= last-digit ?6)
+        (= last-digit ?8))))
+
+(defun is-divisible-by-3 (number)
+  "Checks divisibility by 3 by a simple rule.
+Does not work for negative numbers."
+  (or (= number 3)
+      (= number 6)
+      (= number 9)
+      (zerop number)
+      (unless (< number 10)
+        (is-divisible-by-3 (sum-of-digits number)))))
+
+
+(defun is-divisible-by-4 (number)
+   (let ((num (% number 100)))
+        (= 0 (% num 4))))
+
+(defun is-divisible-by-5 (number)
+   (let ((num (% number 10)))
+        (or (= num 5) (= num 0))))
+
+(defun is-divisible-by-6 (number)
+   (and (is-divisible-by-2 number) (is-divisible-by-3 number)))
+
+
+(defun is-divisible-by-7 (number) 
+   (if (= 1 (num-digits number))
+       (or (= 0 number) (= 7 number))
+       (let ((stem (* (% number 10) 2))
+             (rest (/ number 10)))
+             (is-divisible-by-7 (- rest stem)))))
+   
+
+(defun is-divisible-by-8 (number)
+   (= (% (% number 1000) 8) 0))
+
+(defun is-divisible-by-9 (number)
+   (let ((num (sum-of-digits number)))
+   (cond ((= num 9) t)
+         ((>= num 0) nil)
+         (t (is-divisible-by-9 num)))))
+
+(defun is-divisible-by-10 (number) 
+   (and (is-divisible-by-2 number) (is-divisible-by-5 number)))
+
+(defun is-divisible-by-11 (number)
+   (let* ((evens 0)
+         (odds 0)
+         (list-of-digits (mapcar 'string-to-number (mapcar 'char-to-string (append (number-to-string number) nil)))))
+         (zerop (loop for i in list-of-digits
+                      for j from 1 to (length list-of-digits)
+                      sum (if (zerop (% j 2))
+                          i
+                          (* -1 i))))))       
+         
+
+
+(defun char-to-num (number el)
+   (string-to-number (char-to-string (elt number el))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (is-divisible-by-11 257547752)
+#+END_SRC
+#+RESULTS:
+t
+
+#+BEGIN_SRC emacs-lisp
+  (mapcar 'char-to-string (append "12345" nil))
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 3 | 4 | 5 |
+
+#+BEGIN_SRC js :results output
+function sumDigits(number) {
+    const remainder = number % 10;
+    let sum = remainder;
+    if(number >= 10) {
+        const rest = Math.floor(number / 10);
+        sum += sumDigits(rest); 
+    }
+    return sum;
+}
+
+function isDivisibleBy2(num) {
+  num = num % 10;
+  switch (num) {
+    case 0:
+    case 2:
+    case 4:
+    case 6:
+    case 8:
+     return true;
+    default:
+     return false;
+  }
+}
+
+function isDivisibleBy3 (num) {
+  const sum = sumDigits(num);
+  if (num % 3)
+    return false;
+  return true;
+}
+
+function isDivisibleBy4(num) {
+  num = num % 100;
+  if(num % 4) 
+    return false
+  return true;
+}
+
+
+function isDivisibleBy5(num) {
+  num = num % 10;
+  if(num === 5 || num === 0)
+     return true;
+  return false;
+}
+
+
+function isDivisibleBy6(num) {
+  if(isDivisibleBy2(num) && isDivisibleBy3(num)) 
+    return true;
+  return false;
+}
+
+function isDivisibleBy7(num) {
+   if(num.toString().length === 1) {
+     return num === 0 || num === 7;
+   }
+   const stem = (num % 10) * 2;
+   const rest = parseInt(num.toString().substr(0, num.toString().length - 1));
+   return isDivisibleBy7(Math.abs(rest - stem));
+}
+
+function isDivisibleBy8(num) {
+  if((num % 1000) % 8) 
+    return false;
+  return true;
+}
+
+
+function isDivisibleBy9(num) {
+  if(sumDigits(num) === 9) 
+     return true;
+  else if((sumDigits(num) >= 0))
+     return false;
+ return isDivisibleBy9(sumDigits(num));
+}
+
+function isDivisibleBy10(num) {
+  return isDivisibleBy2(num) && isDivisibleBy5(num);
+}
+
+function isDivisibleBy11(num) {
+    num = num + '';
+    let oddInd = [];
+    let evenInd = [];
+    for(let i = 0; i < num.length; i++ ) {
+        if(i % 2) {
+            evenInd.push(num[i])
+        } else {
+            oddInd.push(num[i]);
+        }
+    }
+    let sums = []
+    oddInd.forEach((t, i) => {
+        sums[i] = t - evenInd[i];
+    })
+    
+    return sums.reduce((sum, val) => {
+        return sum + val;
+    }) ? true : false;
+}
+
+console.log(isDivisibleBy3(13097034951));
+
+#+END_SRC
+
+#+RESULTS:
+: true
+
+** DONE FBH
+   CLOSED: [2018-02-20 Tue 19:32]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:32]--[2018-02-20 Tue 19:32] =>  0:00
+   :END:
+    
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun sum-of-digits(number) 
+     (if (= number 0) 0 
+        (+ (mod number 10) 
+           (sum-of-digits (/ (- number (mod x 10)) 10)))))
+    #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(sum-of-digits '123)
+#+END_SRC
+
+** DONE ITT
+   CLOSED: [2018-02-20 Tue 19:32]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:32]--[2018-02-20 Tue 19:32] =>  0:00
+   :END:
+   1. Find the prime factorization of the integer
+   2. Write out all the exponents
+   3. Take each exponent and add one to it
+   4. Find the product of the numbers in step 3.
+** DONE FDK
+   CLOSED: [2018-02-20 Tue 19:41]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:32]--[2018-02-20 Tue 19:41] =>  0:09
+   :END:
+
+   First I would write out some concrete examples. I can look at a formula, but if I truly want to understand it,
+   I have to try it out. From there, I would look for patterns within the hard numerical results that may 
+   contribute to solving the proof. I would then try to apply some algebra concepts to simplify the equations
+   and potentially find a proof. 
+   
+** DONE IVO
+   CLOSED: [2018-02-20 Tue 19:41]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:41]--[2018-02-20 Tue 19:41] =>  0:00
+   :END:
+   composite(n) \harr \not [\forall x \forall y [(x > 1 ∧ y > 1) → xy ≠ n]]
+   composite(n) \harr \exists x \not [\forall y [(x > 1 \land y > 1)] \rarr xy \ne n]]
+   composite(n) \harr \exists x \exists y \not [(x > 1 \land y > 1)] \rarr xy \ne n]
+   composite(n) \harr \exists x \exists y \not (p \rarr q) where p = (x >1 \land y > 1) and q = (xy \ne n)
+   composite(n) \harr \exists x \exist y [(x > 1 \land y > 1)] \land \not (xy \ne n)]
+   composite(n) \harr \exists x \exists y [(x > 1 \land y > 1) \land (xy = n)]
+    
+** DONE FDZ
+   CLOSED: [2018-02-20 Tue 19:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:42]--[2018-02-20 Tue 19:43] =>  0:01
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results raw
+(defun prime-power-list-to-number (prime-power-list)
+    (reduce #'* (loop with number = 1
+          with primes = [2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71]
+          for prime across primes
+          for power in prime-power-list
+          collect (* number (expt prime power)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp 
+(prime-power-list-to-number '(6 5 4 3 2 1))
+#+END_SRC
+
+#+RESULTS:
+: 5244319080000
+** DONE IWC
+   CLOSED: [2018-02-20 Tue 19:44]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:43]--[2018-02-20 Tue 19:44] =>  0:01
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun prime-powers-to-number (collection-of-prime-powers)
+       (let* ((primes [2 3 5 7 11 13 17 19 23 29 31 41 43 47 53 59 61 57 71]))
+        (apply #'* (mapcar* #'expt
+                  primes collection-of-prime-powers))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(prime-powers-to-number '(0 1 2 3))
+#+END_SRC
+
+#+RESULTS:
+25725
+376639725
+5244319080000
+5244319080000
+** DONE FJH
+   CLOSED: [2018-02-20 Tue 19:44]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:44]--[2018-02-20 Tue 19:44] =>  0:00
+   :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(prime-powers-to-number [2 0 0 0 0 1])
+#+END_SRC
+
+#+RESULTS:
+52
+** DONE IWK
+   CLOSED: [2018-02-20 Tue 19:47]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 19:44]--[2018-02-20 Tue 19:47] =>  0:03
+   :END:
+***  Values where 4k + 11 is non-prime
+    k = 1 -> 4 + 11 = 15; 
+    k = 4 -> 16 + 11 = 27;
+    k = 6 -> 24 + 11 = 35;
+    k = 7 -> 28 + 11 = 39;
+    k = 10 -> f(k) = 51;
+    k = 11 -> f(k) = 55
+    k = 13 -> f(k) = 63
+    k = 16 -> f(k) = 75
+    k = 19 -> f(k) = 87
+    k = 20 -> f(k) = 91
+*** Values where 4k + 11 is prime
+    k = 2 -> 8 + 11 = 19;
+    k = 3 -> 12 + 11 = 23;
+    k = 5 -> 20 + 11 = 31; 
+    k = 8 -> 32 + 11 = 43
+    k = 9 -> 36 + 11 = 47
+    k = 12 -> f(k) = 59
+    k = 14 -> f(k) = 67
+    k = 15 -> f(k) = 71
+    k = 17 -> f(k) = 79
+    k = 18 -> f(k) = 83!
+** DONE FJY
+   CLOSED: [2018-02-21 Wed 20:57]
+   :LOGBOOK:
+   CLOCK: [2018-02-21 Wed 20:48]--[2018-02-21 Wed 20:57] =>  0:09
+   CLOCK: [2018-02-20 Tue 19:47]--[2018-02-20 Tue 20:01] =>  0:14
+   :END:
+
+   x^4 - 97n^3 + 3294n^2 - 45458n - 213589 
+   range 0 to 54 
+   distinct primes = 55
+
+   36n^2 - 810n + 2753
+   range 0 to 44
+   distinct primes = 45
+
+   There are more: 
+
+   http://mathworld.wolfram.com/Prime-GeneratingPolynomial.html
+
+** DONE IXT
+   CLOSED: [2018-02-20 Tue 20:03]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:01]--[2018-02-20 Tue 20:03] =>  0:02
+   :END:
+    ∀q∃p∀x∀y[p>q∧((x>1∧y>1)→xy≠p)]
+
+for all q there exists a p for all x and all y that if p > q and x and y > 1 then xy \ne p
+
+if p implies q, then there is no largest p
+
+prime(n) = (x > 1 \land y > 1) \rarr xy \ne p
+
+∀q∃p∀x∀y([p>q∧prime(p) \land prime(q + 2)])  
+** DONE FMD
+   CLOSED: [2018-02-20 Tue 20:04]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:03]--[2018-02-20 Tue 20:04] =>  0:01
+   :END:
+
+    #+BEGIN_SRC js :results output
+const testPrime = (n) => {
+  if (n===1){
+    return false;
+  }
+  else if(n === 2) {
+    return true;
+  } else {
+    for(let x = 2; x < n; x++) {
+      if(n % x === 0) {
+        return false;
+      }
+    }
+    return true;  
+  }
+}
+
+const squares = () => {
+  let coll = [];
+  for(let i = 1; i <= 100; i++ ) {
+    const range = {
+      min: i * i,
+      max: (i + 1) * (i + 1)
+    }
+    coll.push(range);
+  }
+  return coll
+}
+
+const primes = (ranges) => {
+  const primeList = [];
+  ranges.forEach((item) => {
+    for(let i = item.min; i < item.max; i++) {
+      if(testPrime(i)) {
+        item.lowestPrime = i;
+        primeList.push(item);
+        return;
+      }
+    }
+  });
+  return primeList;
+}
+
+console.log(primes(squares()));
+    #+END_SRC
+
+    #+begin_example
+    [ { min: 1, max: 4, lowestPrime: 2 },
+      { min: 4, max: 9, lowestPrime: 5 },
+      { min: 9, max: 16, lowestPrime: 11 },
+      { min: 16, max: 25, lowestPrime: 17 },
+      { min: 25, max: 36, lowestPrime: 29 },
+      { min: 36, max: 49, lowestPrime: 37 },
+      { min: 49, max: 64, lowestPrime: 53 },
+      { min: 64, max: 81, lowestPrime: 67 },
+      { min: 81, max: 100, lowestPrime: 83 },
+      { min: 100, max: 121, lowestPrime: 101 },
+      { min: 121, max: 144, lowestPrime: 127 },
+      { min: 144, max: 169, lowestPrime: 149 },
+      { min: 169, max: 196, lowestPrime: 173 },
+      { min: 196, max: 225, lowestPrime: 197 },
+      { min: 225, max: 256, lowestPrime: 227 },
+      { min: 256, max: 289, lowestPrime: 257 },
+      { min: 289, max: 324, lowestPrime: 293 },
+      { min: 324, max: 361, lowestPrime: 331 },
+      { min: 361, max: 400, lowestPrime: 367 },
+      { min: 400, max: 441, lowestPrime: 401 },
+      { min: 441, max: 484, lowestPrime: 443 },
+      { min: 484, max: 529, lowestPrime: 487 },
+      { min: 529, max: 576, lowestPrime: 541 },
+      { min: 576, max: 625, lowestPrime: 577 },
+      { min: 625, max: 676, lowestPrime: 631 },
+      { min: 676, max: 729, lowestPrime: 677 },
+      { min: 729, max: 784, lowestPrime: 733 },
+      { min: 784, max: 841, lowestPrime: 787 },
+      { min: 841, max: 900, lowestPrime: 853 },
+      { min: 900, max: 961, lowestPrime: 907 },
+      { min: 961, max: 1024, lowestPrime: 967 },
+      { min: 1024, max: 1089, lowestPrime: 1031 },
+      { min: 1089, max: 1156, lowestPrime: 1091 },
+      { min: 1156, max: 1225, lowestPrime: 1163 },
+      { min: 1225, max: 1296, lowestPrime: 1229 },
+      { min: 1296, max: 1369, lowestPrime: 1297 },
+      { min: 1369, max: 1444, lowestPrime: 1373 },
+      { min: 1444, max: 1521, lowestPrime: 1447 },
+      { min: 1521, max: 1600, lowestPrime: 1523 },
+      { min: 1600, max: 1681, lowestPrime: 1601 },
+      { min: 1681, max: 1764, lowestPrime: 1693 },
+      { min: 1764, max: 1849, lowestPrime: 1777 },
+      { min: 1849, max: 1936, lowestPrime: 1861 },
+      { min: 1936, max: 2025, lowestPrime: 1949 },
+      { min: 2025, max: 2116, lowestPrime: 2027 },
+      { min: 2116, max: 2209, lowestPrime: 2129 },
+      { min: 2209, max: 2304, lowestPrime: 2213 },
+      { min: 2304, max: 2401, lowestPrime: 2309 },
+      { min: 2401, max: 2500, lowestPrime: 2411 },
+      { min: 2500, max: 2601, lowestPrime: 2503 },
+      { min: 2601, max: 2704, lowestPrime: 2609 },
+      { min: 2704, max: 2809, lowestPrime: 2707 },
+      { min: 2809, max: 2916, lowestPrime: 2819 },
+      { min: 2916, max: 3025, lowestPrime: 2917 },
+      { min: 3025, max: 3136, lowestPrime: 3037 },
+      { min: 3136, max: 3249, lowestPrime: 3137 },
+      { min: 3249, max: 3364, lowestPrime: 3251 },
+      { min: 3364, max: 3481, lowestPrime: 3371 },
+      { min: 3481, max: 3600, lowestPrime: 3491 },
+      { min: 3600, max: 3721, lowestPrime: 3607 },
+      { min: 3721, max: 3844, lowestPrime: 3727 },
+      { min: 3844, max: 3969, lowestPrime: 3847 },
+      { min: 3969, max: 4096, lowestPrime: 3989 },
+      { min: 4096, max: 4225, lowestPrime: 4099 },
+      { min: 4225, max: 4356, lowestPrime: 4229 },
+      { min: 4356, max: 4489, lowestPrime: 4357 },
+      { min: 4489, max: 4624, lowestPrime: 4493 },
+      { min: 4624, max: 4761, lowestPrime: 4637 },
+      { min: 4761, max: 4900, lowestPrime: 4783 },
+      { min: 4900, max: 5041, lowestPrime: 4903 },
+      { min: 5041, max: 5184, lowestPrime: 5051 },
+      { min: 5184, max: 5329, lowestPrime: 5189 },
+      { min: 5329, max: 5476, lowestPrime: 5333 },
+      { min: 5476, max: 5625, lowestPrime: 5477 },
+      { min: 5625, max: 5776, lowestPrime: 5639 },
+      { min: 5776, max: 5929, lowestPrime: 5779 },
+      { min: 5929, max: 6084, lowestPrime: 5939 },
+      { min: 6084, max: 6241, lowestPrime: 6089 },
+      { min: 6241, max: 6400, lowestPrime: 6247 },
+      { min: 6400, max: 6561, lowestPrime: 6421 },
+      { min: 6561, max: 6724, lowestPrime: 6563 },
+      { min: 6724, max: 6889, lowestPrime: 6733 },
+      { min: 6889, max: 7056, lowestPrime: 6899 },
+      { min: 7056, max: 7225, lowestPrime: 7057 },
+      { min: 7225, max: 7396, lowestPrime: 7229 },
+      { min: 7396, max: 7569, lowestPrime: 7411 },
+      { min: 7569, max: 7744, lowestPrime: 7573 },
+      { min: 7744, max: 7921, lowestPrime: 7753 },
+      { min: 7921, max: 8100, lowestPrime: 7927 },
+      { min: 8100, max: 8281, lowestPrime: 8101 },
+      { min: 8281, max: 8464, lowestPrime: 8287 },
+      { min: 8464, max: 8649, lowestPrime: 8467 },
+      { min: 8649, max: 8836, lowestPrime: 8663 },
+      { min: 8836, max: 9025, lowestPrime: 8837 },
+      { min: 9025, max: 9216, lowestPrime: 9029 },
+      { min: 9216, max: 9409, lowestPrime: 9221 },
+      { min: 9409, max: 9604, lowestPrime: 9413 },
+      { min: 9604, max: 9801, lowestPrime: 9613 },
+      { min: 9801, max: 10000, lowestPrime: 9803 },
+      { min: 10000, max: 10201, lowestPrime: 10007 } ]
+    #+end_example
+
+** DONE IYJ
+   CLOSED: [2018-02-20 Tue 20:21]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:04]--[2018-02-20 Tue 20:21] =>  0:17
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+  (setq 7-digit-primes '(1000003 1000033 1000037 1000039 1000081 1000099 1000117 1000121 1000133 1000151 1000159 1000171 1000183 1000187 1000193 1000199 1000211 1000213 1000231 1000249 1000253 1000273 1000289 1000291 1000303 1000313 1000333 1000357 1000367 1000381 1000393 1000397 1000403 1000409 1000423 1000427 1000429 1000453 1000457 1000507 1000537 1000541 1000547 1000577 1000579 1000589 1000609 1000619 1000621 1000639 1000651 1000667 1000669 1000679 1000691 1000697 1000721 1000723 1000763 1000777 1000793 1000829 1000847 1000849 1000859 1000861 1000889 1000907 1000919 1000921 1000931 1000969 1000973 1000981 1000999
+1001003 1001017 1001023 1001027 1001041 1001069 1001081 1001087 1001089 1001093 1001107 1001123 1001153 1001159 1001173 1001177 1001191 1001197 1001219 1001237 1001267 1001279 1001291 1001303 1001311 1001321 1001323 1001327 1001347 1001353 1001369 1001381 1001387 1001389 1001401 1001411 1001431 1001447 1001459 1001467 1001491 1001501 1001527 1001531 1001549 1001551 1001563 1001569 1001587 1001593 1001621 1001629 1001639 1001659 1001669 1001683 1001687 1001713 1001723 1001743 1001783 1001797 1001801 1001807 1001809 1001821 1001831 1001839 1001911 1001933 1001941 1001947 1001953 1001977 1001981 1001983 1001989
+1002017 1002049 1002061 1002073 1002077 1002083 1002091 1002101 1002109 1002121 1002143 1002149 1002151 1002173 1002191 1002227 1002241 1002247 1002257 1002259 1002263 1002289 1002299 1002341 1002343 1002347 1002349 1002359 1002361 1002377 1002403 1002427 1002433 1002451 1002457 1002467 1002481 1002487 1002493 1002503 1002511 1002517 1002523 1002527 1002553 1002569 1002577 1002583 1002619 1002623 1002647 1002653 1002679 1002709 1002713 1002719 1002721 1002739 1002751 1002767 1002769 1002773 1002787 1002797 1002809 1002817 1002821 1002851 1002853 1002857 1002863 1002871 1002887 1002893 1002899 1002913 1002917 1002929 1002931 1002973 1002979
+1003001 1003003 1003019 1003039 1003049 1003087 1003091 1003097 1003103 1003109 1003111 1003133 1003141 1003193 1003199 1003201 1003241 1003259 1003273 1003279 1003291 1003307 1003337 1003349 1003351 1003361 1003363 1003367 1003369 1003381 1003397 1003411 1003417 1003433 1003463 1003469 1003507 1003517 1003543 1003549 1003589 1003601 1003609 1003619 1003621 1003627 1003631 1003679 1003693 1003711 1003729 1003733 1003741 1003747 1003753 1003757 1003763 1003771 1003787 1003817 1003819 1003841 1003879 1003889 1003897 1003907 1003909 1003913 1003931 1003943 1003957 1003963
+1004027 1004033 1004053 1004057 1004063 1004077 1004089 1004117 1004119 1004137 1004141 1004161 1004167 1004209 1004221 1004233 1004273 1004279 1004287 1004293 1004303 1004317 1004323 1004363 1004371 1004401 1004429 1004441 1004449 1004453 1004461 1004477 1004483 1004501 1004527 1004537 1004551 1004561 1004567 1004599 1004651 1004657 1004659 1004669 1004671 1004677 1004687 1004723 1004737 1004743 1004747 1004749 1004761 1004779 1004797 1004873 1004903 1004911 1004917 1004963 1004977 1004981 1004987
+1005007 1005013 1005019 1005029 1005041 1005049 1005071 1005073 1005079 1005101 1005107 1005131 1005133 1005143 1005161 1005187 1005203 1005209 1005217 1005223 1005229 1005239 1005241 1005269 1005287 1005293 1005313 1005317 1005331 1005349 1005359 1005371 1005373 1005391 1005409 1005413 1005427 1005437 1005439 1005457 1005467 1005481 1005493 1005503 1005527 1005541 1005551 1005553 1005581 1005593 1005617 1005619 1005637 1005643 1005647 1005661 1005677 1005679 1005701 1005709 1005751 1005761 1005821 1005827 1005833 1005883 1005911 1005913 1005931 1005937 1005959 1005971 1005989
+1006003 1006007 1006021 1006037 1006063 1006087 1006091 1006123 1006133 1006147 1006151 1006153 1006163 1006169 1006171 1006177 1006189 1006193 1006217 1006219 1006231 1006237 1006241 1006249 1006253 1006267 1006279 1006301 1006303 1006307 1006309 1006331 1006333 1006337 1006339 1006351 1006361 1006367 1006391 1006393 1006433 1006441 1006463 1006469 1006471 1006493 1006507 1006513 1006531 1006543 1006547 1006559 1006583 1006589 1006609 1006613 1006633 1006637 1006651 1006711 1006721 1006739 1006751 1006769 1006781 1006783 1006799 1006847 1006853 1006861 1006877 1006879 1006883 1006891 1006897 1006933 1006937 1006949 1006969 1006979 1006987 1006991
+1007021 1007023 1007047 1007059 1007081 1007089 1007099 1007117 1007119 1007129 1007137 1007161 1007173 1007179 1007203 1007231 1007243 1007249 1007297 1007299 1007309 1007317 1007339 1007353 1007359 1007381 1007387 1007401 1007417 1007429 1007441 1007459 1007467 1007483 1007497 1007519 1007527 1007549 1007557 1007597 1007599 1007609 1007647 1007651 1007681 1007683 1007693 1007701 1007711 1007719 1007723 1007729 1007731 1007749 1007753 1007759 1007767 1007771 1007789 1007801 1007807 1007813 1007819 1007827 1007857 1007861 1007873 1007887 1007891 1007921 1007933 1007939 1007957 1007959 1007971 1007977
+1008001 1008013 1008017 1008031 1008037 1008041 1008043 1008101 1008131 1008157 1008181 1008187 1008193 1008199 1008209 1008223 1008229 1008233 1008239 1008247 1008257 1008263 1008317 1008323 1008331 1008347 1008353 1008373 1008379 1008401 1008407 1008409 1008419 1008421 1008433 1008437 1008451 1008467 1008493 1008499 1008503 1008517 1008541 1008547 1008563 1008571 1008587 1008589 1008607 1008611 1008613 1008617 1008659 1008701 1008719 1008743 1008773 1008779 1008781 1008793 1008809 1008817 1008829 1008851 1008853 1008857 1008859 1008863 1008871 1008901 1008911 1008913 1008923 1008937 1008947 1008979 1008983 1008989 1008991
+1009007 1009037 1009049 1009061 1009097 1009121 1009139 1009153 1009157 1009159 1009163 1009189 1009193 1009199 1009201 1009207 1009237 1009243 1009247 1009259 1009289 1009291 1009301 1009303 1009319 1009321 1009343 1009357 1009361 1009369 1009373 1009387 1009399 1009417 1009433 1009439 1009457 1009483 1009487 1009499 1009501 1009507 1009531 1009537 1009559 1009573 1009601 1009609 1009621 1009627 1009637 1009643 1009649 1009651 1009669 1009727 1009741 1009747 1009781 1009787 1009807 1009819 1009837 1009843 1009859 1009873 1009901 1009909 1009927 1009937 1009951 1009963 1009991 1009993 1009997
+1010003 1010033 1010069 1010081 1010083 1010129 1010131 1010143 1010167 1010179 1010201 1010203 1010237 1010263 1010291 1010297 1010329 1010353 1010357 1010381 1010407 1010411 1010419 1010423 1010431 1010461 1010467 1010473 1010491 1010501 1010509 1010519 1010549 1010567 1010579 1010617 1010623 1010627 1010671 1010683 1010687 1010717 1010719 1010747 1010749 1010753 1010759 1010767 1010771 1010783 1010791 1010797 1010809 1010833 1010843 1010861 1010881 1010897 1010899 1010903 1010917 1010929 1010957 1010981 1010983 1010993
+1011001 1011013 1011029 1011037 1011067 1011071 1011077 1011079 1011091 1011107 1011137 1011139 1011163 1011167 1011191 1011217 1011221 1011229 1011233 1011239 1011271 1011277 1011281 1011289 1011331 1011343 1011349 1011359 1011371 1011377 1011391 1011397 1011407 1011431 1011443 1011509 1011539 1011553 1011559 1011583 1011587 1011589 1011599 1011601 1011631 1011641 1011649 1011667 1011671 1011677 1011697 1011719 1011733 1011737 1011749 1011763 1011779 1011797 1011799 1011817 1011827 1011889 1011893 1011917 1011937 1011943 1011947 1011961 1011973 1011979
+1012007 1012009 1012031 1012043 1012049 1012079 1012087 1012093 1012097 1012103 1012133 1012147 1012159 1012171 1012183 1012189 1012201 1012213 1012217 1012229 1012241 1012259 1012261 1012267 1012279 1012289 1012307 1012321 1012369 1012373 1012379 1012397 1012399 1012411 1012421 1012423 1012433 1012439 1012447 1012457 1012463 1012481 1012489 1012507 1012513 1012519 1012523 1012547 1012549 1012559 1012573 1012591 1012597 1012601 1012619 1012631 1012633 1012637 1012657 1012663 1012679 1012691 1012699 1012703 1012717 1012721 1012733 1012751 1012763 1012769 1012771 1012789 1012811 1012829 1012831 1012861 1012903 1012919 1012931 1012967 1012981 1012993 1012997
+1013003 1013009 1013029 1013041 1013053 1013063 1013143 1013153 1013197 1013203 1013227 1013237 1013239 1013249 1013263 1013267 1013279 1013291 1013321 1013329 1013377 1013399 1013401 1013429 1013431 1013471 1013477 1013501 1013503 1013527 1013531 1013533 1013563 1013569 1013581 1013603 1013609 1013627 1013629 1013641 1013671 1013681 1013687 1013699 1013711 1013713 1013717 1013729 1013741 1013767 1013773 1013791 1013813 1013819 1013827 1013833 1013839 1013843 1013851 1013879 1013891 1013893 1013899 1013921 1013923 1013933 1013993
+1014007 1014029 1014037 1014061 1014089 1014113 1014121 1014127 1014131 1014137 1014149 1014157 1014161 1014173 1014193 1014197 1014199 1014229 1014257 1014259 1014263 1014287 1014301 1014317 1014319 1014331 1014337 1014341 1014359 1014361 1014371 1014389 1014397 1014451 1014457 1014469 1014487 1014493 1014521 1014539 1014547 1014557 1014571 1014593 1014617 1014631 1014641 1014649 1014677 1014697 1014719 1014721 1014731 1014743 1014749 1014763 1014779 1014787 1014817 1014821 1014833 1014863 1014869 1014877 1014887 1014889 1014907 1014941 1014953 1014973 1014989
+1015009 1015039 1015043 1015051 1015057 1015061 1015067 1015073))
+
+(defun iyj ()
+   (-filter (lambda (prime) 
+      (zerop (- (sqrt (- prime 1)) (floor (sqrt (- prime 1)))))
+    ) 7-digit-primes))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;(zerop (- (sqrt 25) (floor (sqrt 25))))
+  (iyj)
+#+END_SRC
+
+#+RESULTS:
+| 1008017 |
+
+** DONE FOJ 
+   CLOSED: [2018-02-20 Tue 20:22]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:22]--[2018-02-20 Tue 20:22] =>  0:00
+   :END:
+*** CCS of length 2
+    (8 9)
+*** CCS of length 3
+    (8 9 10)
+*** CCS of length 4
+    (24 25 26 27) 
+*** CCS of length 10
+     (114, 115, 116, 117, 118, 119, 120, 121, 122, 123) 
+** DONE IZL
+   CLOSED: [2018-02-20 Tue 20:24]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:22]--[2018-02-20 Tue 20:24] =>  0:02
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun factorial (n)
+  (if (zerop n)
+      1
+    (* n (factorial (- n 1)))))
+
+(defun consecutive-composite-sequence-of-length (r)
+  (let ((r+1-factorial (factorial (1+ r))))
+    (loop for n from 1 to r
+          collect (+ r+1-factorial n 1))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results raw
+(consecutive-composite-sequence-of-length 4)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun all-composite (r) 
+   (every #'identity (mapcar (lambda (x) 
+             (or (and (= (mod x 3) 0) (/= x 3))
+                 (and (= (mod x 2) 0) (/= x 2))
+                 (and (= (mod x 5) 0 (/= x 5)))
+                  ))
+             r))
+)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(all-composite [4 7 9])
+#+END_SRC
+
+#+RESULTS:
+nil
+(t t t)
+
+I think if you are able to know the prime distribution in the range that the composite sequence covers, you could 
+use that knowledge to manage a guess at whether or not a certain range contains a prime number. It may not be 100 percent
+accurate, but if you have a large sequence, you may not have to brute force the entire list before making an educated guess 
+on where a prime may be hiding. 
+** DONE FOY
+   CLOSED: [2018-02-21 Wed 22:38]
+   :LOGBOOK:
+   CLOCK: [2018-02-21 Wed 22:22]--[2018-02-21 Wed 22:38] =>  0:16
+   CLOCK: [2018-02-21 Wed 20:57]--[2018-02-21 Wed 22:12] =>  1:15
+   CLOCK: [2018-02-20 Tue 20:41]--[2018-02-20 Tue 20:45] =>  0:04
+   CLOCK: [2018-02-20 Tue 20:24]--[2018-02-20 Tue 20:38] =>  0:14
+   :END:
+*** LAME WAY
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun sieve-of-e (min max)
+          (let* ((range (number-sequence min max))
+                (zonder-2 (-filter (lambda (val) (not (zerop (% val 2)))) range))
+                (zonder-3 (-filter (lambda (val) (not (zerop (% val 3)))) zonder-2))
+                (zonder-5 (-filter (lambda (val) (not (zerop (% val 5)))) zonder-3))
+                (zonder-7 (-filter (lambda (val) (not (zerop (% val 7)))) zonder-5))
+                (zonder-11 (-filter (lambda (val) (not (zerop (% val 11)))) zonder-7))) zonder-11))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp
+   (sieve-of-e 8 200)
+ #+END_SRC
+*** RECURSIVE FUN WAY
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun sieve-of-e-v2 (min max)
+      "min must be a prime"
+      (build-sieve max (-filter (lambda (val) (if (= min val) val (not (zerop (% val min))))) (number-sequence min max)) 0))
+
+ (defun build-sieve (max primes it)
+    (if (elt primes it) 
+     (let ((next (elt primes it)))
+      (unless (= max next)
+           (build-sieve max (-filter (lambda (val) (if (= next val) val (not (zerop (% val next))))) primes) (incf it))))
+      primes))
+ #+END_SRC
+
+Max this function will go is 838 giving you the first 145 primes
+ #+BEGIN_SRC emacs-lisp 
+ (length (sieve-of-e-v2 2 838))
+ #+END_SRC
+
+ #+RESULTS:
+ : 145
+
+
+
+
+*** Prime Gaps
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun prime-gaps (primes)
+     (loop for i in primes
+        for j from 1 to (- (length primes) 1)
+        collect (- (elt primes j) i)))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp :results raw
+   (prime-gaps (sieve-of-e-v2 2 300))
+ #+END_SRC
+
+ #+RESULTS:
+ (4 4 6 4 8 4 8 6 4 8 8 6 6 8 10 6 6 10 4 8 8 10 8 10 10 4 10 6 4 10 12 6 8 4 16 12 8 6 6 4)
+
+** DONE VAO
+   CLOSED: [2018-02-20 Tue 20:46]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:45]--[2018-02-20 Tue 20:46] =>  0:01
+   CLOCK: [2018-02-20 Tue 20:38]--[2018-02-20 Tue 20:41] =>  0:03
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun maybe-find-factorization (number limit)
+  (mapc (lambda (n)
+          (let* ((a (floor (sqrt number)))
+                 (s (+ a n))
+                 (x (sqrt (- (* s s) number))))
+            (when (= x (floor x))
+              (princ (format "n = %d, a = %d, s = %d, x = %d,
+ factor1 = s - x = %d,
+ factor2 = s + x = %d\n"
+                             n a s x (- s x) (+ s x))))))
+        (number-sequence 1 limit)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results output
+(maybe-find-factorization 125 10)
+#+END_SRC
+
+#+RESULTS:
+: n = 4, a = 11, s = 15, x = 10,
+:  factor1 = s - x = 5,
+:  factor2 = s + x = 25
+
+It assumes that x and s are close, otherwise it will take very long to factor.
+
+
+#+RESULTS:
+** DONE FQI
+   CLOSED: [2018-02-20 Tue 20:58]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:46]--[2018-02-20 Tue 20:58] =>  0:12
+   :END:
+
+   
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun reconstitute-primes (rle-list)
+  (loop for b in rle-list
+        for n from 2
+        unless (or (zerop b) (and (> b 1) (incf n (- b 1))))
+        collect n))
+
+(defun prime-list-from-rle-list (rle-list limit)
+  (mapcar 'first
+          (remove-if
+           (lambda (x)
+             (zerop (second x)))
+           (mapcar* 'list
+                    (number-sequence 2 limit)
+                    (apply 'append
+                           (mapcar (lambda (x)
+                                     (if (> x 1)
+                                         (make-list x 0)
+                                       (list x)))
+                                   rle-list))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (loop for i from 1 to 97 
+    when (setq limit i
+      p100rle (list 1 1 0 1 0 1 3 1 0 1 3 1 0 1 3 1 5 1 0 1 5 1 3 1 0
+                    1 3 1 5 1 5 1 0 1 5 1 3 1 0 1 5 1 3 1 5 1 7 1 3)
+      got-it-right (equal (reconstitute-primes p100rle)
+                          (prime-list-from-rle-list p100rle limit)))
+                          collect i)
+#+END_SRC
+
+#+RESULTS:
+(97)
+
+** DONE VAR
+   CLOSED: [2018-02-20 Tue 20:58]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 20:58]--[2018-02-20 Tue 20:58] =>  0:00
+   :END:
+    
+   720720, yes it is divisible it has 10 prime factors.
+** DONE FQL
+   CLOSED: [2018-02-22 Thu 21:17]
+   :LOGBOOK:
+   CLOCK: [2018-02-22 Thu 20:57]--[2018-02-22 Thu 21:17] =>  0:20
+   CLOCK: [2018-02-21 Wed 22:39]--[2018-02-21 Wed 22:43] =>  0:04
+   CLOCK: [2018-02-21 Wed 22:15]--[2018-02-21 Wed 22:22] =>  0:07
+   CLOCK: [2018-02-21 Wed 22:12]--[2018-02-21 Wed 22:15] =>  0:03
+   CLOCK: [2018-02-20 Tue 20:58]--[2018-02-20 Tue 21:02] =>  0:04
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun digits-to-number (d1 d2)
+    (+ (* (if (< d2 10) 10 16) d1) d2))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (digits-to-number )
+#+END_SRC
+
+#+RESULTS:
+: 45
+
+#+BEGIN_SRC emacs-lisp
+  (setq primes-under-100 (sieve-of-e-v2 2 100))
+
+  (mapcar (lambda (prime) 
+  (loop for i in primes-under-100
+     collect 
+  )
+  ) primes-under-100)
+#+END_SRC
+
+https://oeis.org/A111170
+
+** DONE VAY
+   CLOSED: [2018-02-20 Tue 21:02]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:02]--[2018-02-20 Tue 21:02] =>  0:00
+   :END:
+*** 1. 57/43
+    57/43 = 1 r 14
+    43 / 14 = 3 r 1
+    14 / 1 = 14 r = 0
+    b = 1 gcd = 1
+*** 2. 501/39
+    501/39 = 12 r 33
+    39 / 33 = 1 r 6
+    33 / 6 = 5 r 3
+    6 / 3 = 2 r 0
+    b = 3 gcd = 3
+*** 3. 765/110
+    765/110 = 6 r 105
+    110 / 105 = 1 r 5
+    105 / 5 = 21 r = 0
+    gcd = 5
+*** 4. 899 / 493
+    899/493 = 1 r 406
+    493/406 = 1 r 87
+    406 / 87 = 4 r 58
+    87 / 58 = 1 r 29
+    58 /29 = 2 r 0
+    gcd = 29
+** DONE FQW
+   CLOSED: [2018-02-20 Tue 21:02]
+
+I predict that this will return true.
+
+#+BEGIN_SRC emacs-lisp :results raw
+(and (= (gcd 56 8) 8)
+     (= (gcd 65 15) 5)
+     (= (lcm 5 7) 35)
+     (= (lcm 4 6) 12))
+#+END_SRC
+
+#+RESULTS:
+t
+
+For some of these it was easy to tell that it would be true. For instance, the first one, we know that the gcd can't be more than 8, 
+and we also know that both are divisible by 8, so its pretty easy to assert that it is true. With lcm 5 7, we know that all multiples
+of 5 must end in 0 or 5, so we can mentally check the multiples of 7 and find the first that ends with a 0 or a 5, 35. 
+Some of the others take a bit more work to predict. 
+** DONE VCR
+   CLOSED: [2018-02-20 Tue 21:05]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:02]--[2018-02-20 Tue 21:05] =>  0:03
+   :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(and (= (* (gcd 35 72) (lcm 35 72)) (* 35 72))
+(= (* (gcd 10 2) (lcm 10 2)) (* 10 2))
+(= (* (gcd 13 64) (lcm 13 64)) (* 13 64)))
+#+END_SRC
+
+#+RESULTS:
+t
+t
+
+I believe it will. After doing some research, I think I have found some evidence to backup that claim. 
+You can find a series of proofs here that show that gcd(a,b) * lcm(a,b) = a * b
+https://math.stackexchange.com/questions/470807/prove-that-gcdm-n-times-mboxlcmm-n-m-times-n
+
+** DONE FRM 
+   CLOSED: [2018-02-20 Tue 21:07]
+   272160
+
+   #+BEGIN_SRC emacs-lisp :results silent
+   (defun gcd-lcm-ab (a-in-csf b-in-csf)
+ (let* ((a-csf-powers (prime-powers-to-number a-in-csf))
+        (b-csf-powers (prime-powers-to-number b-in-csf))
+        (gcd-of-a-and-b-in-csf (gcd a-csf-powers b-csf-powers))
+        (lcm-of-a-and-b-in-csf (lcm a-csf-powers b-csf-powers))
+        (product-of-a-and-b-in-csf (* b-csf-powers a-csf-powers)))
+   (list gcd-of-a-and-b-in-csf
+         lcm-of-a-and-b-in-csf
+         product-of-a-and-b-in-csf)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp :results raw
+   (gcd-lcm-ab '(3 2 1 0) '(2 3 0 1))
+   #+END_SRC
+
+   #+RESULTS:
+   (36 7560 272160)
+** DONE VEM
+   CLOSED: [2018-02-20 Tue 21:07]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:07]--[2018-02-20 Tue 21:07] =>  0:00
+   :END:
+
+     #+BEGIN_SRC emacs-lisp :results silent
+  (defun gcdi (a b)
+   (let ((x a) (y b) r)
+     (while (not (zerop y))
+       (setq r (mod x y) x y y r))
+     x))
+     #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp :results raw
+ (gcdi 899 493)
+ #+END_SRC
+
+ #+RESULTS:
+
+ As far as I can tell, they seem to execute and find the gcd in the same time. I do think that the
+ built in gcd function may be a bit more effecient. The built in gcd function is recursive while this 
+ is iterative. 
+
+ #+BEGIN_SRC emacs-lisp :results silent
+ (defun gcdr (a b)
+    (if (zerop b)
+        a
+      (gcdr b (mod a b))))
+ #+END_SRC
+ #+BEGIN_SRC emacs-lisp :results raw
+ (gcdr 899 493)
+ #+END_SRC
+
+ #+RESULTS:
+ 0.000000
+
+ If I understand correctly, this is almost if not exactly the same way that the cl-gcd function is implemented...
+** DONE FUA
+   CLOSED: [2018-02-20 Tue 21:08]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:07]--[2018-02-20 Tue 21:08] =>  0:01
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defalias 'div '/)
+
+(defun alternate-base-representation (n b)
+  (let ((d (div n b))
+        (m (mod n b)))
+    (if (zerop d)
+        (list m)
+      (append (alternate-base-representation d b) (list m)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(alternate-base-representation 300 8)
+(alternate-base-representation 300 78)
+(alternate-base-representation 124127923 12)
+#+END_SRC
+
+#+RESULTS:
+(3 5 6 10 1 3 5 7)
+(3 66)
+(4 5 4)
+
+As we saw in the reading right before this EPP, some base systems
+allow us to represent numbers using symbols or patterns that are 
+easily convertible between formats. Another great example of this
+is hexidecimal and binary, they allow for easy representation and
+conversion of data, especially binary data in hex. I wouldn't say that
+there are bases that are completely useless, but it really depends on 
+the situation and the data you are trying to represent. 
+** DONE VFJ
+   CLOSED: [2018-02-20 Tue 21:13]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:08]--[2018-02-20 Tue 21:13] =>  0:05
+   :END:
+    
+    | B      | r      | y      | a     | n      | M      | u      | l      | l      | e     | r      |
+    | 2      | 18     | 25     | 1     | 14     | 13     | 21     | 12     | 12     | 5     | 18     |
+    | 2*27^10 | 18*27^9 | 25*27^8 | 1*27^7 | 14*27^6 | 13*27^5 | 21*27^4 | 12*27^3 | 12*27^2 | 5*27^1 | 18*27^0 |
+
+   556119839512287 <- That's a big number!
+
+Elisp solution:
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun to-base-27 (num-base-10)
+   (mapconcat (lambda (n) (char-to-string (+ ?@ n))) (abr num-base-10 27) ""))
+
+(defun from-base-27 (string-base-27) 
+    (reconstruct-number-from-abr (reverse (mapcar (lambda (n) (- n ?@)) string-base-27)) 27))
+
+(defun reconstruct-number-from-abr (list-of-coeff base)
+   (if (null list-of-coeff)
+      0
+      (+ (car list-of-coeff)
+         (* base (reconstruct-number-from-abr (cdr list-of-coeff) base)))))
+
+(defalias 'div '/)
+
+(defun abr (n b)
+  (let ((d (div n b))
+        (m (mod n b)))
+    (if (zerop d)
+        (list m)
+      (append (abr d b) (list m)))))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (from-base-27 "BRYANMULLER")
+  (to-base-27 (from-base-27 "RICKNEFF"))
+#+END_SRC
+
+#+RESULTS:
+: RICKNEFF
+
+JavaScript solution:
+    #+BEGIN_SRC js :results output
+const base27 = {
+    '_': 0,
+    A: 1,
+    B: 2,
+    C: 3,
+    D: 4,
+    E: 5,
+    F: 6,
+    G: 7,
+    H: 8,
+    I: 9,
+    J: 10,
+    K: 11,
+    L: 12,
+    M: 13,
+    N: 14,
+    O: 15,
+    P: 16,
+    Q: 17,
+    R: 18,
+    S: 19,
+    T: 20,
+    U: 21,
+    V: 22,
+    W: 23,
+    X: 24,
+    Y: 25,
+    Z: 26
+};
+
+
+function fromBase27(num) {
+    num = num.toUpperCase().replace(' ', '_');
+    let coeff = getFromCoeffs(num, []);
+    return coeff.reduce((sum, value, index) => {
+        return sum + (value * Math.pow(27, (coeff.length - 1) - index));
+    }, 0);
+}
+
+function getFromCoeffs(num, arr) {
+    if (num) {
+        const sub = num.slice(0, 1)
+        num = num.slice(1);
+        arr.push(base27[sub]);
+        return getFromCoeffs(num, arr);
+    } else {
+        return arr;
+    }
+}
+
+function getToCoeffs(num, arr) {
+    
+    if (parseInt(num / 27) === 0) {
+        arr.push(getKeyByValue(base27, num % 27));
+        return arr;
+    } else {
+        const step1 = parseInt(num % 27);
+        const step2 = parseInt((num - step1) / 27);
+        arr.push(getKeyByValue(base27, step1));
+        return getToCoeffs(step2, arr);
+    }
+}
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function toBase27(num) {
+    const coeff = getToCoeffs(num, []);
+    return coeff.reduceRight((str, x)=> {
+        return str + x;
+    })
+}
+
+console.log(fromBase27("BryanMuller"));
+console.log(toBase27(556119839512287));
+console.log(toBase27(fromBase27("Rick Neff")));
+
+    #+END_SRC
+
+    #+RESULTS:
+    : 556119839512287
+    : BRYANMULLER
+    : RICK_NEFF
+** DONE FVF
+   CLOSED: [2018-02-20 Tue 21:18]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:13]--[2018-02-20 Tue 21:18] =>  0:05
+   :END:
+
+#+BEGIN_SRC emacs-lisp 
+(get-hint 'FVF)
+#+END_SRC
+
+#+RESULTS:
+
+Permutation of nonnegative integers. The binary encoding of squarefree numbers. 
+
+4096
+
+see 
+http://oeis.org/A048672 
+and
+http://oeis.org/A005117
+
+** DONE VGU
+   CLOSED: [2018-02-20 Tue 21:28]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:18]--[2018-02-20 Tue 21:28] =>  0:10
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun ax+by (a x b y)
+  (+ (* a x) (* b y)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun vgu (min max)
+  (loop for i from min to max
+     collect (loop for j from min to max
+        when (= 1 (ax+by 33 i 28 j))
+        collect (list i j))))
+
+  (vgu -20 20)
+#+END_SRC
+
+#+RESULTS:
+| (-11 13) |
+| (17 -20) |
+
+** DONE FVH
+   CLOSED: [2018-02-20 Tue 21:29]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:28]--[2018-02-20 Tue 21:29] =>  0:01
+   :END:
+    #+BEGIN_SRC emacs-lisp :results raw
+    (require 'cl)
+
+(defun for-some-for-some (predicate domain-x domain-y)
+   (loop for x in domain-x
+         thereis (loop for y in domain-y
+                       thereis (funcall predicate x y))))
+
+(let ((domain-x-y (number-sequence -49 50)))
+  (for-some-for-some (lambda (x y) (= (+ (* 91 x) (* 11 y)) 1))
+                     domain-x-y domain-x-y))
+    #+END_SRC
+
+    #+RESULTS:
+    t
+    nil
+    t
+    nil
+    nil
+
+** DONE VGX 
+   CLOSED: [2018-02-20 Tue 21:29]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:29]--[2018-02-20 Tue 21:29] =>  0:00
+   :END:
+   x = ap + bq a and b > 0, p = 5 q = 7
+
+   pq - p - q = 5(7) - 5 - 7 = 35 - 5 - 7 = 30 - 7 = 23 
+** DONE FXI
+   CLOSED: [2018-02-20 Tue 21:29]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:29]--[2018-02-20 Tue 21:29] =>  0:00
+   :END:
+   (p | ab)\rarr(p | a || p | b)
+
+   for any integer n, if n | ab then n divides a or n divides b
+** DONE VIB
+   CLOSED: [2018-02-20 Tue 21:30]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:29]--[2018-02-20 Tue 21:30] =>  0:01
+   :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun is-divisible-by (n d)
+  (zerop (mod n d)))
+
+(defun factorial (n)
+  (if (zerop n)
+      1
+    (* n (factorial (- n 1)))))
+    #+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+(is-divisible-by (- (factorial 28) 28) 29)
+#+END_SRC
+
+
+#+RESULTS:
+nil
+t
+
+    : 19
+
+
+It would be the above number. Anything larger we would have to deal with integer overflow and it return null.
+** DONE FYR
+   CLOSED: [2018-02-20 Tue 21:30]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:30]--[2018-02-20 Tue 21:30] =>  0:00
+   :END:
+   We saw this in ISM determining if a number was divisable by 11. as well as the example of Wilson's Theorem.
+** DONE VIW
+   CLOSED: [2018-02-20 Tue 21:31]
+   :LOGBOOK:
+   CLOCK: [2018-02-20 Tue 21:30]--[2018-02-20 Tue 21:31] =>  0:01
+   :END:
+   #+BEGIN_SRC emacs-lisp :results silent
+   (require 'cl) ;; for destructuring-bind
+
+(defun egcd (a b)
+  "Computes the greatest common divisor of a and b recursively.
+   This extended version returns a list of d, x and y, where
+   d = ax + by = gcd(a, b)."
+  (if (zerop b)
+      (list a 1 0)
+      (destructuring-bind (d x y) (egcd b (% a b))
+        (list d y (- x (* (/ a b) y))))))
+   #+END_SRC
+
+#+BEGIN_SRC emacs-lisp 
+(egcd 1573428 567)
+#+END_SRC
+
+#+RESULTS:
+| 3 | 1 | -2775 |
+
+q and r are only used once each in the function, so we can just replace them with the division and mod operations instead.   
+* Day 2
+  :LOGBOOK:
+  CLOCK: [2018-02-21 Wed 15:22]--[2018-02-21 Wed 16:17] =>  0:55
+  :END:
+** Bayes' Theorem Generalized
+
+    |1 | 2 | 3|
+    let i = door you chose
+    let j = the door Monty opens
+    let k = the number of the winning door
+
+    Random Variable = a functino from an event to a real number
+
+    let W be the random variable whose value is the number of the winning door
+    let M be the random variable whose value is the number of the door that Monty opens
+
+    Your chance of winning, p(W = i), is 1/3, no matter which door you choose.
+
+    If you have chosen a door other than the winning door (i.e. i \neq k), then Monty opens the other non-winning door.
+    
+    if you have chosen the winning door, then Monty opens another door at random
+
+    Thus P(M = j | W = k) = 1 if i,j,k distinct
+** Probability of a number being Prime
+
+   lim_n\rarr\infin \pi(n)/(n / log n) = 1
+
+   Number of n digit numbers = 10^n - 10^{n-1} 
+
+   10^n/nln10/(10^n - 10^{n-1} 
+
+   (1 + 9^-4
+* Day 3
+  :LOGBOOK:
+  CLOCK: [2018-02-22 Thu 15:10]--[2018-02-22 Thu 16:18] =>  1:08
+  :END:
+
+  x_1 + x_2 + x_3 = n
+
+  # of solutions in nonnegative integers
+  3 multichoose 10 = 12 choose 10 = 66 
+
+  ((n multichoose r)) = ((n-1 + r) choose r)
+
+
+  x_1 | x_2 | x_3  - divide into bins
+
+  ((n choose k -n)) = (n - 1 + k -n choose k-n) = (k-1 choose k -n) = (k-1 choose (k-1-(k-n)) = (k-n choose n-1)
+** Properties of Probabilities
+
+   134 143 314 341 431 413

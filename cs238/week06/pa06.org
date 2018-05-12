@@ -1,0 +1,72 @@
+#+TITLE: Preparation Assessment 06
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+STARTUP: entitiespretty
+#+SCORE: 100
+
+* DONE Reread (review) section TWO subsection MNO from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-02-19 Mon 17:05]
+  :LOGBOOK:
+  CLOCK: [2018-02-19 Mon 15:58]-[2018-02-19 Mon 17:05] =>  1:07
+  :END:
+
+  In addition to all the section MNO exercises/problems/puzzles (EPPs) that you
+  did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following tasks:
+
+* DONE Answer What is True
+  CLOSED: [2018-02-19 Mon 22:14]
+  :LOGBOOK:
+  CLOCK: [2018-02-20 Tue 16:07]--[2018-02-20 Tue 16:09] =>  0:02
+  CLOCK: [2018-02-19 Mon 21:33]--[2018-02-19 Mon 22:14] =>  0:41
+  CLOCK: [2018-02-19 Mon 17:06]--[2018-02-19 Mon 17:27] =>  0:21
+  :END:
+  You know what to do:
+
+  - [X] I know how to explore advanced topics in combinatorics, for example, the
+    [[https://en.wikipedia.org/wiki/Twelvefold_way][Twelvefold Way]].
+
+    https://www.johndcook.com/TwelvefoldWay.pdf
+  - [X] I know how to identify patterns in the mathematical playground that is
+    [[https://en.wikipedia.org/wiki/Pascal's_triangle][Pascal\rsquo{}s triangle]]!
+  - [X] I know the connection between combinatorics and Pascal\rsquo{}s Triangle.
+  - [X] I will come prepared to discuss [[file:conditional-probability.org][conditional probability]].
+  - [X] I will come prepared to discuss [[file:bayes-theorem.org][Bayes\rsquo Theorem]].
+  - [X] I will learn how to solve problems using Bayes\rsquo{}s Theorem.
+  - [X] I will learn how to solve problems using Bayes\rsquo{}s Theorem generalized.
+  - [X] I will come prepared to discuss the probability that a randomly-chosen
+    N-digit number is prime.
+
+* DONE Answer for Extra Credit
+  CLOSED: [2018-02-19 Mon 22:19]
+  - [X] I went to the BYU STEM fair; and/or
+  - [ ] I participated in the Power To Become conference at BYU-I.
+
+  Write something cogent and descriptive about what you learned from either or
+  both experiences in a short paragraph below.
+
+  I attended the STEM fair with my roommate Ben. I am looking for an internship in the fall,
+  so my main focus was filling out applications and speaking with recruiters. The most impactful thing
+  I learned would be making connections with the recruiters. I have several interviews scheduled with
+  the companies I spoke with, and each of them has come from a company whose recruiter I was able to
+  make a personal connection with. I have always heard that it is more about who you know than what you
+  know when it comes to first impressions, and I was finally able to see it first hand for myself. 
+
+  Bonus: I saw Brad and Cam there, and gave them the challenge to find a company who was looking for a Lisp programmer. 
+         We weren't able to find one :(
+
+
+:Feedback:
+Talk to Brother Neff, he will email me about how much extra credit to give you
+for this.
+:END:
+
+* Day 1 
+  :LOGBOOK:
+  CLOCK: [2018-02-20 Tue 15:45]--[2018-02-20 Tue 16:06] =>  0:21
+  :END:
+  
+  P(A \cap B)/P(B)
+
+  
+

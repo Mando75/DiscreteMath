@@ -1,0 +1,49 @@
+#+TITLE: README for Discrete Mathematics Two (aka DM2 aka CS 238)
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+  Welcome to Discrete Mathematics Two!
+
+  As a reminder, there are many, many things you can do in
+  emacs/Spacemacs/org-mode that you will need to do in this course. One of them
+  is that links in this and other files can be visited (when available) either
+  in the usual way by clicking on them, or else by positioning the cursor on
+  them and pressing Enter. 
+
+* Course Metamaterial
+
+   [[file:week00/syllabus.org][syllabus.org]]
+
+   [[file:week00/schedule.org][schedule.org]]
+
+   [[file:week00/grading.org][grading.org]]
+
+   [[file:week00/see-grades.org][see-grades.org]]
+
+* Course Material
+
+   [[https://rickneff.github.io/metaphors-be-with-you.html][The Book]]
+
+* Getting Updates from GitHub
+
+** DONE Once Only
+   CLOSED: [2018-01-08 Mon 17:05]
+  Add a remote repository from which to get \ldquo{}upstream\rdquo updates.
+
+  If you are reading this file in emacs/Spacemacs, you are in the right
+  directory to invoke the following git command:
+
+#+BEGIN_EXAMPLE
+  git remote add upstream https://github.com/rmn97152/032118.git
+#+END_EXAMPLE
+
+** DONE Get Updates
+   CLOSED: [2018-01-08 Mon 17:05]
+
+   When announced, which will be on a regular basis, you can get updated course
+   files by invoking the following git command:
+
+#+BEGIN_EXAMPLE
+  git pull upstream master --allow-unrelated-histories
+#+END_EXAMPLE

@@ -1,0 +1,14 @@
+#+TITLE: Preparation Assessment 08
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+* DONE Answer What is True
+  CLOSED: [2018-03-05 Mon 22:11]
+
+  - [X] I know that trees can encode a vast variety of data.
+  - [X] I know that trees have a variety of representations.
+  - [X] I know that trees have a variety of implementations. 
+  - [X] I know that the simple examples of Huffman Trees in the book are not
+    representative of its usefulness for data compression.

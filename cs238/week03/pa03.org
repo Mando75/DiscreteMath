@@ -1,0 +1,35 @@
+#+TITLE: Preparation Assessment 03
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-01-29 Mon 15:31]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:44* |
+|---------------------+--------|
+| Answer What is True | 1:44   |
+#+END:
+
+
+* DONE Answer What is True
+  CLOSED: [2018-01-30 Tue 11:56]
+  :LOGBOOK:
+  CLOCK: [2018-01-30 Tue 11:32]--[2018-01-30 Tue 11:56] =>  0:24
+  CLOCK: [2018-01-29 Mon 15:13]--[2018-01-29 Mon 15:30] =>  0:17
+  CLOCK: [2018-01-29 Mon 08:32]--[2018-01-29 Mon 09:59] =>  1:27
+  :END:
+
+  If you can truthfully assert any of the following, you know what to do:
+
+  - [X] I know that set builder notation can be problematic, and can think of
+    some examples showing why that\rsquo{}s the case.
+  - [X] I know how to do closures in elisp.
+  - [X] I know why closures are useful.
+
+
+  See wa03.org Day 1 for closure example
+  https://www.scientificamerican.com/article/what-is-russells-paradox/
+  https://hanshuebner.github.io/lmman/fd-clo.xml

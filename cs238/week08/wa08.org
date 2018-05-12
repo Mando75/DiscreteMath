@@ -1,0 +1,1287 @@
+#+TITLE: Weekly Assignment 08
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: entitiespretty
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-03-09 Fri 17:19]
+| Headline                                |    Time |      |
+|-----------------------------------------+---------+------|
+| *Total time*                            | *16:43* |      |
+|-----------------------------------------+---------+------|
+| Reread (review) section THR...          |    0:15 |      |
+| Explore Huffman Trees and Huffman Codes |    6:56 |      |
+| \_  MY WORK                             |         | 1:11 |
+| Day 1                                   |    1:01 |      |
+| Day 2                                   |    1:02 |      |
+| Day 3                                   |    0:51 |      |
+| STU Completed in DM1 Fall 2017.         |    6:38 |      |
+| \_  STX                                 |         | 0:40 |
+| \_  ST@                                 |         | 1:20 |
+| \_  STC                                 |         | 0:41 |
+| \_  STD                                 |         | 1:20 |
+| \_  STH                                 |         | 0:23 |
+| \_  STI                                 |         | 0:46 |
+| \_  STJ                                 |         | 1:07 |
+| \_  STK                                 |         | 0:21 |
+#+END:
+
+
+* DONE Reread (review) section THR subsection STU from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-03-05 Mon 22:26]
+  :LOGBOOK:
+  CLOCK: [2018-03-05 Mon 22:11]--[2018-03-05 Mon 22:26] =>  0:15
+  :END:
+
+  In addition to the first half of the section STU exercises/problems/puzzles
+  (EPPs) that you did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following
+  tasks:
+
+* DONE Explore Huffman Trees and Huffman Codes
+  CLOSED: [2018-03-09 Fri 17:16]
+  :LOGBOOK:
+  CLOCK: [2018-03-09 Fri 16:34]--[2018-03-09 Fri 17:16] =>  0:42
+  CLOCK: [2018-03-09 Fri 15:36]--[2018-03-09 Fri 16:34] =>  0:58
+  CLOCK: [2018-03-07 Wed 22:10]--[2018-03-07 Wed 23:00] =>  0:50
+  CLOCK: [2018-03-06 Tue 19:32]--[2018-03-06 Tue 22:47] =>  3:15
+  :END:
+
+** Provided Info 
+ https://goo.glSF5Q3P
+
+   Your task is to compress a /special piece of information/ as compactly as
+   possible, *give its encoding* and *calculate its compression ratio*.
+
+   Recall that the *compression ratio* of an encoding is the percentage
+   \(\frac{(f - v)}{f} \times 100\), where /f/ is the number of bits per symbol of the
+   smallest *fixed*-length encoding, and /v/ is the average number of bits per
+   symbol with the Huffman encoding.
+
+   For example, if there were 9 different symbols in a message, \(f=4\) is the
+   number of bits of the smallest fixed-length encoding, because 2^3 = 8 (not
+   enough for 9) and 2^4 = 16 (enough and to spare). If the Huffman encoding of
+   the message had \(v=3.12\), the compression ratio would be
+
+   \(\frac{4 - 3.12}{4} \times 100\
+
+   The /special piece of information/ you are tasked to compress is a list of the
+   first ten million primes. This is a list that starts
+
+   |  2 |
+   |  3 |
+   |  5 |
+   |  7 |
+   | 11 |
+   | 13 |
+   | 17 |
+   | 19 |
+   | 23 |
+   | 29 |
+
+   and ends
+
+   | 179424551 |
+   | 179424571 |
+   | 179424577 |
+   | 179424601 |
+   | 179424611 |
+   | 179424617 |
+   | 179424629 |
+   | 179424667 |
+   | 179424671 |
+   | 179424673 |
+
+   As ASCII text stored in a file with one prime per line, the size of this data
+   file is slightly over 89 megabytes. The goal is to compress this down to just
+   over 5 megabytes (5589056 bytes, to be exact). That\rsquo{}s a 94% compression ratio!
+
+   Standard compression tools can only get about a 73% compression ratio for this
+   ASCII data. A more clever approach is needed. Instead of compressing the list
+   of prime numbers, compress a list of the /gaps/ between them!
+
+   It doesn\rsquo{}t save much, just the unique (occurring only once) gap size of 1
+   between 2 and 3, but in the spirit of de Polignac\rsquo{}s conjecture that every
+   /even/ number appears infinitely often as a gap between consecutive primes,
+   just consider the even-sized gaps. The result will be a list that starts with
+   2 (the difference between 5 and 3), 2 (the difference between 7 and 5), 4 (the
+   difference between 11 and 7), 2 (the difference between 13 and 11), 4 (the
+   difference between 17 and 13), 2 (the difference between 19 and 17), 4 (the
+   difference between 23 and 19), and 6 (the difference between 29 and 23).
+
+   Generating this data is the first task. The algorithm for doing so is very
+   straightfoeasy api builderrward:
+
+   1. Find the gaps between consecutive odd primes.
+   2. Store these gaps as.  a list of even numbers.
+
+   Tabulating the results, the first ten gaps are as follows, where the last
+   column is the list to keep:
+
+   |  5 | - |  3 | = | 2 |
+   |  7 | - |  5 | = | 2 |
+   | 11 | - |  7 | = | 4 |
+   | 13 | - | 11 | = | 2 |
+   | 17 | - | 13 | = | 4 |
+   | 19 | - | 17 | = | 2 |
+   | 23 | - | 19 | = | 4 |
+   | 29 | - | 23 | = | 6 |
+   | 31 | - | 29 | = | 2 |
+   | 37 | - | 31 | = | 6 |
+
+   And the last ten:
+
+   | 179424551 | - | 179424533 | = | 18 |
+   | 179424571 | - | 179424551 | = | 20 |
+   | 179424577 | - | 179424571 | = |  6 |
+   | 179424601 | - | 179424577 | = | 24 |
+   | 179424611 | - | 179424601 | = | 10 |
+   | 179424617 | - | 179424611 | = |  6 |
+   | 179424629 | - | 179424617 | = | 12 |
+   | 179424667 | - | 179424629 | = | 38 |
+   | 179424671 | - | 179424667 | = |  4 |
+   | 179424673 | - | 179424671 | = |  2 |
+
+   As a check, see if the generated list of gaps has length 9999998.
+
+   The next step is to count how many times each gap size occurs, so that for the
+   Huffman encoding scheme, the larger the frequency of occurrence, the smaller
+   the number of bits encoding that gap size.
+
+   As a correctness check, here are the first ten gap counts:
+
+   | Gap |   Count |
+   |-----+---------|
+   |   2 |  738597 |
+   |   4 |  738717 |
+   |   6 | 1297540 |
+   |   8 |  566151 |
+   |  10 |  729808 |
+   |  12 |  920661 |
+   |  14 |  503524 |
+   |  16 |  371677 |
+   |  18 |  667734 |
+   |  20 |  354267 |
+
+   And the last ten:
+
+   | Gap | Count |
+   |-----+-------|
+   | 190 |     1 |
+   | 192 |     3 |
+   | 194 |     1 |
+   | 196 |     1 |
+   | 198 |     6 |
+   | 202 |     2 |
+   | 204 |     3 |
+   | 210 |     4 |
+   | 220 |     1 |
+   | 222 |     1 |
+
+   Note two things from these partial gap counts:
+
+   1. Small even numbers (< 100) are well represented, larger ones (< 1000) less
+      so.
+   2. Ten million primes aren\rsquo{}t enough to have /every/ even number represented;
+      for example, 200, 206, 208, 212, 214, 216 and 218 do not appear even once.
+     
+** MY WORK
+   :LOGBOOK:
+   CLOCK: [2018-03-08 Thu 21:04]--[2018-03-08 Thu 22:12] =>  1:08
+   CLOCK: [2018-03-07 Wed 22:06]--[2018-03-07 Wed 22:09] =>  0:03
+   :END:
+*** Retreive Package
+
+#+BEGIN_SRC emacs-lisp :results silent
+  
+
+(require 'eww)
+
+(defun retrieve-package (package-name)
+  "Retrieves a given named package (string or symbol) from the server."
+  (let* ((package-server-url "https://firstthreeodds.org/packages")
+         (package-file (format "%s.el" package-name))
+         (temp-buffer (url-retrieve-synchronously (format "%s/%s.el" package-server-url package-name) t t))
+         headers content-length end)
+    (with-current-buffer temp-buffer
+      (unwind-protect
+          (setq headers (eww-parse-headers)
+                content-length (string-to-number (cdr (assoc "content-length" headers)))
+                end (point-max))
+        (write-region (- end content-length) end package-file)))
+    (kill-buffer temp-buffer)
+    headers))
+#+END_SRC
+*** Find the first 10 million primes
+
+#+BEGIN_SRC emacs-lisp
+  (retrieve-package 'first-ten-million-primes)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'first-ten-million-primes)
+(defun find-gaps (list-of-primes)
+  (mapcar (lambda (x) (- (elt list-of-primes (1+ x)) (elt list-of-primes x)))
+        (number-sequence 0 (- (length list-of-primes) 2))))
+
+(defun find-list (gap-list)
+   (let ((val e))
+   (cons 2 (cons 3 (mapcar (lambda (x) (setq val (+ val x))) gap-list)))))
+
+(setq gap-list (cdr (find-gaps first-ten-million-primes)))
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (setq unique (remove-duplicates (find-gaps first-ten-million-primes)))
+#+END_SRC
+I'm just storing the results of the above call into this set q so don't have to run the function all the time...
+#+BEGIN_SRC emacs-lisp :results silent
+(setq unique '(220 196 202 222 204 188 172 190 184 192 170 178 194 210 180 198 174 164 176 154 166 158 186 156 160 146 130 144 168 148 162 128 142 134 136 140 182 132 112 114 118 106 152 126 122 102 150 110 76 120 104 138 124 86 98 116 96 100 84 70 82 90 80 94 108 74 58 64 92 88 78 54 52 60 40 46 68 32 72 66 42 48 36 62 44 26 34 30 56 50 14 16 22 28 8 18 20 24 10 6 12 38 4 2)
+      unique-sorted (sort unique '<))
+(length unique-sorted)
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 22 | 24 | 26 | 28 | 30 | 32 | 34 | 36 | 38 | 40 | 42 | 44 | 46 | 48 | 50 | 52 | 54 | 56 | 58 | 60 | 62 | 64 | 66 | 68 | 70 | 72 | 74 | 76 | 78 | 80 | 82 | 84 | 86 | 88 | 90 | 92 | 94 | 96 | 98 | 100 | 102 | 104 | 106 | 108 | 110 | 112 | 114 | 116 | 118 | 120 | 122 | 124 | 126 | 128 | 130 | 132 | 134 | 136 | 138 | 140 | 142 | 144 | 146 | 148 | 150 | 152 | 154 | 156 | 158 | 160 | 162 | 164 | 166 | 168 | 170 | 172 | 174 | 176 | 178 | 180 | 182 | 184 | 186 | 188 | 190 | 192 | 194 | 196 | 198 | 202 | 204 | 210 | 220 | 222 |
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (setq nodes (mapcar (lambda (x) (list x (count x gap-list))) unique-sorted))
+
+  (defun make-node-parent (weight &optional node)
+    (let* ((n (if node node node-counter))
+           (symbol (intern (concat "n" (number-to-string n)))))
+        (set symbol weight)
+        (setf (symbol-plist symbol) nil)
+        (unless node (incf node-counter))
+        symbol))
+
+  (defun make-node-i (list-n list-f)
+    (mapcar* (lambda (x y) (make-node-parent y x)) list-n list-f))
+    
+
+  (defun build-parent-child (left right)
+    (let ((p (make-node-parent (+ (get-value left) (get-value right)))))
+         (set-left p left)
+         (set-right p right)
+         (set-parent left p)
+         (set-parent right p)
+         p))
+
+  (defun get-height (root start)
+     (let ((lh 0)
+           (rh 0))
+           (cond ((and (null (get-left root))
+                       (null (get-right root)))
+                   start)
+                   (t (setq lh (get-height (get-left root) (1+ start))
+                            rh (get-height (get-right root) (1+ start)))
+                            (if (> lh rh) lh rh)))))
+
+
+   (defun make-huffman (list-n list-f)
+    (setq node-counter 250)
+    (let* ((leaves (make-node-i list-n list-f))
+             (node-list (stable-sort leaves #'< :key #'get-value))
+             (leaf1 nil)
+             (leaf2 nil)
+             parent)
+             (while (not (= (length node-list) 1))
+               (setq leaf1 (elt node-list 0)
+                     leaf2 (elt node-list 1))
+               (cond ((> (get-value leaf1) (get-value leaf2))
+                      (setq parent (build-parent-child leaf2 leaf1)))
+                     ((< (get-value leaf1) (get-value leaf2))
+                      (setq parent (build-parent-child leaf1 leaf2)))
+                     ((< (get-height leaf1 0) (get-height leaf2 0))
+                      (setq parent ( build-parent-child leaf1 leaf2)))
+                     (t (setq parent (build-parent-child leaf2 leaf1))))
+               (setq node-list (cddr node-list))
+               (add-to-list 'node-list parent)
+               (setq node-list (stable-sort node-list #'< :key #'get-value)))
+               parent))
+               
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+ (setq n (mapcar 'car nodes)
+        f (mapcar 'cadr nodes)
+        leaves (make-node-i n f))
+(make-huffman n f) 
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp :results silent  
+(defun huffman-encode (node code)
+   "Recursive function to place the huffman encoding for each leaf within the :code value"
+    (cond ((and (null (get-left node))
+                (null (get-right node)))
+            (put node :code code))
+            (t (progn 
+                (huffman-code (get-left node) (concat code "0"))
+                (huffman-code (get-right node) (concat code "1"))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (huffman-encode 'n352 "")
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC emacs-lisp :results value table
+ (cons '("Gap" "Code" "Code Length" "Frequency" "Weight") (mapcar (lambda (x) (list x 
+                        (get x :code)
+                        (length (get x :code))
+                        (get-value x)
+                        (* (length (get x :code)) (get-value x)))) leaves))
+#+END_SRC
+
+
+*** Huffman Tree Prime Gap Encodings
+
+| Gap  |                    Code | Code Length | Frequency |  Weight |
+| n2   |                    1100 |           4 |    738597 | 2954388 |
+| n4   |                    1101 |           4 |    738717 | 2954868 |
+| n6   |                     100 |           3 |   1297540 | 3892620 |
+| n8   |                    0101 |           4 |    566151 | 2264604 |
+| n10  |                    1011 |           4 |    729808 | 2919232 |
+| n12  |                     000 |           3 |    920661 | 2761983 |
+| n14  |                    0100 |           4 |    503524 | 2014096 |
+| n16  |                   11100 |           5 |    371677 | 1858385 |
+| n18  |                    0111 |           4 |    667734 | 2670936 |
+| n20  |                   10101 |           5 |    354267 | 1771335 |
+| n22  |                   01101 |           5 |    307230 | 1536150 |
+| n24  |                    0010 |           4 |    453215 | 1812860 |
+| n26  |                  111110 |           6 |    211203 | 1267218 |
+| n28  |                  111111 |           6 |    229177 | 1375062 |
+| n30  |                   11101 |           5 |    398713 | 1993565 |
+| n32  |                  001110 |           6 |    123123 |  738738 |
+| n34  |                  011000 |           6 |    129043 |  774258 |
+| n36  |                  111101 |           6 |    206722 | 1240332 |
+| n38  |                 1010011 |           7 |     94682 |  662774 |
+| n40  |                  001100 |           6 |    111546 |  669276 |
+| n42  |                  101000 |           6 |    159956 |  959736 |
+| n44  |                 0011111 |           7 |     64866 |  454062 |
+| n46  |                11110010 |           8 |     54931 |  439448 |
+| n48  |                 1010010 |           7 |     93693 |  655851 |
+| n50  |                11110001 |           8 |     52183 |  417464 |
+| n52  |                01100111 |           8 |     38800 |  310400 |
+| n54  |                 0011110 |           7 |     64157 |  449099 |
+| n56  |                01100100 |           8 |     32224 |  257792 |
+| n58  |                00110101 |           8 |     27985 |  223880 |
+| n60  |                11110011 |           8 |     55305 |  442440 |
+| n62  |               011001010 |           9 |     16763 |  150867 |
+| n64  |               011001100 |           9 |     17374 |  156366 |
+| n66  |                00110110 |           8 |     30960 |  247680 |
+| n68  |              1111000010 |          10 |     12368 |  123680 |
+| n70  |               011001101 |           9 |     17475 |  157275 |
+| n72  |               011001011 |           9 |     17255 |  155295 |
+| n74  |              0011011111 |          10 |      8540 |   85400 |
+| n76  |              0011011101 |          10 |      7253 |   72530 |
+| n78  |               001101000 |           9 |     13758 |  123822 |
+| n80  |             11110000111 |          11 |      6760 |   74360 |
+| n82  |             11110000001 |          11 |      4791 |   52701 |
+| n84  |              1111000001 |          10 |      9818 |   98180 |
+| n86  |             00110100100 |          11 |      3411 |   37521 |
+| n88  |             00110100101 |          11 |      3454 |   37994 |
+| n90  |              0011010011 |          10 |      7056 |   70560 |
+| n92  |            111100000000 |          12 |      2259 |   27108 |
+| n94  |            001101111010 |          12 |      2058 |   24696 |
+| n96  |             00110111000 |          11 |      3544 |   38984 |
+| n98  |            001101110011 |          12 |      1831 |   21972 |
+| n100 |            001101111001 |          12 |      1923 |   23076 |
+| n102 |            111100000001 |          12 |      2374 |   28488 |
+| n104 |           1111000011000 |          13 |      1168 |   15184 |
+| n106 |           0011011100101 |          13 |       933 |   12129 |
+| n108 |           1111000011011 |          13 |      1634 |   21242 |
+| n110 |           0011011110000 |          13 |       941 |   12233 |
+| n112 |          11110000110100 |          14 |       711 |    9954 |
+| n114 |           0011011110111 |          13 |      1125 |   14625 |
+| n116 |          00110111001000 |          14 |       439 |    6146 |
+| n118 |         111100001101011 |          15 |       433 |    6495 |
+| n120 |           0011011110001 |          13 |       948 |   12324 |
+| n122 |         001101111011011 |          15 |       287 |    4305 |
+| n124 |         111100001100110 |          15 |       318 |    4770 |
+| n126 |          00110111101100 |          14 |       533 |    7462 |
+| n128 |        1111000011001110 |          16 |       183 |    2928 |
+| n130 |         001101110010010 |          15 |       211 |    3165 |
+| n132 |         111100001100100 |          15 |       301 |    4515 |
+| n134 |        0011011110110101 |          16 |       128 |    2048 |
+| n136 |       11110000110101001 |          17 |       100 |    1700 |
+| n138 |        1111000011010101 |          16 |       210 |    3360 |
+| n140 |        1111000011001010 |          16 |       140 |    2240 |
+| n142 |       11110000110011110 |          17 |        90 |    1530 |
+| n144 |        0011011100100111 |          16 |       123 |    1968 |
+| n146 |      111100001101010000 |          18 |        46 |     828 |
+| n148 |       00110111101101001 |          17 |        67 |    1139 |
+| n150 |       11110000110011111 |          17 |        94 |    1598 |
+| n152 |       00110111001001100 |          17 |        52 |     884 |
+| n154 |      111100001100101110 |          18 |        43 |     774 |
+| n156 |       00110111101101000 |          17 |        57 |     969 |
+| n158 |     1111000011001011010 |          19 |        19 |     361 |
+| n160 |     1111000011010100011 |          19 |        27 |     513 |
+| n162 |      001101110010011010 |          18 |        27 |     486 |
+| n164 |     1111000011001011011 |          19 |        20 |     380 |
+| n166 |    11110000110010110010 |          20 |         9 |     180 |
+| n168 |     1111000011010100010 |          19 |        25 |     475 |
+| n170 |     1111000011001011000 |          19 |        18 |     342 |
+| n172 |   001101110010011011110 |          21 |         4 |      84 |
+| n174 |    11110000110010110011 |          20 |        10 |     200 |
+| n176 |    11110000110010111110 |          20 |        11 |     220 |
+| n178 |    11110000110010111111 |          20 |        12 |     240 |
+| n180 |    11110000110010111100 |          20 |        10 |     200 |
+| n182 |   111100001100101111010 |          21 |         5 |     105 |
+| n184 |   001101110010011011101 |          21 |         4 |      84 |
+| n186 |  1111000011001011110111 |          22 |         3 |      66 |
+| n188 | 00110111001001101101111 |          23 |         1 |      23 |
+| n190 | 00110111001001101101110 |          23 |         1 |      23 |
+| n192 |  1111000011001011110110 |          22 |         3 |      66 |
+| n194 | 00110111001001101111101 |          23 |         1 |      23 |
+| n196 | 00110111001001101111100 |          23 |         1 |      23 |
+| n198 |    00110111001001101100 |          20 |         6 |     120 |
+| n202 |  0011011100100110110110 |          22 |         2 |      44 |
+| n204 |   001101110010011011010 |          21 |         3 |      63 |
+| n210 |   001101110010011011100 |          21 |         4 |      84 |
+| n220 | 00110111001001101111111 |          23 |         1 |      23 |
+| n222 | 00110111001001101111110 |          23 |         1 |      23 |
+|      |                         |             |           |         |
+
+Sums of each column:
+| # nodes |   | sum of code length | sum of frequencies | sum of weights |
+|     104 |   |               1345 |            9999998 |       44712373 |
+
+*** Compression Ratio
+
+Compression Ratio from raw
+
+#+BEGIN_SRC emacs-lisp
+(let* ((leave-count 104)
+       (f 32)
+       (freq-count 9999998)
+       (weight-count 44712373)
+       (v (/ weight-count (float freq-count))))
+       (list (* 100 (/ (- f v) f))))
+#+END_SRC 
+
+#+RESULTS:
+| 86.02738064297613 |
+    
+
+* DONE Calculate Size of File
+  CLOSED: [2018-03-08 Thu 22:07]
+  Imagine evaluating the following two code blocks:
+#+BEGIN_SRC emacs-lisp :results silent
+  (require 'first-ten-million-primes)
+
+  (defun create-ascii-file-of-first-ten-million-primes ()
+    (with-temp-buffer
+      (mapc (lambda (n) (insert (format "%d\n" n))) first-ten-million-primes)
+      (write-region nil 0 "first-ten-million-primes.txt")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (create-ascii-file-of-first-ten-million-primes)
+#+END_SRC
+
+  Strictly speaking, it is not necessary to create this file in order to
+  calculate its size. How? What would its size be? (Knowing this size is useful
+  for compression ratio comparison.)
+
+The file size is 93484692. This is what is returned when the retrieve package function executes, 
+and represents the size of the file which was retrieved. 
+
+
+* DONE Study and Extend Some Sample Code
+  CLOSED: [2018-03-09 Fri 15:53]
+  As you are required to build an elisp-structured Huffman tree that can
+  compress the list of primes, use the following code block, which includes code
+  for restoring a list of the first ten million primes from the list of gaps
+  between them, as a guide and a starting point. This code shows a possible
+  implementation of a tree node as a symbol. The symbol\rsquo{}s value is the node\rsquo{}s
+  value. The symbol\rsquo{}s plist (property list) is used for storing \ldquo{}pointers\rdquo to
+  left and right children, and parent.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+
+  (defun restore-primes (list-of-gaps)
+    "Given the list of gaps starting at the gap between 3 and 5
+       return a list of the first ten million primes."
+    (cons 2 (cons 3 (loop for gap in list-of-gaps with prime = 3
+                          collect (incf prime gap)))))
+
+  (defun try-it-out ()
+    (setq a 1 b 2 c 3)
+    (put 'a :right 'b)
+    (get 'a :right)
+    (put 'a :left 'c)
+    (get 'a :left)
+    (symbol-plist 'a)
+    (put 'c :parent 'a)
+    (put 'b :parent 'a)
+    a)
+
+  (defvar node-counter 0)
+
+  (defun make-node ()
+    (let ((symbol (intern (concat "n" (number-to-string node-counter)))))
+      (set symbol node-counter)
+      (setf (symbol-plist symbol) nil)
+      (incf node-counter)
+      symbol))
+
+  (defun get-value (node)
+    (and (symbolp node) (symbol-value node)))
+
+  (defun set-value (node new-value)
+    (and (symbolp node) (set node new-value)))
+
+  (defun get-parent (node)
+    (and (symbolp node) (get node :parent)))
+
+  (defun set-parent (node parent)
+    (and (symbolp node) (symbolp parent) (put node :parent parent)))
+
+  (defun get-left (node)
+    (and (symbolp node) (get node :left)))
+
+  (defun set-left (node left)
+    (and (symbolp node) (symbolp left) (put node :left left)))
+
+  (defun get-right (node)
+    (and (symbolp node) (get node :right)))
+
+  (defun set-right (node right)
+    (and (symbolp node) (symbolp right) (put node :right right)))
+
+  (defun build-tree (height)
+    (let ((root (make-node)))
+      (if (> height 0)
+          (let ((left (build-tree (1- height)))
+                (right (build-tree (1- height))))
+            (set-left root left)
+            (set-right root right)
+            (set-parent left root)
+            (set-parent right root)))
+      root))
+#+END_SRC
+
+#+RESULTS:
+: build-tree
+
+I included the code used to extend these functions in the Explore Huffman Trees exercise
+
+* Day 1
+  :LOGBOOK:
+  CLOCK: [2018-03-05 Mon 15:15]--[2018-03-05 Mon 16:16] =>  1:01
+  :END:
+  
+** Wrap up RSA and RNS
+
+#+BEGIN_SRC emacs-lisp
+  ;(crt-solve '(4 . 7) '(2 . 11) '(6 . 13))
+  (list (% 123 7) (% 123 11) (% 123 13))
+#+END_SRC
+
+#+RESULTS:
+| 4 | 2 | 6 |
+
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'cl) ;; for destructuring-bind
+
+(defun egcd (a b)
+  "Computes the greatest common divisor of a and b recursively.
+   This extended version returns a list of d, x and y, where
+   d = ax + by = gcd(a, b)."
+  (if (zerop b)
+      (list a 1 0)
+    (let ((q (/ a b))
+          (r (% a b)))
+      (destructuring-bind (d x y) (egcd b r)
+        (list d y (- x (* q y)))))))
+
+(defun find-y (o m)
+    (second (egcd o m)))
+(defun crt-solve (&rest pairs)
+     (let* ((r-list (mapcar 'car pairs))
+            (m-list (mapcar 'cdr pairs))
+            (m (apply '* m-list))
+            (o-list (mapcar (-partial '/ m) m-list))
+            (y-list (mapcar* 'find-y o-list m-list)))
+      (if (zerop m) 0
+      (mod (apply '+ (mapcar* '* r-list o-list y-list)) m))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (crt-solve)
+#+END_SRC
+
+#+RESULTS:
+: 0
+
+** Looking at Trees
+
+*** General Props 
+    1. Connected
+    2. No cycles
+
+** Spanning Tree
+   
+** Ladder Graph
+
+Probability of choosing a spanning tree which includes the bottom rung = sqrt(3) -1   
+   
+* Day 2
+  :LOGBOOK:
+  CLOCK: [2018-03-06 Tue 15:15]--[2018-03-06 Tue 16:17] =>  1:02
+  :END:
+
+#+BEGIN_SRC emacs-lisp 
+  ;(retrieve-package 'graph-1)
+  (push "." load-path)
+  (require 'graph-1)
+  (graph-1-edges)
+#+END_SRC
+
+#+RESULTS:
+: ((1 . 2) (1 . 9) (1 . 10) (1 . 11) (2 . 3) (2 . 4) (2 . 5) (2 . 9) (2 . 10) (2 . 11) (3 . 4) (3 . 10) (3 . 11) (4 . 5) (4 . 10) (4 . 11) (5 . 6) (5 . 7) (5 . 9) (6 . 7) (6 . 9) (7 . 8) (7 . 9) (8 . 10) (8 . 9) (9 . 10) (10 . 11))
+
+** Task 1
+   :LOGBOOK:
+   CLOCK: [2018-03-06 Tue 16:17]--[2018-03-06 Tue 16:17] =>  0:00
+   :END:
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun make-ladder-graph (n) 
+      (append (apply 'append (mapcar* (lambda (x y) (list (cons x y) (cons x (+ 2 x)) (cons y (+ 2 y))))
+                     (number-sequence 1 (- (* 2 n) 3) 2) 
+                     (number-sequence 2 (- (* 2 n) 1) 2))) (list (cons (- (* n 2) 1) (* n 2)))))
+ #+END_SRC
+
+
+ #+BEGIN_SRC emacs-lisp :results raw
+ (make-ladder-graph 5)
+ #+END_SRC
+
+ #+RESULTS:
+ ((1 . 2) (1 . 3) (2 . 4) (3 . 4) (3 . 5) (4 . 6) (5 . 6) (5 . 7) (6 . 8) (7 . 8) (7 . 9) (8 . 10) (9 . 10))
+
+** Task 2
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun random-subset (edge-list)
+     (nth (random (expt 2 (length edge-list)))
+        (-powerset edge-list)))
+#+END_SRC  
+
+#+BEGIN_SRC emacs-lisp
+  (random-subset (make-ladder-graph 4))
+#+END_SRC
+
+#+RESULTS:
+: ((1 . 2) (1 . 3) (2 . 4) (5 . 6) (5 . 7) (6 . 8))
+* Day 3
+  :LOGBOOK:
+  CLOCK: [2018-03-07 Wed 16:10]--[2018-03-07 Wed 16:15] =>  0:05
+  CLOCK: [2018-03-07 Wed 15:24]--[2018-03-07 Wed 16:10] =>  0:46
+  :END:
+** Task 2 
+
+#+BEGIN_SRC emacs-lisp
+  (retrieve-package 'ladder-graph)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(require 'graph-1)  
+(defun spanning-tree (vertices edges adjacency-lists)
+     ;1. Start with frontier = (list (first vertices))
+     ;   and spanning-tree = nil
+     ;2. Pick an edge connected to a vertex in the frontier
+     ;   that does not create a cycle -- that is, the
+     ;   other destination vertex of the edge is not 
+     ;   already on the frontier.
+     ;3. Add that destination vertex to the frontier.
+     ;4. Add the picked edge to the spanning-tree
+     ;5. Repeat steps 2-4 until all nodes are in the frontier. 
+     ;6. Return spanning-tree as sorted edge-list
+     
+     (let ((frontier (list (first vertices)))
+           (span-tree nil))
+      (loop while (not (= (length frontier) (length vertices)))
+           (loop for n in edges
+              when (and (member (car x) frontier) (not (member (cdr x) frontier)))
+              do (push (cdr x) frontier)
+              do (push x span-tree)))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp 
+(setq lg4 (make-ladder-graph 4)
+        lg4n (get-graph-nodes lg4)
+        lg4a (make-adjacency-lists lg4n lg4)
+        answer (list lg4 lg4n lg4a)
+        random-neighbor (nth (random (length (get-adjacency-list 5 lg4a))) (get-adjacency-list 5 lg4a)))
+#+END_SRC
+
+#+RESULTS:
+(((1 . 2) (3 . 4) (5 . 6) (7 . 8) (1 . 3) (3 . 5) (5 . 7) (2 . 4) (4 . 6) (6 . 8)) (1 2 3 4 5 6 7 8) ((1 2 3) (2 4 1) (3 4 5 1) (4 6 3 2) (5 6 7 3) (6 8 5 4) (7 8 5) (8 7 6)))
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (sort lg4 (lambda (x y) (or (< (car x) (car y)) (< (cdr x) (cdr y)))))
+#+END_SRC
+
+#+RESULTS:
+((1 . 2) (1 . 3) (2 . 4) (3 . 4) (3 . 5) (4 . 6) (5 . 6) (5 . 7) (6 . 8) (7 . 8))
+
+
+
+* STU Completed in DM1 Fall 2017.
+
+I completed all of these last semester in DM1
+
+** DONE STX
+   CLOSED: [2017-11-14 Tue 16:23]
+*** DONE LDA
+    CLOSED: [2017-11-13 Mon 20:06]
+    :LOGBOOK:
+    CLOCK: [2017-11-13 Mon 20:03]--[2017-11-13 Mon 20:06] =>  0:03
+    :END:
+    #+BEGIN_SRC emacs-lisp :results raw
+    (let ((a 1) (b 2) (c 3) (d 4))
+  (cons (+ a b) (cons (/ d b) (cons (- d a) (cons (* c d) nil)))))
+    #+END_SRC
+
+    #+RESULTS:
+    (3 2 3 12)
+*** DONE SQI
+    CLOSED: [2017-11-13 Mon 20:13]
+    :LOGBOOK:
+    CLOCK: [2017-11-13 Mon 20:06]--[2017-11-13 Mon 20:13] =>  0:07
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (defun morphifyr (fun lst)
+  (if (null lst)
+      nil
+    (append (list (funcall fun (first lst))) (morphifyr fun (rest lst)))))
+
+    (defun morphifyr-cons (fun lst)
+       (if (null lst)
+        nil
+       (cons (funcall fun (first lst)) (morphifyr fun (rest lst)))))
+    #+END_SRC
+
+    #+RESULTS:
+    : morphifyr-cons
+
+#+BEGIN_SRC emacs-lisp :results raw
+(equal (morphifyr-cons (lambda (n) (+ n 1)) '(1 2 3 4)) (morphifyr (lambda (n) (+ n 1)) '(1 2 3 4)))
+#+END_SRC
+
+#+RESULTS:
+t
+t
+(2 3 4 5)
+(2 3 4 5)
+*** DONE LJP
+    CLOSED: [2017-11-14 Tue 16:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 16:17]--[2017-11-14 Tue 16:23] =>  0:06
+    CLOCK: [2017-11-13 Mon 20:13]--[2017-11-13 Mon 20:37] =>  0:24
+    :END:
+
+Think recursively...
+
+
+97
+#+BEGIN_SRC emacs-lisp :results silent
+(defun prime-list-from-rle-list (rle-list limit)
+  (mapcar 'first
+          (remove-if
+           (lambda (x)
+             (zerop (second x)))
+           (mapcar* 'list
+                    (number-sequence 2 limit)
+                    (apply 'append
+                           (mapcar (lambda (x)
+                                     (if (> x 1)
+                                         (make-list x 0)
+                                       (list x)))
+                                   rle-list))))))
+
+(defun reconstitute-primes (rle-list)
+  (loop for b in rle-list
+        for n from 2
+        unless (or (zerop b) (and (> b 1) (incf n (- b 1))))
+        collect n))
+
+
+(defun prime-list-from-rle-list-cons (start rle-list)
+  ;; 1. (Null rle list)
+  ;; 2. (zerop (car rle-list))
+  ;; 3. (= 1 (car rle-list)) cons something
+  ;; 4. (> (car rle-list) 1)
+  (cond ((null rle-list) nil)
+        ((zerop (car rle-list))
+          (prime-list-from-rle-list-cons (+ start 1) (cdr rle-list)))
+        ((= 1 (car rle-list)) 
+         (cons (+ start 1) (prime-list-from-rle-list-cons (+ start 1) (cdr rle-list))))
+        ((> (car rle-list) 1) (prime-list-from-rle-list-cons (+ start (car rle-list)) (cdr rle-list)))
+  ))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(prime-list-from-rle-list-cons 1 p100rle)
+#+END_SRC
+
+#+RESULTS:
+| 2 | 3 | 5 | 7 | 11 | 13 | 17 | 19 | 23 | 29 | 31 | 37 | 41 | 43 | 47 | 53 | 59 | 61 | 67 | 71 | 73 | 79 | 83 | 89 | 97 |
+
+#+BEGIN_SRC emacs-lisp :results raw
+(setq limit 0
+      p100rle (list 1 1 0 1 0 1 3 1 0 1 3 1 0 1 3 1 5 1 0 1 5 1 3 1 0
+                    1 3 1 5 1 5 1 0 1 5 1 3 1 0 1 5 1 3 1 5 1 7 1 3)
+      got-it-right (equal (reconstitute-primes p100rle)
+                          (prime-list-from-rle-list-cons 1 p100rle)))
+#+END_SRC
+
+#+RESULTS:
+t
+nil
+(2 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49)
+(2 3 5)
+(2 3 5)
+nil
+** DONE ST@
+   CLOSED: [2017-11-14 Tue 17:41]
+*** DONE SUF
+    CLOSED: [2017-11-14 Tue 17:11]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 16:24]--[2017-11-14 Tue 17:11] =>  0:47
+    CLOCK: [2017-11-13 Mon 20:54]--[2017-11-13 Mon 21:03] =>  0:09
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun number-of-factors (csf)
+  "Takes a CSF like '((2 . 3) (3 . 1) (5 . 2)) and returns 24."
+  (apply #'* (mapcar (lambda (n) (+ 1 (cdr n) )) csf)))
+
+
+    #+END_SRC
+
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+(number-of-factors '((2 . 3) (3 . 2) (5 . 1)))
+#+END_SRC
+
+#+RESULTS:
+24
+*** DONE LNR
+    CLOSED: [2017-11-14 Tue 17:41]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 17:12]--[2017-11-14 Tue 17:36] =>  0:24
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (defun number-of-factors-alt (csf)
+  "Takes a CSF like [(2 3) (3 1) (5 2)] and returns 24."
+    (apply #'* (mapcar (lambda (n) (+ 1 (car (cdr n)))) csf)))
+    #+END_SRC
+
+    #+RESULTS:
+    : number-of-factors-alt
+
+
+    #+BEGIN_SRC emacs-lisp :results raw
+    (number-of-factors-alt [(2 3) (3 1) (5 2)])
+    #+END_SRC
+
+    #+RESULTS:
+    24
+    24
+** DONE STC 
+   CLOSED: [2018-03-09 Fri 17:18]
+*** DONE YGT
+    CLOSED: [2018-03-09 Fri 17:18]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 17:48]--[2017-11-14 Tue 17:53] =>  0:05
+    :END:
+
+    It has a height of 4
+
+                             time
+                            /    \ 
+                       flies      wings
+                            \
+                             on
+                            /
+                          of
+                         / 
+                      lightning   
+*** DONE LDO
+    CLOSED: [2018-03-09 Fri 17:18]
+    :LOGBOOK:
+    CLOCK: [2017-11-17 Fri 15:39]--[2017-11-17 Fri 16:00] =>  0:21
+    CLOCK: [2017-11-14 Tue 18:04]--[2017-11-14 Tue 18:19] =>  0:15
+    :END:
+    Case 1: The key is a leaf on the tree. We simply delete the leaf without needing to further modify the tree
+    Case 2: The key has one child. We change the parent of the key to point to the child of the key, and then remove the key.
+    Case 3: The key has two children. Find the next largest item by traversing to the left down the key's right subtree. When a node with no left child is found, 
+            we have found the next largest item. Recursively remove this item, and use it to replace the key. You must do this recursively, because it is possible 
+            that in moving that node, you will need to adjust its children.
+
+    Deletion is not always as fast. It is only as fast if the key to delete is a leaf. Otherwise, time will be spent readjusting the tree.
+** DONE STD
+   CLOSED: [2018-03-09 Fri 17:18]
+*** DONE YCF
+    CLOSED: [2018-03-09 Fri 17:18]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 18:22]--[2017-11-14 Tue 18:37] =>  0:15
+    :END:
+**** Full Binary Tree
+     A full binary tree means that every node EXCEPT the leaves has two children.
+     This means there are no nodes with only one child.
+**** Complete Binary Tree
+     A binary tree which is completely filled except for possibly the last level. 
+     The bottom level is filled from left to right. 
+     A complete binary tree is very regular, and could be stored in an array if desired.
+
+     Some cool properties of Complete Binary Trees I found: http://cs-study.blogspot.com/2012/11/complete-binary-tree.html
+**** Balanced Binary Tree
+     A tree is balanced if the left and subtree heights differ by 1 at the most,
+     with this definition being recursively applied to each subtree. 
+*** DONE LUM
+    CLOSED: [2018-03-09 Fri 17:18]
+    :LOGBOOK:
+    CLOCK: [2017-11-14 Tue 18:40]--[2017-11-14 Tue 18:53] =>  0:13
+    :END:
+
+This is a complete binary tree. 
+
+I used this site to help build a visual representation of the tree: https://www.cs.usfca.edu/~galles/visualization/BST.html
+*** DONE YZU
+    CLOSED: [2018-03-09 Fri 17:18]
+    :LOGBOOK:
+    CLOCK: [2017-11-17 Fri 16:03]--[2017-11-17 Fri 16:47] =>  0:44
+    CLOCK: [2017-11-16 Thu 09:57]--[2017-11-16 Thu 10:05] =>  0:08
+    :END:
+**** Examples of self balancing trees (balance at insertion)
+     https://www.cpp.edu/~ftang/courses/CS241/notes/self%20balance%20bst.htm
+***** AVL trees
+      Checks at insertion that all tree rules are followed, with a balance factor of 1, 0, or -1.
+      Will rotate tree after insertion. Due to implementation, at most 2 rotations will be needed to rebalance the tree.
+***** Red Black tree
+      Every node is either 'red' or 'black'
+      Root of the tree is always black
+      There are no two adjacent red nodes
+      Every path from root to a null node has the same amount of black nodes. This keeps the tree roughly balanced.
+      The tree is recursively balanced by repainting nodes as necessary, cascading up the tree. 
+**** Balancing an unbalanced tree
+***** Insertion
+      One method to balance an unbalanced tree, would be to traverse the unbalanced tree, and insert each node into an AVL like
+      tree, thus balancing it. This is a simple solution, but not always the most efficient. Depending on the complexity of the tree,
+      this may or may not work. 
+***** Other options
+      Traverse the unbalanced tree and store the result in an array. Sort the array, and then insert it as a balanced binary tree. 
+** DONE STH
+   CLOSED: [2018-03-09 Fri 17:18]
+*** DONE LTI   
+    CLOSED: [2017-11-20 Mon 23:10]
+     :LOGBOOK:
+       CLOCK: [2017-11-18 Sat 13:25]--[2017-11-18 Sat 13:48] =>  0:23
+     :END:
+**** Decode function
+      #+BEGIN_SRC emacs-lisp
+      (require 'cl)
+
+ (defvar huff-tree
+   '((("n" "t") (("i" "o") (" " ""))) ("e" ("h" "r"))))
+
+ (defun get-value (node)
+   (and (stringp node) node))
+
+ (defun get-left (node)
+   (and (listp node) (first node)))
+
+ (defun get-right (node)
+   (and (listp node) (second node)))
+
+ (defun find-leaf (encoded tree)
+   (if (get-value tree)
+       (cons tree encoded)
+     (let ((first-char (elt encoded 0))
+           (rest-of-encoded (substring encoded 1)))
+       (case first-char
+         (?0 (find-leaf rest-of-encoded (get-left tree)))
+         (?1 (find-leaf rest-of-encoded (get-right tree)))
+         (t "")))))
+
+ (defvar encode1 "00010010000111010111011011010111100110000010111101100011101011110")
+ (defvar encode2 "0001001000111001110101110110110101111001100000101111011000111010111100111")
+
+ (defun huffman-decoder (encoded tree)
+   (if (equal encoded "")
+       ""
+       (let ((leaf-cell (find-leaf encoded tree)))
+       ;;   (print leaf-cell)
+          (cons (car leaf-cell) (huffman-decoder (cdr leaf-cell) tree)))))
+
+      #+END_SRC
+
+      #+RESULTS:
+      : huffman-decoder
+
+**** Decode first message
+
+ #+BEGIN_SRC emacs-lisp :results raw
+ (huffman-decoder encode1 huff-tree)
+ #+END_SRC
+
+ #+RESULTS:
+ (n e i t h e r   h e r e   n o r   t h e r e . )
+
+
+**** DONE Decode second message
+     CLOSED: [2017-11-20 Mon 23:10]
+
+#+BEGIN_SRC emacs-lisp :results raw
+(huffman-decoder encode2 huff-tree)
+#+END_SRC
+
+#+RESULTS:
+(n e i  t h e r   h e r e   n o r   t h e r e  . )
+
+There are extra spaces in the message, which would account for the longer encoding, and the very close result
+
+** DONE STI
+   CLOSED: [2018-03-09 Fri 17:19]
+*** DONE YDQ 
+    CLOSED: [2017-11-22 Wed 11:30]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:20]--[2017-11-22 Wed 13:31] =>  0:11
+    CLOCK: [2017-11-22 Wed 11:08]--[2017-11-22 Wed 11:30] =>  0:22
+    CLOCK: [2017-11-20 Mon 23:12]--[2017-11-20 Mon 23:25] =>  0:13
+    :END:
+    
+**** Tie Breaking Rule
+     Sort first by subtree weight. Then alphabetical.
+     The tiebreaker is the alphabetical order of the letters. We see that that H,F,P, and W all have an occurance
+     of 1. So we order them in alphabetical order as so, F, H, P, W
+
+**** Implement in elisp
+     #+BEGIN_SRC emacs-lisp :results silent
+     (defun huffman-tiebreaker (n1 n2)
+     "Returns the smaller of two cons cell with a string and weight sorted lexicographically"
+     (cond ((and (not (stringp (car n1))) (not (stringp (car n2))))  nil)
+           ((< (cdr n1) (cdr n2)) n1)
+           ((> (cdr n1) (cdr n2)) n2)
+           ((< (length (car n1)) (length (car n2))) n1)
+           ((> (length (car n1)) (length (car n2))) n2)
+           ((string-lessp (car n1) (car n2)) n1)
+           (t n2)
+     ))
+     #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(huffman-tiebreaker '("AC" . 3) '("BC" . 2))
+#+END_SRC
+
+#+RESULTS:
+(BC . 2)
+
+**** Does it matter which tiebreaker you use?
+     Yes. Depending on the tie breaker, your average number of bits per character could change. This was demonstrated in class
+** DONE STJ
+   CLOSED: [2018-03-09 Fri 17:19]
+*** DONE LND
+    CLOSED: [2017-11-22 Wed 12:05]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 11:30]--[2017-11-22 Wed 12:05] =>  0:35
+    :END:
+
+    When looking at the ASCII binary values of these 17 char, we see
+    that their values range from 01000000 to 01010111 (This range includes
+    some numbers we aren't using, but that is irrelevant). Each of these numbers has
+    a leading 010, which we could chop off by fixed-length encoding rules, leaving a 
+    5-bit number. Additionally, 17 in binary is a 5 bit length (10001). 
+    
+    The general case is a little more difficult to predict when using ASCII. It depends on which range of 
+    characters you need to be able to represent. In order to shorten a fixed length encoding,
+    you need to be able to eliminate preceding bits that are common amongst all characters
+    being represented. For instance, lets look at trying to encode my name with its real spelling: Bryan Müller
+    We would need the characters ranging from binary values of 00100000 (space) to 11111100 (ü). This would give
+    us a fixed length encoding of 7 bits because all seven bits would be needed to represent all of the ASCII values
+    within the string. Now assuming you were not restricted to ASCII code values, you could represent my 12 char name with
+    a 4 bit fixed-length encoding (12 in binary is 1100). So for the optimal general case where you are allowed to create your own encoding scheme,
+    a message with n characters could be represented with a fixed length encoding of the length of n when represented in binary. This would provide 
+    the possibility for a message of length n to consist of completely unique characters, and still have room to represent each character with a unique 
+    binary number. 
+*** DONE YTR
+    CLOSED: [2017-11-22 Wed 13:20]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 12:54]--[2017-11-22 Wed 13:20] =>  0:26
+    CLOCK: [2017-11-22 Wed 12:05]--[2017-11-22 Wed 12:05] =>  0:00
+    :END:
+**** Count Chars 
+     | Char | Count |
+     |------+-------|
+     | c    |     1 |
+     | b    |     1 |
+     | k    |     3 |
+     | n    |     1 |
+     | o    |     6 |
+**** Build Huffman Tree
+
+     c1 b1 n1 k3 o6
+     n1 bc2 k3 o6
+     k3 bcn3 o6
+     o6 bcnk6
+     bcnko12
+ | Char | code | Length of Code | Count | Weighted |
+ |------+------+----------------+-------+----------|
+ | c    | 1111 |              4 |     1 |        4 |
+ | b    | 1110 |              4 |     1 |        4 |
+ | k    |   10 |              2 |     3 |        6 |
+ | n    |  110 |              3 |     1 |        3 |
+ | o    |    0 |              1 |     6 |        6 |
+ |------+------+----------------+-------+----------|
+ |      |      |             14 |    12 |       23 |
+**** Bitstring encoding
+
+     #+BEGIN_SRC js :results output
+     String.prototype.replaceAll = function(search, replacement) {
+       let target = this;
+       return target.split(search).join(replacement);
+    };
+
+    let msg = 'cookbooknook';
+    msg = msg.replaceAll('c','1111');
+    msg = msg.replaceAll('b','1110');
+    msg = msg.replaceAll('k','10');
+    msg = msg.replaceAll('n','110');
+    msg = msg.replaceAll('o','0');
+
+    console.log(msg);
+     #+END_SRC
+
+     #+RESULTS:
+     : 11110010111000101100010
+
+**** Average # bits
+     #+BEGIN_SRC emacs-lisp
+     (setq ytr-avg-bits (/ 23 (float 12)))
+     #+END_SRC
+
+     #+RESULTS:
+     : 1.9166666666666667
+
+**** Compression Ratio
+
+     #+BEGIN_SRC emacs-lisp
+    (* (/ (- 3 ytr-avg-bits) 3) 100 )
+     #+END_SRC
+
+     #+RESULTS:
+     : 36.11111111111111
+
+     So about 36.1%
+*** DONE LGO
+    CLOSED: [2017-11-22 Wed 13:37]
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:31]--[2017-11-22 Wed 13:37] =>  0:06
+    :END:
+          
+          n        b 
+        _____   _______
+    1 0 1 1 0 0 1 1 1 0
+    ___       _
+     k        o
+
+     knob
+** DONE STK
+   CLOSED: [2018-03-09 Fri 17:19]
+*** YIV
+    :LOGBOOK:
+    CLOCK: [2017-11-22 Wed 13:50]--[2017-11-22 Wed 14:04] =>  0:14
+    CLOCK: [2017-11-22 Wed 13:40]--[2017-11-22 Wed 13:47] =>  0:07
+    :END:
+    
+    #+BEGIN_SRC emacs-lisp :results silent
+    (require 'cl)
+
+(defun get-value (node)
+  (and (symbolp node) (symbol-value node)))
+
+(defun set-value (node new-value)
+  (and (symbolp node) (set node new-value)))
+
+(defun get-parent (node)
+  (and (symbolp node) (get node :parent)))
+
+(defun set-parent (node parent)
+  (and (symbolp node) (symbolp parent) (put node :parent parent)))
+
+(defun get-left (node)
+  (and (symbolp node) (get node :left)))
+
+(defun set-left (node left)
+  (and (symbolp node) (symbolp left) (put node :left left)))
+
+(defun get-right (node)
+  (and (symbolp node) (get node :right)))
+
+(defun set-right (node right)
+  (and (symbolp node) (symbolp right) (put node :right right)))
+
+(defun try-it-out ()
+  (setq a 1 b 2 c 3)
+  (put 'a :right 'b)
+  (put 'a :left 'c)
+  (put 'c :parent 'a)
+  (put 'b :parent 'a)
+  (list a (symbol-plist 'a)))
+
+(defvar node-counter 0)
+
+(defun make-node ()
+  (let ((symbol (intern (concat "n" (number-to-string node-counter)))))
+    (set symbol node-counter)
+    (incf node-counter)
+    (setf (symbol-plist symbol) nil)
+    symbol))
+
+(defun build-tree (height)
+  (let ((root (make-node)))
+    (if (> height 0)
+        (let ((left (build-tree (1- height)))
+              (right (build-tree (1- height))))
+          (set-left root left)
+          (set-right root right)
+          (set-parent left root)
+          (set-parent right root)))
+    root))
+    #+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp :results raw 
+(try-it-out)
+#+END_SRC
+
+#+RESULTS:
+(1 (:right b :left c))
+
+
+#+BEGIN_SRC emacs-lisp :results raw 
+(build-tree 2)
+#+END_SRC
+
+#+RESULTS:
+n41
+n10
+n3
+n0
+
+I drew out these trees on paper.  

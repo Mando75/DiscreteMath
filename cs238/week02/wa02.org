@@ -1,0 +1,1477 @@
+#+TITLE: Weekly Assignment 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+  In addition to all the section ABC exercises/problems/puzzles (EPPs) that you
+  did /not/ do in DM1 (see [[file:~/mebewiyo/F17/2/week00/schedule.org][schedule]]), please do the following tasks:
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-01-26 Fri 16:04]
+| Headline                                |   Time |      |
+|-----------------------------------------+--------+------|
+| *Total time*                            | *9:32* |      |
+|-----------------------------------------+--------+------|
+| Review Set Intersections and Unions     |   0:17 |      |
+| Review the Symmetric Difference of Sets |   0:04 |      |
+| Review DeMorgan's Laws                  |   0:34 |      |
+| Review the Cartesian Products of Sets   |   0:19 |      |
+| Week 1 ABC                              |   3:42 |      |
+| \_  UOX                                 |        | 0:01 |
+| \_  UOT                                 |        | 0:02 |
+| \_  OIM                                 |        | 0:03 |
+| \_  UCG                                 |        | 0:01 |
+| \_  OIO                                 |        | 0:02 |
+| \_  UIJ                                 |        | 0:01 |
+| \_  OQT                                 |        | 0:02 |
+| \_  UTQ                                 |        | 0:04 |
+| \_  OYU                                 |        | 0:01 |
+| \_  UOH                                 |        | 0:12 |
+| \_  OZD                                 |        | 0:01 |
+| \_  OOY                                 |        | 0:02 |
+| \_  UVH                                 |        | 0:04 |
+| \_  OJM                                 |        | 0:04 |
+| \_  ULQ                                 |        | 0:01 |
+| \_  OTD                                 |        | 0:04 |
+| \_  UJU                                 |        | 0:05 |
+| \_  OLH                                 |        | 0:09 |
+| \_  UWY                                 |        | 0:13 |
+| \_  OBW                                 |        | 0:03 |
+| \_  USL                                 |        | 0:02 |
+| \_  UBV                                 |        | 0:44 |
+| \_  OKQ                                 |        | 0:03 |
+| \_  UKF                                 |        | 0:01 |
+| \_  OKL                                 |        | 0:06 |
+| \_  UEZ                                 |        | 0:03 |
+| \_  OYW                                 |        | 0:34 |
+| \_  UEF                                 |        | 0:13 |
+| \_  OUB                                 |        | 0:11 |
+| \_  UQY                                 |        | 0:30 |
+| Day 1                                   |   1:32 |      |
+| Day 2                                   |   1:01 |      |
+| Day 3                                   |   1:06 |      |
+| Day 4                                   |   0:57 |      |
+#+END:
+
+* DONE Review Set Intersections and Unions
+  CLOSED: [2018-01-20 Sat 12:14]
+  :LOGBOOK:
+  CLOCK: [2018-01-20 Sat 11:57]--[2018-01-20 Sat 12:14] =>  0:17
+  :END:
+
+  Let /A/ = =[0 2 4 6 8 10]=,
+      /B/ = =[0 1 2 3 4 5 6]=, and
+      /C/ = =[4 5 6 7 8 9 10]=.
+
+  Find
+  1. \(A \cap B \cap C\)
+  2. \(A \cup B \cup C\)
+  3. \((A \cup B) \cap C\)
+  4. \((A \cap B) \cup C\)
+  5. (A \cup (B \cap C))
+
+
+** Solutions
+
+   #+BEGIN_SRC emacs-lisp :results silent
+   (setq setA '(0 2 4 6 8 10)
+         setB '(0 1 2 3 4 5 6)
+         setC '(4 5 6 7 8 9 10))
+   #+END_SRC
+
+
+  
+*** 1. (A \cap B \cap C)
+  #+BEGIN_SRC emacs-lisp :results raw
+    (intersection setA (intersection setB setC))
+  #+END_SRC
+
+  #+RESULTS:
+  (4 6)
+
+
+*** 2. (A \cup B \cup C)
+  #+BEGIN_SRC emacs-lisp :results raw
+   (-union setA (-union setB setC)) 
+  #+END_SRC
+
+  #+RESULTS:
+  (0 2 4 6 8 10 1 3 5 7 9)
+
+
+*** 3. ((A \cup B) \cap C)
+#+BEGIN_SRC emacs-lisp :results raw
+  (intersection setC (-union setA setB))
+#+END_SRC
+
+   (10 8 6 5 4)
+
+
+*** 4. ((A \cap B) \cup C)
+    #+BEGIN_SRC emacs-lisp :results raw
+    (-union setC (intersection setA setB))
+    #+END_SRC
+
+    (4 5 6 7 8 9 10 2 0)
+
+
+***  5. (A \cup (B \cap C))
+#+BEGIN_SRC emacs-lisp :results raw
+ (-union setA (intersection setB setC)) 
+#+END_SRC
+
+   (0 2 4 6 8 10 5)
+
+* DONE Review the Symmetric Difference of Sets
+  CLOSED: [2018-01-20 Sat 12:18]
+  :LOGBOOK:
+  CLOCK: [2018-01-20 Sat 12:14]--[2018-01-20 Sat 12:18] =>  0:04
+  :END:
+  
+  Find the *symmetric difference* (\(A \oplus B\)) (which, recall, is
+  the set containing those elements in either /A/ or /B/, but not in
+  both /A/ and /B/ --- i.e., \(A \oplus B = (A - B) \cup (B - A)\)) of
+  /A/ = =[1 3 5]= and /B/ = =[1 2 3]=.
+
+** Solution
+   
+#+BEGIN_SRC emacs-lisp :results raw
+  (set-exclusive-or '(1 3 5) '(1 2 3))
+#+END_SRC
+
+(5 2)
+
+* DONE Review DeMorgan's Laws
+  CLOSED: [2018-01-22 Mon 18:11]
+  :LOGBOOK:
+  CLOCK: [2018-01-22 Mon 17:57]--[2018-01-22 Mon 18:11] =>  0:14
+  CLOCK: [2018-01-20 Sat 12:19]--[2018-01-20 Sat 12:39] =>  0:20
+  :END:
+
+  DeMorgan's laws for sets involve set intersection, set union, and set
+  complementation. Find what elisp functions exist to help explore these laws,
+  and do some experiments with them.
+
+** Solution 
+
+   DeMorgan's Laws as related to sets are defined as follows:
+
+  (A \cup B)^c =  A^c \cap B^c
+
+  and
+  
+  (A \cap B)^c = A^c \cup B^c
+
+  There are several lisp functions that can be used to demonstrate this law, the 
+  main contenders in my domain of knowledge being -union -intersection (these are 
+  from the dash library) and set-difference. Please note that a set complement is defined
+  as everything in the universe which is not in the set. So you will need to define what
+  your universe is if you wish to implement a DeMorgan's law example. 
+
+  Here is an example in lisp code:
+
+  
+
+#+BEGIN_SRC emacs-lisp :results output
+  (setq universe '(1 2 3 4 5 6 7 8 9 10)
+        setA '(1 2 3)
+        setB '(3 4 5))
+
+  (progn (print "A U B") 
+         (print (-union setA setB))
+         (print "(A U B)^c")
+         (print (-intersection (set-difference universe setA) (set-difference universe setB)))
+         (print "A Intersect B")
+         (print (-intersection setA setB))
+         (print "(A Intersect B)^C")
+         (print (-union (set-difference universe setA) (set-difference universe setB))))
+  
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+"A U B"
+
+(1 2 3 4 5)
+
+"(A U B)^c"
+
+(6 7 8 9 10)
+
+"A Intersect B"
+
+(3)
+
+"(A Intersect B)^C"
+
+(4 5 6 7 8 9 10 1 2)
+#+end_example
+
+* DONE Review the Cartesian Products of Sets
+  CLOSED: [2018-01-22 Mon 18:30]
+  :LOGBOOK:
+  CLOCK: [2018-01-22 Mon 18:11]--[2018-01-22 Mon 18:30] =>  0:19
+  :END:
+  
+  Let A = [a b c], B = [x y], and C = [0 1]. Find
+
+  1. A \times B \times C
+  2. C \times B \times A
+  3. C \times A \times B
+  4. B \times B \times B
+
+** Solutions
+
+I pulled this code from my DM1 workbook. I wrote it for EBQ.
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun cartesian-product (x y)
+   (mapcan (lambda (x-item) ;; map over the first list
+       (mapcar (lambda (y-item) ;; map over the second list
+           (if (listp x-item) ;; check that we are given a list 
+             (append x-item (list y-item)) ;; if so, append the y-item 
+             (list x-item y-item))) ;; otherwise, list the two items
+        y)) ;; passing y into the nested map
+    x)) ;; passing x into the map
+
+ (defun cartesian-product-general (list-of-sets)
+    (reduce #'cartesian-product list-of-sets)) 
+ ;; calling the reduce function on the cartesian-product 
+ ;; reduce will go through the list-of-sets, evaluate the function
+ ;; on the first two, and then evaluate it again with the first result and 
+ ;; the third element so on until it runs out of sets. 
+
+
+ (setq cart-set-A '(a b c)
+       cart-set-B '(x y)
+       cart-set-C '(0 1))
+ #+END_SRC
+
+*** A x B x C
+#+BEGIN_SRC emacs-lisp
+  (cartesian-product-general (list cart-set-A cart-set-B cart-set-C))
+#+END_SRC    
+
+| a | x | 0 |
+| a | x | 1 |
+| a | y | 0 |
+| a | y | 1 |
+| b | x | 0 |
+| b | x | 1 |
+| b | y | 0 |
+| b | y | 1 |
+| c | x | 0 |
+| c | x | 1 |
+| c | y | 0 |
+| c | y | 1 |
+
+*** C x B x A
+#+BEGIN_SRC emacs-lisp
+  (cartesian-product-general (list cart-set-C cart-set-B cart-set-A))
+#+END_SRC
+
+| 0 | x | a |
+| 0 | x | b |
+| 0 | x | c |
+| 0 | y | a |
+| 0 | y | b |
+| 0 | y | c |
+| 1 | x | a |
+| 1 | x | b |
+| 1 | x | c |
+| 1 | y | a |
+| 1 | y | b |
+| 1 | y | c |
+
+*** C x A x B
+
+#+BEGIN_SRC emacs-lisp
+  (cartesian-product-general (list cart-set-C cart-set-A cart-set-B))
+#+END_SRC
+
+| 0 | a | x |
+| 0 | a | y |
+| 0 | b | x |
+| 0 | b | y |
+| 0 | c | x |
+| 0 | c | y |
+| 1 | a | x |
+| 1 | a | y |
+| 1 | b | x |
+| 1 | b | y |
+| 1 | c | x |
+| 1 | c | y |
+
+*** B x B x B
+#+BEGIN_SRC emacs-lisp
+  (cartesian-product-general (make-list 3 cart-set-B))
+#+END_SRC
+
+| x | x | x |
+| x | x | y |
+| x | y | x |
+| x | y | y |
+| y | x | x |
+| y | x | y |
+| y | y | x |
+| y | y | y |
+
+* DONE Week 1 ABC
+  CLOSED: [2018-01-26 Fri 16:04]
+  
+  NOTE!!!! I did these all in DM1 last (Fall 2017) semester, so I just copied them over.
+  Happy grading :) 
+
+** DONE USV
+   CLOSED: [2018-01-22 Mon 15:25]
+ #+BEGIN_SRC emacs-lisp
+(rot13 "Or pyrire jvgu ahzoref. Svaq n jnl gb vafreg vagb gurfr gra yvarf gur sbhe fgnaqneq zngu bcrengbef 
+(+, -, \gvzrf, \qvi), be ! (snpgbevny), be \enqvp (fdhner ebbg), naq cneragurfrf sbe tebhcvat, gb znxr gra
+ qvssrerag rkcerffvbaf gung rnpu rinyhngr gb 6. Sbe rknzcyr: \enqvp4 + \enqvp4 + \enqvp4 = 6.")
+ 
+ #+END_SRC
+
+ #+RESULTS:
+ : Be clever with numbers. Find a way to insert into these ten lines the four standard math operators 
+ : (+, -, times, div), or ! (factorial), or adic (square root), and parentheses for grouping, to make ten
+ :  different expressions that each evaluate to 6. For example: adic4 + adic4 + adic4 = 6.
+
+    ( 0! + 0! + 0! )!                     = 6 
+    ( 1 + 1 + 1 )!                        = 6 
+    ( 2 + 2 + 2 )                         = 6 
+    ( 3 * 3 - 3 )                         = 6 
+    ( \radic(4*4)! / 4 )                       = 6 
+    ( 5 / 5 + 5 )                         = 6 
+    ( 6 / 6 * 6 )                         = 6 
+    ( 7 - 7 / 7 )                         = 6 
+    ( \radic(8+8)! / 8)!                       = 6 
+    (\radic(9) * \radic(9) - \radic(9) )                 = 6 
+
+** DONE OQP
+   CLOSED: [2018-01-22 Mon 15:26]
+   I worked through the entire primer notebook.
+   #+BEGIN_SRC emacs-lisp
+   (+ 1 2 3 4)
+   #+END_SRC
+
+   #+RESULTS:
+   : 10
+
+** DONE UCA
+   CLOSED: [2018-01-22 Mon 15:28]
+   It is my understanding of the text that propositions can be true OR false.
+*** Propositions
+    Rain falls down. 
+    Chickens are birds
+    Fish have fur
+*** Non-Propositions
+    Fetch me some water
+    What is your middle name?
+    How many colors are there?
+** DONE ODS
+   CLOSED: [2018-01-22 Mon 15:31]
+    P = proposition
+    NP = non-proposition  
+      
+    1. P true
+    2. P false
+    3. P false
+    4. NP n/a
+    5. P Depending on the values of each variable, it could be true or false
+    6. NP n/a
+    7. P given that x = 3, than it is true, otherwise it is false
+    8. NP n/a
+
+** DONE UGX
+   CLOSED: [2018-01-22 Mon 15:31]
+   v \in C 
+
+** DONE OGR   
+   CLOSED: [2018-01-22 Mon 15:32]
+   1. simple proposition
+   2. compound proposition
+   3. compound proposition
+   4. compound proposition
+
+   So only the first item is a simple proposition.
+   
+** DONE UWM
+   CLOSED: [2018-01-22 Mon 15:36]
+   1. Two plus two does not equal four
+   2. Two plus one is greater than four
+   3. Toronto is not the capital of Germany
+   4. A total eclipse happens frequently
+   5. Special measures must not be taken to deal with the current situation
+   
+** DONE OPZ 
+   CLOSED: [2018-01-22 Mon 15:38]
+   1. I did not study
+   2. I studied or I got an F on the test
+   3. I studied and I got an F on the test
+   4. I did not study and I did not get an F on the test
+   5. I did not study or I got an F on the test
+   6. I did not study and I did not get an F on the test
+   
+** DONE UOX  
+   CLOSED: [2018-01-22 Mon 18:32]
+   :LOGBOOK:
+   CLOCK: [2018-01-22 Mon 18:31]--[2018-01-22 Mon 18:32] =>  0:01
+   :END:
+   Check special forms
+   1. =when=
+   2. =unless=
+   3. =cond=
+   4. =not=
+   5. =and=
+   6. =or=
+
+      According the the gnu emacs manual, "A special form is a primitive function specially
+      marked so that its arguments are not all evaluated. For example, the 'if' function executes 
+      only a certain part of its code block depending on which of the conditions is evaluated. 
+   
+** DONE OTX
+   CLOSED: [2018-01-22 Mon 18:33]
+   1. xor
+   2. or
+   3. or
+   4. or
+   5. xor
+   6. xor
+   
+** DONE UOT 
+   CLOSED: [2018-01-22 Mon 18:35]
+   :LOGBOOK:
+   CLOCK: [2018-01-22 Mon 18:33]--[2018-01-22 Mon 18:35] =>  0:02
+   :END:
+  
+Truth table for equation 2:
+
+| p | q | r | p and q (A) | not r (B) | (A) or (B) |
+|---+---+---+-------------+-----------+------------|
+| 0 | 0 | 0 |           0 |         1 |          1 |
+| 0 | 0 | 1 |           0 |         0 |          0 |
+| 0 | 1 | 0 |           0 |         1 |          1 |
+| 0 | 1 | 1 |           0 |         0 |          0 |
+| 1 | 0 | 0 |           0 |         1 |          1 |
+| 1 | 0 | 1 |           0 |         0 |          0 |
+| 1 | 1 | 0 |           1 |         1 |          1 |
+| 1 | 1 | 1 |           1 |         0 |          1 |
+
+Comparison between the 2:
+| EQ1 | EQ2 |
+|-----+-----|
+|   0 |   1 |
+|   0 |   0 |
+|   0 |   1 |
+|   0 |   0 |
+|   1 |   1 |
+|   0 |   0 |
+|   1 |   1 |
+|   1 |   1 |
+
+** DONE OIM  
+   CLOSED: [2018-01-22 Mon 18:38]
+   :LOGBOOK:
+   CLOCK: [2018-01-22 Mon 18:35]--[2018-01-22 Mon 18:38] =>  0:03
+   :END:
+   The first column represents the decimal value given in binary by the last three columns. 
+   If A,B,C could be represented as being true (1), and their compliments as being false (0), the middle column
+   reflects the binary number in its set logic. 
+   
+** DONE UIN
+   CLOSED: [2018-01-22 Mon 18:54]
+
+   #+BEGIN_SRC emacs-lisp
+(require 'cl)
+(set-difference '(q w e r t y u i o p a s d f g h j k l z x c v b n m) '(a e i o u h k l m n p w))
+   
+   #+END_SRC
+
+   #+RESULTS:
+   | q | r | t | y | s | d | f | g | j | z | x | c | v | b |
+
+** DONE OJL
+   CLOSED: [2018-01-22 Mon 19:11]
+   
+   | A   | 4 ∪ 5 ∪ 7 ∪ 6	 | (p∧¬q∧¬r)∨(p∧¬q∧r)∨(p∧q∧r)∨(p∧q∧¬r) | correct |
+   | B	 | 2 ∪ 3 ∪ 7 ∪ 6	 | (¬p∧q∧¬r)∨(¬p∧q∧r)∨(p∧q∧r)∨(p∧q∧¬r) | correct |
+   | C	 | 1 ∪ 3 ∪ 5 ∪ 7	 | (¬p∧¬q∧r)∨(¬p∧q∧r)∨(p∧¬q∧r)∨(p∧q∧r) | correct |
+   
+   You can verify these by looking at the image above OJL in the book. 
+
+** DONE UCG
+   CLOSED: [2018-01-23 Tue 15:11]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 15:10]--[2018-01-23 Tue 15:11] =>  0:01
+   :END:
+
+*** 1. A or B = C
+    C = [verve vim vigor butter vinegar pepper]
+
+*** 2. A and B = D
+    D = [vigor]
+
+*** 3. subset of C that start with 'v'
+    [verve vim vigor vinegar]
+
+*** 4. subset of C that end with 'r'
+    [vigor butter vinegar pepper]
+*** 5. subset of C that start with 'v' and end with 'r'
+    [vigor vinegar]
+*** 6. subset of D that have six letters
+    [ ] -> empty
+** DONE OIO
+   CLOSED: [2018-01-23 Tue 15:13]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 15:11]--[2018-01-23 Tue 15:13] =>  0:02
+   :END:
+   #+BEGIN_SRC emacs-lisp
+(setq A [ s i z e]
+      a (length A)
+      B [b i g g e r i n s i z e]
+      b (length B)
+      A-is-a-subset-of-B (subsetp (append A nil) (append B nil))
+      a-is-less-than-or-equal-to-b (<= a b))
+   #+END_SRC
+
+   #+RESULTS:
+   : t
+
+#+BEGIN_SRC emacs-lisp :results silent
+  
+#+END_SRC 
+** DONE UIJ
+   CLOSED: [2018-01-23 Tue 15:14]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 15:13]--[2018-01-23 Tue 15:14] =>  0:01
+   :END:
+   The logical operator -> represents 'if... then', in other words, if the left side is true,
+   then the right side is also true. If A is a subset of B, that means that anything in A(3) 
+   is inside of B(2) (which is also in set U(1)). This means, that if a point is inside A,
+   than it is also inside B (and U). This can be expressed with the \rightarrow symbol: A \rightarrow B (\rightarrow U).
+
+   This does NOT mean that everything in B is in A. so B \rarr A is not valid.
+** DONE OQT
+   CLOSED: [2018-01-23 Tue 15:16]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 15:14]--[2018-01-23 Tue 15:16] =>  0:02
+   :END:
+*** 1. If I study, then I get an A on the test
+*** 2. I did not study or I did not get an A on the test
+*** 3. If I do not study, then I study or get an A on the test
+*** 4. If I do not study, then I do not get an A on the test
+** DONE UTQ
+   CLOSED: [2018-01-23 Tue 21:35]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:34]--[2018-01-23 Tue 21:35] =>  0:01
+   CLOCK: [2018-01-23 Tue 15:16]--[2018-01-23 Tue 15:19] =>  0:03
+   :END:
+   1. p \land q
+   2. \not p \land q
+   3. p \land \not q
+   4. (\not p \land \not q) \lor (p \land q)
+** DONE OYU
+   CLOSED: [2018-01-23 Tue 21:36]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:35]--[2018-01-23 Tue 21:36] =>  0:01
+   :END:
+   1. p implies q
+   2. p so q
+   3. p therefore q
+   4. every time p, q
+** DONE UOH
+   CLOSED: [2018-01-23 Tue 21:48]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:36]--[2018-01-23 Tue 21:48] =>  0:12
+   :END:
+   
+   p: You applied for admission at BYU-I
+   q: You were accepted
+   
+   You are accepted only if you apply so,
+
+   q \rarr p
+   
+   If you were accepted, then you know you applied so
+
+   q \rarr p
+
+   q \leftrightarrow p 
+   
+** DONE OZD
+   CLOSED: [2018-01-23 Tue 21:49]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:48]--[2018-01-23 Tue 21:49] =>  0:01
+   :END:
+   1. if true than false : false
+   2. if true than false : false
+   3. if false than true : true
+   4. if true than true : true
+** DONE UZM
+   CLOSED: [2018-01-23 Tue 21:49]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:49]--[2018-01-23 Tue 21:49] =>  0:00
+   :END:
+   1. true
+   2. false
+   3. false
+   4. true
+** DONE OOY
+   CLOSED: [2018-01-23 Tue 21:51]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:49]--[2018-01-23 Tue 21:51] =>  0:02
+   :END:
+   1. If you want to win, then you must sign up
+   2. If I go outside, then I get cold
+   3. If you are an A student, then you will get a scholarship
+   4. If you leave now, then you will get there on time
+   5. If I act now, then I get half off
+
+** DONE UFZ
+   CLOSED: [2018-01-23 Tue 21:51]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:51]--[2018-01-23 Tue 21:51] =>  0:00
+   :END:
+   Given p \rarr q
+   Converse q \rarr p
+   Inverse \not p \rarr \not q
+   Contrapositive \not q \rarr \not p
+
+** DONE OKJ
+   CLOSED: [2018-01-23 Tue 21:54]
+*** 1. If it rains today, we won't go to the park   
+    it rains = p we won't go to the park = q
+
+    converse: If we don't go to the park, it will rain
+    inverse: If it does not rain today, we will go to the park
+    contrapositive: We will go to the park if it does not rain.
+*** 2. If you do your homework, I’ll give you a pat on the back.
+
+    you do your homework = p I give you a pat on the back = q
+
+    converse: If I give you a pat on the back, then you will do your homework.
+    inverse: If you do not do your homework, I will not give you a pat on the back.
+    contrapostive: If I do not give you a pat on the back, you will not do your homework
+*** 3. Whenever I babysit, I get sick
+    I babysit = p I get sick = q
+
+    converse: If I get sick, then I babysit
+    inverse: If I do not babysit, then I do not get sick
+    contrapositive: if I do not get sick, then I do not babysit
+*** 4. Every time there is a quiz, I go to class
+    There is a quiz = p I go to class = q
+
+    converse: Every time I go to class, there is a quiz
+    inverse: If there is not a quiz, then I do not go to class
+    contrapositive: If I do not go to class, then there is no quiz
+*** 5. I wake up late when I stay up past my bedtime
+    I wake up late = p I stay up past my bedtime = q
+
+    converse: When I stay up past my bedtime, I wake up late.
+    inverse: When I don't wake up late, I don't stay up past my bedtime
+    contrapositive: When I don't stay up past my bedtime, I don't wake up late
+** DONE UVH
+   CLOSED: [2018-01-23 Tue 21:58]
+    :LOGBOOK:
+    CLOCK: [2018-01-23 Tue 21:55]--[2018-01-23 Tue 21:59] =>  0:04
+    :END:
+*** 1. p \rarr q
+    
+    | p | q | p --> q |
+    | 0 | 0 |       1 |
+    | 0 | 1 |       1 |
+    | 1 | 0 |       0 |
+    | 1 | 1 |       1 |
+
+*** 2. p \oplus q
+    | p | q | p \oplus q |
+    | 0 | 0 |     0 |
+    | 0 | 1 |     1 |
+    | 1 | 0 |     1 |
+    | 1 | 1 |     0 |
+
+*** 3. p → q  
+    | p | q | p --> q |
+    | 0 | 0 |       1 |
+    | 0 | 1 |       1 |
+    | 1 | 0 |       0 |
+    | 1 | 1 |       1 |
+
+*** 4. ¬p → q
+    | p | \not p | q | ¬p→q |
+    | 0 |   1 | 0 |    0 |
+    | 0 |   1 | 1 |    1 |
+    | 1 |   0 | 0 |    1 |
+    | 1 |   0 | 1 |    1 |
+
+*** 5. p ∧ ¬q
+    | p | q | \not q | p \land \not q |
+    | 0 | 0 |   1 |       0 |
+    | 0 | 1 |   0 |       0 |
+    | 1 | 0 |   1 |       1 |
+    | 1 | 1 |   0 |       0 |
+
+** DONE OJM 
+   CLOSED: [2018-01-23 Tue 22:03]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 21:59]--[2018-01-23 Tue 22:03] =>  0:04
+   :END:
+*** 1. p → (¬p)
+    | p | \not p | p→(¬p) |
+    | 0 |   1 |      1 |
+    | 1 |   0 |      0 |
+
+*** 2. p ↔ q
+
+    | p | q | p↔q |
+    | 0 | 0 |   1 |
+    | 0 | 1 |   0 |
+    | 1 | 0 |   0 |
+    | 1 | 1 |   1 |
+
+*** 3. p ↔ (¬p)
+    | p | \not p | p↔(¬p) |
+    | 0 |   1 |      0 |
+    | 1 |   0 |      0 |
+
+*** 4. p ∧ p
+
+    | p | p ∧ p |
+    | 0 |     0 |
+    | 1 |     1 |
+
+*** 5. p ∨ p
+
+    | p | p ∨ p |
+    | 0 |     0 |
+    | 1 |     1 |
+
+** DONE ULQ
+   CLOSED: [2018-01-23 Tue 22:04]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:03]--[2018-01-23 Tue 22:04] =>  0:01
+   :END:
+
+   | p | q | r | s | p->q | q->r | (p->q)->(q->r) | (r->s) | (p->q)->(q->r)->(r->s) |
+   | 0 | 0 | 0 | 0 |    1 |    1 |              1 |      1 |                      1 |
+   | 0 | 0 | 0 | 1 |    1 |    1 |              1 |      1 |                      1 |
+   | 0 | 0 | 1 | 0 |    1 |    1 |              1 |      0 |                      0 |
+   | 0 | 0 | 1 | 1 |    1 |    1 |              1 |      1 |                      1 |
+   | 0 | 1 | 0 | 0 |    1 |    0 |              0 |      1 |                      1 |
+   | 0 | 1 | 0 | 1 |    1 |    0 |              0 |      1 |                      1 |
+   | 0 | 1 | 1 | 0 |    1 |    1 |              1 |      0 |                      0 |
+   | 0 | 1 | 1 | 1 |    1 |    1 |              1 |      1 |                      1 |
+   | 1 | 0 | 0 | 0 |    0 |    1 |              1 |      1 |                      1 |
+   | 1 | 0 | 0 | 1 |    0 |    1 |              1 |      1 |                      1 |
+   | 1 | 0 | 1 | 0 |    0 |    1 |              1 |      0 |                      1 |
+   | 1 | 0 | 1 | 1 |    0 |    1 |              1 |      1 |                      1 |
+   | 1 | 1 | 0 | 0 |    1 |    0 |              0 |      1 |                      1 |
+   | 1 | 1 | 0 | 1 |    1 |    0 |              0 |      1 |                      1 |
+   | 1 | 1 | 1 | 0 |    1 |    1 |              1 |      0 |                      0 |
+   | 1 | 1 | 1 | 1 |    1 |    1 |              1 |      1 |                      1 |
+
+** DONE OTD
+   CLOSED: [2018-01-23 Tue 22:08]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:04]--[2018-01-23 Tue 22:08] =>  0:04
+   :END:
+(p ∨ q) ∧ (¬ p ∨ r) → (q V r)
+   | p | q | r | \not p | p V q | \not p V r | (p V q) \land (\not p V r) | (q V r) | ((p ∨ q) ∧ (¬ p ∨ r)) → (q V r) |
+   | 0 | 0 | 0 |   1 |     0 |       1 |                   0 |       0 |                               1 |
+   | 0 | 0 | 1 |   1 |     0 |       1 |                   0 |       1 |                               1 |
+   | 0 | 1 | 0 |   1 |     1 |       1 |                   1 |       1 |                               1 |
+   | 0 | 1 | 1 |   1 |     1 |       1 |                   1 |       1 |                               1 |
+   | 1 | 0 | 0 |   0 |     1 |       0 |                   0 |       0 |                               1 |
+   | 1 | 0 | 1 |   0 |     1 |       1 |                   1 |       1 |                               1 |
+   | 1 | 1 | 0 |   0 |     1 |       0 |                   0 |       1 |                               1 |
+   | 1 | 1 | 1 |   0 |     1 |       1 |                   1 |       1 |                               1 |
+** DONE UJU
+   CLOSED: [2018-01-23 Tue 22:13]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:11]--[2018-01-23 Tue 22:13] =>  0:02
+   CLOCK: [2018-01-23 Tue 22:08]--[2018-01-23 Tue 22:11] =>  0:03
+   :END:
+*** 1. Or congruence    
+
+    | p | q | p \lor q | q \lor p | (p \lor q) \leftrightarrow (q \lor p) |
+    | 0 | 0 |     0 |     0 |                 1 |
+    | 0 | 1 |     1 |     1 |                 1 |
+    | 1 | 0 |     1 |     1 |                 1 |
+    | 1 | 1 |     1 |     1 |                 1 |
+
+*** 2. And congruence
+     | p | q | p \land q | q \land p | (p \land q) \leftrightarrow (q \land p) |
+     | 0 | 0 |     0 |     0 |                 1 |
+     | 0 | 1 |     0 |     0 |                 1 |
+     | 1 | 0 |     0 |     0 |                 1 |
+     | 1 | 1 |     1 |     1 |                 1 |
+    
+
+    | p | q | p ^ q | <-> | p | q | q ^ p |
+    | 0 | 0 |     0 |   1 | 0 | 0 |     0 |
+    | 0 | 1 |     0 |   1 | 0 | 1 |     0 |
+    | 1 | 0 |     0 |   1 | 1 | 0 |     0 |
+    | 1 | 1 |     1 |   1 | 1 | 1 |     1 |
+    |   |   |       |     |   |   |       |
+** DONE OLH
+   CLOSED: [2018-01-23 Tue 22:23]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:14]--[2018-01-23 Tue 22:23] =>  0:09
+   :END:
+
+*** 1. (p∨q)∨r≡p∨(q∨r)
+
+| p | q | r | (p \lor q) | (q \lor r) | (p \lor q) \lor r | p \lor (q \lor r) | (p \lor q) \lor r \leftrightarrow p \lor (q \lor r) |
+| 0 | 0 | 0 |       0 |       0 |           0 |           0 |                         1 |
+| 0 | 0 | 1 |       0 |       1 |           1 |           1 |                         1 |
+| 0 | 1 | 0 |       1 |       1 |           1 |           1 |                         1 |
+| 0 | 1 | 1 |       1 |       1 |           1 |           1 |                         1 |
+| 1 | 0 | 0 |       1 |       0 |           1 |           1 |                         1 |
+| 1 | 0 | 1 |       1 |       1 |           1 |           1 |                         1 |
+| 1 | 1 | 0 |       1 |       1 |           1 |           1 |                         1 |
+| 1 | 1 | 1 |       1 |       1 |           1 |           1 |                         1 |
+
+*** 2. (p∧q)∧r≡p∧(q∧r)
+
+| p | q | r | (p \land q) | (q \land r) | (p \land q) \land r | p \land (q \land r) | (p \land q) \land r \leftrightarrow p \land (q \land r) |
+| 0 | 0 | 0 |       0 |       0 |           0 |           0 |                         1 |
+| 0 | 0 | 1 |       0 |       0 |           0 |           0 |                         1 |
+| 0 | 1 | 0 |       0 |       0 |           0 |           0 |                         1 |
+| 0 | 1 | 1 |       0 |       1 |           0 |           0 |                         1 |
+| 1 | 0 | 0 |       0 |       0 |           0 |           0 |                         1 |
+| 1 | 0 | 1 |       0 |       0 |           0 |           0 |                         1 |
+| 1 | 1 | 0 |       1 |       0 |           0 |           0 |                         1 |
+| 1 | 1 | 1 |       1 |       1 |           1 |           1 |                         1 |
+
+** DONE UWY
+   CLOSED: [2018-01-23 Tue 22:36]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:23]--[2018-01-23 Tue 22:36] =>  0:13
+   :END:
+*** 1. p∧(q∨r)≡(p∧q)∨(p∧r)
+
+| p | q | r | (q \lor r) | (p \land q) | (p \land r) | p \land ( q \lor r) | (p \land q) \lor (p \land r) | p \land ( q \lor r) \leftrightarrow  (p \land q) \lor (p \land r) |
+| 0 | 0 | 0 |       0 |       0 |       0 |            0 |                 0 |                                 1 |
+| 0 | 0 | 1 |       1 |       0 |       0 |            0 |                 0 |                                 1 |
+| 0 | 1 | 0 |       1 |       0 |       0 |            0 |                 0 |                                 1 |
+| 0 | 1 | 1 |       1 |       0 |       0 |            0 |                 0 |                                 1 |
+| 1 | 0 | 0 |       0 |       0 |       0 |            0 |                 0 |                                 1 |
+| 1 | 0 | 1 |       1 |       0 |       1 |            1 |                 1 |                                 1 |
+| 1 | 1 | 0 |       1 |       1 |       0 |            1 |                 1 |                                 1 |
+| 1 | 1 | 1 |       1 |       1 |       1 |            1 |                 1 |                                 1 |
+
+*** 2. p∨(q∧r)≡(p∨q)∧(p∨r)
+
+    | p | q | r | (q \land r) | (p \lor q) | (p \lor r) | p \lor ( q \land r) | (p \lor q) \land (p \lor r) | p \lor ( q \land r) \leftrightarrow  (p \lor q) \land (p \lor r) |
+    | 0 | 0 | 0 |       0 |       0 |       0 |            0 |                 0 |                                 1 |
+    | 0 | 0 | 1 |       0 |       0 |       1 |            0 |                 0 |                                 1 |
+    | 0 | 1 | 0 |       0 |       1 |       0 |            0 |                 0 |                                 1 |
+    | 0 | 1 | 1 |       1 |       1 |       1 |            1 |                 1 |                                 1 |
+    | 1 | 0 | 0 |       0 |       1 |       1 |            1 |                 1 |                                 1 |
+    | 1 | 0 | 1 |       0 |       1 |       1 |            1 |                 1 |                                 1 |
+    | 1 | 1 | 0 |       0 |       1 |       1 |            1 |                 1 |                                 1 |
+    | 1 | 1 | 1 |       1 |       1 |       1 |            1 |                 1 |                                 1 |
+
+** DONE OBW
+   CLOSED: [2018-01-23 Tue 22:39]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:36]--[2018-01-23 Tue 22:39] =>  0:03
+   :END:
+*** 1. ¬(p∨q)≡¬p∧¬q 
+    
+    I constructed this truth table a little differently, 
+    I just emulated the expression in its structure. As 
+    such, the final 'truth' column is this one
+                                    |
+                                    \downarrow
+    | p | q | (p \lor q) | \not (p \lor q) | \leftrightarrow | \not p | \land | \not q |
+    | 0 | 0 |       0 |         1 | 1 |   1 | 1 |   1 |
+    | 0 | 1 |       1 |         0 | 1 |   1 | 0 |   0 |
+    | 1 | 0 |       1 |         0 | 1 |   0 | 0 |   1 |
+    | 1 | 1 |       1 |         0 | 1 |   0 | 0 |   0 |
+
+*** 2. ¬(p∧q)≡¬p∨¬q
+    Same fromat of table here... 
+    | p | q | (p \land q) | \not (p \land q) | \leftrightarrow | \not p | \lor | \not q |
+    | 0 | 0 |       0 |         1 | 1 |   1 | 1 |   1 |
+    | 0 | 1 |       0 |         1 | 1 |   1 | 1 |   0 |
+    | 1 | 0 |       0 |         1 | 1 |   0 | 1 |   1 |
+    | 1 | 1 |       1 |         0 | 1 |   0 | 0 |   0 |
+** DONE USL
+   CLOSED: [2018-01-23 Tue 22:42]
+*** 1. p∧1≡p
+    :LOGBOOK:
+    CLOCK: [2018-01-23 Tue 22:40]--[2018-01-23 Tue 22:42] =>  0:02
+    :END:
+    
+    | p | \land 1 | \leftrightarrow | p |
+    | 0 |   0 | 0 | 0 |
+    | 1 |   1 | 1 | 1 |
+*** 2. p∨0≡p   
+
+    | p | \lor 0 | \leftrightarrow | p |
+    | 0 |   0 | 1 | 0 |
+    | 1 |   1 | 1 | 1 |
+*** 3. ¬¬p≡p
+
+    | p | \not \not | \leftrightarrow | p |
+    | 0 |   0 | 1 | 0 |
+    | 1 |   1 | 1 | 1 |
+
+*** 4. p∧0≡0   
+
+    | p | \land 0 | \leftrightarrow | 0 |
+    | 0 |   0 | 1 | 0 |
+    | 1 |   0 | 1 | 0 |
+
+*** 5. p∨1≡1
+
+    | p | \lor 1 | \leftrightarrow | 1 |
+    | 0 |   1 | 1 | 1 |
+    | 1 |   1 | 1 | 1 |
+
+** DONE OYP
+   CLOSED: [2018-01-23 Tue 22:42]
+   :LOGBOOK:
+   CLOCK: [2018-01-23 Tue 22:42]--[2018-01-23 Tue 22:42] =>  0:00
+   :END:
+
+   1. matches with USL.1 (idempotence)
+   2. matches with USL.5 (absorption)
+   3. matches with USL.2 (idempotence)
+   4. matches with USL.4 (absorption)
+   5. matches with USL.3 (double negation)
+   
+** DONE UBV
+   CLOSED: [2018-01-26 Fri 16:04]
+   :LOGBOOK:
+   CLOCK: [2018-01-26 Fri 15:57]--[2018-01-26 Fri 16:04] =>  0:07
+   CLOCK: [2018-01-26 Fri 13:51]--[2018-01-26 Fri 13:54] =>  0:03
+   CLOCK: [2018-01-23 Tue 23:03]--[2018-01-23 Tue 23:17] =>  0:14
+   CLOCK: [2018-01-23 Tue 22:42]--[2018-01-23 Tue 23:02] =>  0:20
+   :END:
+
+*** 1. Winning the first round is necessary for winning the trophy
+
+    p = winning the first round q = winning the trophy
+
+    q \rarr p \equiv \not q \lor p
+
+    \not (\not q \lor p) \equiv q \land \not p 
+   
+    Win the trophy and lose the first round
+
+*** 2. Winning the tournament is sufficient for winning the trophy
+
+    p = winning the tournament q = winning the trophy 
+    
+    p \rarr q \equiv \not p \lor q
+
+    \not ( \not p \lor q ) \equiv  p \land \not q
+
+    Winning the the tournament and lose the trophy.
+
+*** 3. I am powerful and successful
+
+    p = I am powerful q = successful
+    \not (p \land q) = (\not p) \lor (\not q)
+
+    I am not powerful, or I am not successful
+
+*** 4. You can pass or fail this test
+    
+    p = You can pass q = fail this test
+    
+    \not (p \lor q) \equiv \not p \land \not q
+    
+    You can fail and you can pass this test
+
+*** 5. Getting an A on the final exam is necessary and sufficient for passing this class
+
+    p = Getting an A on the final exam q = passing this class
+
+    p \leftrightarrow q \equiv (p \rarr q) \land (q \rarr p)
+
+    \not ((p \rarr q) \land (q \rarr p)) \equiv \not (p \rarr q) \lor \not (q \rarr p) \equiv (p \land \not q) \lor (q \land \not p)
+
+    Get an A on the final exam and not pass the class or pass the class and do not get an A on the final exam
+
+** DONE OKQ 
+   CLOSED: [2018-01-24 Wed 21:10]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 21:07]--[2018-01-24 Wed 21:10] =>  0:03
+   :END:
+                         This is the one you want
+                                  |
+                                  \downarrow
+| p | q | r | p \leftrightarrow q | \wedge | q \leftrightarrow r | \leftrightarrow | p \leftrightarrow | q \wedge r |
+| 0 | 0 | 0 |     1 | 1 |     1 | 1 |   1 |     0 |
+| 0 | 0 | 1 |     1 | 0 |     0 | 0 |   1 |     0 |
+| 0 | 1 | 0 |     0 | 0 |     0 | 0 |   1 |     0 |
+| 0 | 1 | 1 |     0 | 0 |     1 | 1 |   0 |     1 |
+| 1 | 0 | 0 |     0 | 0 |     1 | 1 |   0 |     0 |
+| 1 | 0 | 1 |     0 | 0 |     0 | 1 |   0 |     0 |
+| 1 | 1 | 0 |     1 | 0 |     0 | 1 |   0 |     0 |
+| 1 | 1 | 1 |     1 | 1 |     1 | 1 |   1 |     1 |
+
+** DONE UKF
+   CLOSED: [2018-01-24 Wed 21:11]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 21:10]--[2018-01-24 Wed 21:11] =>  0:01
+   :END:
+
+   | p | q | \not p | \leftrightarrow q | \leftrightarrow | p \leftrightarrow | \not q |
+   | 0 | 0 |   1 |   0 | 1 |   0 |   1 |
+   | 0 | 1 |   1 |   1 | 1 |   1 |   0 |
+   | 1 | 0 |   0 |   1 | 1 |   1 |   1 |
+   | 1 | 1 |   0 |   0 | 1 |   0 |   0 |
+
+** DONE OKL
+   CLOSED: [2018-01-24 Wed 21:17]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 21:11]--[2018-01-24 Wed 21:17] =>  0:06
+   :END:
+   
+| p | q | r | p \lor q | \wedge | \not p \lor r | \rarr | q \lor r |
+| 0 | 0 | 0 |     0 | 0 |       1 |  1 |     0 |
+| 0 | 0 | 1 |     0 | 0 |       1 |  1 |     1 |
+| 0 | 1 | 0 |     1 | 1 |       1 |  1 |     1 |
+| 0 | 1 | 1 |     1 | 1 |       1 |  1 |     1 |
+| 1 | 0 | 0 |     1 | 0 |       0 |  1 |     0 |
+| 1 | 0 | 1 |     1 | 1 |       1 |  1 |     1 |
+| 1 | 1 | 0 |     1 | 0 |       0 |  1 |     1 |
+| 1 | 1 | 1 |     1 | 1 |       1 |  1 |     1 |
+
+It is a tautology
+
+** DONE UEZ
+   CLOSED: [2018-01-24 Wed 21:20]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 21:17]--[2018-01-24 Wed 21:20] =>  0:03
+   :END:
+   (p ∧ q) ∧ ¬ r
+
+| p | q | r | p \wedge q | \wedge | \not r |
+| 0 | 0 | 0 |     0 | 0 |   1 |
+| 0 | 0 | 1 |     0 | 0 |   0 |
+| 0 | 1 | 0 |     0 | 0 |   1 |
+| 0 | 1 | 1 |     0 | 0 |   0 |
+| 1 | 0 | 0 |     0 | 0 |   1 |
+| 1 | 0 | 1 |     0 | 0 |   0 |
+| 1 | 1 | 0 |     1 | 1 |   1 |
+| 1 | 1 | 1 |     1 | 0 |   0 |
+
+** DONE OYW
+   CLOSED: [2018-01-24 Wed 21:55]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 21:21]--[2018-01-24 Wed 21:55] =>  0:34
+   :END:
+
+#+BEGIN_SRC emacs-lisp
+(defun xor (p q)
+  "Exclusive or."
+  (if p (not q) q))  
+
+  (defun --> (p q)
+    "Conditional: p only if q"
+    (or (not p) q))
+
+  (defun <--> (p q)
+    "Biconditional: p if and only if q"
+    (and (--> p q) (--> q p)))
+
+  (defun valid-connective (op)
+    (or (eq op 'and) (eq op 'or) (eq op 'xor)
+        (eq op '-->) (eq op '<-->)))
+  (defun prop-eval (prop)
+    (unless (and (vectorp prop)
+                 (= 3 (length prop))
+                 (valid-connective (elt prop 1)))
+      (error "bad parameters"))
+    (let* ((op (elt prop 1))
+           (l (eval (elt prop 0)))
+           (r (eval (elt prop 2)))
+           (lval (y-or-n-p (mapconcat 'symbol-name l " ")))
+           (rval (y-or-n-p (mapconcat 'symbol-name r " ")))
+           (result (eval (list op lval rval))))
+      (list l (list lval) op r (list rval) 'yields result)))
+
+  ;(let* ((p [It is raining])
+     ;    (q [The grass is wet])
+    ;     (p-and-q [p and q]))
+   ; (prop-eval p-and-q))
+
+
+  ;(let* ((p [It is raining])
+   ;      (q [The grass is wet])
+    ;     (p-onlyif-q [p --> q]))
+    ;(prop-eval p-onlyif-q ))
+
+#+END_SRC
+
+#+RESULTS:
+: prop-eval
+
+#+BEGIN_SRC emacs-lisp :results output
+   (progn (print (let* ((p [My car runs])
+         (q [There is gas in the tank])
+         (p-onlyif-q [p <--> q]))
+         (prop-eval p-onlyif-q)))
+
+     (print (let* ((p [I buy food])
+            (q [I have money])
+            (p-xor-q [p xor q]))
+            (prop-eval p-xor-q)))
+
+   (print (let* ((p [It is cold])
+          (q [It is snowing])
+          (p-and-q [p and q]))
+          (prop-eval p-and-q)))
+
+    (print (let* ((p [I am tired])
+            (q [I am awake])
+            (p-or-q [p or q]))
+            (prop-eval p-or-q))))
+#+END_SRC
+
+: 
+: ([My car runs] (t) <--> [There is gas in the tank] (nil) yields nil)
+: 
+: ([I buy food] (t) xor [I have money] (t) yields nil)
+: 
+: ([It is cold] (t) and [It is snowing] (nil) yields nil)
+: 
+: ([I am tired] (nil) or [I am awake] (t) yields t)
+
+** DONE UEF
+   CLOSED: [2018-01-24 Wed 22:25]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 22:12]--[2018-01-24 Wed 22:25] =>  0:13
+   :END:
+
+#+BEGIN_SRC emacs-lisp
+
+(defun --> (p q)
+  "Conditional: p only if q"
+  (or (not p) q))
+
+(defun <--> (p q)
+  "Biconditional: p if and only if q"
+  (and (--> p q) (--> q p)))
+
+(defun valid-connective (op)
+  (or (eq op 'and) (eq op 'or) (eq op 'xor)
+      (eq op '-->) (eq op '<-->)))
+(defun stringify (prop)
+  (let* ((str (mapconcat 'symbol-name prop " ")))
+    (downcase (substring str 0 (- (length str) 1)))))
+
+(defun fancier-prompt (str)
+  (let* ((prompt (concat "Is it the case that " str "? "))
+         (answer (y-or-n-p-with-timeout prompt 5 t)))
+    (princ (format "Given %s is %s\n" str (if answer 'true: 'false:)))
+    answer))
+
+(defun fancier-output (result l op r)
+  (princ (format "It is %s that %s %s %s.\n"
+                 (if result 'true 'false)
+                 l op r)))
+
+(defun prop-eval (prop)
+  (unless (and (vectorp prop)
+               (= 3 (length prop))
+               (valid-connective (elt prop 1)))
+    (error "bad parameters"))
+  (let* ((op (elt prop 1))
+         (l (eval (elt prop 0)))
+         (r (eval (elt prop 2)))
+         (lstr (stringify l))
+         (rstr (stringify r))
+         (lval (fancier-prompt lstr))
+         (rval (fancier-prompt rstr))
+         (result (eval (list op lval rval))))
+    (fancier-output result lstr op rstr)))
+
+(let* ((p [It is now raining.])
+       (q [The grass is wet.])
+       (p-onlyif-q [p <--> q]))
+  (prop-eval p-onlyif-q))
+#+END_SRC
+
+#+RESULTS:
+: It is false that it is now raining <--> the grass is wet.
+
+In the prop-eval function, within the unless-> and conditional, you could replace the '(= 3 (length prop))' with 't',
+you can then pass in any length of parameter. It may not be a valid input, but that is where you'd need to start if you wanted
+to implement more complex expressions. Then you could use &rest and iterate over the list and evaluate the propositions that way. You 
+would still need to check that for each operator, the correct amount of operands were present. 
+
+** DONE OUB
+   CLOSED: [2018-01-24 Wed 22:37]
+   :LOGBOOK:
+   CLOCK: [2018-01-24 Wed 22:26]--[2018-01-24 Wed 22:37] =>  0:11
+   :END:
+
+
+  #+BEGIN_SRC emacs-lisp :results silent
+(defun <-- (p q)
+"Conditional: p if q"
+(and (not q) p))
+
+(defun --> (p q)
+  "Conditional: p only if q"
+  (or (not p) q))
+
+(defun <--> (p q)
+  "Biconditional: p if and only if q"
+  (and (--> p q) (--> q p))
+  ;(or (<-- p q) (<-- q))
+  ;(or (and p q) (and (not p) (not q)))
+)
+
+(defun valid-connective (op)
+  (or (eq op 'and) (eq op 'or) (eq op 'xor)
+      (eq op '-->) (eq op '<-->) (eq op '<--)))
+(defun stringify (prop)
+  (let* ((str (mapconcat 'symbol-name prop " ")))
+    (downcase (substring str 0 (- (length str) 1)))))
+
+(defun fancier-prompt (str)
+  (let* ((prompt (concat "Is it the case that " str "? "))
+         (answer (y-or-n-p-with-timeout prompt 5 t)))
+    (princ (format "Given %s is %s\n" str (if answer 'true: 'false:)))
+    answer))
+
+(defun fancier-output (result l op r)
+  (princ (format "It is %s that %s %s %s.\n"
+                 (if result 'true 'false)
+                 l op r)))
+
+(defun prop-eval (prop)
+  (unless (and (vectorp prop)
+               (= 3 (length prop))
+               (valid-connective (elt prop 1)))
+    (error "bad parameters"))
+  (let* ((op (elt prop 1))
+         (l (eval (elt prop 0)))
+         (r (eval (elt prop 2)))
+         (lstr (stringify l))
+         (rstr (stringify r))
+         (lval (fancier-prompt lstr))
+         (rval (fancier-prompt rstr))
+         (result (eval (list op lval rval))))
+    (fancier-output result lstr op rstr)))
+
+
+  #+END_SRC 
+
+  #+RESULTS:
+  : It is true that it is raining <--> the grass is wet.
+
+#+BEGIN_SRC emacs-lisp :results output
+  (progn (let* ((p [It is raining.])
+               (q [The grass is wet.])
+               (p-onlyif-q [p <--> q]))
+         (prop-eval p-onlyif-q))
+
+         (let* ((p [It is raining.])
+                (q [The grass is wet.])
+                (q-if-p [p <-- q]))
+          (prop-eval q-if-p)))
+  
+#+END_SRC
+
+: Given it is raining is true:
+: Given the grass is wet is true:
+: It is true that it is raining <--> the grass is wet.
+: Given it is raining is true:
+: Given the grass is wet is true:
+: It is false that it is raining <-- the grass is wet.
+
+** DONE UQY
+   CLOSED: [2018-01-25 Thu 16:12]
+   :LOGBOOK:
+   CLOCK: [2018-01-25 Thu 15:09]--[2018-01-25 Thu 15:15] =>  0:06
+   CLOCK: [2018-01-24 Wed 22:38]--[2018-01-24 Wed 23:02] =>  0:24
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun not1 (x)
+  (* (- x 1) -1))
+  ;(not x))
+
+(defun and2 (x y)
+  (* x y))
+  ;(and x y))
+
+(defun or2 (x y)
+  (ceiling (/ (+ x y) 2.0)))
+  ;(or x y))
+
+(defun truth-table-row-inputs (i)
+  (elt [[0 0 0] [0 0 1] [0 1 0] [0 1 1]
+        [1 0 0] [1 0 1] [1 1 0] [1 1 1]] i))
+
+(defun truth-table-row-with-output (i func)
+  (let* ((inputs (append (truth-table-row-inputs i) nil))
+         (output (apply func inputs)))
+    (apply 'vector (append inputs (list output)))))
+
+(defun f1 (p q r)
+  (or2 (and2 p q) (not1 r)))
+
+(defun f2 (p q r)
+  (and2 p (or2 q (not1 r))))
+
+(defun f3 (p q r)
+  (or2 p (and2 q r)))
+
+(defun generate-truth-table-for (func)
+  (vector (truth-table-row-with-output 0 func)
+          (truth-table-row-with-output 1 func)
+          (truth-table-row-with-output 2 func)
+          (truth-table-row-with-output 3 func)
+          (truth-table-row-with-output 4 func)
+          (truth-table-row-with-output 5 func)
+          (truth-table-row-with-output 6 func)
+          (truth-table-row-with-output 7 func)))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results output
+  (progn (print (not1 1))
+         (print (not1 0))
+         (print (and2 1 0))
+         (print (and2 1 1))
+         (print (or2 1 0))
+         (print (or2 0 0))
+         (print (or2 1 1))
+         (print (or2 0 1)))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+0
+
+1
+
+0
+
+1
+
+0
+
+0
+
+1
+
+0
+#+end_example
+
+
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (equal (generate-truth-table-for 'f1)
+       [[0 0 0 1]
+        [0 0 1 0]
+        [0 1 0 1]
+        [0 1 1 0]
+        [1 0 0 1]
+        [1 0 1 0]
+        [1 1 0 1]
+        [1 1 1 1]])
+#+END_SRC
+
+#+RESULTS:
+t
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (equal (generate-truth-table-for 'f2)
+       [[0 0 0 0]
+        [0 0 1 0]
+        [0 1 0 0]
+        [0 1 1 0]
+        [1 0 0 1]
+        [1 0 1 0]
+        [1 1 0 1]
+        [1 1 1 1]])
+#+END_SRC
+
+#+RESULTS:
+t
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (equal (generate-truth-table-for 'f3)
+       [[0 0 0 0]
+        [0 0 1 0]
+        [0 1 0 0]
+        [0 1 1 1]
+        [1 0 0 1]
+        [1 0 1 1]
+        [1 1 0 1]
+        [1 1 1 1]])
+#+END_SRC
+
+#+RESULTS:
+t
+
+* DONE Day 1
+  CLOSED: [2018-01-24 Wed 15:17]
+  :LOGBOOK:
+  CLOCK: [2018-01-22 Mon 17:30]--[2018-01-22 Mon 17:57] =>  0:27
+  CLOCK: [2018-01-22 Mon 15:12]--[2018-01-22 Mon 16:17] =>  1:05
+  :END:
+
+** Sets Logic and Lisp
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun make-truth-table-inputs (num-inputs)
+     (mapcar (lambda (x) (append (make-list (- num-inputs (length x)) 0) x))
+      (mapcar 'to-binary (number-sequence 0 (- (expt 2 num-inputs) 1)))))
+
+
+(defun to-binary (n)
+  (cond ((= n 0) (list 0))
+        ((= n 1) (list 1))
+        (t (nconc (to-binary (truncate n 2)) (list (mod n 2))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw 
+  (to-binary 312345678912344567)
+#+END_SRC
+
+#+RESULTS:
+(1 0 0 0 1 0 1 0 1 0 1 1 0 1 0 1 1 0 0 1 0 1 1 1 1 0 1 0 1 1 1 0 1 1 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 0 1 1 1 1 1 0 1 1 1)
+
+
+
+* DONE Day 2
+  CLOSED: [2018-01-24 Wed 15:17]
+  :LOGBOOK:
+  CLOCK: [2018-01-23 Tue 15:19]--[2018-01-23 Tue 16:19] =>  1:00
+  CLOCK: [2018-01-23 Tue 15:09]--[2018-01-23 Tue 15:10] =>  0:01
+  :END:
+
+
+* DONE Day 3
+  CLOSED: [2018-01-24 Wed 21:06]
+  :LOGBOOK:
+  CLOCK: [2018-01-24 Wed 15:13]--[2018-01-24 Wed 16:19] =>  1:06
+  :END:
+
+** Introduce Week 3
+   Triangular numbers
+
+* DONE Day 4
+  CLOSED: [2018-01-25 Thu 16:12]
+  :LOGBOOK:
+  CLOCK: [2018-01-25 Thu 15:15]--[2018-01-25 Thu 16:12] =>  0:57
+  :END:
+
+
+

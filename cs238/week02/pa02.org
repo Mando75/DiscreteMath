@@ -1,0 +1,23 @@
+#+TITLE: Preparation Assessment 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+* DONE Answer What is True
+  CLOSED: [2018-01-20 Sat 11:55]
+  :LOGBOOK:
+  CLOCK: [2018-01-20 Sat 11:37]--[2018-01-20 Sat 11:55] =>  0:18
+  :END:
+
+  If you can truthfully assert any of the following, you know what to do. 
+
+  - [X] I followed the presentation in class about comparing set sizes.
+  - [X] I was intrigued enough to watch the other numberphile video (the one we
+    didn\rsquo{}t watch) on Graham\rsquo{}s number.
+  - [X] I will ponder the fact that /any/ gargantuan natural number (e.g.,
+    Graham\rsquo{}s number), because it is finite, is \ldquo{}small\rdquo in the sense that /almost
+    all/ natural numbers are larger than it.
+  - [X] I can articulate the Cantor Diagonalization argument.
+  - [X] I know enough about infinity to be dangerous! (Such as where the only
+    occurrence of that word is found in all of the Standard Works.)

@@ -1,0 +1,108 @@
+#+TITLE: Preparation Assessment 09
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+* TODO Answer What is True
+  You know what to do:
+  - [X] I know how to explain the usefulness of the following code in getting
+    the list of gaps between the first ten million primes:
+#+BEGIN_SRC emacs-lisp :results raw
+  (require 'first-ten-million-primes)
+
+  (setq list-of-gaps
+        (mapcar*
+         (lambda (x y)
+           (- y x))
+         (subseq first-ten-million-primes 1 9999999) ;primes from the second prime to the 9999999th prime
+         (subseq first-ten-million-primes 2)) ; primes from the 3rd one to the last one
+         size-of-list-of-gaps (length list-of-gaps))
+#+END_SRC
+
+#+RESULTS:
+9999998
+9999998
+
+
+Writes the list to a .el file.
+The provides allows you to require the list of gaps in another code block.
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun create-list-of-gaps-package (list-of-gaps)
+    (with-temp-buffer
+      (insert "(setq list-of-gaps '(\n")
+      (mapc (lambda (n) (insert (format "%d\n" n))) list-of-gaps) 
+      (insert "))\n\n(provide 'list-of-gaps)\n")
+      (write-region nil 0 "list-of-gaps.el")))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results silent
+  ;(create-list-of-gaps-package list-of-gaps)
+  ;(load-file "list-of-gaps.el")
+  (require 'list-of-gaps)
+  (setq unique (sort (remove-duplicates list-of-gaps) '<)
+        unique-count (mapcar (lambda (x) (list x (count x list-of-gaps))) unique))
+   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (with-temp-buffer
+      (insert "(setq unique-gap-count '(\n")
+      (mapc (lambda (n) (insert (format "(%d . %d)\n" (car n) (cadr n)))) unique-count) 
+      (insert "))\n\n(provide 'unique-gap-count)\n")
+      (write-region nil 0 "unique-gaps.el"))
+
+#+END_SRC
+
+#+RESULTS:
+
+
+  - [X] I know how to use the following code to finish the investigation we
+    started in class into uniform random spanning trees of ladder graphs, and
+    the probability of randomly choosing one that includes the bottom rung (edge
+    =(1 . 2)= in the numbering scheme of the supplied code):
+#+BEGIN_SRC emacs-lisp :results silent 
+(require 'ladder-graph)
+
+  (defun spanning-tree (nodes edges adjacency-lists)
+    ;; 1. Start with frontier = (list (first nodes))
+    (let ((frontier (list (nth (random (length nodes)) nodes)))
+          (num-nodes (length nodes))
+          (spanning-tree nil)
+          node-in-frontier adjacencies destination)
+      ;; 2. Pick an edge connected to a node in the frontier
+      ;;    that does not create a cycle --- that is, the
+      ;;    other (destination) node of the edge is not
+      ;;    already in the frontier.
+      (while (< (length frontier) num-nodes) ;; more to do
+        ;; randomly pick a node in the frontier, and a destination
+        ;; randomly chosen from that node's adjacencies
+        (setq node-in-frontier (nth (random (length frontier)) frontier)
+              adjacencies (cdr (assoc node-in-frontier adjacency-lists))
+              destination (nth (random (length adjacencies)) adjacencies))
+        ;; 3. Add that destination node to the frontier unless already there
+        (unless (member destination frontier)
+          (pushnew destination frontier)
+          ;; 4. Add the picked edge to the spanning-tree.
+          (push (if (< node-in-frontier destination)
+                    (cons node-in-frontier destination)
+                  (cons destination node-in-frontier))
+                spanning-tree)))
+      ;; 5. Repeat steps 2-4 until all nodes are in the frontier.
+      ;; 6. Return spanning-tree as sorted edge-list.
+      (sort spanning-tree (lambda (x y) (or (< (car x) (car y)) (< (cdr x) (cdr y)))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (make-ladder-graph 4)
+#+END_SRC
+
+#+RESULTS:
+: ((1 . 2) (3 . 4) (5 . 6) (7 . 8) (1 . 3) (3 . 5) (5 . 7) (2 . 4) (4 . 6) (6 . 8))
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (let* ((n 8)
+         (nodes (number-sequence 1 (* 2 n)))
+         (edges (make-ladder-graph n))
+         (adj (make-adjacency-lists nodes edges)))
+        (spanning-tree nodes edges adj))
+        
+#+END_SRC
+

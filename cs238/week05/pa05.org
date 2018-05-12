@@ -1,0 +1,197 @@
+#+TITLE: Preparation Assessment 05
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+STARTUP: entitiespretty
+#+SCORE: 96
+
+* DONE Reread (review) section TWO subsection JKL from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-02-12 Mon 19:01]
+  :LOGBOOK:
+  CLOCK: [2018-02-12 Mon 18:52]--[2018-02-12 Mon 19:01] =>  0:09
+  CLOCK: [2018-02-12 Mon 15:12]--[2018-02-12 Mon 15:16] =>  0:04
+  :END:
+
+* DONE Learn about Partially Ordered Sets (posets)
+  CLOSED: [2018-02-13 Tue 18:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-13 Tue 18:44]--[2018-02-13 Tue 18:59] =>  0:15
+  CLOCK: [2018-02-13 Tue 18:21]--[2018-02-13 Tue 18:42] =>  0:21
+  CLOCK: [2018-02-12 Mon 19:01]--[2018-02-12 Mon 19:03] =>  0:02
+  :END:
+
+  Read the outline in [[file:partial-orders.org][Partial Orders]] and ponder what applications these
+  particular types of relations might have.
+
+     - dependency graphs
+     - tree sorting
+     - genealogy trees
+
+* DONE Answer What is True
+  CLOSED: [2018-02-13 Tue 19:56]
+  :LOGBOOK:
+  CLOCK: [2018-02-13 Tue 18:59]--[2018-02-13 Tue 19:46] =>  0:47
+  :END:
+
+  You know what to do:
+
+  - [X] I know the falsehood in the statement that a poset is a relation that is
+    both a /preorder/ and is /transitive/.
+
+    - A preorder is transitive by definition. A poset is a relation which is
+      both a Preorder and Antisymmetric
+
+  - [-] I know how each of following pairs of sets (before the comma, given in
+    lisp vector form) and partial orders (after the comma, the relations
+    given in symbolic form) are posets?
+    - [X] ([2 3 4 6 9 12 18 24 36], \vbar) 
+      Yes, because | is reflexive, transitive, and antisymmetric making | a partial order
+    - [X] (Power set of [1 2 3 4], \sube)
+      Yes, because the \sube relation is a partial order
+    - [X] (Z^{+}, \leq) 
+  yes becase \le is a partial order
+    - [ ] ([0 1 2 3 4], \equiv_5)
+  - [X] I will ponder and come to class prepared to discuss the following:
+
+  A certain type of a partial order on Cartesian products of sets or strings
+  over some alphabet is called *lexicographic order*.
+
+  Such a partial order on sets A_i induces this lexicographic order on A_1 \times
+  A_2 \times \cdots \times A_n given by (a_1, a_2, \dots, a_n) \prec (b_1, b_2, \dots,
+  b_n) if for some i \ge 0, a_1 = b_1, \dots, a_i = b_i, and a_{i + 1} \prec b_{i + 1}.
+
+  A partial order on A induces lexicographic order on strings of any finite
+  length given by a_1 a_2 \dots a_n \prec b_1 b_2 \dots b_m if (a_1, a_2, \dots, a_t)
+  \prec (b_1, b_2, \dots, b_t) where t = min(m, n) or if (a_1, a_2, \dots, a_n) = (b_1, b_2, \dots, b_n)
+  and n < m.
+
+** DONE IMPORTANT!!
+   CLOSED: [2018-02-13 Tue 20:02]
+   :LOGBOOK:
+   CLOCK: [2018-02-13 Tue 19:57]--[2018-02-13 Tue 20:02] =>  0:05
+   CLOCK: [2018-02-13 Tue 19:46]--[2018-02-13 Tue 19:56] =>  0:10
+   :END:
+  Show you understand these definitions. For the Cartesian product, let S = {1,
+  2, 3, 4}. With respect to the lexicographic order based on the usual less-than
+  relation, do the following:
+
+  1. Find all pairs in S \times S less than (2, 3).
+ 
+#+BEGIN_SRC emacs-lisp
+ (-filter (lambda (set) (and (< (car set) 2) (< (cadr set) 3)))
+    (cartesian-product-general '((1 2 3 4)(1 2 3 4))))
+#+END_SRC    
+
+#+RESULTS:
+| 1 | 1 |
+| 1 | 2 |
+
+:Feedback:
+Good, but your logic is flawed.
+(1, 1), (1, 2), (1, 3), (1, 4), (2, 1), (2, 2) are all less than (2, 3)
+#+BEGIN_SRC elisp :results raw
+  (defun cartesian-product (S1 S2)
+    (mapcan (lambda (x)
+              (mapcar (lambda (y) (list x y)) S2))
+            S1))
+
+  (let ((S '(1 2 3 4)))
+    (remove-if-not
+     (lambda (pair)
+       (or
+        (< (car pair) 2)
+        (and
+         (= (car pair) 2)
+         (< (cadr pair) 3)
+         ))) (cartesian-product S S)))
+#+END_SRC
+
+#+RESULTS:
+((1 1) (1 2) (1 3) (1 4) (2 1) (2 2))
+-2 points
+:END:
+
+  2. Find all pairs in S \times S greater than (3, 1).
+
+#+BEGIN_SRC emacs-lisp
+ (-filter (lambda (set) (and (> (car set) 3) (> (cadr set) 1)))
+    (cartesian-product-general '((1 2 3 4) (1 2 3 4)))) 
+#+END_SRC
+
+#+RESULTS:
+| 4 | 2 |
+| 4 | 3 |
+| 4 | 4 |
+
+:Feedback:
+#+BEGIN_SRC elisp :results raw
+  (let ((S '(1 2 3 4)))
+    (remove-if-not
+     (lambda (pair)
+       (or
+        (> (car pair) 3)
+        (and
+         (= (car pair) 3)
+         (> (cadr pair) 1)
+         ))) (cartesian-product S S)))
+#+END_SRC
+
+#+RESULTS:
+((3 2) (3 3) (3 4) (4 1) (4 2) (4 3) (4 4))
+Again, your logic was flawed for filtering.
+-2 points
+:END:
+
+#+BEGIN_SRC emacs-lisp :results silent
+ (defun cartesian-product (x y)
+  (mapcan (lambda (x-item) ;; map over the first list
+      (mapcar (lambda (y-item) ;; map over the second list
+          (if (listp x-item) ;; check that we are given a list 
+            (append x-item (list y-item)) ;; if so, append the y-item 
+            (list x-item y-item))) ;; otherwise, list the two items
+       y)) ;; passing y into the nested map
+   x)) ;; passing x into the map
+
+(defun cartesian-product-general (list-of-sets)
+   (reduce #'cartesian-product list-of-sets)) 
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+ (cartesian-product-general '((1 2 3 4) (1 2 3 4)))
+#+END_SRC
+
+#+RESULTS:
+| 1 | 1 |
+| 1 | 2 |
+| 1 | 3 |
+| 1 | 4 |
+| 2 | 1 |
+| 2 | 2 |
+| 2 | 3 |
+| 2 | 4 |
+| 3 | 1 |
+| 3 | 2 |
+| 3 | 3 |
+| 3 | 4 |
+| 4 | 1 |
+| 4 | 2 |
+| 4 | 3 |
+| 4 | 4 |
+
+  For strings, which of the following gives the correct lexicographic order of
+  {\ldquo{}aa\rdquo, \ldquo{}aab\rdquo, \ldquo{}ac\rdquo, \ldquo{}abb\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo}?
+  - [X] \ldquo{}aa\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}ac\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo
+  - [ ] \ldquo{}b\rdquo, \ldquo{}aa\rdquo, \ldquo{}ac\rdquo, \ldquo{}ba\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}bba\rdquo
+  - [ ] \ldquo{}aa\rdquo, \ldquo{}ac\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo
+  - [ ] \ldquo{}aa\rdquo, \ldquo{}aab\rdquo, \ldquo{}ac\rdquo, \ldquo{}abb\rdquo, \ldquo{}ba\rdquo, \ldquo{}b\rdquo, \ldquo{}bba\rdquo
+
+  Which of the following gives the correct *canonical* order of {\ldquo{}aa\rdquo, \ldquo{}aab\rdquo,
+  \ldquo{}ac\rdquo, \ldquo{}abb\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo}? Canonical order differs from lexicographic
+  order by having shorter strings precede longer strings. (Strings of the same
+  length are still ordered lexicographically.)
+  - [ ] \ldquo{}aa\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}ac\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo
+  - [X] \ldquo{}b\rdquo, \ldquo{}aa\rdquo, \ldquo{}ac\rdquo, \ldquo{}ba\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}bba\rdquo
+  - [ ] \ldquo{}aa\rdquo, \ldquo{}ac\rdquo, \ldquo{}aab\rdquo, \ldquo{}abb\rdquo, \ldquo{}b\rdquo, \ldquo{}ba\rdquo, \ldquo{}bba\rdquo
+  - [ ] \ldquo{}aa\rdquo, \ldquo{}aab\rdquo, \ldquo{}ac\rdquo, \ldquo{}abb\rdquo, \ldquo{}ba\rdquo, \ldquo{}b\rdquo, \ldquo{}bba\rdquo
+
+

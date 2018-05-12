@@ -1,0 +1,266 @@
+#+TITLE: Weekly Assignment 00
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-01-12 Fri 19:13]
+| Headline         |   Time |
+|------------------+--------|
+| *Total time*     | *1:30* |
+|------------------+--------|
+| CRC              |   0:08 |
+| DGZ              |   0:01 |
+| DZB Extra Credit |   0:18 |
+| CJF Extra Credit |   1:03 |
+#+END:
+
+
+* DONE Answer What is True
+  CLOSED: [2018-01-08 Mon 20:43]
+
+  If you can truthfully assert that you did any of the following, put an X in
+  the box. (With Spacemacs bindings, putting the cursor anywhere on the line and
+  typing , , (two commas) will toggle the X for you.)
+
+  + [x] I got a GitHub account, or I already had one.
+  + [x] I found and worked through an introductory GitHub/Git tutorial, or I am
+    already GitHub/Git-literate.
+  + [x] I obviously signed up for GitHub Classroom, as that is how I got access
+    to this file.
+  + [x] I (re)read the introductory sections of [[https://rickneff.github.io/metaphors-be-with-you.html][The Book]] (up to and including
+    section ONE subsubsection ONI --- just before subsection ABC).
+
+:Feedback:
+Use , , to mark the boxes. Do not type an x.
+:END:
+
+  The following are found in ONI:
+
+* DONE CRC
+  CLOSED: [2018-01-08 Mon 20:40]
+  :LOGBOOK:
+  CLOCK: [2018-01-08 Mon 20:32]--[2018-01-08 Mon 20:40] =>  0:08
+  :END:
+  
+  I think one subtle way the desert can be related to discrete mathematics, and more specifically to this course, is that 
+  it is dangerous to traverse alone! It is much better to travel in groups where you can look out for and help one another. 
+  In this class, I think we need to band together to enhance each other's learning, and 'safely' traverse the often confusing 
+  or immense space discrete mathematics contains. 
+
+* DONE DGZ
+  CLOSED: [2018-01-08 Mon 20:41]
+  :LOGBOOK:
+  CLOCK: [2018-01-08 Mon 20:40]--[2018-01-08 Mon 20:41] =>  0:01
+  :END:
+
+  THE TIME HAS COME THE WALRUS SAID TO TALK OF MANY THINGS OF SHOES AND SHIPS
+  AND SEALING WAX OF CABBAGES AND KINGS AND WHY THE SEA IS BOILING HOT AND
+  WHETHER PIGS HAVE WINGS
+
+(I did this in DM 1 last semester)
+
+* DONE CHJ
+  CLOSED: [2018-01-08 Mon 20:43]
+
+(I did this last semester)
+
+strengths v/c = 1/8
+
+* DONE DOK
+  CLOSED: [2018-01-08 Mon 20:43]
+
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun dok-pattern-gen (start end)
+   (mapcar (lambda (x) (list x '* (+ 1 x) '* (+ 1 (* 2 x)) '= (* x (+ 1 x) (+ 1 (* x 2)))))
+   (number-sequence start end)))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+  (dok-pattern-gen 1 25)
+#+END_SRC
+
+#+RESULTS:
+|  1 | * |  2 | * |  3 | = |     6 |
+|  2 | * |  3 | * |  5 | = |    30 |
+|  3 | * |  4 | * |  7 | = |    84 |
+|  4 | * |  5 | * |  9 | = |   180 |
+|  5 | * |  6 | * | 11 | = |   330 |
+|  6 | * |  7 | * | 13 | = |   546 |
+|  7 | * |  8 | * | 15 | = |   840 |
+|  8 | * |  9 | * | 17 | = |  1224 |
+|  9 | * | 10 | * | 19 | = |  1710 |
+| 10 | * | 11 | * | 21 | = |  2310 |
+| 11 | * | 12 | * | 23 | = |  3036 |
+| 12 | * | 13 | * | 25 | = |  3900 |
+| 13 | * | 14 | * | 27 | = |  4914 |
+| 14 | * | 15 | * | 29 | = |  6090 |
+| 15 | * | 16 | * | 31 | = |  7440 |
+| 16 | * | 17 | * | 33 | = |  8976 |
+| 17 | * | 18 | * | 35 | = | 10710 |
+| 18 | * | 19 | * | 37 | = | 12654 |
+| 19 | * | 20 | * | 39 | = | 148BYU Thomas S. Monson Presidential Scholar20 |
+| 20 | * | 21 | * | 41 | = | 17220 |
+| 21 | * | 22 | * | 43 | = | 19866 |
+| 22 | * | 23 | * | 45 | = | 22770 |
+| 23 | * | 24 | * | 47 | = | 25944 |
+| 24 | * | 25 | * | 49 | = | 29400 |
+| 25 |Content * | 26 | * | 51 | = | 33150 |
+
+
+Patterns:
+The results are all even numbers
+The results are all divisible by 3
+The results are all divisible by 6
+The (2x) + 1 terms are the ascending odd numbers
+The last digits of the product seem to be following a pattern of 6040060400…
+This sequence also represents the area of Pythagorean triangles!!!!
+
+* DONE DZB Extra Credit
+  CLOSED: [2018-01-11 Thu 21:02]
+  :LOGBOOK:
+  CLOCK: [2018-01-11 Thu 20:02]--[2018-01-11 Thu 20:20] =>  0:18
+  :END:
+
+
+   I did this for DM1 in JavaScript. Brother Neff said that I could get some extra credit for translating it into LISP :)
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun get-side (x it)
+     (/ x (cos (/ pi it))))
+
+  (defun get-limit (sides) 
+     (let* ((rad 1.0))
+       (loop for i from 3 to sides
+         do (setq rad (get-side rad i)))
+       rad))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (get-limit 10000000)
+#+END_SRC
+
+#+RESULTS:
+: 8.70003233192945
+
+* TODO CJF Extra Credit
+  :LOGBOOK:
+  CLOCK: [2018-01-12 Fri 18:37]--[2018-01-12 Fri 19:01] =>  0:24
+  CLOCK: [2018-01-11 Thu 20:23]--[2018-01-11 Thu 21:02] =>  0:39
+  :END:
+
+  Bro. Neff told us that we could do this problem as extra credit. 
+
+** Hardy 
+   I think that he meant that patterns in mathematics may be 'created' or 'discovered' by mathematicians, 
+   but they are rooted in something deeper. Mathematics is one of the natural languages in the world, which
+   is why these patterns we 'create' appear in so many places. Just take the Fibonacci Numbers that we examined in class
+   today! Humans invented the pattern, named it, and studied it, but elements of that pattern can be found everywhere in nature. 
+   This is profound, because it shows that mathematics is truth. 
+
+** Puzzle
+
+   6:54 3:21
+
+   CLA HCK
+
+* DONE Week 0 Wednesday ICE
+  CLOSED: [2018-01-10 Wed 15:50]
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun extract-times (times) 
+  (let* ((minutes (apply '+ (mapcar 'car times)))
+        (seconds (apply '+ (mapcar 'cdr times)))
+        (total-minutes (+ minutes (/ seconds 60)))
+        (rem-sec (% seconds 60)))
+        (list 'Total: total-minutes 'minutes rem-sec 'seconds)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(setq times '((0 . 41) (1 . 24) ( 1 . 59) (5 . 29) (13 . 59) (0 . 35))
+            minutes (extract-times times))
+#+END_SRC
+
+(Total: 24 minutes 7 seconds)
+
+* DONE Week 0 Thursday ICE/Notes 
+  CLOSED: [2018-01-11 Thu 16:16]
+
+** Introduce Set Cardinality (Size)
+   Cardinal: The attribute of a set that is its size. Cardinal means counting ie 1 2 3 
+   Ordinal: Order of items ie 1st 2nd 3rd
+** Golden quesition to ask computer professionals
+   What is the cardinaliity of the power set of a set of size n? 2^n 
+
+   
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun do-magic ()
+    (let ((start (point))
+          (n 0))
+          (while (not (looking-at "^$"))
+            (incf n)
+            (forward-line 1))
+            (copy-region-as-kill start (point))
+            (yank)
+            (goto-char start)
+))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (do-magic)
+#+END_SRC
+
+#+RESULTS:
+: 4688
+
+s-lisp
+  (do-magic)
+#+END_SRC
+
+#+RESULTS:
+| 2 | 4648 |
+
+
+* TODO What about these four words? 
+  ADMIT
+  HONOR 
+  
+  SAVAGE
+   
+
+* DONE What about these numbers?
+  CLOSED: [2018-01-11 Thu 16:16]
+  
+What is the missing number in this sequence?
+
+[2 3 2 2 5 3 2 7 2 2 2 3 3 ...] 
+
+2  
+3
+2 * 2 = 4
+5
+3 * 2 = 6
+7 
+2 * 2 * 2 = 8
+3 * 3 = 9
+
+* DONE What about these words?
+  CLOSED: [2018-01-11 Thu 16:16]
+T U
+_ _ NA
+    F O R
+COM _ _ _T
+      S I C S
+FOREN _ _ _ _
+   A T E
+SK _ _ _ BOARD
+T E N
+_ _ _ DERLY
+
+
+TU FOR SICS ATE TEN
+

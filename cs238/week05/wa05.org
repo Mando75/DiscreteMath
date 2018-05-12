@@ -1,0 +1,752 @@
+#+TITLE: Weekly Assignment 05
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+  In addition to all the section JKL exercises/problems/puzzles (EPPs) that you
+  did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following tasks:
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-02-16 Fri 17:59]
+| Headline                               |    Time |      |
+|----------------------------------------+---------+------|
+| *Total time*                           | *11:19* |      |
+|----------------------------------------+---------+------|
+| Identify the Pattern                   |    0:51 |      |
+| Validate the Hexagon Identity          |    0:32 |      |
+| Validate A Committee with Chair and... |    0:24 |      |
+| Validate Another Identity              |    0:27 |      |
+| Investigate A Possible Relationship    |    1:47 |      |
+| Investigate Another Possible...        |    2:41 |      |
+| Week 5 JKL                             |    1:42 |      |
+| \_  QAM                                |         | 0:21 |
+| \_  REX                                |         | 0:02 |
+| \_  QCV                                |         | 0:01 |
+| \_  QCZ                                |         | 0:01 |
+| \_  RFF                                |         | 0:08 |
+| \_  QDM                                |         | 0:02 |
+| \_  RGL                                |         | 0:07 |
+| \_  QFK                                |         | 0:02 |
+| \_  RHB                                |         | 0:09 |
+| \_  QGK                                |         | 0:01 |
+| \_  RVB                                |         | 0:01 |
+| \_  RJV                                |         | 0:01 |
+| \_  QKA                                |         | 0:01 |
+| \_  RNC                                |         | 0:36 |
+| \_  QKT                                |         | 0:01 |
+| \_  RNM                                |         | 0:02 |
+| \_  QOS                                |         | 0:02 |
+| \_  ROP                                |         | 0:04 |
+| Day 1                                  |    0:56 |      |
+| Day 2                                  |    0:58 |      |
+| Day 3                                  |    1:01 |      |
+#+END:
+
+
+* DONE Identify the Pattern
+  CLOSED: [2018-02-13 Tue 23:27]
+  :LOGBOOK:
+  CLOCK: [2018-02-13 Tue 22:36]--[2018-02-13 Tue 23:27] =>  0:51
+  :END:
+
+  Here are two different identities that point out the same pattern in
+  Pascal's triangle. What is the name of this pattern?
+
+** 1st Identity (for nonnegative integer n)
+
+  \(\sum^n_{k=0} {r+k \choose k} = {r+n+1 \choose n}\)
+
+** 2nd Identity (for nonnegative integers m and n)
+
+   \(\sum^n_{k=0} {k \choose m} = {n+1 \choose m+1}\)
+
+   This identities produce the Hockey Stick Pattern 
+   See https://brilliant.org/wiki/hockey-stick-identity/
+
+* DONE Validate the Hexagon Identity
+  CLOSED: [2018-02-14 Wed 21:33]
+  :LOGBOOK:
+  CLOCK: [2018-02-14 Wed 21:01]--[2018-02-14 Wed 21:33] =>  0:32
+  :END:
+  Suppose that k and n are integers with 1 \le k \le n. Argue using the n-choose-k
+  definition and algebra for the validity of the *hexagon identity* \({n - 1
+  \choose k - 1}{n \choose k + 1}{n + 1 \choose k} = {n - 1 \choose k}{n \choose
+  k - 1}{n + 1 \choose k + 1}\) which relates terms in Pascal's triangle that
+  form a hexagon.
+
+
+  \({n \choose k} = \frac{n!}{((n - k)!k!)}\)
+
+  Rewrite identity with the definition of \({n \choose k}\)
+
+  \( \rightarrow (\frac{(n-1)!}{((n-1)-(k-1))!(k-1)!})(\frac{n!}{(n-(k+1))!(k+1)!})(\frac{(n+1)!}{((n+1)-k)!k!}) = {n - 1 \choose k}{n \choose
+  k - 1}{n + 1 \choose k + 1}\)
+
+  Simplify:
+
+  \( \rightarrow  (\frac{(n-1)!}{((n-k)!(k-1)!})(\frac{n!}{(n-k-1))!(k+1)!})(\frac{(n+1)!}{((n-k+1)!k!}) = {n - 1 \choose k}{n \choose
+  k - 1}{n + 1 \choose k + 1}\)
+  
+  Rearrange the denominators:
+
+  \( \rightarrow  (\frac{(n-1)!}{(n-k-1)!k!})(\frac{n!}{(n-k)!(k+1)!})(\frac{(n+1)!}{(n-k+1)!(k-1)!}) = {n - 1 \choose k}{n \choose
+  k - 1}{n + 1 \choose k + 1}\)
+
+  Using the definition of  \({n \choose k}\), we can recombine the left hand side:
+
+\( \rightarrow {n - 1 \choose k}{n \choose k - 1}{n + 1 \choose k + 1}\ = {n - 1 \choose k}{n \choose k - 1}{n + 1 \choose k + 1} \)
+ 
+
+* DONE Validate A Committee with Chair and Co-Chair Identity
+  CLOSED: [2018-02-14 Wed 21:58]
+  :LOGBOOK:
+  CLOCK: [2018-02-14 Wed 21:34]--[2018-02-14 Wed 21:58] =>  0:24
+  :END:
+  Give a *combinatorial argument* that if n is a positive integer then
+
+  \(\sum^n_{k = 0} k^2{n \choose k} = n(n + 1)2^{n - 2}.\)
+
+  Hint: show that both sides count the ways to select a subset of a set of n
+  elements together with two not necessarily distinct elements from this subset.
+  It will be easier to do so if you express the right-hand side of the identity
+  as the equivalent n(n - 1)2^{n - 2} + n2^{n - 1} (after verifying that they are
+  indeed equivalent).
+
+** Validate hint
+   \(n(n+1) * 2^{n-2} = n(n-1) * 2^{n-2} + n*n^{n-1} \)
+
+   \(n^2 +n)(2^{n-2}) = (n^2 - n)(2^{n-2}) + n*2^{n-1 }\)
+
+   \( n^{2} * 2^{n-2} + n * 2^{n-2} = n^{2} * 2^{n-2} - n * 2^{n-2} + n * 2^{n-1} \)
+
+   \(n^{2} * 2^{n-2} + n * 2^{n-2} = n^{2} * 2^{n-2} + n * 2^{n-2} \)
+
+   \( 1 = 1 \)
+
+  
+** Validate Identity
+https://math.stackexchange.com/questions/954335/present-a-combinatorial-argument-for-the-identiy-sumn-k-1-k-binomnk
+
+
+   Set the summation equal to the hint:
+
+     \(\sum^n_{k = 0} k^2{n \choose k} =  n(n - 1)2^{n - 2} + n2^{n - 1}\)
+      
+       \(n2^{n - 1}\) calculates when the elements are not distinct
+
+       \(n(n - 1)2^{n - 2} \) calculates when the elements are distinct
+
+       When we add them together, we get the sum of all elements, whether they are distinct or not:
+     
+       \(\sum^n_{k = 0} k^2{n \choose k} \)    
+* DONE Validate Another Identity
+  CLOSED: [2018-02-16 Fri 17:15]
+  :LOGBOOK:
+  CLOCK: [2018-02-16 Fri 16:48]--[2018-02-16 Fri 17:15] =>  0:27
+  :END:
+
+  Using a *combinatorial argument*, argue for the validity of the identity
+
+  \({n \choose r}{r \choose k} = {n \choose k}{n - k \choose r - k}\)
+
+  whenever n, r, and k are nonnegative integers with r \le n and k \le r.
+** My work
+*** Algebra: 
+    \(\rightarrow(\frac{n!}{((n-r)!r!)})(\frac{r!}{(r-k)!k!)}) = (\frac{n!}{(n-k)!k!)})(\frac{(n-k)!}{((n-r)!(r-k)!)})\)
+ 
+
+  \(\rightarrow(\frac{n!}{r!})r! = (\frac{n!}{(n-k)!})(n-ki)!\)
+
+  \(\rightarrow n! = n! \)
+*** Combinitorics
+
+    \( {n \choose r} {r \choose k} \) combine
+    \(\rightarrow {n r \choose r k} \) the /r/'s cancel
+    \(\rightarrow {n \choose k} \) 
+
+    This means however, that we are counting the k's twice
+
+    To fix that: 
+    Multiply
+    \( {n-k \choose r-k}{n \choose k} \)
+
+
+    \(\rightarrow {n-k \choose r-k}{n \choose k} = {n \choose k}{n-k \choose r-k}\)
+
+    Thus we have shown that 
+
+    \( {n \choose r}{r \choose k} = {n \choose k}{n - k \choose r - k}\)
+
+* DONE Investigate A Possible Relationship
+  CLOSED: [2018-02-16 Fri 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-16 Fri 17:45]--[2018-02-16 Fri 17:57] =>  0:12
+  CLOCK: [2018-02-15 Thu 17:15]--[2018-02-15 Thu 18:50] =>  1:35
+  :END:
+  Does any row in Pascal\rsquo{}s Triangle have the Fibonacci numbers\rsquo relationship
+  between three consecutive entries (in other words, where x, y and z are three
+  consecutive entries in a single row, x + y = z)?
+
+  The number of rows where this relationship could possibly hold is:
+  - [ ] Zero.
+  - [X] At least one.
+  - [ ] At most one.
+  - [ ] Exactly one.
+  - [ ] It cannot be determined.
+
+  Explain your answer.
+
+  
+    \({n \choose k + 1} = 2 * {n \choose k}\)
+
+    and 
+
+    \({n \choose k + 2} = 3 * {n \choose k}\)
+
+    when n = 14  we get the row 
+
+    1 14 91 364 1001 2002 3003 3432 3003 2002 1001 364 91 14 1
+
+    We can easily see that if x = 1001, y = 2002, z = 3003 then x + y = z.
+
+    This actually goes hand in hand with the next relationship we investigated. 
+    When I solved that one, it gave me the  answer to this one as well. 
+    I would suggest reading through the next section to see how I got those answers.
+ 
+
+* DONE Investigate Another Possible Relationship
+  CLOSED: [2018-02-16 Fri 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-16 Fri 12:34]--[2018-02-16 Fri 13:23] =>  0:49
+  CLOCK: [2018-02-16 Fri 9:50]--[2018-02-16 Fri 11:42] =>  1:52
+
+  :END:
+
+
+  Does any row in Pascal\rsquo{}s Triangle have three consecutive entries in the ratio
+  1:2:3? (12:24:36 is an example of three numbers in a 1:2:3 ratio.)
+
+  The number of rows where this relationship could possibly hold is:
+  - [ ] Zero.
+  - [ ] At least one.
+  - [ ] At most one.
+  - [X] Exactly one.
+  - [ ] It cannot be determined.
+
+  Explain your answer.
+
+
+     \({n \choose k + 1} = 2 {n \choose k}\)
+
+
+     \({n \choose k + 2} = 3 {n \choose k}\)
+
+     could be expressed as
+    
+     \(n - k = 2k + 2\)
+
+     \( n = 3k + 2\)
+
+     and  \({n \choose k + 2} = 3 {n \choose k}\) as
+
+     \(3(k + 1)(k+2)=(n-k-1)(n-k)\)
+
+     Use a little algebra:
+
+     \(3(k+1)(k+2) = (3k+2-k-1)(3k+2-k)\)
+
+     /k/ = 4
+
+     \(n = 3(4) + 2\)
+
+     /n/ = 14
+
+     So row 14, element k + 1 gives us a sequence 1001, 2002, 3003, fulfilling the requirement
+
+     Source of the proof: 
+
+     https://math.stackexchange.com/questions/1495107/find-three-consecutive-entries-of-a-row-of-pascal-triangle-that-are-in-the-ratio
+
+* DONE Week 5 JKL
+  CLOSED: [2018-02-16 Fri 16:47]
+I completed all of these in DM1
+** DONE QAM
+   CLOSED: [2018-02-15 Thu 15:37]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:16]--[2018-02-15 Thu 15:37] =>  0:21
+   :END:
+
+   * This will be the product rule and the sum rule. With a set of 5 long-sleeve and 3 short-sleeve, applying the sum rule, we get 8 shirts. 
+     We can now combined this sum with the set of pants using the product rule, giving us 1 * 8 = 8 different outfits.
+   * So we take the original 8 shirts * 2 pants * 10 ties giving us 160 outfits.
+   * The multiplication principle.
+** DONE REX
+   CLOSED: [2018-02-15 Thu 15:39]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:37]--[2018-02-15 Thu 15:39] =>  0:02
+   :END:
+
+   The sum should be adjusted to be the length of the set A \cup B 
+** DONE QCV
+   CLOSED: [2018-02-15 Thu 15:40]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:39]--[2018-02-15 Thu 15:40] =>  0:01
+   :END:
+   If set A is size n, and set B is size m, then there are set m^n functions in A \rarr B.
+   So if set A is size 3, and set B is size 5, then there are 5^3 functions, or 125.
+** DONE RFC
+   CLOSED: [2018-02-15 Thu 15:40]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:40]--[2018-02-15 Thu 15:40] =>  0:00
+   :END:
+   If set A is size n and set B is size m, then the amount of one-to-one functions is
+   m!/(m-n)! so 120/2 = 60 one-to-one functions.
+** DONE QCZ
+   CLOSED: [2018-02-15 Thu 15:41]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:40]--[2018-02-15 Thu 15:41] =>  0:01
+   :END:
+   There are no onto functions from a set X of size 3 and a set Y of size 5. 
+   An onto function is surjective, which means that every element in Y is mapped to from X.
+   Because size of X \lt Y, it cannot map to every element in Y, therefore, there are no surjective (onto) functions.
+** DONE RFF
+   CLOSED: [2018-02-16 Fri 16:47]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:41]--[2018-02-15 Thu 15:49] =>  0:08
+   :END:
+
+
+
+   How many permuations of the set of vowels are there?
+   AEIOUY. There are 6 numbers so n = 6, and all six are being used so r = 6.
+   P(6,6) = 6!/(6-6)! = (6*5*4*3*2*1)/1 = 720/1 = 720 possible permutations. 
+
+   6(6-1)(6-2)(6-3)(6-4)(6 -(6 - 1)) = 6(5)(4)(3)(2)(1) 
+   this case produces factorial of n, which is basically the same as the above function
+   In other cases, where r \ne n, it will still hold true, because the extra bits added by n!
+   are removed by (n-r)!
+** DONE QDM
+   CLOSED: [2018-02-15 Thu 15:51]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:49]--[2018-02-15 Thu 15:51] =>  0:02
+   :END:
+   Assuming the set of word types is [Subject Verb Object], then the number of permutations
+   would be P(3,3) = 3!/0! = 6. If you would like to include more specific word types, such as preposition, 
+   indirect object, or conjuntion, n and r would increase, increasing the answer. 
+** DONE RGL
+   CLOSED: [2018-02-15 Thu 15:58]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:51]--[2018-02-15 Thu 15:58] =>  0:07
+   :END:
+    We can demonstrate this with a for loop. I am going to use JavaScript, just 
+    because it is a bit easier to look at than Lisp in my opinion. 
+
+#+BEGIN_SRC js :results output
+/* Let's define a function that return's factorials using a for loop. 
+   It takes one parameter, an integer to calculate the factorial of. */
+function factorial(n) {
+  // first we define a variable that we will use to 
+  // store the product. We must initialize it as 1, otherwise we will always
+  // be multiplying by zero, which will always return zero. 
+  let prod = 1;
+  // Not we define our for loop, notice that i must also begin at 1, otherwise we will only
+  // ever get zero for an answer. 
+  for(let i = 1; i <= n; i++) {
+   prod *= i;
+  }
+  return prod;
+}
+
+// lets see what happens when we run this on a non-zero number. 
+console.log(factorial(6));
+
+// now lets try it on zero.
+console.log(factorial(0));
+
+/* Because n starts at zero, it does not meet the requirements to intiate the for loop. This means the function
+   skips it, and returns the original prod, which is just 1. This is a simple example of why 0! must be 1.*/
+#+END_SRC
+
+#+RESULTS:
+: 720
+: 1
+** DONE QEB 
+   CLOSED: [2018-02-15 Thu 15:59]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:59]--[2018-02-15 Thu 15:59] =>  0:00
+   :END:
+   If we treat ELM as one object instead of three letters, we can use the permutation formula to solve this :)
+   So instead of a set of 9! arrangements, it is a set of 7! arrangements, which is 5040 arrangments of ABCDELMNO 
+   where ELM are always arranged next to each other in that fashion.
+** DONE RGM
+   CLOSED: [2018-02-15 Thu 15:59]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:59]--[2018-02-15 Thu 15:59] =>  0:00
+   :END:
+     This would just be the cartesian product of the 3 sets, each containing all the letters in the alphabet,
+     so 26^3 or 17576 possible TLA's 
+** DONE QFK
+   CLOSED: [2018-02-15 Thu 16:01]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 15:59]--[2018-02-15 Thu 16:01] =>  0:02
+   :END:
+   Assuming that letters are allowed to repeat, I believe that it would be the cartesian product of the set of all letters with itself A^2 plus
+   the cartesian product of the set of all letters with itself twice, or A^3. So 26^2 + 26^3 = 18252 possible combinations of initals with either 
+   two initials (like me :) ) or three intials. 
+** DONE RHB
+   CLOSED: [2018-02-15 Thu 16:10]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:01]--[2018-02-15 Thu 16:10] =>  0:09
+   :END:
+   Assuming that repeats are allowed... Otherwise you would follow the same formula of summing, but summing the
+   permutations instead of the cartesian products. 
+   Following the same idea as the previous problem, it will be the sum of several cartesian products. 
+   First the product giving us the number of two letter combinations summed with the product of two digit 
+   number combinations AND 3 digit number combinations. We would take that sum and add it with the product of 
+   all three letter combinations summed with the two different number combinations. This would look something like this:
+    
+   All the two letter        All the three letter 
+   combinations with #'s     combinatinos with #'s
+   (26^2 + 10^2 + 10^3)     +    (26^3 + 10^2 + 10^3)
+** DONE QGK
+   CLOSED: [2018-02-15 Thu 16:11]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:10]--[2018-02-15 Thu 16:11] =>  0:01
+   :END:
+
+   ccvcv 
+   So if we start of with two consonants, than we know that the possible combinations are (20 * 19)
+   Multiply that by 6 possible vowels, then another 18 possible consonants and another vowel, giving us
+   (20 * 19) * 18 * 5^2  = 171000 
+
+** DONE RVB 
+   CLOSED: [2018-02-15 Thu 16:12]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:11]--[2018-02-15 Thu 16:12] =>  0:01
+   :END:
+#+BEGIN_SRC emacs-lisp :results silent
+(defun n-choose-k-cond (n k)
+"Computes C(n, k) by a recursive definition; 
+given a pair of nonnegative integers n >= k >= 0.
+Also handles invalid input for k. reteurns the value of n choose k"
+ (cond ((or (zerop k) (= k n)) 1)
+       ((or (< k 0) (> k n)) 0)
+       (t  (+ (n-choose-k-cond (- n 1) (- k 1))
+       (n-choose-k-cond (- n 1) k)))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results raw
+(n-choose-k-cond '12 '3)
+#+END_SRC
+
+#+RESULTS:
+220
+4
+** DONE QGT
+   CLOSED: [2018-02-15 Thu 16:12]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:12]--[2018-02-15 Thu 16:12] =>  0:00
+   :END:
+  
+   You can see this with Pascal's triangle or the binomial theorem expansion.
+   We discussed this in class.
+** DONE RJV 
+   CLOSED: [2018-02-15 Thu 16:13]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:12]--[2018-02-15 Thu 16:13] =>  0:01
+   :END:
+*** 1. no heads?
+    n = 10 (flips) k = 0 (heads)
+    
+   #+BEGIN_SRC emacs-lisp :results raw
+   (n-choose-k-cond '10 '0)
+   #+END_SRC
+
+   #+RESULTS:
+   1
+
+*** 2. exactly one head
+    #+BEGIN_SRC emacs-lisp :results raw 
+    (n-choose-k-cond '10 '1)
+    #+END_SRC
+
+    #+RESULTS:
+    10
+*** 3. exactly two heads
+   #+BEGIN_SRC emacs-lisp :results raw
+   (n-choose-k-cond '10 '2)
+   #+END_SRC 
+
+   #+RESULTS:
+   45
+*** 4. exactly r heads
+    10!/(10-r)!r!
+*** 5. At least two heads
+https://math.stackexchange.com/questions/1353370/number-of-ways-of-choosing-at-least-k-objects-out-of-n
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun n-atleast-k (n k) 
+ (loop for i from k to n
+        sum (n-choose-k-cond n i)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(n-atleast-k '10 '2)
+#+END_SRC
+
+#+RESULTS:
+1013
+** DONE QIQ
+   CLOSED: [2018-02-15 Thu 16:13]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:13]--[2018-02-15 Thu 16:13] =>  0:00
+   :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(n-atleast-k '10 '2)
+#+END_SRC
+
+#+RESULTS:
+1013
+** DONE RLH
+   CLOSED: [2018-02-15 Thu 16:13]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 16:13]--[2018-02-15 Thu 16:13] =>  0:00
+   :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(n-choose-k-cond '9 '5)
+#+END_SRC
+
+#+RESULTS:
+126
+** DONE QKA
+   CLOSED: [2018-02-15 Thu 22:20]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 22:19]--[2018-02-15 Thu 22:20] =>  0:01
+   :END:
+*** [4 4 3 2]
+    First off, there are (52 choose 13) possible hands, so that's 635013559600 possible hands.
+
+    For the first and seconds suits, there are 13 choose 4 combinations, so that's 715 combinations for each, or 1430 possible combinations. 
+
+    The third has 286, and the fourth has 78. 
+
+    So a total of 715 * 715 * 286 * 78 = 11404407300 combinations of suits that match the criteria. We multiply that because of the permutations by 24 = 273705775200
+
+    Because we have a double suit, we divide that number by 2! = 136852887600 possible hands
+*** How many different suit distributions are there? 
+
+   We calculated that number above, 635013559600 possible hand distributions.
+
+** DONE RNC
+   CLOSED: [2018-02-15 Thu 22:56]
+   :LOGBOOK:
+   CLOCK: [2018-02-15 Thu 22:20]--[2018-02-15 Thu 22:56] =>  0:36
+   :END:
+
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (n-choose-k-cond 116 14)
+#+END_SRC
+
+#+RESULTS:
+: 404822104630406520
+
+#+BEGIN_SRC emacs-lisp
+  most-positive-fixnum
+#+END_SRC
+
+#+RESULTS:
+: 2305843009213693951
+
+** DONE QKT
+   CLOSED: [2018-02-16 Fri 16:35]
+   :LOGBOOK:
+   CLOCK: [2018-02-16 Fri 16:34]--[2018-02-16 Fri 16:35] =>  0:01
+   :END:
+   4/36 = 1/9
+
+** DONE RNM
+   CLOSED: [2018-02-16 Fri 16:37]
+   :LOGBOOK:
+   CLOCK: [2018-02-16 Fri 16:35]--[2018-02-16 Fri 16:37] =>  0:02
+   :END:
+    We have 8 possible outcomes:
+
+HH H, HT H, TT H, HH T, HT T, TH H, TH T, TT T. 
+In 4 of those outcomes Ed has more heads, so the probability is 1/2
+Ironically, this is the same as with one coin. 
+
+** DONE QOS
+   CLOSED: [2018-02-16 Fri 16:39]
+   :LOGBOOK:
+   CLOCK: [2018-02-16 Fri 16:37]--[2018-02-16 Fri 16:39] =>  0:02
+   :END:
+   With 2n coins, the the probability space will be (2n)^2 -> [(2(1))^2 = 4 outcomes for 2 coins, (2(2))^2 = 16
+   for 4 coins where n is the number of coins /2, hence, 2n coins]
+
+** DONE ROP
+   CLOSED: [2018-02-16 Fri 16:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-16 Fri 16:39]--[2018-02-16 Fri 16:43] =>  0:04
+   :END:
+
+*** 1. The first 13 letters will be in alphabetical order
+    There are 26! combinations of the uppercase letters. 
+    There are 13! ways the first 13 numbers can be arranged 
+    so (26!/13!)/26! is equal to 1/13!
+
+*** 2. The first and last letters will be B and Y.  
+    There are 24! ways to arrange the other letters (subtracting B and Y) 
+    so it will be 24!/26! = 1/650
+
+*** 3. The letter I will come before both J and K
+    1/3
+
+*** 4. The letters O and P will be next to each other
+    2(25!/26!) = 1/13
+
+*** 5. The letters U and V will be at least 23 spaces apart.
+    6(24!)/(26!) = 3/325 
+** DONE QRQ
+   CLOSED: [2018-02-16 Fri 16:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-16 Fri 16:43]--[2018-02-16 Fri 16:43] =>  0:00
+   :END:
+
+We worked on this one in class. 
+
+   #+BEGIN_SRC emacs-lisp :results silent
+(defun size-prob (seq)
+   (float (length seq)))
+
+;;(require 'cl)
+
+(defun probability (event space)
+  "A function that takes an event and a space
+and returns a number between 0 and 1."
+  (let ((result (/ (size-prob event) (size-prob space))))
+    (if (subsetp (append event nil) (append space nil))
+    result
+    (error "Bad Parameters"))))
+   #+END_SRC 
+
+#+BEGIN_SRC emacs-lisp :results raw
+(probability [1 2 3 4] [1 2 3 4 5 6])
+#+END_SRC
+
+#+RESULTS:
+0.6666666666666666
+0.5
+** DONE ROX
+   CLOSED: [2018-02-16 Fri 16:43]
+    This code is based of the brief example we got to see in class. I don't know if its exactly the same, but I had to play with it quite a bit to 
+get it to work. 
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun 3-digit-date-prob () 
+       (let* (
+              ;; Here we define our invalid date ranges. These are ranges that we know are invalid
+             (invalid-dates '(100 (111 . 119) (121 . 129) (132 . 209) (230 . 309) (332 . 409) (431 . 509) (532 . 609) (631 . 709) (732 . 809) (832 . 909) (931 . 909)))
+             ;; Here we define our valid date ranges. Again, these are ranges that we know are valid
+             (valid-dates '((101 . 110) 120 130 131 (210 . 229) (310 . 331) (410 . 430) (510 . 531) (610 . 630) (710 . 731) (810 . 831) (910 . 930)))
+
+             ;; Here we are making a list of all the invalid dates from the ranges we provided above
+             (get-invalid 
+             (loop for i in invalid-dates 
+                   append (if (consp i) ;; if it is an object, then it must be a sublist, so loop through it. 
+                          (loop for k from (car i) to (cdr i) ;; use the car as the initial, and use the cdr to get the full range to loop through
+                                collect k) (list i)))) ;; otherwise just append the number in the list
+             (get-valid  ;; We go through the same process for the valid date ranges
+             (loop for i in valid-dates
+                   append (if (consp i)
+                   (loop for k from (car i) to (cdr i)
+                         collect k) (list i))))
+                         ;; now we can calculate the probability based on the lengths of the lists we just created
+             (prob (/ (length get-valid) (float (length (union get-invalid get-valid))))))
+
+             prob))
+    #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(3-digit-date-prob)
+#+END_SRC
+
+#+RESULTS:
+: 0.2214199759326113
+* DONE Day 1
+  CLOSED: [2018-02-16 Fri 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-12 Mon 15:17]--[2018-02-12 Mon 16:13] =>  0:56
+  :END:
+
+** DONE "Prove" Coprime Probability
+   CLOSED: [2018-02-12 Mon 15:28]
+
+   If u and v are integers chosen at random, the probability that gcd(u,v) = 1
+   is 6/\pi^2 \approx .60793.
+
+   
+
+** DONE Discuss GPAO
+   CLOSED: [2018-02-12 Mon 15:22]
+
+   gersy principle application opportunities
+
+   What is the gersy principle?
+
+   John is eager to please.
+   Jonn is easy to please.
+
+   Never settle for the superficial.
+   Always look below the surface.
+
+   Sam is eager to learn.
+   Sam is easy to teach.
+
+** DONE Discuss Combinatorial Proofs
+   CLOSED: [2018-02-12 Mon 16:12]
+   \({2n \choose 2) = 2{n \choose 2} + n^2\)
+
+   Proof:
+
+   \({r \choose k} = \frac{r!}{(r-k)!k!}\)
+
+
+   How many ways can you choose 2 people from a group of 2n people (n of them men, the other n women)
+   
+   2n \chooose 2
+
+
+   How many ways can you choose:
+   Either 2 men, n \choose 2 
+   OR 2 women, n \choose 2
+    OR one of each? n * n 
+
+   n choose 2 + n choose 2 + n^2
+   
+** DONE Discuss Pascal's Triangle
+   CLOSED: [2018-02-12 Mon 16:13]
+
+* DONE Day 2 
+  CLOSED: [2018-02-16 Fri 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-13 Tue 15:14]--[2018-02-13 Tue 16:12] =>  0:58
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+(defun n-choose-k (n k)
+   (if (or (zerop k) (= n k)
+     1
+   (+ (n-choose-k (- n 1) 9-k 1))
+   (n-choose-k (- n 1) k))))
+#+END_SRC
+
+* DONE Day 3
+  CLOSED: [2018-02-16 Fri 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-02-14 Wed 15:13]--[2018-02-14 Wed 16:14] =>  1:01
+  :END:
+  
+* DONE Day 4
+  CLOSED: [2018-02-16 Fri 17:59]
+ The Value of Values by Rich Hickey

@@ -1,0 +1,62 @@
+#+TITLE: Schedule
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+  Simple. Regular. Predictable. Such is this semester\rsquo{}s schedule.
+
+  There are assignments of ever-increasing weight due every week, including this
+  week I\rsquo{}m numbering 00, excluding the last week of the semester (finals week).
+  The 00 Assignment is due Saturday, September 16th, 2017, at 6:00 PM MST. Every
+  assignment thereafter is also due by 6:00 PM MST on Saturday. A grace period
+  of up to 6 hours will be granted, but the points earned will be diminished by
+  a "Timeliness" factor that is factored into the weighted score for each
+  assignment. The [[file:see-grades.org][see-grades.org]] file shows how. This factor is initially 1.0,
+  but decreases as a function of elapsed time starting at the 6:00 hour and
+  ending at midnight, or the submission time, whichever comes first. If the
+  submission time is midnight or later, the factor drops to zero. Provision may
+  be made on occasion for a factor that is greater than one, rewarding early
+  submissions.
+
+  A similar mechanism governs preparation assessments, with the following
+  differences:
+
+  - Preparation assessments are weighted equally, each at 2.5% of the total
+    grade.
+  - Each week\rsquo{}s PA is due by 3:15 PM MST (class starting time) on Wednesday (the
+    third class meeting of each week).
+
+  (Re)reading [[https://rickneff.github.io/metaphors-be-with-you.html][The Book]] is another regular activity you are tasked with. There
+  are three main sections and essentially three months (12 full weeks) in the
+  semester. That\rsquo{}s one main section per month, or about one subsection every
+  week. More details will be available in each week\rsquo{}s preparation assessment,
+  but here\rsquo{}s an outline:
+
+  | Week | Reading | Exercises/Problems/Puzzles (EPP)                                      |
+  |------+---------+-----------------------------------------------------------------------|
+  |   00 | <ABC    | CRC DGZ CHJ DOK UJF                                                   |
+  |   01 |         | Some EPPs not in the book.                                    |
+  |   02 | ABC     | OQP USV UCA ODS UGX OGR UWM OPZ UOX OTX UOT OIM UIN OJL UCG           |
+  |      |         | OIO UIJ OQT UTQ OYU UOH OZD UZM OOY UFZ OKJ UVH OJM ULQ OTD           |
+  |      |         | UJU OLH UWY OBW USL OYP UBV OKQ UKF OKL UEZ OYW UEF OUB UQY           |
+  |   03 | DEF     | TBD WDK TDR WDT TEH WFC TEJ WFK TER WGP TEU WGW TFV WJS TGE           |
+  |      |         | WKC THP WKM TIW WNW TKG WOV TME WQW TMZ WRA TNL WRD TNQ WRP           |
+  |      |         | TOJ WRU TOL WZO TOU WYH TLI WPI TSD WTM TTV WUZ WZM TUK WVQ           |
+  |      |         | TUQ WVU TUW WWD TVL WWR TWN WWS TXG WZG TKH WUE                       |
+  |   04 | GHI     | EBQ MGX ECI MHB ECT MKJ EFE MKL EFS MLB EJE MLU EJK MMC EJU           |
+  |      |         | MNE EKQ MON                                                           |
+  |   05 | JKL     | QAM REX QCV RFC QCZ RFF QDM RGL QEB RGM QFK RHB QGK RVB QGT           |
+  |      |         | RJV QIQ RLH QKA RNC QKT RNM QOS ROP QRQ ROX                           |
+  |   06 | MNO     | FAB ISM FBH ITT FDK IVO FDZ IWC FJH IWK FJY IXT FMD IYJ FOJ           |
+  |      |         | IZL FOY VAO FQI VAR FQL VAY FQW VCR FRM VEM FUA VFJ FVF VGU           |
+  |      |         | FVH VGX FXI VIB FYR VIW                                               |
+  |   07 | PQR     | GMQ JPZ GMY JQA GRZ JYA GXF XAJ GYI XFO GYN XGG                       |
+  |   08 | STU     | LDA SQI LJP SUF LNR YGT LDO YCF                                       |
+  |   09 | STU     | LUM YZU LTI YDQ LND YTR LGO YIV                                       |
+  |   10 | VWX     | HST KDB HTC ABR KWD HRR KEO HMO HIJ KLE HAB KOV HBT AGA KNF           |
+  |      |         | Upcatching and Thanksgiving                                           |
+  |   11 | VWX     | HJS HAX KHQ HKE KBB HRL AGD HSG KHO ANA HLX KSI HTR KSQ HBE KSC       |
+  |   12 | YZ@     | BAO NCO PDQ NTC PTW NTM PMV NES BRZ BRE NGP BRQ PIQ PRK NIO           |
+  |   13 | YZ@     | PFA BGT NGI NLR BSP NBO PBI BJO NKY BMI                               |
+  |      |         | Upcatching and Finalstaking (in your other classes --- not this one!) |
+

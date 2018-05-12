@@ -1,0 +1,62 @@
+#+TITLE: Preparation Assessment 10
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+* DONE Watch a Video and Be Mesmerized
+  CLOSED: [2018-03-19 Mon 20:39]
+  For five and a half minutes!
+  [[https://www.youtube.com/watch?v=bo-MB1QPZ7E#t=326.976085][Mandelbrot Ultra Hard Zoom]]
+
+* DONE Watch Another (Shorter) Video
+  CLOSED: [2018-03-19 Mon 20:41]
+  And compare the two: [[https://www.youtube.com/watch?v=0jGaio87u3A][(Claimed) Deepest Mandelbrot Set Zoom Animation Ever]]
+
+  (Some commenter said: All images were lovingly rendered by 12 CPU cores running 24/7 for 6 months.)
+
+  (Another one said: The 2e915 zoom factor is equivalent to the Planck length
+  (1.616 229 e-35 meters) being exploded up to 1.713 733 e+310 meters.)
+
+  I prefer the first. I found it more engaging. But they also zoom into different areas. It's pretty cool to 
+  see repeating patterns in both. The nature of fractals I suppose. 
+
+* DONE Write a Response
+  CLOSED: [2018-03-19 Mon 21:16]
+  Namely, address the use of time (computer and people) that goes into these
+  kinds of enterprises, including the work of Melinda Green at
+  http://superliminal.com/fractals/ (which please go there and look around).
+
+  From what I know about the Mandelbrot set, it does not have many real world
+  applications outside of studying fractals. Despite this, I do feel like it has
+  real world value. For instance, when I first started jumping into studying
+  math for fun, the Mandelbrot set was one of the first structures that really
+  intrigued me. It sparked my curiousity into set theory and other areas of
+  mathematics long before I studied them in any formal class. For this and other
+  similar reasons, I do believe that it can be worth the time and effort put
+  into creating these very deep peeks into the Mandelbrot set.
+
+  To specifically respond to Melinda Green's work, I think it is fantastic. I
+  know some people may consider it a waste of time, but I think that the artwork
+  is a fantastic way to show the beauty of mathematics. It could inspire someone
+  like me to explore these areas further. I think anything that encourages
+  learning more about mathematics and how the world around us works should be
+  encouraged.
+
+* DONE Find the MIs
+  CLOSED: [2018-03-20 Tue 19:06]
+  on the poster about Fractals in Brother Neff\rsquo{}s office.
+
+Generally, citations are placed before the period of a sentance.
+
+"For Example" should be "For example"
+
+"This equation defines the perimeter of the snowflake;" <- should be semi-colon
+
+Missing a space between Triangle and (Shown.
+
+Again, citations are generally inside the period.
+
+With a recursive formula, <- missing comma
+
+Citations are cut off of the page

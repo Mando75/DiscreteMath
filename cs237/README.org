@@ -179,7 +179,6 @@ getLimit(10000000)
     ( ^[adic(8+8)]! / 8)!                 = 6 
     (^[adic(9)]* ^[adic(9)] - ^[adic(9)]) = 6 
 
-
 ** OQP
    I worked through the entire primer notebook.
    #+BEGIN_SRC emacs-lisp

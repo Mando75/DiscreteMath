@@ -1,0 +1,77 @@
+#+TITLE: Preparation Assessment 07
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+* DONE Answer What is True by Way of Review and Preview
+  CLOSED: [2018-02-27 Tue 21:34]
+  :LOGBOOK:
+  CLOCK: [2018-02-25 Sun 21:25]--[2018-02-25 Sun 22:25] =>  1:00
+  :END:
+  You know what to do:
+  - [X] I looked up some piece of prime lore to flesh out the list of 6 in MNS,
+    and will be prepared to share it with the class.
+
+    https://www.quora.com/What-are-some-amazing-facts-about-prime-numbers
+  - [X] I know that factors of a positive integer can be nonprime as well as
+    prime.
+  - [X] I know that, for example, the number 2^3 × 3^2 × 5^1 has an
+    easily-calculable total number of factors.
+  - [X] I understand how knowing the prime factorization of, say 360, allows one
+    to immediately say it has 24 factors.
+  - [X] I know that the GCD of 2^3 * 3^2 * 5 and 2^2 * 3^3 * 7 is 2^2 * 3^2.
+  - [X] I know that 2^2 * 3^2 is more helpfully expressed as 2^2 * 3^2 * 5^0 * 7^0,
+    and I know why that is the case.
+  - [X] I know how to write 2^1 * 3^2 * 7^1, the prime factorization of 126, in
+    the more helpful (complete standard) form.
+  - [X] I know why is it impossible that for some integer x, for some integer
+    y, 12x + 27y = 1; whereas it *is* possible that for some integer x, for some
+    integer y, 13x + 27y = 1.
+#+BEGIN_SRC emacs-lisp
+  (defun try-it (a x b y)
+    (eql 1 (+ (* a x) (* b y))))
+
+    (gcd 13 27)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+  - [X] I understand that the *Chinese Remainder Theorem* (CRT) guarantees that
+    if p and q are coprime positive integers, then a bijection exists between
+    Z_{pq} and Z_p \times Z_q.
+#+BEGIN_SRC emacs-lisp
+  (defun try-crt (p q)
+    (let ((z-sub-pq (number-sequence 0 (* p q))))
+      (mapcar* 'list z-sub-pq
+               (mapcar (lambda (n) (mod n p)) z-sub-pq)
+               (mapcar (lambda (n) (mod n q)) z-sub-pq))))
+  (try-crt 3 5)
+#+END_SRC
+
+#+RESULTS:
+|  0 | 0 | 0 |
+|  1 | 1 | 1 |
+|  2 | 2 | 2 |
+|  3 | 0 | 3 |
+|  4 | 1 | 4 |
+|  5 | 2 | 0 |
+|  6 | 0 | 1 |
+|  7 | 1 | 2 |
+|  8 | 2 | 3 |
+|  9 | 0 | 4 |
+| 10 | 1 | 0 |
+| 11 | 2 | 1 |
+| 12 | 0 | 2 |
+| 13 | 1 | 3 |
+| 14 | 2 | 4 |
+| 15 | 0 | 0 |
+
+  - [X] I know how the CRT makes possible the Residue Number System.
+  - [X] I know how to \ldquo{}connect all the dots\rdquo in the [[file:primes-and-probability.org][primes and probability]] file.
+  - [X] I looked up how to finish a rigorous proof of the Theorem given a
+    hand-waving proof in the [[file:coprime-probability.org][coprime probability]] file.
+
+https://www.cut-the-knot.org/m/Probability/TwoCoprime.shtml
+

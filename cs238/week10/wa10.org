@@ -1,0 +1,1149 @@
+#+TITLE: Weekly Assignment 10
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-03-21 Wed 21:55]
+| Headline                                |   Time |
+|-----------------------------------------+--------|
+| *Total time*                            | *2:52* |
+|-----------------------------------------+--------|
+| Reread (review) section THR...          |   0:12 |
+| Analyze Binomial Coefficient...         |   2:13 |
+| Answer a Question Involving Multiple... |   0:27 |
+#+END:
+
+
+* DONE Reread (review) section THR subsection VWX from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-03-19 Mon 21:29]
+  :LOGBOOK:
+  CLOCK: [2018-03-19 Mon 21:17]--[2018-03-19 Mon 21:29] =>  0:12
+  :END:
+
+  In addition to the first half of the section VWX exercises/problems/puzzles
+  (EPPs) that you did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following
+  tasks:
+
+  I completed all of the EPPs in VWX last semester in DM1
+
+* DONE Analyze Binomial Coefficient Calculations
+  CLOSED: [2018-03-21 Wed 21:54]
+  :LOGBOOK:
+  CLOCK: [2018-03-21 Wed 21:08]--[2018-03-21 Wed 21:54] =>  0:46
+  CLOCK: [2018-03-20 Tue 20:14]--[2018-03-20 Tue 21:08] =>  0:54
+  CLOCK: [2018-03-19 Mon 22:03]--[2018-03-19 Mon 22:03] =>  0:00
+  CLOCK: [2018-03-19 Mon 21:35]--[2018-03-19 Mon 22:03] =>  0:28
+  CLOCK: [2018-03-19 Mon 21:30]--[2018-03-19 Mon 21:35] =>  0:05
+  :END:
+  What can you say about these two different versions of the \ldquo{}N Choose K\rdquo
+  function (other than that they give the same result for 20 choose 10)?
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun n-choose-k-1 (n k)
+    (cond ((or (< n 0) (< k 0))  
+           (error "negative arg")) 
+          ((> k n) 0)
+          ((or (= n k) (zerop k)) 1)
+          (t (let ((result 1)         
+                   (top (- n (1- k)))  
+                   (bot 1)             
+                   (i 0))
+               (while (> k i)     
+                 (setq result (/ (* result top) bot) 
+                       top (1+ top) 
+                       bot (1+ bot)
+                       i (1+ i))
+                       (print (list result top bot i)))
+
+               result))))
+
+  (defun n-choose-k-2 (n k)
+    (if (> k n)
+        0
+      (let ((result 1)
+            (d 1)
+            (g 1)
+            (m (min k (- n k))))
+        (while (<= d m)
+          (setq g (gcd result d)
+                result (* n (/ result g))
+                result (/ result (/ d g))
+                n (- n 1)
+                d (+ d 1))
+          (print (list 'gcd g 'result result 'n n 'd d)))
+        result)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (list (n-choose-k-1 20 10)
+        (n-choose-k-2 20 10))
+#+END_SRC
+
+#+RESULTS:
+| 184756 | 184756 |
+
+** Speed Test
+   
+ #+BEGIN_SRC emacs-lisp :results silent 
+  (defun n-choose-k-speed-test (n k) 
+    (let ((start (float-time))
+         (1-time nil)
+         (2-time nil))
+        (progn 
+           (n-choose-k-1 n k)
+           (setq 1-time (- (float-time) start)
+                 start (float-time))
+           (n-choose-k-2 n k)
+           (setq 2-time (- (float-time) start))
+           (list 'n n 'k k '1-time 1-time '2-time 2-time 'winner 
+                (if (< 1-time 2-time) (symbol-name '1-time) (symbol-name '2-time))))))
+ #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results table
+  (loop for i from 100 to 120
+        for j from 110 to 130 
+     collect (n-choose-k-speed-test i j))
+#+END_SRC
+
+#+RESULTS:
+| n | 100 | k | 110 | 1-time |  5.245208740234375e-06 | 2-time |    1.9073486328125e-06 | winner | 2-time |
+| n | 101 | k | 111 | 1-time |  2.384185791015625e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 102 | k | 112 | 1-time |  3.337860107421875e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 103 | k | 113 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 104 | k | 114 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 105 | k | 115 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 106 | k | 116 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 107 | k | 117 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 108 | k | 118 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 109 | k | 119 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 110 | k | 120 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 111 | k | 121 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 112 | k | 122 | 1-time |  2.384185791015625e-05 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 113 | k | 123 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 114 | k | 124 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 115 | k | 125 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 116 | k | 126 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 117 | k | 127 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 118 | k | 128 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 119 | k | 129 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 120 | k | 130 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+
+#+RESULT 3:
+| n | 100 | k | 110 | 1-time | 5.0067901611328125e-06 | 2-time |    1.9073486328125e-06 | winner | 2-time |
+| n | 101 | k | 111 | 1-time | 2.6226043701171875e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 102 | k | 112 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 103 | k | 113 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 104 | k | 114 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 105 | k | 115 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 106 | k | 116 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 107 | k | 117 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 108 | k | 118 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 109 | k | 119 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 110 | k | 120 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 111 | k | 121 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 112 | k | 122 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 113 | k | 123 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 114 | k | 124 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 115 | k | 125 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 116 | k | 126 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 117 | k | 127 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 118 | k | 128 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 119 | k | 129 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 120 | k | 130 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+
+#+RESULT 2:
+| n |  10 | k |  20 | 1-time |   4.76837158203125e-06 | 2-time |    1.9073486328125e-06 | winner | 2-time |
+| n |  20 | k |  30 | 1-time |  3.337860107421875e-06 | 2-time | 2.1457672119140625e-06 | winner | 2-time |
+| n |  30 | k |  40 | 1-time | 3.0994415283203125e-06 | 2-time |    1.9073486328125e-06 | winner | 2-time |
+| n |  40 | k |  50 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  50 | k |  60 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  60 | k |  70 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n |  70 | k |  80 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  80 | k |  90 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  90 | k | 100 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n | 100 | k | 110 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+
+#+RESULT 1:
+| n |  10 | k |  20 | 1-time | 5.9604644775390625e-06 | 2-time |    1.9073486328125e-06 | winner | 2-time |
+| n |  20 | k |  30 | 1-time | 2.6226043701171875e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n |  30 | k |  40 | 1-time |    1.9073486328125e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  40 | k |  50 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  50 | k |  60 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  60 | k |  70 | 1-time |  1.430511474609375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  70 | k |  80 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+| n |  80 | k |  90 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n |  90 | k | 100 | 1-time | 1.6689300537109375e-06 | 2-time | 1.1920928955078125e-06 | winner | 2-time |
+| n | 100 | k | 110 | 1-time | 1.6689300537109375e-06 | 2-time |    9.5367431640625e-07 | winner | 2-time |
+
+
+We can see that n-choose-k-2 seems to be consistently faster than n-choose-k-1, at least in these tests.
+
+** Other Comparisons
+  
+*** Step by step iterations for both functions 
+
+ #+BEGIN_SRC emacs-lisp :results output
+   (n-choose-k-2 20 10)
+ #+END_SRC
+
+ #+RESULTS:
+ #+begin_example
+
+ (gcd 1 result 20 n 19 d 2)
+
+ (gcd 2 result 190 n 18 d 3)
+
+ (gcd 1 result 1140 n 17 d 4)
+
+ (gcd 4 result 4845 n 16 d 5)
+
+ (gcd 5 result 15504 n 15 d 6)
+
+ (gcd 6 result 38760 n 14 d 7)
+
+ (gcd 1 result 77520 n 13 d 8)
+
+ (gcd 8 result 125970 n 12 d 9)
+
+ (gcd 3 result 167960 n 11 d 10)
+
+ (gcd 10 result 184756 n 10 d 11)
+ #+end_example
+
+ #+BEGIN_SRC emacs-lisp :results output
+   (n-choose-k-1 20 10)
+ #+END_SRC
+
+ #+RESULTS:
+ #+begin_example
+
+ (11 12 2 1)
+
+ (66 13 3 2)
+
+ (286 14 4 3)
+
+ (1001 15 5 4)
+
+ (3003 16 6 5)
+
+ (8008 17 7 6)
+
+ (19448 18 8 7)
+
+ (43758 19 9 8)
+
+ (92378 20 10 9)
+
+ (184756 21 11 10)
+ #+end_example
+
+*** Large numbers test
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun test-n-choose-k-large (min-n max-n k)
+  (loop for i from min-n to max-n
+     collect (list "n-choose-k-1" (n-choose-k-1 i k) "n-choose-k-2" (n-choose-k-2 i k))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (test-n-choose-k-large 100 250 15)
+#+END_SRC
+
+#+RESULTS:
+| n-choose-k-1 |  -54107263211837220 | n-choose-k-2 |   253338471349988640 |
+| n-choose-k-1 |   -9920320534513620 | n-choose-k-2 |   297525414027312240 |
+| n-choose-k-1 |   41377164642609179 | n-choose-k-2 |   348822899204435040 |
+| n-choose-k-1 |  100835613370637879 | n-choose-k-2 |   408281347932463740 |
+| n-choose-k-1 | -137798658056503080 | n-choose-k-2 |   477092811067148640 |
+| n-choose-k-1 |  -58283189545311640 | n-choose-k-2 |   556608279578340080 |
+| n-choose-k-1 |   33465427967601559 | n-choose-k-2 |   648356897091253280 |
+| n-choose-k-1 |  139175791623784159 | n-choose-k-2 |   754067260747435880 |
+| n-choose-k-1 |  -46646191204584300 | n-choose-k-2 |   875691012480893280 |
+| n-choose-k-1 |   93091736318962499 | n-choose-k-2 |  1015428940004440080 |
+| n-choose-k-1 |  -54023112979004401 | n-choose-k-2 |  1175759825268299040 |
+| n-choose-k-1 |  151649769330726316 | n-choose-k-2 |  -770687434354751265 |
+| n-choose-k-1 |   32471300100610140 | n-choose-k-2 |  1569699972909739440 |
+| n-choose-k-1 |  -56674644137610509 | n-choose-k-2 |  1809960172844903640 |
+| n-choose-k-1 | -111844398486009959 | n-choose-k-2 |   239522155298933878 |
+| n-choose-k-1 | -128621058258911454 | n-choose-k-2 | -2214859971357015508 |
+| n-choose-k-1 | -102062938015904372 | n-choose-k-2 | -1858895706940623568 |
+| n-choose-k-1 |  -26646977558882702 | n-choose-k-2 | -1454073602310217048 |
+| n-choose-k-1 |  103793346634310727 | n-choose-k-2 |  -950306314720520784 |
+| n-choose-k-1 |  142413212749784467 | n-choose-k-2 |   449858947311610322 |
+| n-choose-k-1 |   74916318982089144 | n-choose-k-2 |   118837138205207120 |
+| n-choose-k-1 |   85517684875780995 | n-choose-k-2 |   788250792445668680 |
+| n-choose-k-1 | -123739850527245884 | n-choose-k-2 |     8022607142108058 |
+| n-choose-k-1 |  138459270291026015 | n-choose-k-2 | -2211304558145785924 |
+| n-choose-k-1 |  115204252272108604 | n-choose-k-2 |  -324003939959071203 |
+| n-choose-k-1 |  -92682974826659039 | n-choose-k-2 |   -70722565215100046 |
+| n-choose-k-1 |  144072624165813412 | n-choose-k-2 |  1066409827851290992 |
+| n-choose-k-1 | -102901901637846482 | n-choose-k-2 |   138662604089302415 |
+| n-choose-k-1 |   84386018838120772 | n-choose-k-2 |  -618347088731766912 |
+| n-choose-k-1 |   -2665586825531842 | n-choose-k-2 |  1644365134041392408 |
+| n-choose-k-1 |   -3013272063644682 | n-choose-k-2 | -1540241944872774016 |
+| n-choose-k-1 | -122670661169134640 | n-choose-k-2 |    31052206111778263 |
+| n-choose-k-1 |  103729924141754899 | n-choose-k-2 |  -112495647418210564 |
+| n-choose-k-1 | -151447718211988660 | n-choose-k-2 |    -9549686875761361 |
+| n-choose-k-1 | -131784102705706660 | n-choose-k-2 |  -331117051487549824 |
+| n-choose-k-1 | -109826398723691850 | n-choose-k-2 |    11800485278788773 |
+| n-choose-k-1 |  -47215026360060451 | n-choose-k-2 |   135225299643660450 |
+| n-choose-k-1 |   98182667724436638 | n-choose-k-2 |    81290044946314406 |
+| n-choose-k-1 |  109084924295145568 | n-choose-k-2 |  -103762122709195357 |
+| n-choose-k-1 | -107377250018817130 | n-choose-k-2 |    26074469928348978 |
+| n-choose-k-1 |    2715773803655144 | n-choose-k-2 |   -44583569975087351 |
+| n-choose-k-1 |   76240445580715475 | n-choose-k-2 |  -145052912812686707 |
+| n-choose-k-1 | -149575535275870268 | n-choose-k-2 |  -149575535275870259 |
+| n-choose-k-1 |   13040066778808534 | n-choose-k-2 |  -118722390890545365 |
+| n-choose-k-1 |  -58985483225155449 | n-choose-k-2 |  -761718590795043098 |
+| n-choose-k-1 |  135230710539289804 | n-choose-k-2 |  -140119040744103778 |
+| n-choose-k-1 |    9900302786463805 | n-choose-k-2 |  -135376253105388074 |
+| n-choose-k-1 |  -23911678097100173 | n-choose-k-2 |    58862173515699101 |
+| n-choose-k-1 |   69057106151209724 | n-choose-k-2 |  -454614199970581590 |
+| n-choose-k-1 |  111202946529534604 | n-choose-k-2 | -1420957939446158024 |
+| n-choose-k-1 |  -47244356390420471 | n-choose-k-2 |    60868429389562339 |
+| n-choose-k-1 | -135427719343670329 | n-choose-k-2 |   139922031939723093 |
+| n-choose-k-1 |  123528220994925897 | n-choose-k-2 |  1741841483139042288 |
+| n-choose-k-1 |  130051260054620188 | n-choose-k-2 |   163836505610864683 |
+| n-choose-k-1 |  144085568693607843 | n-choose-k-2 |    73136553025494202 |
+| n-choose-k-1 | -128495910170490327 | n-choose-k-2 |  -366681891342014889 |
+| n-choose-k-1 |   45665900744281197 | n-choose-k-2 |   353111635306106566 |
+| n-choose-k-1 | -111893547009047973 | n-choose-k-2 |   -89933137397489386 |
+| n-choose-k-1 |   45909872613507421 | n-choose-k-2 |  -143287502501462894 |
+| n-choose-k-1 | -123090705819185543 | n-choose-k-2 |   254459413271847408 |
+| n-choose-k-1 |  -72214764787689171 | n-choose-k-2 |  -744541151356957092 |
+| n-choose-k-1 |   15126581674412378 | n-choose-k-2 |   -43997598049016088 |
+| n-choose-k-1 |  110786151609095039 | n-choose-k-2 |  -186524009285857915 |
+| n-choose-k-1 |  -91951134780985236 | n-choose-k-2 |     3492183915406885 |
+| n-choose-k-1 |   53546603946680416 | n-choose-k-2 |  -287684376171388948 |
+| n-choose-k-1 |   63293346263660271 | n-choose-k-2 |   311614901102059259 |
+| n-choose-k-1 |  127552666247620066 | n-choose-k-2 |    46468076912634009 |
+| n-choose-k-1 |   18779942037124983 | n-choose-k-2 | -1350367134129686353 |
+| n-choose-k-1 |   80904590190142308 | n-choose-k-2 |   -13694097367341330 |
+| n-choose-k-1 |  142687731008465662 | n-choose-k-2 |  -142797593941802265 |
+| n-choose-k-1 |   -7852650825608045 | n-choose-k-2 |    -7852650825609325 |
+| n-choose-k-1 |   20954376456720441 | n-choose-k-2 |  -660662952640515560 |
+| n-choose-k-1 |  -65165001940931652 | n-choose-k-2 |   265930404510264192 |
+| n-choose-k-1 |   90154750840823271 | n-choose-k-2 |  -676770323285929116 |
+| n-choose-k-1 |  -17357342310731600 | n-choose-k-2 |   354280358807959705 |
+| n-choose-k-1 | -152013997530075613 | n-choose-k-2 |    31270959612552030 |
+| n-choose-k-1 | -109035659629365094 | n-choose-k-2 |    90297289152478375 |
+| n-choose-k-1 |  129753088224843699 | n-choose-k-2 |   148334973280778107 |
+| n-choose-k-1 |   85108451945812286 | n-choose-k-2 |   -19625809278546108 |
+| n-choose-k-1 |   36652688179546471 | n-choose-k-2 |   556100838606805911 |
+| n-choose-k-1 |  149326090905170232 | n-choose-k-2 |   -66899480654795996 |
+| n-choose-k-1 |  -78012401282340120 | n-choose-k-2 |   124699072055126836 |
+| n-choose-k-1 | -143931260714758655 | n-choose-k-2 | -1373714198962061712 |
+| n-choose-k-1 |   40861420368311884 | n-choose-k-2 |   -68940627689481771 |
+| n-choose-k-1 |  -69861888227230977 | n-choose-k-2 |   173391879777728786 |
+| n-choose-k-1 |  -21771042854017394 | n-choose-k-2 |    42420923702847123 |
+| n-choose-k-1 |  137895671608474957 | n-choose-k-2 |   -24273507061498367 |
+| n-choose-k-1 |  -26390382677326701 | n-choose-k-2 |    49626419824223534 |
+| n-choose-k-1 |  -28678566146459087 | n-choose-k-2 |   342959134972232570 |
+| n-choose-k-1 |   83427726442868660 | n-choose-k-2 |   -58470304893358702 |
+| n-choose-k-1 | -127674011869653239 | n-choose-k-2 |    10845494910948598 |
+| n-choose-k-1 |  -33744273826106296 | n-choose-k-2 |    60854413731380408 |
+| n-choose-k-1 | -121238861323449920 | n-choose-k-2 |    13902120901526907 |
+| n-choose-k-1 |  -92488704060276838 | n-choose-k-2 |   301109406669973483 |
+| n-choose-k-1 | -142641438945245802 | n-choose-k-2 |   101226606251630905 |
+| n-choose-k-1 |  127297031157653747 | n-choose-k-2 |  -260004738355309568 |
+| n-choose-k-1 |   86888652320695503 | n-choose-k-2 |    30989427854891225 |
+| n-choose-k-1 |   43371936650118046 | n-choose-k-2 |    36614887538866834 |
+| n-choose-k-1 |  122528423562871787 | n-choose-k-2 |   -26126656884620840 |
+| n-choose-k-1 | -149865069847483956 | n-choose-k-2 |    72272919684806463 |
+| n-choose-k-1 |  -24044653793268859 | n-choose-k-2 |  -328111863799484883 |
+| n-choose-k-1 | -114533777532883247 | n-choose-k-2 |  -131426400311022181 |
+| n-choose-k-1 |   29667649281332815 | n-choose-k-2 |    16460689654783091 |
+| n-choose-k-1 | -128229516930576449 | n-choose-k-2 |   282952278418697737 |
+| n-choose-k-1 |  -65205097346854137 | n-choose-k-2 |  -148439656853623021 |
+| n-choose-k-1 |  109420201585565958 | n-choose-k-2 |   400587590561182382 |
+| n-choose-k-1 |  142158364110176746 | n-choose-k-2 |  -137030619622757021 |
+| n-choose-k-1 |   57187694255716980 | n-choose-k-2 |    99265681903072217 |
+| n-choose-k-1 |   86209786949667706 | n-choose-k-2 |    86209786949674574 |
+| n-choose-k-1 |   92875492126188406 | n-choose-k-2 |  -170649423212480978 |
+| n-choose-k-1 | -112827286253057811 | n-choose-k-2 |    52720416972577903 |
+| n-choose-k-1 |  -11901302672679363 | n-choose-k-2 |  -127615768702782133 |
+| n-choose-k-1 |  -36217066929117617 | n-choose-k-2 |  -252442638489042657 |
+| n-choose-k-1 |  -62252127648039346 | n-choose-k-2 |   125870262381005415 |
+| n-choose-k-1 |   19369163437755405 | n-choose-k-2 |   -45129941715118090 |
+| n-choose-k-1 |   89997140971997879 | n-choose-k-2 |    60358266461245369 |
+| n-choose-k-1 |  119657057056611592 | n-choose-k-2 |  -159531926676404436 |
+| n-choose-k-1 |   -8438290739011770 | n-choose-k-2 |   -60037574861325708 |
+| n-choose-k-1 |   -2421261494636942 | n-choose-k-2 |   453372414918650680 |
+| n-choose-k-1 |  133038528643259436 | n-choose-k-2 |    92189095379823412 |
+| n-choose-k-1 |  -52192532641562384 | n-choose-k-2 |   133626317917800248 |
+| n-choose-k-1 |  -51302386848920142 | n-choose-k-2 |    -7381567625779595 |
+| n-choose-k-1 |  125755594674576960 | n-choose-k-2 |   389280510013303603 |
+| n-choose-k-1 |  115397991557253666 | n-choose-k-2 |   -76333276974438127 |
+| n-choose-k-1 |  114175012775682796 | n-choose-k-2 |   -70722421995769362 |
+| n-choose-k-1 |   34488732384857086 | n-choose-k-2 |   128626712048383920 |
+| n-choose-k-1 |   71974716808928669 | n-choose-k-2 |    55389232626762832 |
+| n-choose-k-1 |   69688697388465933 | n-choose-k-2 |    55483537325120580 |
+| n-choose-k-1 |   74596352134136728 | n-choose-k-2 |   108688736286422380 |
+| n-choose-k-1 |   35730586704951143 | n-choose-k-2 |  -604960524479758244 |
+| n-choose-k-1 |  -58803806957384292 | n-choose-k-2 |   -79074954291201104 |
+| n-choose-k-1 |   65214984738002590 | n-choose-k-2 |   -70770628625920191 |
+| n-choose-k-1 | -110210745761082429 | n-choose-k-2 |  -296029596320378520 |
+| n-choose-k-1 |  -61583464215969156 | n-choose-k-2 | -1554891317801933649 |
+| n-choose-k-1 |  -36320411875511384 | n-choose-k-2 |    95442045793887126 |
+| n-choose-k-1 | -148598851651969108 | n-choose-k-2 |  -149597052088929643 |
+| n-choose-k-1 |  107026272902456369 | n-choose-k-2 |  -348153126319025140 |
+| n-choose-k-1 |  -21933286353253022 | n-choose-k-2 |   -54643546823603004 |
+| n-choose-k-1 |  -23408619516032713 | n-choose-k-2 |  1898664714038340800 |
+| n-choose-k-1 |  -91558049758164706 | n-choose-k-2 |    45886471936542946 |
+| n-choose-k-1 |  -15676390525560657 | n-choose-k-2 |    64486783021513592 |
+| n-choose-k-1 |   56519387970455067 | n-choose-k-2 |   -53896937279116437 |
+| n-choose-k-1 |  127913940611234287 | n-choose-k-2 |   455630822506757038 |
+| n-choose-k-1 |   48220967371872711 | n-choose-k-2 |    82850844066966526 |
+| n-choose-k-1 |   88277755250348979 | n-choose-k-2 |   118684476251015261 |
+| n-choose-k-1 | -113156690524845694 | n-choose-k-2 |   -30382838912140839 |
+| n-choose-k-1 |  -76583708348801056 | n-choose-k-2 |   158991594756913787 |
+| n-choose-k-1 |  147534548697380727 | n-choose-k-2 |   -58094741301750856 |
+| n-choose-k-1 |   81563387041733194 | n-choose-k-2 |   -66170277617881116 |
+| n-choose-k-1 |   32735416397889132 | n-choose-k-2 |   369359317576551150 |
+| n-choose-k-1 | -133892201079673055 | n-choose-k-2 |  -645277963362907748 |
+
+These functions are not equivalent. When given larger numbers, they do not provide the same
+answers. Many of the results are inaccurate. I believe this is due to integer overflow. 
+
+* DONE Answer a Question Involving Multiple Ideas
+  CLOSED: [2018-03-20 Tue 22:23]
+  :LOGBOOK:
+  CLOCK: [2018-03-20 Tue 21:56]--[2018-03-20 Tue 22:23] =>  0:27
+  :END:
+  The Pythagoreans may have been the first to notice that the most beautiful
+  harmonies produced by lyres or flutes corresponded to the simplest fractional
+  ratios between the lengths of vibrating strings or pipes. The *Pythagorean
+  Scale* gives the numerical ratios of frequencies determining the principal
+  intervals on which Western music is essentially based. Also known as the pure
+  *diatonic scale*, these frequencies (in inverse proportion to the lengths of
+  the vibrating elements) are in the ratios 24:27:30:32:36:40:45:48, giving many
+  instances of simple ratios which underlie harmonies that are pleasing to the
+  ear.
+
+  Demonstrate an understanding of what meaning the 2-digit numbers (the 8
+  numbers separated by colons) have by matching the interval on the scale in the
+  first column with the corresponding *simple ratio* in the second column. (You
+  don\rsquo{}t need to know music theory to answer this --- logical thinking will
+  suffice.)
+
+  | Scale Interval   | Simple Ratio |
+  |------------------+--------------|
+  | a perfect unison |         15:8 | x
+  | a major second   |          2:1 | x
+  | a major third    |          1:1 | x
+  | a perfect fourth |          5:3 | x
+  | a perfect fifth  |          9:8 | x
+  | a major sixth    |          5:4 | x
+  | a major seventh  |          3:2 | x
+  | a perfect octave |          4:3 | x
+
+  Which goes with which? Reproduce the table above with the correct matching.
+
+  I am a classically trained pianist, so this was a good recall to the many hours of music theory
+  I studied :)
+
+  | Scale Interval   | Simple Ratio | Complex Ratio | Reduce with GCD |
+  |------------------+--------------+---------------+-----------------|
+  | a perfect unison |          1:1 | 24/24 = 1/1   | GCD = 24        |
+  | a major second   |          9:8 | 27/24 = 9/8   | GCD = 3         |
+  | a major third    |          5:4 | 30/24 = 5/4   | GCD = 6         |
+  | a perfect fourth |          4:3 | 32/24 = 4/4   | GCD = 8         |
+  | a perfect fifth  |          3:2 | 36/24 = 3/2   | GCD = 12        |
+  | a major sixth    |          5:3 | 40/24 = 5/3   | GCD = 8         |
+  | a major seventh  |         15:8 | 45/24 = 15/8  | GCD = 3         |
+  | a perfect octave |          2:1 | 48/24 = 2/1   | GCD = 24        |
+
+Verify the GCDs are correct:
+
+#+BEGIN_SRC emacs-lisp
+  (mapcar (lambda (x) 
+                  (list 
+                      (concatenate 'string "gcd of 24 and " (number-to-string x) " is " (number-to-string (gcd x 24)))))
+          '(24 27 30 32 36 40 45 48))
+#+END_SRC
+
+#+RESULTS:
+| gcd of 24 and 24 is 24 |
+| gcd of 24 and 27 is 3  |
+| gcd of 24 and 30 is 6  |
+| gcd of 24 and 32 is 8  |
+| gcd of 24 and 36 is 12 |
+| gcd of 24 and 40 is 8  |
+| gcd of 24 and 45 is 3  |
+| gcd of 24 and 48 is 24 |
+
+
+
+* VWX  
+  I completed all of these in DM1 Fall 2017 Semester
+** DONE VWD
+   CLOSED: [2017-12-01 Fri 18:56]
+*** DONE KDB
+    CLOSED: [2017-12-01 Fri 18:56]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 18:43]--[2017-12-01 Fri 18:56] =>  0:13
+    :END:
+
+
+I started working on this last week. So I carried my work over
+
+    #+BEGIN_SRC emacs-lisp
+        (setq kdb-arcs '([ID MT] [ID WY] [ID NV] [ID UT] [MT WY] [WY UT] [WY CO]
+                     [UT CO] [UT NV] [UT AZ] [CO NM] [AZ NM] [NV AZ])
+          MT-NM-paths '(([MT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO NM])
+                        ([MT ID] [ID UT] [UT WY] [WY CO] [CO NM])
+                        ([MT ID] [ID WY] [WY CO] [CO UT] [UT NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID UT] [UT NV] [NV AZ] [AZ NM])
+                        ([MT ID] [ID UT] [UT AZ] [AZ NM])
+                         ([MT ID] [ID UT] [UT CO] [CO NM])
+                         ([MT ID] [ID WY] [WY UT] [UT NV] [NV AZ] [AZ NM])
+                         ([MT ID] [ID WY] [WY UT] [UT NV] [NV CO] [CO NM])           
+    )
+    
+    MT-NM-Simple-Paths '((MT ID NV AZ NM)
+    (MT ID UT NV AZ NM)
+    (MT ID UT AZ NM)
+    (MT ID UT CO NM)
+    (MT ID WY UT NV AZ NM)
+    (MT ID WY UT AZ NM)
+    (MT ID WY UT CO NM)
+    (MT ID WY CO UT NV AZ NM)
+    (MT ID WY CO UT AZ NM)
+    (MT ID WY CO NM)
+    (MT WY ID NV AZ NM)
+    (MT WY ID NV UT CO NM)
+    (MT WY ID NV UT AZ NM)
+    (MT WY UT NV AZ NM)
+    (MT WY UT AZ NM)
+    (MT WY UT CO NM)
+    (MT WY CO UT NV AZ NM)
+    (MT WY CO NM)
+    (MT ID UT WY CO NM)
+    (MT ID NV AZ UT WY CO NM)
+    (MT ID NV AZ UT CO NM)))
+    #+END_SRC
+
+    #+RESULTS:
+    | MT | ID | NV | AZ | NM |    |    |    |
+    | MT | ID | UT | NV | AZ | NM |    |    |
+    | MT | ID | UT | AZ | NM |    |    |    |
+    | MT | ID | UT | CO | NM |    |    |    |
+    | MT | ID | WY | UT | NV | AZ | NM |    |
+    | MT | ID | WY | UT | AZ | NM |    |    |
+    | MT | ID | WY | UT | CO | NM |    |    |
+    | MT | ID | WY | CO | UT | NV | AZ | NM | LARGEST
+    | MT | ID | WY | CO | UT | AZ | NM |    |
+    | MT | ID | WY | CO | NM |    |    |    |
+    | MT | WY | ID | NV | AZ | NM |    |    |
+    | MT | WY | ID | NV | UT | CO | NM |    |
+    | MT | WY | ID | NV | UT | AZ | NM |    |
+    | MT | WY | UT | NV | AZ | NM |    |    |
+    | MT | WY | UT | AZ | NM |    |    |    |
+    | MT | WY | UT | CO | NM |    |    |    |
+    | MT | WY | CO | UT | NV | AZ | NM |    |
+    | MT | WY | CO | NM |    |    |    |    | SMALLEST
+    | MT | ID | UT | WY | CO | NM |    |    |
+    | MT | ID | NV | AZ | UT | WY | CO | NM | LARGEST
+    | MT | ID | NV | AZ | UT | CO | NM |    |
+
+** DONE VWH
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE KWD
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:27] =>  0:02
+    :END:
+    [2 2 2 1 1 1 1]
+*** DONE HRR
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:25]--[2017-11-27 Mon 18:36] =>  0:11
+    :END:
+    This is a graph representation of the seven bridges of Koningsberg that were at the center
+    of the problem which later gave birth to graph theory. You can see how this graph maps to the
+    bridges by looking at this article -> http://mathworld.wolfram.com/KoenigsbergBridgeProblem.html
+
+    The nodes represent land masses, and the links represent bridges from one landmass to the other. 
+
+    A Eulerian graph meets the criteria for a Eulerian cycle. This means that you can begin at one vertex, 
+    traverse the entire graph using each link exactly once, and end up back at the beginning vertex. Euler showed
+    that if no graph vertices have an odd degree, it can be traveresed with an Eulerian cycle. 
+
+    It is not a Eulerian graph. Loenhard Euler proved that it had no solution.
+*** DONE KEO
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 18:36]--[2017-11-27 Mon 18:45] =>  0:09
+    :END:
+
+    Although you can always construct a graph from a given degree sequence, it is possible however, that
+    two or more distinct graphs have the same degree sequence. For this reason, I conclude that just having the
+    degree sequence is not enough to reconstruct specific graphs. If you are looking to build a graph in general, than
+    yes, it is enough.
+*** DONE HMO
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-04 Mon 17:52]--[2017-12-04 Mon 18:08] =>  0:16
+    CLOCK: [2017-11-27 Mon 18:49]--[2017-11-27 Mon 19:12] =>  0:23
+    :END:
+  | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   | 4 |   |
+  | 3 | 1 |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 2 | 2 |   |   | 1 | 3 | 1 |   |   |   |   |   |   |   |
+  | 3 | 3 |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 | 1 |   |   |   | 1 |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 |   | 1 |   |   | 2 | 2 |   |   | 1 | 1 |   |   | 1 |
+  |   | 3 |   |   |   |   |   |   |   |   |   |   |   | 1 |
+  |   | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 0 |
+
+  *                 *--*           *--*          *  *
+  |                 |  |           |  |          | /
+  |                 |  |           |  |          *
+  *--*              *--*           *--*          | \ 
+                                                 *  *
+
+  *--*     *--*--*     *   *      *--*    *   *   *
+  |  |        |         \ /       |  |    |   |   |
+  *--*        |          *        |  |    |   |   * 
+  |  |        *          |        *--*    *---*   * 
+                         *
+  
+  For your viewing pleasure. :)
+** DONE VWI
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE HIJ
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 19:13]--[2017-11-27 Mon 19:15] =>  0:02
+    :END:
+    Every degree represents a link from that node to another. That means that each link is 
+    counted twice in the degree sequence. Logically then, if each link is counted twice in the 
+    degree sequence, then the number of links is half the sum of the degree sequence. 
+*** DONE KLE
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 19:16]--[2017-11-27 Mon 19:28] =>  0:12
+    :END:
+    
+    Let G = (v,e) be the graph of vertices and edges
+    Suppose V = {v_1 v_2 ... v_n } is the set of vertices in G
+    The handshake theorem says:
+
+    2|E(G)| = deg(v_1) + deg(v_2) + ... deg(v_n)
+       \uparrow                   \uparrow
+   This side          Which implies that this     
+   of the             side of the equation must 
+   equation           also always be even
+   is always 
+   even
+
+   A sum with an odd number of odds cannot be even, so that implies that
+   there cannot be an odd number of vertices with odd degrees.
+*** DONE HAB
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 21:49]--[2017-11-27 Mon 21:55] =>  0:06
+    CLOCK: [2017-11-27 Mon 19:28]--[2017-11-27 Mon 19:33] =>  0:05
+    :END:
+    No. It is not possible, because there is no way to connect the 3 node three ways 
+    (only two linking options: node 1 node 2) without either linking to the same node
+    twice, or linking to itself. Both of these
+    violate the rules of a simple graph, hence, it is not possible. 
+** DONE VWJ
+   CLOSED: [2017-12-01 Fri 19:01]
+*** DONE KOV
+    CLOSED: [2017-12-01 Fri 19:01]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 18:58]--[2017-12-01 Fri 19:01] =>  0:03
+    CLOCK: [2017-11-27 Mon 21:55]--[2017-11-27 Mon 22:04] =>  0:09
+    :END:
+    
+    D is adjacent to E F G
+    D is adjacent from A B C
+    k comes from D
+    k,i,j go to E F G
+    k,i,j connect D to E F G
+    k,i,j go from D to E F G
+    D is the initial node of k,i,and j
+    E F G are terminal nodes of k, i, and j
+
+*** HBT
+    :LOGBOOK:
+    CLOCK: [2017-11-27 Mon 22:04]--[2017-11-27 Mon 22:08] =>  0:04
+    :END:
+    
+    #+BEGIN_SRC emacs-lisp
+    (list [A F] [A B F] [A B C F] [A B C D F] [A B C D E F]
+          [A B E F] [A B D F] [A C F] [A C E F] [A C D F] [A C D E F]
+          [A D F] [A D E F] [A E F])
+    #+END_SRC
+
+    #+RESULTS:
+    | [A F] | [A B F] | [A B C F] | [A B C D F] | [A B C D E F] | [A B E F] | [A B D F] | [A C F] | [A C E F] | [A C D F] | [A C D E F] | [A D F] | [A D E F] | [A E F] |
+
+    Zero of the paths cross the node G
+** DONE VWM
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE AGA
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 13:45]--[2017-12-01 Fri 13:50] =>  0:05
+    :END:
+    0 Nodes and 0 links
+** DONE VWO
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE KNF
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 13:55]--[2017-12-01 Fri 14:03] =>  0:08
+    :END:
+    W_5 = [5 3 3 3 3 3]
+
+    W_n = [n 3_1 3_2 ... 3_n]
+** DONE VWP
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE HJS
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:19]--[2017-12-01 Fri 14:30] =>  0:11
+    :END:
+    Q_1 = 2 nodes 1 link
+    Q_2 = 4 nodes 4 links
+    Q_3 = 8 nodes 12 links
+    Q_4 = 16 nodes 
+
+    so n*2^(n-1)
+** DONE VWQ
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE HAX
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:30]--[2017-12-01 Fri 14:40] =>  0:10
+    :END:
+    m is the set of nodes on the upper/top portion of the graph
+    n is the set of nodes on the lower/bottom portion of the graph
+*** DONE KHQ
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:40]--[2017-12-01 Fri 14:47] =>  0:07
+    :END:
+
+    They are both complete graphs, 
+    
+*** DONE HKE
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:49]--[2017-12-01 Fri 14:54] =>  0:05
+    :END:
+    Bipartite graphs are good for data representation. Data to be searched for can be kept
+    in set m, and set n can contain the data. You can then use matching algorithms to match data between sets
+*** DONE KBB
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 14:54]--[2017-12-01 Fri 15:04] =>  0:10
+    :END:
+
+    A tripartite would follow the same idea as a bipartite, three sets of nodes composed so that no two nodes within 
+    the same set are adjacent. For an example of what a complete tripartite graph would look like, check this page out: 
+    http://mathworld.wolfram.com/CompleteTripartiteGraph.html
+
+    An npartite would follow the above principles. N sets of nodes composed so that no two nodes within the same set are adjacent. 
+    Examples of these graphs can be found here: 
+    http://mathworld.wolfram.com/Completek-PartiteGraph.html
+** DONE VWR
+   CLOSED: [2018-03-24 Sat 15:23]
+*** DONE HRL 
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-01 Fri 15:04]--[2017-12-01 Fri 15:22] =>  0:18
+    :END:
+
+         d
+       / |\
+      t--e \
+    / |  |  \
+   p--q  m--c
+    \ | / /
+      n--/
+*** DONE AGD
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 12:07]--[2017-12-02 Sat 12:53] =>  0:46
+    CLOCK: [2017-12-01 Fri 18:02]--[2017-12-01 Fri 18:40] =>  0:38
+    CLOCK: [2017-12-01 Fri 15:25]--[2017-12-01 Fri 15:38] =>  0:13
+    :END:
+    #+BEGIN_SRC emacs-lisp :results silent
+(defun make-adjacency-list (node links)
+  "Make the adjacency list of a node by collecting
+all the nodes it's connected to in links."
+  (loop for link in links
+        if (= node (car link))
+        collect (cdr link)))
+
+(defun make-adjacency-list-in-reverse (node links)
+  "Make the reverse adjacency list of a node by collecting
+all the nodes connected to it in links."
+  (loop for link in links
+        if (= node (cdr link))
+        collect (car link)))
+
+(defun make-adjacency-lists (nodes links)
+  "Make adjacency lists given a graph's nodes and links
+by collecting the adjacency lists and reverse adjacency lists
+for each of the graph's nodes, removing any duplicates found."
+  (let ((alists nil) the-nodes-alist)
+    (loop for node in nodes
+          do (setq the-nodes-alist
+                   (remove-duplicates
+                    (nconc (make-adjacency-list node links)
+                           (make-adjacency-list-in-reverse node links)))
+                   alists (nconc alists (list (cons node the-nodes-alist)))))
+    alists))
+
+
+(defun make-adj-list-table (nodes links)
+"Generate an adjacency list table"
+(let ((alists nil) the-nodes-alist)
+      (mapcar (lambda (node) 
+         (progn
+         (setq 
+            AL (format "%s" (make-adjacency-list node links))
+            AL-R (format "%s" (make-adjacency-list-in-reverse node links))
+            merge (sort (remove-duplicates 
+                         (nconc (make-adjacency-list node links) (make-adjacency-list-in-reverse node links)) 
+                        )#'<)
+            row (list node AL AL-R merge)
+            alists (nconc alists (list row))
+         ))
+      ) nodes)
+alists))
+
+
+    #+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+(setq graph-11-27-links '(
+   (1 . 2) (1 . 9) (1 . 10) (1 . 11) (2 . 3) (2 . 4) (2 . 5)
+   (2 . 9) (2 . 10) (2 . 11) (3 . 4) (3 . 10) (3 . 11)
+   (4 . 5) (4 . 10) (4 . 11) (5 . 6) (5 . 7) (5 . 9) (6 . 7)
+   (6 . 9) (7 . 8) (7 . 9) (8 . 10) (8 . 9) (9 . 10) (10 . 11))
+      graph-11-27-nodes '(1 2 3 4 5 6 7 8 9 10 11))
+
+(make-adj-list-table graph-11-27-nodes graph-11-27-links)
+#+END_SRC
+
+#+RESULTS:
+|  1 | (2 9 10 11)     | nil           | (2 9 10 11)       |
+|  2 | (3 4 5 9 10 11) | (1)           | (1 3 4 5 9 10 11) |
+|  3 | (4 10 11)       | (2)           | (2 4 10 11)       |
+|  4 | (5 10 11)       | (2 3)         | (2 3 5 10 11)     |
+|  5 | (6 7 9)         | (2 4)         | (2 4 6 7 9)       |
+|  6 | (7 9)           | (5)           | (5 7 9)           |
+|  7 | (8 9)           | (5 6)         | (5 6 8 9)         |
+|  8 | (10 9)          | (7)           | (7 9 10)          |
+|  9 | (10)            | (1 2 5 6 7 8) | (1 2 5 6 7 8 10)  |
+| 10 | (11)            | (1 2 3 4 8 9) | (1 2 3 4 8 9 11)  |
+| 11 | nil             | (1 2 3 4 10)  | (1 2 3 4 10)      |
+
+*** DONE HSG
+    CLOSED: [2018-03-24 Sat 15:23]
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 12:55]--[2017-12-02 Sat 13:42] =>  0:47
+    CLOCK: [2017-12-01 Fri 19:01]--[2017-12-01 Fri 19:08] =>  0:07
+    :END:
+
+Trying with maps... Will come back
+   #+BEGIN_SRC emacs-lisp :results raw 
+(setq adjacency-matrix (make-vector 12 nil))
+(dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
+
+(mapcar (lambda (j) (aset (aref adjacency-matrix 0) j j))
+(number-sequence 1 11))
+
+(mapcar (lambda (k) 
+(progn 
+   (aset (aref adjacency-matrix k) 0 k)
+   (mapcar (lambda (l) (aset (aref adjacency-matrix k) l 1)) 
+   (remove-duplicates
+      (nconc (make-adjacency-list k graph-11-27-links)
+             (make-adjacency-list-in-reverse k graph-11-27-links))))
+)
+) (number-sequence 1 11))
+   
+   #+END_SRC 
+
+   #+RESULTS:
+   ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
+   ((1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1) (1 1 1 1 1) (1 1 1 1 1) (1 1 1) (1 1 1 1) (1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1 1 1) (1 1 1 1 1))
+
+This solution works
+
+   #+BEGIN_SRC emacs-lisp
+   (setq adjacency-matrix (make-vector 12 nil))
+   (dotimes (i 12) (setf (aref adjacency-matrix i) (make-vector 12 0)))
+
+   (loop for i from 1 to 11
+      do (aset (aref adjacency-matrix 0) i i))
+
+   (loop for i from 1 to 11
+      do (progn 
+          (aset (aref adjacency-matrix i) 0 i)
+          (loop for j in (remove-duplicates
+                         (nconc (make-adjacency-list i graph-11-27-links)
+                                (make-adjacency-list-in-reverse i graph-11-27-links)))
+                          do (aset (aref adjacency-matrix i) j 1))))
+      adjacency-matrix
+   #+END_SRC
+
+   #+RESULTS:
+   : [[0 1 2 3 4 5 6 7 8 9 10 11] [1 0 1 0 0 0 0 0 0 1 1 1] [2 1 0 1 1 1 0 0 0 1 1 1] [3 0 1 0 1 0 0 0 0 0 1 1] [4 0 1 1 0 1 0 0 0 0 1 1] [5 0 1 0 1 0 1 1 0 1 0 0] [6 0 0 0 0 1 0 1 0 1 0 0] [7 0 0 0 0 1 1 0 1 1 0 0] [8 0 0 0 0 0 0 1 0 1 1 0] [9 1 1 0 0 1 1 1 1 0 1 0] [10 1 1 1 1 0 0 0 1 1 0 1] [11 1 1 1 1 0 0 0 0 0 1 0]]
+   
+** DONE VWS
+   CLOSED: [2018-03-24 Sat 15:24]
+*** DONE KHO
+    CLOSED: [2018-03-24 Sat 15:24]
+    :LOGBOOK:
+    CLOCK: [2017-12-02 Sat 14:10]--[2017-12-02 Sat 14:18] =>  0:08
+    :END:
+    
+    [EI]
+    [GH]
+    [ABCDEGH]
+    [DE] [DH]
+    [AB] [AC] [AG]
+    [BD] [BE]
+    [CD] [CH]
+
+*** DONE ANA
+    CLOSED: [2017-12-07 Thu 10:30]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 20:03]--[2017-12-06 Wed 21:02] =>  0:59
+    CLOCK: [2017-12-05 Tue 22:30]--[2017-12-05 Tue 22:31] =>  0:01
+    :END:
+
+How to verify if G is a complete Graph. I think perhaps the easiest method would be to count the number of nodes in the graph, 
+and then compare that to the degree sequence of the graph. If there are the same amount of items in the degree sequence as nodes, 
+and they all are n degree (meaning that the node has a link to every other node), then you know the graph is complete. This solution does not 
+work if the degree sequence or set of nodes is uknown. 
+
+#+BEGIN_SRC emacs-lisp :results output
+(setf links '((4 . 6) (3 . 0) (18 . 23) (19 . 4) (9 . 21) (5 . 9))
+             ns27 (number-sequence 0 26)
+             alphabet (apply 'string (mapcar (lambda (n) (if (= n 0) ? (+ n ?@))) ns27))
+             (symbol-function 'node-value) `(lambda (n) (string (elt ,alphabet n))))
+
+(setq degrees [2 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+
+(print (length degrees))
+#+END_SRC
+
+#+RESULTS:
+: 
+: 27
+
+
+My graph representation is below. It consists of a symbol with 
+each node listed as the property. When accessed, the property returns
+a list with all of the links associated with that node. 
+
+#+BEGIN_SRC emacs-lisp :results silent
+   (setf 
+   (get 'graph-test 'ID) '(MT WY UT NV)
+   (get 'graph-test 'MT) '(MT ID WY)
+   (get 'graph-test 'WY) '(WY MT ID UT CO)
+   (get 'graph-test 'NV) '(NV ID UT AZ)
+   (get 'graph-test 'UT) '(UT NV AZ CO WY ID)
+   (get 'garph-test 'CO) '(CO WY UT NM)
+   (get 'graph-test 'AZ) '(AZ NV UT NM)
+   (get 'graph-test 'NM) '(NM AZ CO))
+ 
+#+END_SRC
+
+#+RESULTS:
+| NM | AZ | CO |
+#+BEGIN_SRC emacs-lisp :results silent
+(defun link-exists (graph-representation node1 node2)
+  "Given a graph representation, is there a link between node1 and node2?"
+  (not
+   (null
+    (or
+     (member node2 (get-adjacency-list graph-representation node1))
+     (member node1 (get-adjacency-list graph-representation node2))))))
+
+(defun check-clique-or-anti-clique (graph-representation nodes anti)
+  "Checks if the represented graph contains a subgraph consisting of
+the given nodes that is a clique (if anti is nil) or an anti-clique
+(if anti is t). Returns array of t if condition is met nil if not."
+   (if anti
+   ;; anticlique
+      (reduce (lambda (x y) (and x y))(apply #'append (catch 'not-anti (apply #'append (mapcar (lambda (node1) 
+            (mapcar (lambda (node2) 
+            (if (eq node1 node2)
+            t
+            (if (not (link-exists 'graph-test node1 node2))
+               t
+               (throw 'not-anti nil)))) nodes)) nodes)))))
+   ;; normal clique
+   (reduce (lambda (x y) (and x y)) (apply #'append (catch 'not-clique (mapcar (lambda (node1) 
+            (mapcar (lambda (node2) 
+            (if (eq node1 node2)
+            t
+            (if (link-exists 'graph-test node1 node2)
+               t
+               (throw 'not-clique nil)))) nodes)) nodes))))))
+
+
+  (defun get-adjacency-list (graph node)
+  "Returns the adjacency list of a given node within a graph"
+  (get graph node))
+#+END_SRC
+
+
+#+RESULTS:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun better-check-clique (graph-representation nodes anti) 
+
+)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+(check-clique-or-anti-clique 'graph-test '(ID UT WY) 'nil)
+#+END_SRC
+
+#+RESULTS:
+t
+(t t t t t t t t t)
+nil
+nil
+(t t t t t t t t t)
+(t t t t)
+Graph is not anti-clique
+(t t t t)
+
+#+BEGIN_SRC emacs-lisp
+(link-exists 'graph-test 'ID 'MT)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** DONE VWV
+   CLOSED: [2017-12-08 Fri 14:26]
+*** DONE HLX
+    CLOSED: [2017-12-06 Wed 18:50]
+    :LOGBOOK:
+    CLOCK: [2017-12-05 Tue 22:34]--[2017-12-05 Tue 22:58] =>  0:24
+    :END:
+    
+    Let G and H be graphs where G = (N_1 , L_1) and H = (N_2 , L_2).
+    
+    G \cap H = {n: n \in N_1 and n \in N_2 and l: l \in N_2 and l \in L_2 }
+
+    Given a graph G: 
+
+     1---2   
+      \ / \
+       3   4
+
+    and the graph H:
+
+       2
+      / \
+     3   4--5
+
+     G \cap H would be 
+
+     2
+    / \
+   3   4 
+
+*** DONE KSI
+    CLOSED: [2017-12-06 Wed 19:06]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:06]--[2017-12-06 Wed 19:07] =>  0:01
+    CLOCK: [2017-12-06 Wed 18:50]--[2017-12-06 Wed 19:06] =>  0:16
+    :END:
+    
+   https://webmailbyui-my.sharepoint.com/:i:/r/personal/mando0975_byui_edu/Documents/Capture.PNG?csf=1&e=4e73d2b9936c44ee8a2cfed45df9eb41
+
+   Where A = A_1 B= A_2 ... E = A_5
+
+   Degree sequence is [4 4 4 3 3]
+   
+*** DONE HTR
+    CLOSED: [2017-12-07 Thu 11:03]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:07]--[2017-12-06 Wed 19:12] =>  0:05
+    CLOCK: [2017-12-06 Wed 19:06]--[2017-12-06 Wed 19:06] =>  0:00
+    :END:
+    Look at HMO
+   
+    [2 1 1]   [2 2 2 1 1]  [4 1 1 1 1]
+ 
+    *     *   *   *   *   *   *
+     \   /     \ / \ /     \ /
+      \ /       *   *       *
+       *                   / \
+                          *   *
+*** DONE KSQ
+    CLOSED: [2017-12-08 Fri 14:26]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 13:57]--[2017-12-08 Fri 14:26] =>  0:29
+    CLOCK: [2017-12-07 Thu 11:06]--[2017-12-07 Thu 11:14] =>  0:08
+    CLOCK: [2017-12-06 Wed 19:32]--[2017-12-06 Wed 19:58] =>  0:26
+    CLOCK: [2017-12-06 Wed 19:12]--[2017-12-06 Wed 19:13] =>  0:01
+    :END:
+
+    https://photos.app.goo.gl/vGg1rNy2n6iVY4pH3
+    
+    Degree Seq
+
+    [4 3 3 3 3 2 2 2]
+
+    Probability:
+
+    4/8, 3/8, 3/8, 3/8, 3/8, 2/8, 2/8, 2/8
+
+    11/28
+    
+*** DONE HBE
+    CLOSED: [2017-12-06 Wed 20:03]
+    :LOGBOOK:
+    CLOCK: [2017-12-06 Wed 19:59]--[2017-12-06 Wed 20:03] =>  0:04
+    :END:
+    
+    No. Not without moving the location of nodes, or using curved edges. 
+    If c and m or e and d were swappe, than you could make it a planar graph. 
+** DONE VWW
+   CLOSED: [2018-03-24 Sat 15:26]
+
+*** DONE KSC
+    CLOSED: [2018-03-24 Sat 15:26]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 14:27]--[2017-12-08 Fri 14:46] =>  0:19
+    CLOCK: [2017-12-07 Thu 22:10]--[2017-12-07 Thu 22:34] =>  0:24
+    :END:
+    
+    Here's a great quote :) 
+
+  "Erdős asks us to imagine an alien force, 
+   vastly more powerful than us, landing on Earth and demanding the value of R(5, 5)
+   or they will destroy our planet. In that case, he claims, we should marshal all our
+   computers and all our mathematicians and attempt to find the value. But suppose, instead, 
+   that they ask for R(6, 6). In that case, he believes, we should attempt to destroy the aliens." - Joel Spencer
+
+There is no efficient alogrithm for calculating Ramsey numbers. There have been some algorithms that help calculate the lower
+and upper bounds, but even looking at R(5,5) shows how difficult it is to calculate. If we assume that the R(5,5) = 43, than for a K_43
+graph colored with 2 colors, we would have to show that it holds true for 43 choose 2 = 903 edges, equals 2^903 possible graphs. That number
+is larger than the total number of atoms in the universe. 

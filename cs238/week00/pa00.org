@@ -1,0 +1,43 @@
+Prep Assignment for Week 00 Day 2
+Tuesday, January 9th 2018
+
+
+Bryan Muller
+mul13001@byui.edu
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun shuffle-map (set1 set2)
+   (vconcat (apply 'append (mapcar* (lambda (x y) (list x y)) set1 set2))))
+#+END_SRC
+
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+(shuffle-map [1 2 3] [x y z])
+#+END_SRC
+
+#+RESULTS:
+[1 x 2 y 3 z]
+
+Brof Neff's solution
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun shuffle-neff (&rest vectors)
+   (apply 'vconcat (apply 'mapcar* 'vector vectors))
+)
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+(shuffle-neff [h y z] [3 4 5] [ 1 2 3])
+#+END_SRC
+
+#+RESULTS:
+[h 3 1 y 4 2 z 5 3]
+[h 3 y 4 z 5]
+[h 3 y 4 z 5]
+
+Much prettier.... but very similar.
+
+ 

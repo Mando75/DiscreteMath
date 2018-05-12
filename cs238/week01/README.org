@@ -1,0 +1,10 @@
+#+TITLE: README for Week 01
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+  The [[file:pa01.org][Preparation Assessment]] is due before the start of the third class meeting
+  of the week.
+
+  The [[file:wa01.org][Weekly Assignment]] may be started and finished outside of class, but some
+  time during class will also be devoted to it.

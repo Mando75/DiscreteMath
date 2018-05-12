@@ -1,0 +1,622 @@
+#+TITLE: Weekly Assignment 12
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+* DONE Reread (review) section THR subsection YZ@ from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-04-07 Sat 17:42]
+  :LOGBOOK:
+  CLOCK: [2018-04-03 Tue 11:41]--[2018-04-03 Tue 12:13] =>  0:32
+  :END:
+
+  In addition to the section YZ@ exercises/problems/puzzles (EPPs) that you did
+  /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following tasks:
+
+* DONE Understand An Elisp Implementation of Boolean Formulas
+  CLOSED: [2018-04-03 Tue 21:11]
+  :LOGBOOK:
+  CLOCK: [2018-04-03 Tue 20:43]--[2018-04-03 Tue 21:11] =>  0:28
+  :END:
+  A literal is a symbol with a value of 1 or 0. A negated literal is a function
+  with that literal\rsquo{}s name returning that symbol\rsquo{}s negated value (arithmetized,
+  so treating 0 and 1 as numbers standing in for false and true).
+
+  A clause is a list of literals. A formula a list of clauses. For now, assume a
+  formula is in Conjunctive Normal Form (CNF --- aka Product of Sums).
+
+  So '((a b c) (a (b) c) ((a) (b) c)) represents three clauses containing three
+  literals each where the literals are or\rsquo{}ed together (added) while the clauses
+  are and\rsquo{}ed together (multiplied).
+
+  An assignment is a setting of 1 (true) or 0 (false) to each literal in the
+  formula. Using an association-list for assignments, the car of each pair is
+  the symbol, the cdr its value.
+
+  So (setf a 1 b 0 c 1) to get the literal \lsquo{}a\rsquo{} with value 1, \lsquo{}b\rsquo{} with value 0,
+  and \lsquo{}c\rsquo{} with value 1:
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (setf a 1 b 0 c 1
+        (symbol-function 'a) (lambda nil (- 1 (symbol-value 'a)))
+        (symbol-function 'b) (lambda nil (- 1 (symbol-value 'b)))
+        (symbol-function 'c) (lambda nil (- 1 (symbol-value 'c)))
+        formula1 '((a b c) (a (b) c) ((a) (b) c)))
+#+END_SRC
+
+#+RESULTS:
+((a b c) (a (b) c) ((a) (b) c))
+((a b c) (a (b) c) ((a) (b) c))
+
+  A formula is evaluated with the current values of the literals, or else the
+  literals are set first from the optional assignment association list. The
+  evaluation gives either t or nil, *NOT* 1 or 0.
+
+#+BEGIN_SRC emacs-lisp
+  (defun eval-formula (formula &optional assignment)
+    (mapc (lambda (pair) (set (car pair) (cdr pair))) assignment)
+    (not (zerop (apply '* (mapcar (lambda (x) (apply '+ (mapcar (lambda (s) (eval s)) x)))
+                                  formula)))))
+#+END_SRC
+
+#+RESULTS:
+: eval-formula
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (eval-formula formula1)
+#+END_SRC
+
+#+RESULTS:
+t
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (eval-formula '((a b (c)) ((a) (b) c) ((a) b (c))) '((a . 1) (b . 0) (c . 1)))
+#+END_SRC
+
+#+RESULTS:
+nil
+
+  Demonstrate your understanding of this implementation by describing in words
+  how the eval-formula function works, and then creating a variation of it (call
+  it eval-formula-alt) that treats the formula as if it were in Disjunctive
+  Normal Form (DNF --- aka Sum of Products).
+
+** Function description
+ The function takes two parameters, a formula to evaluate and an optional assignment. 
+ The assignment takes the form '((symbol-1 . value) (symbol-2 . value) ...etc).
+ If that assignment is given, it first maps over the assignment list and sets the symbol's value
+ to that which is provided in the cdr. 
+
+ Next it maps over the list of clauses. Inside each clause, it 
+    1. Maps over the literals 
+    2. evaluates each literal to the numerical value
+    3. uses apply to add the results of the symbol evaluation together
+
+ Once each clause has been summed to a value, we apply the multiplication to multiply them all together. 
+ Lastly, we check that the result of that multiplication is not zero. 
+
+** eval-formula-alt
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun eval-formula-alt (formula &optional assignment)
+  (mapc (lambda (pair) (set (car pair) (cdr pair))) assignment)
+  (not (zerop (apply '+ (mapcar (lambda (x) (apply '* (mapcar (lambda (s) (eval s)) x))) formula)))))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (eval-formula-alt '((a b c) (a (b) c) ((a) b (c))) '((a . 1) (b . 1) (c . 1)))
+#+END_SRC
+
+#+RESULTS:
+t
+t
+
+#+BEGIN_SRC emacs-lisp
+  (eval-formula-alt formula1)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+* DONE Characterize a Letter-to-Number Mapping
+  CLOSED: [2018-04-07 Sat 17:42]
+  :LOGBOOK:
+  CLOCK: [2018-04-05 Thu 15:15]--[2018-04-05 Thu 17:27] =>  2:12
+  :END:
+  Put Xs in the appropriate column (maybe more than one per row). The first four
+  rows have been done for you:
+
+  | Letter | Number | Visual       | Aural         | Other                 |
+  |        |        | (looks like) | (sounds like) | (some logical reason) |
+  |--------+--------+--------------+---------------+-----------------------|
+  | A      |      8 |              | X             |                       |
+  | B      |      9 |              |               | X                     |
+  | C      |      0 | X            |               |                       |
+  | D      |      0 | X            |               |                       |
+  | E      |      3 | X            | X             | X                     |
+  | F      |      5 | X            | X             |                       |
+  | G      |      6 | X            |               | X                     |
+  | H      |      8 | X            | X             |                       |
+  | I      |      5 |              | X             | X                     |
+  | J      |      6 | X            |               |                       |
+  | K      |      8 |              | X             | X                     |
+  | L      |      7 | X            |               |                       |
+  | M      |      3 |              |               | X                     |
+  | N      |      9 |              | X             |                       |
+  | O      |      1 |              |               | X                     |
+  | P      |      9 | X            |               |                       |
+  | Q      |      4 | X            |               | X                     |
+  | R      |      4 | X            |               |                       |
+  | S      |      7 |              | X             |                       |
+  | T      |      2 |              | X             |                       |
+  | U      |      1 |              |               | X                     |
+  | V      |      5 |              |               | X                     |
+  | W      |      2 |              |               | X                     |
+  | X      |      6 |              | X             |                       |
+  | Y      |      7 |              |               | X                     |
+  | Z      |      0 |              | X             | X                     |
+
+* DONE Code The Inverse Mapping
+  CLOSED: [2018-04-03 Tue 21:43]
+  :LOGBOOK:
+  CLOCK: [2018-04-03 Tue 21:33]--[2018-04-03 Tue 21:43] =>  0:10
+  :END:
+   Since the letterS-to-number mapping was many-to-one, the inverse
+   number-to-letterS mapping will be one-to-many:
+
+  #+tblname: mapping
+  | Number | Letters |
+  |--------+---------|
+  |      0 | ZCD     |
+  |      1 | OU      |
+  |      2 | TW      |
+  |      3 | EM      |
+  |      4 | QR      |
+  |      5 | FIV     |
+  |      6 | GJX     |
+  |      7 | SLY     |
+  |      8 | AHK     |
+  |      9 | BNP     |
+
+  Write code (in your favorite language) to take a string of 3 digits and
+  generate a random TLA with this mapping.
+
+#+BEGIN_SRC js 
+const mapping = {
+    0: ["Z", "C", "D"],
+    1: ["O", "U"],
+    2: ["T", "W"],
+    3: ["E","M"],
+    4: ["Q","R"],
+    5: ["F","I","V"],
+    6: ["G","J","X"],
+    7: ["S","L","Y"],
+    8: ["A","H","K"],
+    9: ["B","N","P"]   
+}
+
+function genTLA(str) {
+    const digits = str.split('').map(num => parseInt(num));
+    return digits.map((digit) => {
+        charArray = mapping[digit];
+        return charArray[Math.floor(Math.random()*charArray.length)]
+    }).join('');
+}
+
+console.log(genTLA("059"));
+#+END_SRC
+
+#+RESULTS:
+: CFN
+: undefined
+  
+
+
+* YZ@
+  I completed all of these in DM 1 Fall 2017 semester
+** YZH
+   :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:19]--[2017-12-08 Fri 15:31] =>  0:12
+    :END:
+*** DONE code
+    CLOSED: [2018-04-07 Sat 17:43]
+     #+BEGIN_SRC emacs-lisp :results silent
+     (setq the t es "" hungry t sleepy t cat t dog t
+        chases t runs t slowly t quickly t
+        productions
+        '((SENTENCE NOUN-PHRASE VERB-PHRASE NOUN-PHRASE)
+          (SENTENCE NOUN-PHRASE VERB-PHRASE)
+          (NOUN-PHRASE ARTICLE ADJECTIVE NOUN)
+          (NOUN-PHRASE ARTICLE NOUN)
+          (VERB-PHRASE VERB ADVERB)
+          (VERB-PHRASE VERB)
+          (ARTICLE the es)
+          (ADJECTIVE hungry sleepy)
+          (NOUN cat dog)
+          (VERB chases runs)
+          (ADVERB slowly quickly))
+        reverse-productions (reverse productions))
+
+  (defun is-terminal (sym)
+    (and (symbolp sym) (boundp sym)))
+
+  (defun nonterminals-remain (derivation)
+    (notevery 'is-terminal derivation))
+
+  (defun derive (LHS)
+    (let* ((rules (if (zerop (random 2)) productions reverse-productions))
+           (RHS (cdr (assoc LHS rules))))
+      (if (null RHS)
+          (list LHS)
+        (if (nonterminals-remain RHS)
+            RHS
+          (list (nth (random (length RHS)) RHS))))))
+
+  (defun transform-terminal (terminal)
+    (or (and (boundp terminal)
+             (stringp (symbol-value terminal))
+             (symbol-value terminal))
+        (symbol-name terminal)))
+
+  (defun find-derivation (start-symbol)
+    (let ((derivation (list start-symbol)))
+      (while (nonterminals-remain derivation)
+        (setq derivation (apply 'append (mapcar 'derive derivation))))
+      (mapconcat 'transform-terminal derivation " ")))
+     #+END_SRC
+
+     #+BEGIN_SRC emacs-lisp :results raw
+     (find-derivation 'SENTENCE)
+     #+END_SRC
+
+     #+RESULTS:
+      dog chases quickly  sleepy cat
+     the sleepy cat runs
+      dog
+     the cat
+     the cat
+     the sleepy cat
+      sleepy dog
+     the dog chases quickly  hungry cat
+
+     #+BEGIN_SRC emacs-lisp :results silent
+      (add-function :override
+                (symbol-function 'random)
+                (lambda (&rest args)
+                  (string-to-number
+                   (read-from-minibuffer
+                    (format "Enter random value less than %d: " (car args)))))
+                '((name . interactive-random)))
+
+        ;;        (remove-function (symbol-function 'random) 'interactive-random)
+
+     #+END_SRC
+
+*** DONE BAO
+    CLOSED: [2018-04-07 Sat 17:43]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:31]--[2017-12-08 Fri 15:41] =>  0:10
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the sleepy cat runs slowly
+
+    the sleepy cat runs slowly
+
+    S \rarr NOUN-PHRASE VERB-PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB ADVERB
+    the ADJECTIVE NOUN VERB ADVERB
+    the sleepy NOUN VERB ADVERB
+    the sleepy cat VERB ADVERB
+    the sleepy cat runs ADVERB
+    the sleepy cat runs slowly.
+    
+    [1 0 0 0 0 1 1 1 0 1 1 1 0]
+
+*** DONE NCO
+    CLOSED: [2018-04-07 Sat 17:43]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:41]--[2017-12-08 Fri 15:44] =>  0:03
+    :END:
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the hungry dog runs quickly
+    
+    the hungry dog runs quickly
+
+    S \rarr NOUN PHRASE VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB PHRASE
+    S \rarr ARTICLE ADJECTIVE NOUN VERB ADVER
+        the ADJECTRIVE NOUN VERV ADVERB
+        the hungry NOUN VERB ADVERB
+        the hungry dog runs ADVERB
+        the hungry dog runs quickly
+
+
+*** DONE PDQ
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:44]--[2017-12-08 Fri 15:57] =>  0:13
+    :END:
+
+    the hungry dog chases the sleepy cat
+
+    S \rightarrow NOUN PHRASE VERB PHRASE NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB PHRASE NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB NOUN PHRASE
+    ARTICLE ADJECTIVE NOUN VERB ARTICLE ADJECTIVE NOUN
+    the ADJECTIVE NOUN VERB ARTICLE ADJECTIVE NOUN
+    the hungry NOUN VERB ARTICLE ADJECTIVE NOUN
+    the hungry dog VERB ARTICLE ADJECTIVE NOUN
+    the hungry dog chases ARTICLE ADJECTIVE NOUN
+    the hungry dog chases ARTICLE ADJECTIVE NOUN
+    the hungry dog chases the ADJECTIVE NOUN
+    the hungry dog chases the sleepy NOUN
+    the hungry dog chases the sleepy cat.
+ 
+
+    0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'SENTENCE)
+    #+END_SRC
+
+    #+RESULTS:
+    : the hungry dog chases the sleepy cat
+
+*** DONE NTC
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 15:58]--[2017-12-08 Fri 16:04] =>  0:06
+    :END:
+    
+    288 combonations
+    
+** YZI
+*** DONE PTW 
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:04]--[2017-12-08 Fri 16:17] =>  0:13
+    :END:
+                  SENTANCE
+NP                   VP    PP
+ART   ADJ  ADJ   N    V   PREP NP
+ART  ADJ   ADJ   N    V   PREP ART ADJ NOUN
+the quick brown fox jumps over the lazy dog
+*** DONE NTM
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:18]--[2017-12-08 Fri 16:20] =>  0:02
+    :END:
+    
+         SENTENCE
+     NP            VP
+  ART  N            V
+ the   cat         runs
+*** DONE PMV
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:20]--[2017-12-08 Fri 16:22] =>  0:02
+    :END:
+
+             SENTENCE
+     NP         VP           NP
+ ART    N        V       ART  ADJ    N  
+ the   cat     chases    the  hungry dog
+*** DONE NES
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:22]--[2017-12-08 Fri 16:25] =>  0:03
+    :END:
+    
+          SENTENCE
+    NP               VP
+ART N            V      ADV
+the dog          runs quickly
+*** DONE BRZ
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-08 Fri 16:25]--[2017-12-08 Fri 16:29] =>  0:04
+    :END:
+           SENTANCE
+    NP                 VP             NP 
+ART   ADJ    N       V    ADV    ART ADJ   N
+the sleepy dog    chases quickly the hungry cat
+** YZM
+*** DONE BRE
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:17]--[2017-12-10 Sun 17:20] =>  0:03
+    :END:
+    Adding a transition from S to R with a 0 value will make this a valid state machine.
+    This indicates if the first input is 0, and thus rejected. 
+*** DONE NGP
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:20]--[2017-12-10 Sun 17:26] =>  0:06
+    :END:
+
+    Both of these state machines contain a loop allowing unlimited inputs of 0 or 1.
+    1(0 \cup 1)* must start with a 1, and (0 \cup \1)*1 must end with a one. 
+
+** YZN
+*** DONE BRQ
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-10 Sun 17:28]--[2017-12-10 Sun 17:31] =>  0:03
+    :END: 
+   __
+0 |  |    1
+   \rarr S_0 ---> S_1 
+*** DONE PIQ
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 9:07]--[2017-12-14 Thu 9:28] =>  0:21
+    CLOCK: [2017-12-11 Mon 18:41]--[2017-12-11 Mon 18:49] =>  0:08
+    :END:
+
+    S \rarr AB
+    A \rarr 0A
+    A \rarr 0B
+    A \rarr \lambda
+    B \rarr 1A
+    B \rarr 1B
+    B \rarr \lambda
+** YZP
+*** DONE PRK 
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 9:01]--[2017-12-14 Thu 9:07] =>  0:06
+    CLOCK: [2017-12-11 Mon 18:52]--[2017-12-11 Mon 18:53] =>  0:01
+    :END:
+    
+    0111
+*** DONE NIO
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:47]--[2017-12-14 Thu 8:58] =>  0:11
+    CLOCK: [2017-12-11 Mon 18:53]--[2017-12-11 Mon 19:00] =>  0:07
+    :END:
+    
+    {0^n 10 | n \ge 1}
+*** DONE PFA
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:46]--[2017-12-14 Thu 8:53] =>  0:07
+    CLOCK: [2017-12-11 Mon 19:00]--[2017-12-11 Mon 19:03] =>  0:03
+    :END:
+    
+    011
+    0101
+*** DONE BGT
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:33]--[2017-12-14 Thu 8:46] =>  0:13
+    CLOCK: [2017-12-11 Mon 19:03]--[2017-12-11 Mon 19:07] =>  0:04
+    :END:
+    S \rarr AA {0^2n 0^2n | n \ge 1}
+    S \rarr B {1^n | n \ge 1}
+*** DONE NGI
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:24]--[2017-12-14 Thu 8:33] =>  0:09
+    CLOCK: [2017-12-11 Mon 19:07]--[2017-12-11 Mon 19:19] =>  0:12
+    :END:
+
+    {0^n 1^n 1^m 0^m | n \ge 0 m \ge 0}
+*** DONE NLR
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:07]--[2017-12-14 Thu 8:23] =>  0:16
+    CLOCK: [2017-12-11 Mon 19:19]--[2017-12-11 Mon 19:22] =>  0:03
+    :END:
+
+    #+BEGIN_SRC emacs-lisp :results silent
+    (setq es "" a "0" b "1"
+      productions
+      '((S A B)
+        (A a A b)
+        (B b B a)
+        (A es)
+        (B es))
+      reverse-productions (reverse productions))
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+    (find-derivation 'S)
+    #+END_SRC
+
+  {0^n 1^n 1^m 0^m | n \ge 0 m \ge 0}
+
+  This is the same grammar as the one above in NGI. 
+*** DONE BSP 
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 8:02]--[2017-12-14 Thu 8:07] =>  0:05
+    CLOCK: [2017-12-11 Mon 19:22]--[2017-12-11 Mon 19:33] =>  0:11
+    :END:
+
+    S \rarr A1
+    A \rarr 00A
+    A \rarr \lambda
+
+    {0^2n 1 | n \ge 0}
+*** DONE NBO
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:59]--[2017-12-14 Thu 10:10] =>  0:11
+    CLOCK: [2017-12-11 Mon 19:33]--[2017-12-11 Mon 19:40] =>  0:07
+    :END:
+    
+    {0^n 1^2n | n \ge 0}
+
+    S \rarr AB
+    A \rarr 0A
+    A \rarr \lambda
+    B \rarr 11B
+    B \rarr \lambda
+*** DONE PBI 
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:25]--[2017-12-14 Thu 09:36] =>  0:11
+    :END:
+
+
+    {0^n 1^m 0^n | m \ge \land n \ge 0}
+
+    
+    s \rarr ABA
+    A \rarr 0A
+    A \rarr \lambda
+    B \rarr 1B
+    B \rarr \lambda
+** YZQ
+*** DONE BJO
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2017-12-14 Thu 09:36]--[2017-12-14 Thu 09:58] =>  0:22
+    :END:
+
+    [[1 3 2] [3 1 4] [3 5 4] [5 2 3] [5 4 3] [7 1 4] [7 5 4] [9 3 2]]
+
+    
+    This set of triples represents the graph found in VWH. Each triple provides
+    the x coordinate, y coordinate, and the degree sequence of the node.
+
+
+*** DONE NKY
+    CLOSED: [2018-04-07 Sat 17:44]
+    :LOGBOOK:
+    CLOCK: [2018-04-07 Sat 16:04]--[2018-04-07 Sat 17:44] =>  1:40
+    :END:
+    [[3 1 0] [0 3 0] [1 1 1] [5 0 0] [2 2 0] [3 0 1] [0 2 1] [4 1 0]]
+
+    Assuming you take the first three primes [2 3 5], raise them to the powers given, 
+    and multiply them together, you find the harmonic ratios.
+
+    [[2^3  3^1  5^0] [2^0 3^3 5^0] [2^5 3^0 5^0] [2^1 3^1 5^1] [2^2 3^2 5^0] [2^3 3^0 5^1] [2^0 3^2 5^1] [2^4 3^1 5^0]]
+    
+    [[8 * 3 * 1] [1 * 27 * 1] [2 * 3 * 5] [32 * 1 * 1] [4 * 9 * 1] [8 * 1 * 5] [1 * 9 * 5] [16 * 3 * 1]]
+        
+    [[24] [27] [30] [32] [36] [40] [45] [48]]
+
+    [24 27 30 32 36 40 45 48]
+    [do re mi fa so la ti do]
+    
+*** BMI
+    :LOGBOOK:
+    CLOCK: [2018-04-07 Sat 18:47]--[2018-04-07 Sat 18:53] =>  0:06
+    :END:
+    
+    
+

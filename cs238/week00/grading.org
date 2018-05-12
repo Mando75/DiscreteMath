@@ -1,0 +1,71 @@
+#+TITLE: Grading
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+My philosophy of grading is simple. Grading is evil. Sadly, it's a necessary
+evil, living as we do in a telestial world.
+
+Why do I think grading is evil? Because it presumes to accurately boil down the
+performance of a complicated, living, breathing, human being to a NUMBER! And a
+very-limited-range number at that. Human beings, children of God, deserve better
+treatment than having a one-dimensional label applied to their work.
+
+Still, the grading process does not have to be as painful as it sometimes is.
+How painful it is will have a direct effect on the outcome.
+
+So, here's how it works. You start off with perfect performance, 100%, 100
+points on everything. You can only go down from there (but sometimes you can go
+up)! How do you go down? How do you lose points?
+
+First, when allowed, which is about every other assignment, you are encouraged
+to *appropriately* collaborate with your peers, so failure to do so is a major
+flaw that is painful for me to see in you, and will cost you. Second, failure to
+report what you learned pains me, as it means you missed learning something you
+otherwise could have. Things like these make grading hard.
+
+In a nutshell, the /harder/ you make it for me (or my grader) to read and assess
+your work, the /lower/ your score. So you can lose points by doing any of the
+following (which means you can *avoid* losing points by *NOT* exhibiting these
+behaviors):
+
+* Fail to collaborate
+
+  - Fail to identify your collaborators.
+  - Fail to identify the contribution of each of your collaborators.
+
+* Fail to engage
+
+  - Fail to learn something new, or make no mention of what you learned.
+  - Fail to achieve something meaningful, or something you can build upon at a
+    later time.
+  - Be bored, unenthusiastic, show no evidence of a curious mind at work.
+
+* Fail to clearly show that you fulfilled a requirement
+
+  - Make no mention of the requirement in your report.
+  - Mention it, but fail to describe *how* your work fulfills that requirement.
+
+* Fail to report
+
+  - Fail to write more than a short paragraph.
+  - Fail to organize and structure your report with headings, subheadings, etc.
+  - Fail to use "plain old text" org-mode for organization and markup.
+
+* Fail to take care
+
+  - Write shoddy sentences, strewn with /mechanical infelicities/
+    (e.g., misspelled words, grammatical errors, punctuation errors).
+  - Fail to take obvious steps to eliminate these pesky MIs:
+    - Spell-check your writing.
+    - Grammar-check your writing.
+    - Read your writing aloud (or better yet, have someone else read
+      it to you) to see how it sounds.
+    - Have someone who is good at English carefully proofread your
+      writing.
+
+* Questions?
+
+  *Please come see me* if you have any questions/problems/issues to be resolved.
+  I abhor, despise, detest, hate, loathe, and rather dislike having discussions
+  about your grades *other than in person*.

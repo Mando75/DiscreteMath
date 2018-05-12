@@ -1,0 +1,512 @@
+#+TITLE: Weekly Assignment 09
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-03-17 Sat 16:40]
+| Headline                                |    Time |
+|-----------------------------------------+---------|
+| *Total time*                            | *10:17* |
+|-----------------------------------------+---------|
+| Solve the Huffman Tree Problem Using... |    5:10 |
+| Solve The Dating Service Problem        |    5:07 |
+#+END:
+
+* DONE Reread (review) section THR subsection STU from [[http://firstthreeodds.org/mebewiyo/book/latest][The Book]].
+  CLOSED: [2018-03-14 Wed 15:43]
+
+  In addition to the second half of the section STU exercises/problems/puzzles
+  (EPPs) that you did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following
+  tasks:
+
+  I submitted all of STU last week. I did it all in DM1 last semester. 
+
+* DONE Solve the Huffman Tree Problem Using a Heap Data Structure
+  CLOSED: [2018-03-17 Sat 15:15]
+  :LOGBOOK:
+  CLOCK: [2018-03-17 Sat 15:01]--[2018-03-17 Sat 15:15] =>  0:14
+  CLOCK: [2018-03-15 Thu 15:13]--[2018-03-15 Thu 17:03] =>  1:50
+  CLOCK: [2018-03-14 Wed 19:59]--[2018-03-14 Wed 21:59] =>  2:00
+  CLOCK: [2018-03-14 Wed 18:44]--[2018-03-14 Wed 19:50] =>  1:06
+  :END:
+
+#+BEGIN_SRC emacs-lisp :results raw  
+;(load-file "heap.el")
+;(load-file "list-of-gaps.el")
+;(load-file "unique-gaps.el")
+(require 'heap)
+(require 'unique-gap-count)
+(setq total-freq 9999998.0
+      gap-list (map 'list (lambda (x) (let (
+                               (symbol (intern (concat "n" (number-to-string (car x)))))                               )
+                               (put symbol :gap (car x))
+                               (put symbol :weight (cdr x))
+                               symbol))
+                    unique-gap-count))
+(setq gap-vector (apply 'vector gap-list))
+(setq huffman-heap (heap-build (lambda (x y) (< (get x :weight) (get y :weight))) gap-vector)
+      priority-nodes (elt huffman-heap 1))
+
+#+END_SRC
+
+You will need to evaluate code from the Week 08 section for this to work. 
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun set-code (node code)
+  (and (symbolp node) (put node :code code))) 
+
+(defun build-huff-tree-heap (h-heap)
+    (while (> (heap-size h-heap) 1)
+     (let* ((node1 (heap-delete-root h-heap))
+           (node2 (heap-delete-root h-heap))
+           (newNode (intern (concat (symbol-name node1) (symbol-name node2)))))
+           (set-code node1 0)
+           (set-code node2 1)
+           (set-left newNode node1)
+           (set-right newNode node2)
+           (put node1 :parent newNode)
+           (put node2 :parent newNode)
+           (put newNode :weight (+ (get node1 :weight) (get node2 :weight)))
+           (heap-add h-heap newNode)))
+    h-heap)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+ (let ((start (float-time))) 
+      (progn (build-huff-tree-heap huffman-heap)
+             (huffman-encode (heap-root huffman-heap) "")
+             (- (float-time) start)))
+#+END_SRC
+
+#+RESULT FROM HEAP:
+0.0180814266204834
+
+#+RESULT FROM MY IMPLEMENTATION WEEK 08:
+0.023918867111206055
+
+Heap is quite a bit faster than my implementation. 
+
+
+#+BEGIN_SRC emacs-lisp 
+ (mapcar (lambda (x) (list (get x :gap) (get x :code))) gap-list)
+#+END_SRC
+
+#+RESULTS:
+|   2 |                    1100 |
+|   4 |                    1101 |
+|   6 |                     100 |
+|   8 |                    0101 |
+|  10 |                    1011 |
+|  12 |                     000 |
+|  14 |                    0100 |
+|  16 |                   11100 |
+|  18 |                    0111 |
+|  20 |                   10101 |
+|  22 |                   01101 |
+|  24 |                    0010 |
+|  26 |                  111110 |
+|  28 |                  111111 |
+|  30 |                   11101 |
+|  32 |                  001110 |
+|  34 |                  011000 |
+|  36 |                  111101 |
+|  38 |                 1010011 |
+|  40 |                  001100 |
+|  42 |                  101000 |
+|  44 |                 0011111 |
+|  46 |                11110010 |
+|  48 |                 1010010 |
+|  50 |                11110001 |
+|  52 |                01100111 |
+|  54 |                 0011110 |
+|  56 |                01100100 |
+|  58 |                00110101 |
+|  60 |                11110011 |
+|  62 |               011001010 |
+|  64 |               011001100 |
+|  66 |                00110110 |
+|  68 |              1111000010 |
+|  70 |               011001101 |
+|  72 |               011001011 |
+|  74 |              0011011111 |
+|  76 |              0011011101 |
+|  78 |               001101000 |
+|  80 |             11110000111 |
+|  82 |             11110000001 |
+|  84 |              1111000001 |
+|  86 |             00110100100 |
+|  88 |             00110100101 |
+|  90 |              0011010011 |
+|  92 |            111100000000 |
+|  94 |            001101111010 |
+|  96 |             00110111000 |
+|  98 |            001101110011 |
+| 100 |            001101111001 |
+| 102 |            111100000001 |
+| 104 |           1111000011000 |
+| 106 |           0011011100101 |
+| 108 |           1111000011011 |
+| 110 |           0011011110000 |
+| 112 |          11110000110100 |
+| 114 |           0011011110111 |
+| 116 |          00110111001000 |
+| 118 |         111100001101011 |
+| 120 |           0011011110001 |
+| 122 |         001101111011011 |
+| 124 |         111100001100110 |
+| 126 |          00110111101100 |
+| 128 |        1111000011001110 |
+| 130 |         001101110010010 |
+| 132 |         111100001100100 |
+| 134 |        0011011110110101 |
+| 136 |       11110000110101001 |
+| 138 |        1111000011010101 |
+| 140 |        1111000011001010 |
+| 142 |       11110000110011110 |
+| 144 |        0011011100100111 |
+| 146 |      111100001101010000 |
+| 148 |       00110111101101001 |
+| 150 |       11110000110011111 |
+| 152 |       00110111001001100 |
+| 154 |      111100001100101110 |
+| 156 |       00110111101101000 |
+| 158 |     1111000011001011010 |
+| 160 |      001101110010011010 |
+| 162 |     1111000011010100011 |
+| 164 |     1111000011001011011 |
+| 166 |    11110000110010110010 |
+| 168 |     1111000011010100010 |
+| 170 |     1111000011001011000 |
+| 172 |   001101110010011011101 |
+| 174 |    11110000110010111100 |
+| 176 |    11110000110010111110 |
+| 178 |    11110000110010111111 |
+| 180 |    11110000110010110011 |
+| 182 |   111100001100101111010 |
+| 184 |   001101110010011011100 |
+| 186 |   001101110010011011010 |
+| 188 | 00110111001001101111111 |
+| 190 | 00110111001001101111110 |
+| 192 |  1111000011001011110110 |
+| 194 | 00110111001001101111101 |
+| 196 | 00110111001001101111100 |
+| 198 |    00110111001001101100 |
+| 202 |  0011011100100110110111 |
+| 204 |  1111000011001011110111 |
+| 210 |   001101110010011011110 |
+| 220 | 00110111001001101101101 |
+| 222 | 00110111001001101101100 |
+
+
+
+  Specifically, you will want to use the following five functions:
+  - heap-build
+  - heap-size
+  - heap-root
+  - heap-delete-root
+  - heap-add
+
+** FROM WEEK 08
+
+
+
+#+BEGIN_SRC emacs-lisp :results silent  
+(defun huffman-encode (node code)
+   "Recursive function to place the huffman encoding for each leaf within the :code value"
+    (cond ((and (null (get-left node))
+                (null (get-right node)))
+            (put node :code code))
+            (t (progn 
+                (huffman-encode (get-left node) (concat code "0"))
+                (huffman-encode (get-right node) (concat code "1"))))))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+
+  (defun restore-primes (list-of-gaps)
+    "Given the list of gaps starting at the gap between 3 and 5
+       return a list of the first ten million primes."
+    (cons 2 (cons 3 (loop for gap in list-of-gaps with prime = 3
+                          collect (incf prime gap)))))
+
+  (defun try-it-out ()
+    (setq a 1 b 2 c 3)
+    (put 'a :right 'b)
+    (get 'a :right)
+    (put 'a :left 'c)
+    (get 'a :left)
+    (symbol-plist 'a)
+    (put 'c :parent 'a)
+    (put 'b :parent 'a)
+    a)
+
+  (defvar node-counter 0)
+
+  (defun make-node ()
+    (let ((symbol (intern (concat "n" (number-to-string node-counter)))))
+      (set symbol node-counter)
+      (setf (symbol-plist symbol) nil)
+      (incf node-counter)
+      symbol))
+
+  (defun get-value (node)
+    (and (symbolp node) (symbol-value node)))
+
+  (defun set-value (node new-value)
+    (and (symbolp node) (set node new-value)))
+
+  (defun get-parent (node)
+    (and (symbolp node) (get node :parent)))
+
+  (defun set-parent (node parent)
+    (and (symbolp node) (symbolp parent) (put node :parent parent)))
+
+  (defun get-left (node)
+    (and (symbolp node) (get node :left)))
+
+  (defun set-left (node left)
+    (and (symbolp node) (symbolp left) (put node :left left)))
+
+  (defun get-right (node)
+    (and (symbolp node) (get node :right)))
+
+  (defun set-right (node right)
+    (and (symbolp node) (symbolp right) (put node :right right)))
+
+  (defun build-tree (height)
+    (let ((root (make-node)))
+      (if (> height 0)
+          (let ((left (build-tree (1- height)))
+                (right (build-tree (1- height))))
+            (set-left root left)
+            (set-right root right)
+            (set-parent left root)
+            (set-parent right root)))
+      root))
+#+END_SRC
+
+#+RESULTS:
+: build-tree
+
+* DONE Solve The Dating Service Problem
+  CLOSED: [2018-03-17 Sat 16:40]
+  :LOGBOOK:
+  CLOCK: [2018-03-17 Sat 16:40]--[2018-03-17 Sat 16:40] =>  0:00
+  CLOCK: [2018-03-17 Sat 15:18]--[2018-03-17 Sat 16:40] =>  1:22
+  CLOCK: [2018-03-16 Fri 13:14]--[2018-03-16 Fri 15:17] =>  2:03
+  CLOCK: [2018-03-15 Thu 21:19]--[2018-03-15 Thu 22:52] =>  1:33
+  CLOCK: [2018-03-14 Wed 19:50]--[2018-03-14 Wed 19:59] =>  0:09
+  :END:
+
+  Suppose N boys and N girls join a dating service.
+
+  We write down an N-by-N matrix, where the (i, j) entry equals 1 if the ith boy
+  and the jth girl are willing to date each other, and 0 if they aren’t.
+
+  Is it possible to pair off every boy and girl with a willing partner?
+
+  Here’s a simple way to find out:
+
+  First rescale every row of the matrix to sum to 1.
+
+  Then rescale every column to sum to 1.
+
+  Then rescale every row, then rescale every column, and so on N^5 times.
+
+  If at the end of this scaling process, every row sum and every column sum is
+  between (inclusive) 1 - 1/N and 1 + 1/N,
+
+  then it’s possible to pair off the boys and girls; otherwise it isn’t.
+
+  How does this work? Can you explain it?!
+ 
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun scale-list (lst)
+    (let ((sum (float (apply '+ lst))))
+      (if (zerop sum)
+          (error "no can do")
+        (mapcar (lambda (x) (/ x sum)) lst))))
+
+  (defun scale-rows (matrix)
+    (mapcar 'scale-list matrix))
+
+  (defun scale-columns (matrix)
+     (let ((transpose (apply 'mapcar* 'list matrix)))
+        (apply 'mapcar* 'list (scale-rows transpose))))
+
+  (defun dating-service (n matrix ex)
+    (or (and (= n (length matrix))
+             (every (lambda (row) (= n (length row))) matrix))
+        (error "bad parameters"))
+    (loop repeat (expt n ex)
+          do (setq matrix (scale-rows matrix))
+ ;         do (print matrix)
+          do (setq matrix (scale-columns matrix))
+;          do (print matrix)
+)
+    matrix)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq five-by-five '((0 1 0 1 0) (1 0 1 0 1) (0 1 1 0 0) (0 1 0 0 1) (0 0 1 1 1)))
+#+END_SRC
+
+#+RESULTS:
+| 0 | 1 | 0 | 1 | 0 |
+| 1 | 0 | 1 | 0 | 1 |
+| 0 | 1 | 1 | 0 | 0 |
+| 0 | 1 | 0 | 0 | 1 |
+| 0 | 0 | 1 | 1 | 1 |
+
+|   0 | 1/2 | 0   | 1/2 |   0 |
+| 1/3 | 0   | 1/3 |   0 | 1/3 |
+|   0 | 1/2 | 1/2 |   0 |   0 |   ->
+|   0 | 1/2 | 0   |   0 | 1/2 |
+|   0 | 0   | 1/3 | 1/3 | 1/3 |
+
+
+scottaaronson.com 
+
+#+BEGIN_SRC emacs-lisp
+  (dating-service 5 five-by-five) 
+#+END_SRC
+
+#+RESULT:
+| 0.0 | 0.3332991567624504 |                    0.0 |  0.6666367629688442 |                    0.0 |
+| 1.0 |                0.0 | 0.00012808973625332503 |                 0.0 | 0.00012808973625332503 |
+| 0.0 | 0.3333504216187748 |     0.6665855473677436 |                 0.0 |                    0.0 |
+| 0.0 | 0.3333504216187748 |                    0.0 |                 0.0 |     0.6665855473677436 |
+| 0.0 |                0.0 |     0.3332863628960031 | 0.33336323703115567 |     0.3332863628960031 |
+
+
+** Experimentation 
+
+
+*** N = 2
+ #+BEGIN_SRC emacs-lisp
+   (setq 2-by-2 '((1 0)
+                  (1 1)))
+   (dating-service 2 2-by-2 5)
+ #+END_SRC
+
+ #+RESULTS:
+ |  0.9846153846153847 | 0.0 |
+ | 0.01538461538461539 | 1.0 |
+
+ #+BEGIN_SRC emacs-lisp
+   (dating-service 2 2-by-2 6)
+ #+END_SRC
+
+ #+RESULTS:
+ |   0.9922480620155039 | 0.0 |
+ | 0.007751937984496131 | 1.0 |
+
+*** N = 3
+ #+BEGIN_SRC emacs-lisp
+   (setq 3-by-3 '((1 0 1)
+                  (1 1 0)
+                  (0 1 0)))
+   (dating-service 3 3-by-3 5)
+ #+END_SRC
+
+ #+RESULTS:
+ | 0.004142708819674774 |                   0.0 | 1.0 |
+ |   0.9958572911803252 | 0.0041341277347227865 | 0.0 |
+ |                  0.0 |    0.9958658722652772 | 0.0 |
+
+#+BEGIN_SRC emacs-lisp
+  (dating-service 3 3-by-3 4)
+#+END_SRC
+
+#+RESULTS:
+| 0.012508647305560151 |                  0.0 | 1.0 |
+|   0.9874913526944399 | 0.012430408558295481 | 0.0 |
+|                  0.0 |   0.9875695914417045 | 0.0 |
+
+*** N = 7
+ #+BEGIN_SRC emacs-lisp 
+ (setq 7-by-7 '( (1 1 1 1 1 0 0 )
+                 (1 1 0 0 1 1 1)
+                 (0 1 1 0 1 1 1)
+                 (0 0 1 0 0 1 0)
+                 (1 1 0 0 0 0 0)
+                 (1 1 1 1 1 1 1)
+                 (0 0 0 0 1 1 0)))
+ (dating-service 7 7-by-7 5)  
+ #+END_SRC
+
+ #+RESULTS:
+ | 0.13506325925886353 | 0.11049319923752511 | 0.10464544052602101 |  0.5669960599561722 | 0.08280204102141824 |                  0.0 |                 0.0 |
+ | 0.21176218823738802 | 0.17323942709721424 |                 0.0 |                 0.0 |  0.1298231768834411 |  0.09103373206806367 | 0.39414147571389313 |
+ |                 0.0 |  0.1819152014853069 |  0.1722874939740607 |                 0.0 | 0.13632467952552832 |   0.0955926718796426 | 0.41387995313546144 |
+ |                 0.0 |                 0.0 |  0.6431513636890597 |                 0.0 |                 0.0 |   0.3568486363109403 |                 0.0 |
+ |  0.5500293500154463 |  0.4499706499845538 |                 0.0 |                 0.0 |                 0.0 |                  0.0 |                 0.0 |
+ | 0.10314520248830214 | 0.08438152219539993 | 0.07991570181085866 | 0.43300394004382786 | 0.06323431949194896 | 0.044340742819017044 | 0.19197857115064548 |
+ |                 0.0 |                 0.0 |                 0.0 |                 0.0 |  0.5878157830776635 |   0.4121842169223365 |                 0.0 |
+
+
+ #+BEGIN_SRC emacs-lisp
+   (dating-service 7 7-by-7 6)
+ #+END_SRC
+
+ #+RESULTS:
+ | 0.13506325925886353 | 0.11049319923752511 | 0.10464544052602101 |  0.5669960599561722 | 0.08280204102141824 |                  0.0 |                 0.0 |
+ | 0.21176218823738802 | 0.17323942709721424 |                 0.0 |                 0.0 |  0.1298231768834411 |  0.09103373206806367 | 0.39414147571389313 |
+ |                 0.0 |  0.1819152014853069 |  0.1722874939740607 |                 0.0 | 0.13632467952552832 |   0.0955926718796426 | 0.41387995313546144 |
+ |                 0.0 |                 0.0 |  0.6431513636890597 |                 0.0 |                 0.0 |   0.3568486363109403 |                 0.0 |
+ |  0.5500293500154463 |  0.4499706499845538 |                 0.0 |                 0.0 |                 0.0 |                  0.0 |                 0.0 |
+ | 0.10314520248830214 | 0.08438152219539993 | 0.07991570181085866 | 0.43300394004382786 | 0.06323431949194896 | 0.044340742819017044 | 0.19197857115064548 |
+ |                 0.0 |                 0.0 |                 0.0 |                 0.0 |  0.5878157830776635 |   0.4121842169223365 |                 0.0 |
+
+** My Thoughts
+
+   I met with Brother Neff about this problem. We discussed my thoughts and possible angles by which I could attack this problem. 
+   I am recording my findings here. 
+
+   My intial thought process was that this looked very similar to a Markov
+   chain. A Markov chain is a "A stochastic model describing a sequence of
+   possible events in which the probability of each event depends only on the
+   state attained in the previous event." https://en.oxforddictionaries.com/definition/us/markov_chain
+
+   When we rescale the matrix, we turn it into a probability or stochastic
+   matrix. Assuming girls are columns and boys are rows, when we rescale the
+   columns to sum to one, we are determining the probability of a girl being
+   matched with a boy based on her preferences. At first, this probability will
+   be distributed equally amongst the boys. When we rescale the rows to sum to
+   one, we are now beginning to weight those probabilities by not only each
+   individual girl's preferences, but by the group's preferences. Therefore, if
+   a boy is matched by a girl who has also listed several other boys, and the
+   same boy is matched by a girl who only listed one or two other boys, then the
+   probability of the girl with fewer matched boys ending up with our example
+   boy will go up. As we continually rescale the matrix, the probabilities
+   continue to become more and more heavily weighted, until eventually a
+   semi-steady state matrix will appear. 
+
+   If the rescaling were a limit as x \rarr \infin and we rescaled the the N x N matrix
+   N^x times, we would get a probability matrix which would no longer change when
+   rescaling the rows or columns to 1. Of course, that also relies on the
+   assumption that there is a steady state solution possible. If it is not
+   possible to match every person with a willing partner, than I believe that
+   the matrix will never stabilize.
+
+   In regards to why only rescale the N x N matrix N^5 times, I ran several tests, and
+   it seemed that running it any more than N^5 did not make a significant difference in the end result. 
+   In fact, as N increased, the effect that number of rescales N^x where x > 5 had on the probabilities decreased.
+
+   Due to the nature of the continous rescaling, by the N^\infin time, a stable solution will sum 
+   to 1 in every row and 1 in every column. Of course, when we only rescale N^5 times, a margin of 
+   error is necessary. That is where the 1 - 1/N and the 1 + 1/N come in. They provide a margin
+   of error close enough to determine whether or not we would eventually reach a completely stable
+   matrix. 
+   
+:Feedback:
+Brother Neff has used your answer to the second question as the new exemplanary
+answer. You get an automatic 100% for the whole assignment.
+:END:
+
+
+

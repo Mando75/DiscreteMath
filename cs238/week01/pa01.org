@@ -1,0 +1,179 @@
+#+TITLE: Preparation Assessment 01
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-01-12 Fri 20:10]
+| Headline                             | Time   |
+|--------------------------------------+--------|
+| *Total time*                         | *2:28* |
+|--------------------------------------+--------|
+| Answer What I Remember To Be True... | 2:28   |
+#+END:
+
+
+* TODO Answer What I Remember To Be True from DM1 or Before
+  :LOGBOOK:
+  CLOCK: [2018-01-12 Fri 19:16]--[2018-01-12 Fri 19:53] =>  0:37
+  CLOCK: [2018-01-10 Wed 19:15]--[2018-01-10 Wed 20:23] =>  1:08
+  CLOCK: [2018-01-09 Tue 17:13]--[2018-01-09 Tue 17:56] =>  0:43
+  :END:
+
+
+
+  In no particular order:
+
+  - [X] In combinations order doesn't matter.
+  - [X] In permutations order does matter.
+  - [X] A node/vertex is an intersection between lines in a graph.
+  - [X] An argument can be valid without being true.
+  - [X] For an argument to be valid, it must be written in a form in which if
+    the premises are true, the conclusions must be true.
+  - [X] If an argument is valid and the premises are true, then it is a sound
+    argument.
+  - [X] In encryption and decryption, we use the Chinese Remainder Theorem
+    (CRT).
+  - [X] The CRT says that a bijection exists between a set of numbers and tuples
+    of residues of those numbers divided by a sequence of pairwise coprime
+    divisors.
+  - [X] Lisp is built on lists.
+  - [X] The LOOP macro is handy for looping through sequences in lisp.
+  - [X] Functional programming is not supposed to have side effects.
+  - [X] In a binary tree, each parent has no more than two children.
+  - [X] A complete graph is one where each node is connected to every other
+    node.
+  - [X] A cycle graph is one with n number of nodes where every node is
+    connected to exactly two other nodes.
+  - [X] A set is unordered.
+  - [X] The connection between nodes in a graph is called a link.
+  - [X] The cardinality of a set is how many items are in that set.
+  - [X] The gersy principle has to do with taking initiative to learn on one's
+    own.
+  - [X] Venn diagrams, set theory and certain symbolic logic can describe the
+    same predicate.
+  - [X] The Straw Man fallacy consists of setting up an unsound and/or invalid
+    argument that is different from what the oppenent actually said and then
+    showing why that twisted argument is not true.
+  - [X] Bandwagon is the fallacy of saying something is true because a majority
+    of people believe it to be so.
+  - [X] Red herring is using something as an argument that does not actually
+    have logical weight in the discussion at hand. It is used as a distraction
+    from the real issue.
+  - [X] Ad Hominem is the fallacy of attacking the character of the person
+    offering the opposing argument and trying to imply that their bad character
+    has an effect on the truth value of their argument.
+  - [X] Denying the Antecedent is the fallacy of saying, "If P then Q. Not P,
+    therefore not Q."
+  - [X] Affirming the Consequent is the fallacy of saying, "If P then Q. Q,
+    therefore P."
+  - [X] The antecedent is the part that comes before the conditional operator.
+  - [X] The consequent is what comes after the conditional operator.
+  - [X] In a directed graph, the links only go one way.
+  - [X] Graphs can be represented with sets of pairs.
+  - [X] The pairs need to be ordered for directed graphs, but they do not need
+    to be ordered for undirected graphs.
+  - [X] In a tree, there must be one node that can be reached from any other
+    node.
+  - [X] A path is an unbroken series of nodes connected by vertices.
+  - [X] Because each set of remainders in the CRT maps to a specific integer,
+    the CRT can be used to represent very large numbers in smaller memory.
+  - [X] To be coprime, two integers must have only 1 as a common factor.
+  - [X] A cycle in a graph is a path which reconnects to itself.
+  - [X] You can calculate how many links are in different kinds of graphs if you
+    know how many nodes there are.
+
+    NOTE:
+    (I think this depends on the type of graph. It may be true that you could calculate the max
+     number of links in a simple graph, but for multigraphs which allow 1 or more links between nodes,
+     I do not think it is possible to calculate the number links given ONLY the number of nodes. Therefore,
+     I do not think it is true in all cases, but it is possible, and because of the wording of the question, 
+     I marked it true.)
+
+  - [X] A kind of tree that you can use to make a code is called a Huffman tree.
+  - [X] A Huffman code is an efficient code because it takes advantage of some
+    letters occurring more frequently than others.
+  - [X] DeMorgan’s laws can be used in set logic.
+  - [X] DeMorgan’s laws involve splitting the statement, switching the operator
+    from an OR to an AND or from a union to an intersection (or vice versa) and
+    inverting the predicates.
+  - [X] 0! = 1.
+  - [X] Mathematicians declared that 0! = 1 because it is convenient for
+    combinatorics.
+  - [X] A diagram displaying the statement, “All S are P” can be drawn with a
+    large circle labeled "P" and a small circle inside of it labeled "S."
+  - [X] For a given set, there are more permutations than combinations.
+  - [X] The intersection of two sets is everything that is in both sets.
+  - [X] The union of two sets is everything that is in either set.
+  - [X] The factorial of a number is that number times every number before it
+    down to 1.
+  - [X] In lisp, symbols are like variables.
+  - [X] In lisp, symbols can have a value and a function, as well as other
+    properties.
+  - [X] In lisp, everything in a list gets evaluated except for the first thing
+    in the list
+
+    NOTE: The first item in a list is called as a function, and the rest of the
+    the items are then evaluated as parameters. Just like the next item says. 
+    So you could say that the first item isn't really evaluated. 
+    
+
+  - [X] In lisp, when a list is evaluated, the first item in the list gets
+    called as a function with the rest of the items in the list as parameters.
+  - [X] Lisp uses prefix notation for math.
+  - [X] Vectors self evaluate.
+  - [X] aref is the function for referencing an element in a vector.
+  - [X] funcall will call the function of the value of a symbol.
+  - [X] The conditional in symbolic logic is represented with an arrow.
+  - [X] The biconditional in symbolic logic is represented with a double ended
+    arrow.
+  - [X] A surjective function is the same as an onto function.
+  - [X] An injective function is the same as a one-to-one function.
+  - [X] In a one-to-one function, for every output, there is only one input.
+  - [X] In an onto function, every possible output can be produced.
+  - [X] A prime number is a number which is only divisible to 1 and itself.
+  - [X] Z+ is the set of all integers greater than 0. It comes from a German
+    word that starts with Z.
+  - [X] The Cartesian Product of two sets involves sets of ordered pairs.
+  - [X] An event is a set of some (or all) of the points in a probability space.
+  - [X] A Probability Space is a set containing all the possible outcomes of an
+    experiment.
+  - [X] The Fundamental Theorem of Arithmetic says that every positive integer
+    is the product of primes in essentially one way.
+  - [X] Pairwise coprime refers to a set of pairs of integers in which each pair
+    is coprime.
+  - [X] A wheel graph is created by taking a cycle, adding another node, and
+    adding a link between that node and every other node.
+  - [X] In a directed graph, the in-degree of a node is the number of links
+    going into that node.
+  - [X] In a directed graph, the out-degree of a node is the number of links
+    going out of that node.
+  - [X] In a directed graph, the degree of a node is the number of links going
+    into or out of that node.
+  - [X] Adjacent, neighbors and connected are synonymous terms in graph theory.
+  - [X] Undirected graphs map pairs of symmetric binary relations.
+  - [X] In a multigraph, more than one link can connect two given nodes.
+  - [X] In a simple graph, there cannot be more than one link between two given
+    nodes.
+  - [ ] In pseudographs, there cannot be loops (links connecting nodes to
+    themselves).
+
+    NOTE: 
+    Definition of a pseudograph allows both multiple edges between nodes, and loops. 
+
+  - [X] In directed graphs, the relation between nodes need not be symmetric.
+  - [X] In directed multigraphs, it is allowed to have more than one link
+    between two nodes.
+  - [X] In trees, cycles are not allowed.
+  - [X] Infix notation only works for binary functions.
+  - [X] The codomain of a function is the set of all the possible outputs for
+    that function.
+  - [X] The arity of a function is the amount of arguments it has.
+  - [X] Postfix notation is far less common than infix notation and prefix
+    notation.
+  - [X] A ternary function is a function with three inputs.
+  - [X] A k-ary functio is a function with k inputs.
+  - [X] In recursion, a base case is necessary to exit the function.
+
+

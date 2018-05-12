@@ -1,0 +1,781 @@
+#+TITLE: Weekly Assignment 04
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+SCORE: 100
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-02-10 Sat 17:09]
+| Headline                       |   Time |      |
+|--------------------------------+--------+------|
+| *Total time*                   | *8:46* |      |
+|--------------------------------+--------+------|
+| Explore Continued Fractions    |   1:55 |      |
+| \_  Calculate and Improve      |        | 0:01 |
+| Go Beyond Conjecture Verifying |   1:15 |      |
+| GHI                            |   2:27 |      |
+| \_  EBQ                        |        | 0:03 |
+| \_  MGX                        |        | 0:01 |
+| \_  ECI                        |        | 0:01 |
+| \_  MHB                        |        | 0:27 |
+| \_  ECT                        |        | 0:01 |
+| \_  MKJ                        |        | 0:04 |
+| \_  EFE                        |        | 0:01 |
+| \_  MKL                        |        | 0:01 |
+| \_  EFS                        |        | 0:03 |
+| \_  MLB                        |        | 0:04 |
+| \_  EJE                        |        | 0:01 |
+| \_  MLU                        |        | 1:22 |
+| \_  MMC                        |        | 0:01 |
+| \_  MNE                        |        | 0:08 |
+| \_  EKQ                        |        | 0:09 |
+| Day 1                          |   0:58 |      |
+| Day 2                          |   1:06 |      |
+| Day 3                          |   1:05 |      |
+#+END:
+
+
+  In addition to all the section GHI exercises/problems/puzzles (EPPs) that you
+  did /not/ do in DM1 (see [[file:../week00/schedule.org][schedule]]), please do the following tasks:
+
+* DONE Explore Continued Fractions
+  CLOSED: [2018-02-09 Fri 23:13]
+  :LOGBOOK:
+  CLOCK: [2018-02-09 Fri 22:56]--[2018-02-09 Fri 23:13] =>  0:17
+  CLOCK: [2018-02-06 Tue 21:35]--[2018-02-06 Tue 23:03] =>  1:28
+  CLOCK: [2018-02-05 Mon 17:54]--[2018-02-05 Mon 18:03] =>  0:09
+  :END:
+** Sample Code
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun numerator (frac)
+    (car frac))
+
+  (defun denominator (frac)
+    (cdr frac))
+
+  (defun frac-eval (frac)
+    (/ (float (numerator frac))
+       (float (denominator frac))))
+
+  (defun flipover (x)
+    (and (consp x) (cons (cdr x) (car x))))
+
+  (defun oneover (x)
+    (if (numberp x)
+        (/ 1.0 x)
+      (flipover x)))
+
+  (defun plus (a c)
+    (if (and (numberp a) (numberp c))
+        (+ a c)
+      (cons (+ (car c) (* a (cdr c))) (cdr c))))
+
+  (defun continued-fraction-of-frac (frac)
+    (let* ((n (numerator frac))
+           (d (denominator frac)))
+      (unless (zerop d)
+        (cons (/ n d)
+              (continued-fraction-of-frac (cons d (% n d)))))))
+
+  (defun continued-fraction-of-float-with-iterations (n iterations)
+    (let* ((next-coefficient (floor n))
+           (diff (- n next-coefficient)))
+      (if (or (zerop diff) (<= iterations 0))
+          (and (zerop diff) (list next-coefficient))
+        (cons next-coefficient
+              (continued-fraction-of-float-with-iterations
+               (/ 1.0 diff) (1- iterations))))))
+
+  (defun list-continued-fraction (cf)
+    (if (null cf) 
+        (list 'cons 1 0)
+      (list 'plus (first cf)
+            (list 'oneover
+                  (list-continued-fraction (rest cf))))))
+
+  (defun eval-list-continued-fraction (cf)
+    (eval (list-continued-fraction cf)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (continued-fraction-of-float-with-iterations (/ 1393.0 985) 3)
+#+END_SRC
+
+#+RESULTS:
+(1 2 2)
+(3 2 1)
+(3 2 1)
+(0)
+
+#+BEGIN_SRC emacs-lisp
+  (eval-list-continued-fraction '(3 2 1))
+#+END_SRC
+
+#+RESULTS:
+: (10 . 3)
+
+** Calculate and Improve
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:08]--[2018-02-07 Wed 23:09] =>  0:01
+   :END:
+
+  The above code can theoretically give you the first few partial quotients
+  (coefficients) of the /continued fraction representation/ (CFR) of any
+  positive rational or irrational number. Find and compare the CFRs of the
+  square root of 2 =(sqrt 2.0)= and the rational number \(\frac{1393}{985}\).
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (defalias 'cfr 'continued-fraction-of-float-with-iterations)
+  (defalias 'elcf 'eval-list-continued-fraction)
+  (list "30 iterations" (cfr (sqrt 2) 30) (cfr (/ 1393.0 985) 30))
+#+END_SRC
+
+#+RESULTS:
+(30 iterations (1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 3 3 1 3 1 1) (1 2 2 2 2 2 2 2 2 44770952236 2 6 1 1 1 18 2 2 14028157324 4 2 1 2 1 3 5 1 4 1 1))
+(10 iterations (1 2 2 2 2 2 2 2 2 2) (1 2 2 2 2 2 2 2 2 44770952236))
+(9 iterations (1 2 2 2 2 2 2 2 2) (1 2 2 2 2 2 2 2 2))
+
+We can see by comparing these two outputs that they follow the same pattern up until the 10th iteration. 
+After the 10th iteration, the pattern of 1393/985 diverges from that of \radic2. Although later iterations do match
+up occasionally, it is not consitent enough to be of any real value.  
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (list (elcf (cfr (sqrt 2) 30)) (elcf (cfr (/ 1393.0 985) 30)))
+#+END_SRC
+
+#+RESULTS:
+((27688567065 . 19578773533) (1868734842899497 . -1141334935518086623))
+
+We can also see that when reconstructing the original number from the continued fraction,
+there is quite a large difference in the presented values. 
+
+  Suggest improvements to this code.
+
+  You could do something like the following....
+
+#+BEGIN_SRC emacs-lisp :results silent
+
+  (defun continued-fraction-of-float-with-iterations-improved? (n iterations)
+    (let* ((next-coefficient (floor n))
+           (next-frac (/ 1 (- n next-coefficient))))
+      (if (<= iterations 0) nil
+        (cons next-coefficient
+              (continued-fraction-of-float-with-iterations-improved? next-frac (1- iterations))))))
+
+  (defun list-continued-fraction (cf)
+    (if (null cf) 
+        (list 'cons 1 0)
+      (list 'plus (first cf)
+            (list 'oneover
+                  (list-continued-fraction (rest cf))))))
+#+END_SRC  
+
+
+
+* DONE Go Beyond Conjecture Verifying
+  CLOSED: [2018-02-08 Thu 21:11]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 19:56]--[2018-02-08 Thu 21:11] =>  1:15
+   :END:
+** Preliminary Considerations
+
+   Let $A = \{ \lfloor n\sqrt{2} \rfloor : n \in {\mathbf Z^+} \}$, and let $B = \{ \lfloor n(2 +
+   \sqrt{2}) \rfloor : n \in {\mathbf Z^+} \}$:
+
+  \(\begin{array}{|c|r|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+  & & & & & & & & & & &\\
+n & {\mathbf 1} & {\mathbf 2} & {\mathbf 3} & {\mathbf 4} & {\mathbf 5} & {\mathbf 6} & {\mathbf 7} & {\mathbf 8} & {\mathbf 9} & {\mathbf 10} & \ldots\\ \hline
+  & & & & & & & & & & &\\
+A & 1 & 2 & 4 & 5 & 7 & 8 & 9 & 11 & 12 & 14 &\ldots \\
+  & & & & & & & & & & &\\  \hline
+  & & & & & & & & & & &\\
+B & 3 & 6 & 10 & 13 & 17 & 20 & 23 & 27 & 30 & 34 &\ldots \\
+  & & & & & & & & & & &\\ \hline
+  \end{array}\)
+
+  As suggested by the table above, containing just the first ten elements of
+  each set, the values not contained in $A$ are contained in $B$, and
+  vice-versa. Verifying more and more values (higher $n$) provides more and more
+  evidence that these four relationships hold true:
+
+  \(\begin{array}{rcl}
+  A \cup B & = & {\mathbf Z^+}\\
+  A \cap B & = & \emptyset \\
+  \overline{A} & = & B \\
+  \overline{B} & = & A \\
+  \end{array}\)
+
+  This is the conjecture, that these two sets exhaustively \ldquo{}partition\rdquo the
+  positive integers into two disjoint, mutually complementary sets.
+
+  To prove this (not just verify it) we will need a couple more preliminary
+  definitions:
+
+  For $x$ a real number, let $\{x\}$ be the fractional part of $x$. For example
+  $\{3.14159\} = 0.14159$. Then
+
+  \(\lfloor x \rfloor = x - \{x\}\)
+
+  Let $[booleanExpression]$ mean the value of the C++ expression using the
+  ternary conditional operator as follows: $(booleanExpression\ ?\ 1\ :\ 0)$
+
+  In other words, the expression in the square brackets is evaluated, and if its
+  value is true, the whole expression, square-brackets and all, is replaced by
+  the number 1. If the value is false, it's replaced by 0.
+
+** DONE Going Deeper
+   CLOSED: [2018-02-08 Thu 21:11]
+
+   Let \(\mathtt{Num}(X, n) = \) the number of elements in the set X that are
+   less than or equal to $n$. The table below shows the first few values:
+
+   #+ATTR_HTML: :border 2 :rules all :frame border
+   |---+------+------------------------+------+------------------------+---------------------------------------------|
+   | / |   <> | <>                     |   <> | <>                     | <>                                          |
+   |---+------+------------------------+------+------------------------+---------------------------------------------|
+   | n | A[n] | \(\mathtt{Num}(A, n)\) | B[n] | \(\mathtt{Num}(B, n)\) | \(\mathtt{Num}(A, n) + \mathtt{Num}(B, n)\) |
+   |---+------+------------------------+------+------------------------+---------------------------------------------|
+   |   |      | <c>                    |      | <c>                    | <c>                                         |
+   | 1 |    1 | 1                      |    3 | 0                      | 1                                           |
+   | 2 |    2 | 2                      |    6 | 0                      | 2                                           |
+   | 3 |    4 | 2                      |   10 | 1                      | 3                                           |
+   | 4 |    5 | 3                      |   13 | 1                      | 4                                           |
+   | 5 |    7 | 4                      |   17 | 1                      | 5                                           |
+   | 6 |    8 | 4                      |   20 | 2                      | 6                                           |
+   | 7 |    9 | 5                      |   23 | 2                      | 7                                           |
+
+   Notice that the values in the first and last columns are the same. If that
+   relationship can be shown to always hold, that fact will force the truth of
+   the conjecture. Do you see how?
+
+   So how do we prove that this relationship always holds? Following the
+   implications of all our definitions (except now letting \(Num(x, n)\) be the
+   number of elements of the set /generated by/ $x$ that are less than or equal
+   to $n$):
+
+  \(\begin{array}\mathtt{Num}(x, n) & = & \sum_{i > 0}\left[\ \lfloor ix \rfloor \le n\ \right] \\
+          & = & \sum_{i > 0}\left[\ \lfloor ix \rfloor < n + 1\ \right] \\
+          & = & \sum_{i > 0}[\ ix < n + 1\ ]\ \mbox{because}\ (\lfloor a \rfloor < b) \leftrightarrow (a < b)\ \mbox{--- wait, is this justified?}\\
+          & = & \sum_{i > 0}\left[\ 0 < i < \frac{n + 1}{x}\ \right]\ \mbox{to make it easier and because we can divide through by}\ x\\
+          & = & \left \lfloor \frac{n + 1}{x} \right \rfloor\ \mbox{because the number of integers in the open interval}\ (0, y) = \lfloor y \rfloor.
+  \end{array}\)
+
+  The last step is justified as long as $y$ is a noninteger.
+
+  Remember, our conjecture is equivalent to saying $\mathtt{Num}(\sqrt{2}, n)+
+  \mathtt{Num}(2 + \sqrt{2}, n) = n$. So plug in $\sqrt{2}$ and $2 + \sqrt{2}$
+  for $x$ twice:
+
+  $\mathtt{Num}(\sqrt{2}, n)+ \mathtt{Num}(2 + \sqrt{2}, n) = \left \lfloor
+  \frac{n + 1}{\sqrt{2}} \right \rfloor + \left \lfloor \frac{n + 1}{2 +
+  \sqrt{2}} \right \rfloor = n$
+
+  $\rightarrow \frac{n + 1}{\sqrt{2}} - \left\{\frac{n + 1}{\sqrt{2}}\right\} +
+  \frac{n + 1}{2 + \sqrt{2}} - \left\{\frac{n + 1}{2 + \sqrt{2}}\right\} = n$
+
+  $\rightarrow \frac{n + 1}{\sqrt{2}} + \frac{n + 1}{2 + \sqrt{2}} -
+  \left(\left\{\frac{n + 1}{\sqrt{2}}\right\} + \left\{\frac{n + 1}{2 +
+  \sqrt{2}}\right\}\right) = n$
+
+  $\rightarrow (n + 1)\left(\frac{1}{\sqrt{2}} + \frac{1}{2 + \sqrt{2}}\right) -
+  \left(\left\{\frac{n + 1}{\sqrt{2}}\right\} + \left\{\frac{n + 1}{2 +
+  \sqrt{2}}\right\}\right) = n$
+
+  How would you finish this proof?
+
+$\rightarrow (n + 1)\left(\frac{1}{\sqrt{2}} + \frac{1}{2 + \sqrt{2}}\right) -
+  \left(\left\{\frac{n + 1}{\sqrt{2}}\right\} + \left\{\frac{n + 1}{2 +
+  \sqrt{2}}\right\}\right) = n$
+
+  Step 1: We can simplify the left side:
+  
+  \(\frac{1}{\sqrt{2}} + \frac{1}{2+\sqrt{2}} = 1\ so\ (n+1)(1) = n + 1\) 
+
+  Apply the simplification:
+
+\(\rightarrow n + 1 - (\{\frac{n+1}{\sqrt{2}}\} + \{\frac{n+1}{2+\sqrt{2}}\})= n\) 
+
+  Step 2: Subtract \(n\) from both sides:
+
+  \(\rightarrow 1 - (\{\frac{n+1}{\sqrt{2}}\} + \{\frac{n+1}{2+\sqrt{2}}\})= 0\) 
+
+  Step 3: Rearrange the equation to set it equal to 1:
+
+  \(\rightarrow 1 = (\{\frac{n+1}{\sqrt{2}}\} + \{\frac{n+1}{2+\sqrt{2}}\})\) 
+
+  Step 4: We can now substitute 1 into the equation from Step 1:
+
+ $\rightarrow (n + 1)(1) - 1 = n$
+
+ Thus
+
+ \(n = n\)
+
+ 
+* DONE GHI
+  CLOSED: [2018-02-10 Sat 17:09]
+
+I copied these over from DM 1
+
+** DONE EBQ
+   CLOSED: [2018-02-07 Wed 23:14]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:11]--[2018-02-07 Wed 23:14] =>  0:03
+   :END:
+
+ #+BEGIN_SRC emacs-lisp :results silent
+ (defun cartesian-product (x y)
+   (mapcan (lambda (x-item) ;; map over the first list
+       (mapcar (lambda (y-item) ;; map over the second list
+           (if (listp x-item) ;; check that we are given a list 
+             (append x-item (list y-item)) ;; if so, append the y-item 
+             (list x-item y-item))) ;; otherwise, list the two items
+        y)) ;; passing y into the nested map
+    x)) ;; passing x into the map
+
+ (defun cartesian-product-general (list-of-sets)
+    (reduce #'cartesian-product list-of-sets)) 
+
+ #+END_SRC
+ #+BEGIN_SRC emacs-lisp
+ (cartesian-product-general '((a b c d e f g h i j k l m n o p q r s t u v w x y z)(a b c d e f g h i j k l m n o p q r s t u v w x y z)))
+
+ ;; I deleted the results, as the resulting table is quite large :) If you run it, it will work. 
+ #+END_SRC
+
+** DONE MGX
+   CLOSED: [2018-02-07 Wed 23:15]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:14]--[2018-02-07 Wed 23:15] =>  0:01
+   :END:
+    #+BEGIN_SRC emacs-lisp :results silent
+    (defun map-for-all (pred x domain-y)
+  (every (lambda (y) (funcall pred x y)) domain-y))
+    #+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun map-for-all-for-all (pred domain-x domain-y)
+  (every (lambda (x) (map-for-all pred x domain-y)) domain-x))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map-for-all-for-all '< [1 2 3] [4 5 6])
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** DONE ECI
+   CLOSED: [2018-02-07 Wed 23:16]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:15]--[2018-02-07 Wed 23:16] =>  0:01
+   :END:
+#+BEGIN_SRC emacs-lisp :results raw
+(defun map-for-some (pred x domain-y)
+   (some (lambda (y) (funcall pred x y)) domain-y))
+
+(defun map-for-some-for-some (pred domain-x domain-y)
+   (some (lambda (x) (map-for-some pred x domain-y)) domain-x))
+
+(defun map-for-some-for-all (pred domain-x domain-y)
+   (some (lambda (x) (map-for-all pred x domain-y)) domain-x))
+
+(defun map-for-all-for-some (pred domain-x domain-y)
+   (every (lambda (x) (map-for-some pred x domain-y)) domain-x))
+
+;;(map-for-some-for-all '< [1 2 0] [1 2 8])
+;;(map-for-some-for-all '< [1 2 0] [5 6 5])
+;;(map-for-some-for-all '= [1 2 0] [5 6 7])
+#+END_SRC
+
+#+RESULTS:
+t
+t
+nil
+nil
+
+** DONE MHB
+   CLOSED: [2018-02-07 Wed 23:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:16]--[2018-02-07 Wed 23:43] =>  0:27
+   :END:
+   ∀ x ∀ y [xRy ∧ yRx → x = y]  let p = (xRy \land yRx) and q = (x = y) 
+   The implication is that if x is related to y, and y is related to x, then x is equal to y (p \rarr q).
+   So if xRy is true, but does not imply q, then yRx must be false for the implication to remain valid. 
+   
+** DONE ECT
+   CLOSED: [2018-02-07 Wed 23:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:42]--[2018-02-07 Wed 23:43] =>  0:01
+   :END:
+
+#+BEGIN_SRC emacs-lisp :results raw
+(defun in-the-relation (x y)
+  (> x (+ y 1)))
+#+END_SRC
+    R = [(3 1) (4 1) (4 2)]
+
+** DONE MKJ
+   CLOSED: [2018-02-07 Wed 23:48]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:44]--[2018-02-07 Wed 23:48] =>  0:04
+   :END:
+https://math.stackexchange.com/questions/235972/transitive-relations
+    * Not relexive (No (3 3))
+    * It is symmetric
+    * It is not antisymmetric
+    * It is transitive
+
+     So this is a symmetric transitive relation
+       
+** DONE EFE
+   CLOSED: [2018-02-07 Wed 23:49]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:48]--[2018-02-07 Wed 23:49] =>  0:01
+   :END:
+https://math.stackexchange.com/questions/235972/transitive-relations
+    * It is reflexive
+    * It is not symmetric
+    * It is antisymmetric
+    * It is transitive
+It is a reflexive antisymmetric transitive relation
+
+** DONE MKL
+   CLOSED: [2018-02-07 Wed 23:51]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:50]--[2018-02-07 Wed 23:51] =>  0:01
+   :END:
+    * It is not reflexive
+    * It is symmetric
+    * It is not antisymmetric
+    * It is not transitive because there is no (1 1)
+This is a symetric relation
+
+** DONE EFS
+   CLOSED: [2018-02-07 Wed 23:54]
+   :LOGBOOK:
+   CLOCK: [2018-02-07 Wed 23:51]--[2018-02-07 Wed 23:54] =>  0:03
+   :END:
+    1. It is not reflexive
+    2. It is not symmetric
+    3. It is antisymmetric - vacuously -> There are no symmetric pairs
+    4. It is not transitive
+
+This is an antisymmetric relation
+
+** DONE MLB
+   CLOSED: [2018-02-08 Thu 18:43]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:39]--[2018-02-08 Thu 18:43] =>  0:04
+   :END:
+#+BEGIN_SRC emacs-lisp
+ (defun number-of-binary-relations (n)
+    (* n n))
+
+(number-of-binary-relations '10)
+#+END_SRC
+
+#+RESULTS:
+: 100
+
+** DONE EJE
+   CLOSED: [2018-02-08 Thu 18:44]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:43]--[2018-02-08 Thu 18:44] =>  0:01
+   :END:
+   
+#+BEGIN_SRC emacs-lisp :results raw
+(setq students [1 2 3 4 5 6 7 8]
+      courses [100 200 300 400]
+      by-student '((1 100 200)
+                   (2 100)
+                   (3 100 200 300)
+                   (4 100 200 300 400)
+                   (5 100)
+                   (6 100)
+                   (7 100 200)
+                   (8 100 200 300 400))
+      by-course '((100 1 2 3 4 5 6 7 8)
+                  (200 1 3 4 7 8)
+                  (300 3 4 8)
+                  (400 4 8)))
+
+(defun student-has-taken-course (student course)
+  (not (null (member course (rest (assoc student by-student))))))
+
+(defun course-has-been-taken-by-student (course student)
+  (not (null (member student (rest (assoc course by-course))))))
+
+
+;; similar to the for-all-for-all function, but returns a list of
+;; domain-x, saying whether it was true for all across domain-y
+(defun all-courses (pred domain-x domain-y)
+   (loop for i across domain-x 
+     collect (list i (loop for j across domain-y
+        always (funcall pred i j)))))
+
+
+
+(all-courses 'course-has-been-taken-by-student courses students)
+#+END_SRC
+
+#+RESULTS:
+((100 t) (200 nil) (300 nil) (400 nil))
+((1 nil) (2 nil) (3 nil) (4 t) (5 nil) (6 nil) (7 nil) (8 t))
+
+#+BEGIN_SRC emacs-lisp :results raw
+(mapcar 'first by-student)
+
+#+END_SRC
+
+#+RESULTS:
+(1 2 3 4 5 6 7 8)
+((1 100 200) (2 100) (3 100 200 300) (4 100 200 300 400) (5 100) (6 100) (7 100 200) (8 100 200 300 400))
+
+** DONE MLU
+   CLOSED: [2018-02-10 Sat 17:09]
+   :LOGBOOK:
+   CLOCK: [2018-02-10 Sat 17:01]--[2018-02-10 Sat 17:09] =>  0:08
+   CLOCK: [2018-02-10 Sat 16:21]--[2018-02-10 Sat 16:56] =>  0:35
+   CLOCK: [2018-02-10 Sat 14:26]--[2018-02-10 Sat 14:54] =>  0:28
+   CLOCK: [2018-02-08 Thu 18:45]--[2018-02-08 Thu 18:56] =>  0:11
+   :END:
+    
+
+#+BEGIN_SRC emacs-lisp :results silent
+(setq birthday-table [[Bill 1992 Jan 1] [Bob 2001 May 13][Sue 2000 Dec 22] [George 1995 Sep 17] [Maia 1994 May 12]]
+      zodiac-table [[Jan 20 Aquarius] [Feb 19 Pisces] [Mar 21 Aries] [Apr 20 Taurus] [May 21 Gemini] [Jun 21 Cancer] [Jul 23 Leo] [Aug 23 Virgo] [Sep 23 Libra] [Oct 23 Scorpio] [Nov 22 Sagittarius] [Dec 22 Capricorn]]
+      months-assoc '((Jan . 01) (Feb . 02) (Mar . 03) (Apr . 04) (May . 05) (Jun . 06) (Jul . 07) (Aug . 08) (Sep . 09) (Oct . 10) (Nov . 11) (Dec . 12)))
+
+(defun join-birthday-map (birthdays zodiacs)
+  (mapcar (lambda (birthday-el) (let* 
+     ((b-month (elt birthday-el 2))
+      (b-month-num (cdr (assoc b-month months-assoc)))
+      (b-month-m1 (car (rassoc (- b-month-num 1) months-assoc)))
+      (b-day (elt birthday-el 3)))
+        (loop for zo across zodiacs
+              do (if (= 0 (- b-month-num 1)) (setq b-month-m1 'Dec))
+              do (cond ((and (equal (elt zo 0) b-month) 
+                             (<= (elt zo 1) b-day)) 
+                                 (print (append zo birthday-el)))
+                        ((equal (elt zo 0) b-month-m1)
+                             (print (append zo birthday-el))))))) birthdays))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results output
+ (join-birthday-map birthday-table zodiac-table)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+(Dec 22 Capricorn . [Bill 1992 Jan 1])
+
+(Apr 20 Taurus . [Bob 2001 May 13])
+
+(Nov 22 Sagittarius . [Sue 2000 Dec 22])
+
+(Dec 22 Capricorn . [Sue 2000 Dec 22])
+
+(Aug 23 Virgo . [George 1995 Sep 17])
+
+(Apr 20 Taurus . [Maia 1994 May 12])
+#+end_example
+
+** DONE EJK
+   CLOSED: [2018-02-08 Thu 18:57]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:57]--[2018-02-08 Thu 18:57] =>  0:00
+   :END:
+
+#+NAME: example-table
+| a   | b   |  c |
+| 12  | 23  | 42 |
+| YOU | ARE | A  |
+
+#+BEGIN_SRC emacs-lisp :var example-table=example-table
+(list example-table)
+#+END_SRC
+
+#+RESULTS:
+| (a b c) | (12 23 42) | (YOU ARE A) |
+
+** DONE MMC
+   CLOSED: [2018-02-08 Thu 18:58]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:57]--[2018-02-08 Thu 18:58] =>  0:01
+   :END:
+   | Set Name | Equiv Class | Lesser Members |     |     |    | \downarrow |    |    |    | Greater Members |
+   | A_0       | [0]         | ...            | -21 | -14 | -7 | 0 |  7 | 14 | 21 | ...             |
+   | A_1       | [1]         | ...            | -20 | -13 | -6 | 1 |  8 | 15 | 22 | ...             |
+   | A_2       | [2]         | ...            | -19 | -12 | -5 | 2 |  9 | 16 | 23 | ...             |
+   | A_3       | [3]         | ...            | -18 | -11 | -4 | 3 | 10 | 17 | 24 | ...             |
+   | A_4       | [4]         | ...            | -17 | -10 | -3 | 4 | 11 | 18 | 25 | ...             |
+   | A_5       | [5]         | ...            | -16 |  -9 | -2 | 5 | 12 | 19 | 26 | ...             |
+   | A_6       | [6]         | ...            | -15 |  -8 | -1 | 6 | 13 | 20 | 27 | ...             |
+** DONE EJU
+   CLOSED: [2018-02-08 Thu 18:59]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:59]--[2018-02-08 Thu 18:59] =>  0:00
+   :END:
+   I would say that the CMM relation would be (mod i 10)
+** DONE MNE
+   CLOSED: [2018-02-08 Thu 19:07]
+   :LOGBOOK:
+   CLOCK: [2018-02-08 Thu 18:59]--[2018-02-08 Thu 19:07] =>  0:08
+   :END:
+Consider the set of all bitstrings having length at least 3. 
+Show that the relation on this set that says two bitstrings are related if they agree in the first three bits is an equivalence relation
+
+An equivalence relation is one which is reflexive, symmetric, and transitive.
+
+The set is reflexive because, if the first three bits agree then there will be instances of a = a
+
+The set is symmetric because, if the first three bits of a agree with b, then the first three bits of b agree with a, so it is symmetric.
+
+The set is transitive because, if the first three bits of a agree with the first three bits of b, and b agrees with c, then a will agree with c.
+** DONE EKQ
+   CLOSED: [2018-02-10 Sat 14:24]
+   :LOGBOOK:
+   CLOCK: [2018-02-10 Sat 14:14]--[2018-02-10 Sat 14:23] =>  0:09
+   :END:
+
+  1. No, because it is not reflexive, I am not my own sibling.
+  2. Yes
+  3. No, because it may not always be transitive. I may share a parent with my half-brother, who shares a parent with his half-sister.
+     That does not mean that his half-sister and I share the same parent.
+  4. No, it is not always transitive. Example: I speak Dutch, which I share in common with my Father. My Father speaks German with his boss. 
+     I do not speak German, so I do not have a relation with my Father's boss. It is not transitive
+  5. No, again, not always transitive
+  6. No, not always symmetric
+  7. True
+  8. True
+  9. True
+** DONE MON
+   CLOSED: [2018-02-10 Sat 14:24]
+   :LOGBOOK:
+   CLOCK: [2018-02-10 Sat 14:24]--[2018-02-10 Sat 14:24] =>  0:00
+   :END:
+#+BEGIN_SRC emacs-lisp :results output
+(defun build-partition-set-table (m &optional n)
+  (let* ((count (if (null n) 20 n))
+         (bound (* count m)))
+    (loop for i from 0 below m
+          do (princ "[ ")
+          (loop for j from (+ (- bound) i) to (+ bound i) by m
+                do (princ j)
+                (princ " "))
+          (princ "]\n"))))
+
+(build-partition-set-table '5)
+#+END_SRC
+
+#+RESULTS:
+: [ -100 -95 -90 -85 -80 -75 -70 -65 -60 -55 -50 -45 -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 ]
+: [ -99 -94 -89 -84 -79 -74 -69 -64 -59 -54 -49 -44 -39 -34 -29 -24 -19 -14 -9 -4 1 6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96 101 ]
+: [ -98 -93 -88 -83 -78 -73 -68 -63 -58 -53 -48 -43 -38 -33 -28 -23 -18 -13 -8 -3 2 7 12 17 22 27 32 37 42 47 52 57 62 67 72 77 82 87 92 97 102 ]
+: [ -97 -92 -87 -82 -77 -72 -67 -62 -57 -52 -47 -42 -37 -32 -27 -22 -17 -12 -7 -2 3 8 13 18 23 28 33 38 43 48 53 58 63 68 73 78 83 88 93 98 103 ]
+: [ -96 -91 -86 -81 -76 -71 -66 -61 -56 -51 -46 -41 -36 -31 -26 -21 -16 -11 -6 -1 4 9 14 19 24 29 34 39 44 49 54 59 64 69 74 79 84 89 94 99 104 ]
+
+
+* DONE Day 1
+  CLOSED: [2018-02-06 Tue 22:13]
+  :LOGBOOK:
+  CLOCK: [2018-02-05 Mon 15:17]--[2018-02-05 Mon 16:15] =>  0:58
+  :END:
+
+** DONE P2B Conference | STEM Fair
+   CLOSED: [2018-02-05 Mon 15:23]
+   
+** DONE PST
+   CLOSED: [2018-02-06 Tue 22:13]
+   Checkbox and Radio Button List
+   
+
+** DONE TEU
+   CLOSED: [2018-02-06 Tue 22:13]
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun list-digits (n)
+    (unless (zerop n)
+    (append (list-digits (/ n 10))
+    (list (% n 10)))))
+
+    (defun k-in-list (k list-digits)
+    (loop for digit in list-digits
+    count (= k digit)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results raw
+ (loop for n from 1 to 1000000 with temp
+    count (and (= 1 (k-in-list n (setq temp (list-digits n))))
+       (= 17 (apply '+ temp))))
+#+END_SRC   
+
+#+RESULTS:
+0
+0
+
+** DONE Euler's Famous Sum
+   CLOSED: [2018-02-06 Tue 22:13]
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun eulers-sum (max)
+  (loop for n from 1 to max
+    sum (/ 1 (float (* n n)))))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+ (eulers-sum 1000) 
+#+END_SRC
+
+#+RESULTS:
+: 1.6439345666815615
+
+* DONE Day 2
+  CLOSED: [2018-02-06 Tue 22:13]
+  :LOGBOOK:
+  CLOCK: [2018-02-06 Tue 15:07]--[2018-02-06 Tue 16:13] =>  1:06
+  :END:
+
+** Euler's Sum Amazing Conclusion
+   T(n) = \sum k(k + 1)/2 k=1 to n
+   
+* DONE Day 3
+  CLOSED: [2018-02-07 Wed 16:15]
+  :LOGBOOK:
+  CLOCK: [2018-02-07 Wed 15:10]--[2018-02-07 Wed 16:15] =>  1:05
+  :END:
+
+  
+** Discuss Coprime Probability
+
+   coprime - Two numbers are coprime if their greatest common divisor is 1, as is the case with any two prime numbers
+
+#+BEGIN_SRC emacs-lisp :results raw :var max=10000
+  (loop for m from 1 to max
+     sum (loop for n from 1 to max
+            count (= 1 (gcd m n))))
+#+END_SRC
+
+#+RESULTS:
+60794971
+63
+
+Why is the probability of coprimes is about 60%. Why?
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (/ 1.0 (/ (* pi pi) 6.0))
+#+END_SRC
+
+#+RESULTS:
+0.6079271018540267
+1.6449340668482264
+
+Its the inverse of Euler's Sum. Why?
+
+(1 - 1/m)(1 - 1/n) 
+
