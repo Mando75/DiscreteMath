@@ -1,0 +1,10 @@
+#+TITLE: README for Week 08
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Chapter 9 Greedy Technique
+
+* [[file:pa08.org][Preparation Assessment]]
+
+* [[file:wa08.org][Weekly Assignment]]

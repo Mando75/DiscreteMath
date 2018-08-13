@@ -1,0 +1,348 @@
+#+TITLE: Weekly Assignment 07
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+ #+CAPTION: Clock summary at [2018-06-16 Sat 16:35]
+| Headline                                |   Time |      |
+|-----------------------------------------+--------+------|
+| *Total time*                            | *4:56* |      |
+|-----------------------------------------+--------+------|
+| Continue to Ponder What Is The Question |   4:35 |      |
+| \_  Shrinking the Search Space          |        | 4:35 |
+| What I learned                          |   0:21 |      |
+#+END:
+
+* Collaborators
+Matt Wyndham
+Bryan Muller
+Asa Skousen
+Jonathon Manoa
+Timothy Steele
+Adam Gerhing
+Quade Morrison
+James Palmer
+Zach Delano
+
+We all worked together to try to find the most efficient algorithm for 
+finding the binomial coefficients. We mostly just discussed the pros and cons
+for each method we devised.
+
+* In Class Math Problem
+
+#+BEGIN_SRC emacs-lisp :results silent
+
+  (require 'calc)
+
+
+  (defun prod1 (n k)
+    (reduce 'math-mul 
+            (mapcar (lambda (i) (math-add (math-mul 4 (math-pow k 4))
+                                          (math-pow i 4))) 
+                                (number-sequence 1 (math-sub n 1)))))
+
+  (defun prod2 (n k)
+     (reduce 'math-mul (mapcar (lambda (i) (if (math-equal i k) 1 
+                                       (math-sub (math-pow k 4) (math-pow i 4)))) (number-sequence 1 n))))
+
+  (defun experiment (n)
+     (reduce 'math-add (mapcar (lambda (k) (math-mul (math-div (math-mul 2 (math-pow n 2))
+                                                              (math-pow k 2))
+                                                     (/ (prod1 n k) (prod2 n k))))
+                                           (number-sequence 1 n))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (mapcar 'experiment (number-sequence 1 11))
+#+END_SRC
+
+#+RESULTS:
+| 2.0 | 6.0 | 20.0 | 70.0 | 252.0 | -5638.628970454829 | -487.67128304675185 | 36.63036730245969 | 487.12501079412164 | 608.6321949863182 | 1025.3268796988357 |
+
+
+
+
+
+
+pg 10 
+   2 3 4
+
+* DONE Continue to Ponder What Is The Question
+  CLOSED: [2018-06-16 Sat 16:11]
+
+** Frequently Asked Questions from Former Students
+
+   1. So are we actually expected to know what the numbers mean, or is it just
+      an exercise in seeing what we can think of?
+   2. Is there actually a specific answer for what these numbers mean?
+   3. Is the fact that it was inspired by Facsimile #2 significant for helping
+      us figure it out?
+   4. Is the 10x10 arrangement of the numbers significant?
+   5. Is the goal coming up with a question where the numbers are the answer?
+   6. Where do we begin?
+   7. Why are you making us do this?!
+
+** Answers from Brother Neff
+
+   Or rather, from Brother Neff\rsquo{}s lame imitation of Dr. Lanning\rsquo{}s hologram program,
+   the answer that would be given to each of the FAQs above would be:
+
+   I\rsquo{}m sorry, my responses are limited; you must ask the right question.
+
+   Note a subtle but significant difference between that response and Dr. Lanning\rsquo{}s original
+   response!
+
+** Questions from Current Students
+
+   | Type |  # | Question                                                                        |
+   |------+----+---------------------------------------------------------------------------------|
+   | I    |  1 | What should we have to get further towards a solution?                          |
+   | II   |  2 | If we knew more numbers, would it help us more?                                 |
+   | II   |  3 | Is there significance to there being 10 digits in 10 numbers?                   |
+   | II   |  4 | Is the Book of Abraham of any help?                                             |
+   | II   |  5 | Are there any valuable ways of subsetting these numbers?                        |
+   | II   |  6 | Is the world's ignorance of the B of A numbers applicable to this problem?      |
+   | I    |  7 | Should we be aware of OR concerned with other representations of these numbers? |
+   | I    |  8 | Is it really just inspired by ... OR something else?                            |
+   | I    |  9 | Is there a direct link between the article and the 10 numbers?                  |
+   | II   | 10 | Are we able at this time to determine what these numbers mean?                  |
+   | II   | 11 | Should we be able to find a solution this week?                                 |
+  
+   In an upgrade to Brother Neff\rsquo{}s lame imitation of Dr. Lanning\rsquo{}s hologram program, the answer
+   that would be given to a Type I question would be:
+
+      I'm sorry, my responses are limited. You must ask the right TYPE of question.
+
+** Shrinking the Search Space
+   :LOGBOOK:
+   CLOCK: [2018-06-16 Sat 14:41]--[2018-06-16 Sat 16:11] =>  1:30
+   CLOCK: [2018-06-14 Thu 22:30]--[2018-06-14 Thu 23:12] =>  0:42
+   CLOCK: [2018-06-14 Thu 16:54]--[2018-06-14 Thu 19:17] =>  2:23
+   :END:
+
+   The question has exactly twenty words, all unique (no repeats).
+
+   No word has more than two syllables.
+
+   There are no “uncommon” words.
+
+   Half of the words have three or fewer letters, and of the remaining ten, half
+   have four or five, and the other half have six or seven letters.
+
+   |-------------------+-----------------------------------------------|
+   | Number of letters | Number of words having that number of letters |
+   |-------------------+-----------------------------------------------|
+   |                 1 |                                             1 |
+   |                 2 |                                             5 |
+   |                 3 |                                             4 |
+   |                 4 |                                             3 |
+   |                 5 |                                             2 |
+   |                 6 |                                             3 |
+   |                 7 |                                             2 |
+
+   Your challenge is to shrink the search space, using the above hints, from
+    “all possible permutations of all possible 20-word combinations of 2000
+    common words” to something less “exhaustive”!
+
+*** Common Words Functions
+    :LOGBOOK:
+    CLOCK: [2018-06-14 Thu 20:11]--[2018-06-14 Thu 20:11] =>  0:00
+    :END:
+ #+BEGIN_SRC elisp :results silent
+   (require 'common-words)
+ #+END_SRC
+
+ #+BEGIN_SRC elisp :results silent
+   (defun common-words-by-length ()
+     (loop for n from 1 to 7 
+           collect (cons n (loop for word across common-words
+                                 when (= n (length (symbol-name word)))
+                                 collect word))))
+ #+END_SRC
+
+ #+BEGIN_SRC elisp :results raw 
+   (setq common-words-by-length (common-words-by-length))
+ #+END_SRC
+
+ #+RESULTS:
+
+ #+BEGIN_SRC elisp :results silent
+   (defun n-letter-common-words (n)
+     (cdr (assoc n common-words-by-length)))
+ #+END_SRC
+
+
+ #+BEGIN_SRC emacs-lisp
+ (get-n-letter-words-count)  
+ #+END_SRC
+
+ #+RESULTS:
+ | 2 | 19 | 173 | 498 | 478 | 389 | 249 |
+
+ #+BEGIN_SRC elisp :results raw
+   (mapcar* (lambda (x y) (list x 'choose y))
+            (get-n-letter-words-count)
+            (list 1 5 4 3 2 3 2))
+
+ #+END_SRC
+
+ $((2 \choose 1) * (19 \choose 5) * (173 \choose 4) * (498 \choose 3) * (478 \choose 2) * (389 \choose 3) * (249 \choose 2)) * 20!$
+
+*** Work
+**** Better n choose k
+
+     Using the Multiplicative Formula to find n choose k
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun multi-n-choose-k (n k)
+    "Calculates n choose k using the multiplicative formula"
+    (reduce '* (mapcar (lambda (i) 
+                         (/ (- (+ 1.0 n) i)
+                            (float i)))
+                       (number-sequence 1 k))))
+#+END_SRC
+
+**** Original Search Space
+#+BEGIN_SRC emacs-lisp
+(multi-n-choose-k 2000 20)
+#+END_SRC
+
+: 3.918163685038488e+47 * 20! is the original search space
+
+**** Create some utilities...
+
+     
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun get-n-letter-words-count ()
+  "Returns the count of letters with n characters"
+ (mapcar 'length (loop for n from 1 to 7 collect (n-letter-common-words n))))
+
+ (setq k-list '(1 5 4 3 2 3 2))
+#+END_SRC
+
+**** Reduced problem size
+
+    Original problem size (2000 choose 20) * 20! 
+ 
+    With hints:
+
+    ((2 choose 1) * (19 choose 5) * (173 choose 4) * (498 choose 3) * (478 choose 2) * (389 choose 3) * (249 choose 2)) * 20!
+
+***** Calculate the n choose k's...
+ #+BEGIN_SRC emacs-lisp :results raw
+   (mapcar* 'multi-n-choose-k
+            (get-n-letter-words-count)
+            (list 1 5 4 3 2 3 2))
+ #+END_SRC 
+
+ (2.0 11628.0 36041955.0 20460496.0 114003.0 9735114.0 30876.0)
+
+***** Combine those into a single value
+ #+BEGIN_SRC emacs-lisp
+    (defun find-reduced () (reduce '* (mapcar* 'multi-n-choose-k
+            (get-n-letter-words-count)
+            (list 1 5 4 3 2 3 2))))
+
+ #+END_SRC
+
+ #+RESULTS:
+
+ : 5.876758853324828e+35 * 20! is our reduced search space 
+
+***** Find the percentage reduction
+      Find the percentage decrease in problem size:
+#+BEGIN_SRC emacs-lisp
+(* (/ (- (multi-n-choose-k 2000 20) (find-reduced)) (multi-n-choose-k 2000 20)) 100) 
+#+END_SRC
+
+#+RESULTS:
+: 99.99999999985
+
+**** Summary 
+     This n choose k function has Time Complexity of O(k) and Space Complexity
+     of O(1) which is better than any other algorithm I was able to find. I
+     implemented the mutliplicative formula for finding binomial coefficients.
+     An example of this formula in mathematical form can be found here:
+     https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula
+
+     The calculation for the problem space reduction:
+
+     Original problem space = 9.5325082976949236399227635526776171821699046616643625... × 10^65
+
+     Reduced problem space =  1.429757841582382220130592161792×10^54
+
+     Reduction percentage = 99.99999999985
+
+    \(\frac{1.429758 * 10^54}{9.53251 * 10^65} = 1.499875790 × 10^-12\) 
+     
+    That is a massive reduction in problem space. Although the problem space is still massive,
+    it is now much smaller than what we started with.
+
+    Comparison to n choose k given in the firstthreeodds.org website...
+
+**** Benchmarks
+#+BEGIN_SRC emacs-lisp :results silent
+(defun n-choose-k (n k)
+  "Computes C(n, k) by the recursive definition;
+given a pair of nonnegative integers n >= k >= 0,
+returns the value of n choose k."
+  (if (or (zerop k) (= k n))
+      1
+    (+ (n-choose-k (- n 1) (- k 1))
+       (n-choose-k (- n 1) k))))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (require 'benchmark)
+
+  (benchmark-elapse 
+    (let ((n 25))
+      (loop for r from 1 below n
+            collect (n-choose-k n r))))
+#+END_SRC
+
+#+RESULTS:
+19.414196713
+
+#+BEGIN_SRC elisp :results raw
+  (require 'benchmark)
+
+  (benchmark-elapse 
+    (let ((n 25))
+      (loop for r from 1 below n
+            collect (multi-n-choose-k n r))))
+#+END_SRC
+
+#+RESULTS:
+0.004585046
+
+* DONE What I learned 
+  CLOSED: [2018-06-16 Sat 16:33]
+  :LOGBOOK:
+  CLOCK: [2018-06-16 Sat 16:12]--[2018-06-16 Sat 16:33] =>  0:21
+  :END:
+  
+  I really enjoyed discussing the different possible algorithms with everyone.
+  We didn't always agree right off the bat, but it was encouraging to see how healthy
+  debate led to very robust solution. 
+
+  Our main focus of discussion was time vs space. There were several ways that
+  would have saved time, but would have required a lot of space. An example of
+  this would be to pre-generate Pascal's triangle and then do a lookup for n
+  choose k. If the triangle was pre-generated, this would give us O(1) lookup
+  time, but would require a lot of space to store the triangle (depending on
+  how big the pre-generated triangle was). The other disadvantage to this
+  method, is that our n values would be limited to how many rows of the
+  triangle we generated. Ultimately, that was the deciding factor in picking
+  the multiplicative formula for finding binomial coefficients.
+
+  This examination of time vs. space and the cost and benefits of each really
+  showed me how healthy debate can lead to effective collaboration. I may not
+  have been fully convinced that this was the best algorithm we could use if I
+  had not had the opportunity to debate and discuss it with my classmates. 
+
+  In another vein, I have decided to invest time to really start learning and
+  using Spacemacs outside of this class. I've learned about some cool features
+  like the emacs daemon. It is proving to be quite handy. :)
+

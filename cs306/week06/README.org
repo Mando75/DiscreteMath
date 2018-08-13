@@ -1,0 +1,10 @@
+#+TITLE: README for Week 06
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Chapter 7 Space and Time Trade-Offs
+
+* [[file:pa06.org][Preparation Assessment]]
+
+* [[file:wa06.org][Weekly Assignment]]

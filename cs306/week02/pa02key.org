@@ -1,0 +1,39 @@
+#+TITLE: Preparation Assessment 02 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers                                                   :crypt:
+  :PROPERTIES:
+  :CRYPTKEY: dm3pa02key
+  :END:
+-----BEGIN PGP MESSAGE-----
+
+hQIMA5VH+tOuzYPeAQ//Ti89/rztjyr/fHsLCJcwPurza1wccpgebBzaHbxBzhC8
+CvKcCybjra1KwIny7lYy3x4yh0a0wNsv29tHcHBbHJPFgWYmBcAvK0EfpOnUMx1c
+OcGBxPBnlv7FqFl0FMRqZmUyHcfTVYLIRqVM9H1FcpqvCAoexAxuG5JC5cMQHBq5
+/dZMUMqYhzrmq9dbbeQlQyWTrf/1o0Oo/hRnt8znoOqzwVNdp3YEqMaCveBBhVEg
+zQOfBCkQZfE71xXeKgfhSLjnqysYvqcebdeYmrdST2No6Yh9Y3Xr3ARC4HgE4NO8
+9i//Dcg5lOjrZEFsb4hjPatwK2hTX5xj51ev20gDT5mh6CoU16b3ztA4noNvvDdS
+A5ZsnmaAJuNSUF03/8fvy0qV+7ZJzaljRwoOp4tre1WWB+IyboRsfgN/M4RhRkY+
+m+ynFGyf5gzGD7TOtqAY3YTVfhGdPvsFYGWHlUi7EZ++C4xpR7s67LRhEKJZ4mdX
+crHojz9fk8ScfXRDeiD3WsmjRHjhlqq9478Be9tSbvN+BvhlsJB6Kaq8ZvByqfeX
+R7syaSMl6ySR9FaKOCDPP4UW55vNz1PKauc/aMcETzE2Gsm2uSEaZsX3M+988Xua
+kFhdtQDXb7HipnNbZ08hSE0LAyiMe58WsbSsHOWL+IvcQ265V7QINYpVATh29eXS
+6QGDEx944Jbg9IeDY6NuD8pUPivHO3Zj3FLwD9DTjp3wxpouojqcige+O587HTlQ
+NEFDAgthqRee2IE2wrPpOdkDIORViYfjl5lc4o5SmdEYYKeCQ000Pyhy02OdnwZj
+cl4zTQQDyNMMszFCUSB+8CAqcYFe2rj1D1IbXDqGbIcLB0x4OavlV+sbKv3y6wXO
+QMTkIppDfo66W91NEZHdfNECxjmys0WHzJrAKZUT+cPTXF1YF4kqE2W5PMXDojg4
+HXJCk0FDJg6VaBexk//Vu/qy1olkGXEar2Vj/5IzcsPSdEQUrdnFImowqWJsPoK6
+tG7EUWy2/DoWWVCR+P46e5ehjl5kU29ywuPcXct0G+gR8JRa4esVYOPgOnPAhgiG
+NJUQAgmmo2RKUzFwsOS6pv1yo+6it72hUSUVwc67THYBXWzICTveQ+Q1fBcO325l
+mKmftsz2+wGyMgqaK65JttrOsds1J7N7+8s2vgFkn0BWpZSmXOaC5QH/x9b6BWpG
+2GmimDz7qDk95jrdTLZ3D0puNVKt2Yee1U4e1dKlVpdEps/yQ1c3Byg6XuuUlI/C
+NqwtDWS1ZB8HRwtN+O8g0MbvWSW5Uy/87YI8aS5O4UgKoOsaF4wrRn3wY5AZBYmJ
+BgwArQVOPbFjuLTCG6FVTIZWmxdeDLyP6zUWUA/yVODyqn2qDCeNi7hmuQgn3zy+
+ihK5nWZ3kKPnRtLtpzFNKPlraE+9cQGK/j6xIxtq68UndeKNrYRqBErTQgMWZr5u
+wGjHiUd9FjkEqUvvSaZhNCKqcke+A+VL9N4g5URkEYOxdGNjknrcWYBziToE8kbw
+Brh9/6k9M/7w+guNLCezgN49rFZUZ/3sPy8eiRvF6YkB/dhfu5jSoaX85bMZVmYE
+Q5p5yV9wiggMViJr
+=+D8M
+-----END PGP MESSAGE-----

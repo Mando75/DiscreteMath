@@ -1,0 +1,10 @@
+#+TITLE: README for Week 07
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Chapter 8 Dynamic Programming
+
+* [[file:pa07.org][Preparation Assessment]]
+
+* [[file:wa07.org][Weekly Assignment]]

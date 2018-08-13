@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-03 Thu 17:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Weekly Assignment 01</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bryan Muller" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Weekly Assignment 01</h1>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Clock summary at <span class="timestamp-wrapper"><span class="timestamp">[2018-05-03 Thu 13:31]</span></span></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Headline</th>
+<th scope="col" class="org-right">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Total time</b></td>
+<td class="org-right"><b>7:08</b></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Exercise 1 on page 50</td>
+<td class="org-right">0:19</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 8 on page 51</td>
+<td class="org-right">0:15</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 3 on page 59</td>
+<td class="org-right">0:23</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 12 on page 61</td>
+<td class="org-right">0:15</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 1 on page 67</td>
+<td class="org-right">1:38</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 2 on page 67</td>
+<td class="org-right">1:06</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 3 on page 76</td>
+<td class="org-right">0:25</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 6 on page 83</td>
+<td class="org-right">0:32</td>
+</tr>
+
+<tr>
+<td class="org-left">Day 1</td>
+<td class="org-right">1:18</td>
+</tr>
+
+<tr>
+<td class="org-left">Day 2</td>
+<td class="org-right">0:57</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+Please do the following tasks:
+</p>
+
+<div id="outline-container-org22bc486" class="outline-2">
+<h2 id="org22bc486"><span class="done DONE">DONE</span> Exercise 1 on page 50</h2>
+<div class="outline-text-2" id="text-org22bc486">
+<p>
+For each of the following algorithms, indicate (i) a natural size metric
+for its inputs; (ii) its basic operation; (iii) whether the basic operation count
+can be different for inputs of the same size:
+</p>
+</div>
+
+<div id="outline-container-orgcad1f02" class="outline-4">
+<h4 id="orgcad1f02"><span class="done DONE">DONE</span> a.* computing the sum of \(n\) numbers</h4>
+<div class="outline-text-4" id="text-orgcad1f02">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">\(n\)</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">addition of two numbers</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgee25c00" class="outline-4">
+<h4 id="orgee25c00"><span class="done DONE">DONE</span> b.* computing \(n!\)</h4>
+<div class="outline-text-4" id="text-orgee25c00">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">magnitude of n (see pg 43-44 in book)</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">multiplication of two integers</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1b49eb4" class="outline-4">
+<h4 id="org1b49eb4"><span class="done DONE">DONE</span> c.* finding the largest element in a list of \(n\) numbers</h4>
+<div class="outline-text-4" id="text-org1b49eb4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">\(n)\</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">Comparison of two numbers</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org893c163" class="outline-4">
+<h4 id="org893c163"><span class="done DONE">DONE</span> d.* Euclid's algorithm</h4>
+<div class="outline-text-4" id="text-org893c163">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">the magnitude of the smaller integer value</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">modulus of two integers</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0b25e37" class="outline-4">
+<h4 id="org0b25e37"><span class="done DONE">DONE</span> e.* Sieve of Eratosthenes</h4>
+<div class="outline-text-4" id="text-org0b25e37">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">magnitude of n</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">removal of number from list</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Here is an example of a good answer for part <b>a</b>:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">(i)</td>
+<td class="org-left">\(n\)</td>
+</tr>
+
+<tr>
+<td class="org-left">(ii)</td>
+<td class="org-left">addition of two numbers</td>
+</tr>
+
+<tr>
+<td class="org-left">(iii)</td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga5c5f3c" class="outline-2">
+<h2 id="orga5c5f3c"><span class="done DONE">DONE</span> Exercise 8 on page 51</h2>
+<div class="outline-text-2" id="text-orga5c5f3c">
+<p>
+For each of the following functions, indicate how much the
+function's value will change if its argument is increased fourfold.
+</p>
+
+<p>
+<b>a.</b> \(log_2\ n\)
+</p>
+
+<p>
+Value change:  \(\frac{\log_2 4n}{\log_2 n} 
+                        = \log_2 4n - \log_2 n 
+                        = (\log_2 4 + \log_2 n) - \log_2 n 
+                        = 2\)
+</p>
+
+<p>
+<b>b.</b> \(\sqrt{n}\)
+</p>
+
+<p>
+Value change: \(\frac{\sqrt{4n}}{\sqrt{n}} 
+                       = \frac{2\sqrt{n}}{\sqrt{n}}
+                       = \frac{2}{1}
+                       = 2\)
+</p>
+
+<p>
+<b>c.</b> \(n\)
+</p>
+
+<p>
+Value change: \(\frac{4n}{n}
+                      = \frac{4}{1}
+                      = 4\)
+</p>
+
+<p>
+<b>d.</b> \(n^2\)
+</p>
+
+<p>
+Value change: \(\frac{(4n)^2}{n^2}
+                     = \frac{4^2 * n^2}{n^2}
+                     = 4^2
+                     = 16\)
+</p>
+
+<p>
+<b>e.</b> \(n^3\)
+</p>
+
+<p>
+Value change: \(\frac{(4n)^3}{n^3}
+                     = \frac{4^3 * n^3}{n^3}
+                     = 4^3
+                     = 64\)
+</p>
+
+<p>
+<b>f.</b> \(2^n\)
+</p>
+
+<p>
+Value change: \(\frac{2^{4n}}{2^n}
+                       = 2^{3n}\)
+</p>
+
+<p>
+Here is an example of a good answer for part <b>a</b>:
+</p>
+
+<p>
+\(log_2\ n\). Value change: \(\frac{\log_2 4n}{\log_2 n} = \log_2 4n - \log_2 n = (\log_2 4 + \log_2 n) - \log_2 n = 2\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc579898" class="outline-2">
+<h2 id="orgc579898"><span class="done DONE">DONE</span> Exercise 3 on page 59</h2>
+<div class="outline-text-2" id="text-orgc579898">
+<p>
+For each of the following functions, indicate the class
+&Theta;(<i>g(n)</i>) the function belongs to. (Use the simplest <i>g(n)</i>
+possible in your answers.)  Prove your assertions.
+</p>
+</div>
+
+<div id="outline-container-org2969874" class="outline-4">
+<h4 id="org2969874"><span class="done DONE">DONE</span> a.* \((n^2 + 1)^{10}\)</h4>
+<div class="outline-text-4" id="text-org2969874">
+<p>
+\[ \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{n^{20}} =
+   \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{(n^2)^{10}} =
+   \lim_{n \rightarrow \infty} \left( \frac{n^2 + 1}{n^2} \right)^{10} =
+   \lim_{n \rightarrow \infty} \left( 1 + \frac{1}{n^2} \right)^{10} = 1.
+\]
+ Or, informally: \((n^2 + 1)^{10} \approx (n^2)^{10} = n^{20} \in \Theta(n^{20})\)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga85bb81" class="outline-4">
+<h4 id="orga85bb81"><span class="done DONE">DONE</span> b.* \(\sqrt{10n^2 + 7n + 3}\)</h4>
+<div class="outline-text-4" id="text-orga85bb81">
+<p>
+\[\lim_{n\rightarrow\infty } \sqrt{\frac{10n^2 + 7n + 3}{n^2}} =
+      \lim_n\rightarrow\infty  \sqrt{10 + \frac{7}{n} + \frac{3}{n^2}} =
+      \sqrt{10}
+    \]
+</p>
+
+<p>
+Because it's a constant, we know that \(\sqrt{10n^2 + 7n +3} \in \Theta(n)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb6ff85d" class="outline-4">
+<h4 id="orgb6ff85d"><span class="done DONE">DONE</span> d.* \(2^{n + 1} + 3^{n - 1}\)</h4>
+<div class="outline-text-4" id="text-orgb6ff85d">
+<p>
+3<sup>n-1</sup> has more power than 2<sup>n-1</sup>
+so as n &rarr; &infin;, it will take over. 
+</p>
+
+<p>
+2<sup>n+1</sup> + 3<sup>n-1</sup>&isin; &Theta;(2<sup>n</sup>) + &Theta;(3<sup>n</sup>) = &Theta;(3<sup>n</sup>)
+</p>
+
+<p>
+Here is an example of a good answer for part <b>a</b>:
+</p>
+
+<p>
+\((n^2 + 1)^{10}.\) To prove this is in \(\Theta(n^{20})\):
+\[ \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{n^{20}} =
+   \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{(n^2)^{10}} =
+   \lim_{n \rightarrow \infty} \left( \frac{n^2 + 1}{n^2} \right)^{10} =
+   \lim_{n \rightarrow \infty} \left( 1 + \frac{1}{n^2} \right)^{10} = 1.
+\]
+Or, informally: \((n^2 + 1)^{10} \approx (n^2)^{10} = n^{20} \in \Theta(n^{20})\)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org134971f" class="outline-2">
+<h2 id="org134971f"><span class="done DONE">DONE</span> Exercise 12 on page 61</h2>
+<div class="outline-text-2" id="text-org134971f">
+<p>
+You are facing a wall that stretches infinitely in both directions. There is a
+door in the wall, but you know neither how far away nor in which direction.
+You can see the door only when you are right next to it. Design an algorithm
+that enables you to reach the door by walking at most <i>O(n)</i> steps where <i>n</i>
+is the (unknown to you) number of steps between your initial position and the
+door. (Hint: walk alternately right and left going each time exponentially
+farther from your initial position.)
+</p>
+
+<p>
+i &larr; 0
+goLeft &larr; true
+</p>
+
+<p>
+while true do
+   if (we pass the door) return i
+   if goLeft move 2<sup>i</sup> steps left
+   else move 2<sup>i</sup> steps right
+   i &larr; i + 1
+   goLeft = !goLeft
+</p>
+
+
+<p>
+<b><b><b><b>1***</b></b></b></b>
+<b><b><b>1*****</b></b></b>
+<b><b><b><b><b>1*</b></b></b></b></b>
+<b><b>1*******</b></b>
+<b><b>*******1</b></b>
+</p>
+
+<p>
+etc
+</p>
+</div>
+</div>
+<div id="outline-container-org9fa2b35" class="outline-2">
+<h2 id="org9fa2b35"><span class="done DONE">DONE</span> Exercise 1 on page 67</h2>
+<div class="outline-text-2" id="text-org9fa2b35">
+<p>
+Compute the following sums.
+</p>
+</div>
+
+<div id="outline-container-orge2a4f47" class="outline-4">
+<h4 id="orge2a4f47">a. \(1 + 3 + 5 + 7 + \cdots + 999\)</h4>
+<div class="outline-text-4" id="text-orge2a4f47">
+<p>
+If you don't know the odd number summation forumla, you can get a pretty good
+approximation using a summation forumla 2:
+</p>
+
+<p>
+\(\sum^n_{i=1}i \approx \frac{1}{2}n^2\) 
+</p>
+
+<p>
+with n = 999, this formula would give us the 
+approximate value of (1 + 2 + 3 + 4 + &#x2026; + 999)
+If we divide that value by two, would get the approximate
+value of the desired sequence. 
+</p>
+
+<p>
+\(\frac{1}{2}999^2 = 499000.5\)
+\(\frac{499000.5}{2} = 249500.25\)
+</p>
+
+<p>
+If we sum up the actual values using a lisp program, 
+we find:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">loop</span> for i from <span style="color: #a45bad;">1</span> to <span style="color: #a45bad;">999</span> by <span style="color: #a45bad;">2</span>       
+      sum i<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Which is pretty close to the approximation we found.
+</p>
+
+<p>
+  \[1 + 3 + 5 + 7 + \cdots + 999 = \sum_{i = 1}^{500} (2i - 1) = \sum_{i = 1}^{500} 2i - \sum_{i = 1}^{500} 1
+ = 2 \frac{500 * 501}{2} - 500 = 250,000.\]
+(
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3801070" class="outline-4">
+<h4 id="org3801070">b. \(2 + 4 + 8 + 16 + \cdots + 1024\)</h4>
+<div class="outline-text-4" id="text-org3801070">
+<p>
+Sums of the powers of two minus 2<sup>0</sup>
+</p>
+
+<p>
+\[2 + 4 + 8 + 16 + ... + 2014 = \sum_{i=1}^10 2^i = 2^11 - 2\]
+</p>
+
+<p>
+\(= 2048 - 2 = 2046\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6a0878f" class="outline-4">
+<h4 id="org6a0878f">c. \(\Sigma_{i = 3}^{n + 1} 1\)</h4>
+<div class="outline-text-4" id="text-org6a0878f">
+<p>
+\(\Sigma_{i = 3}^{n + 1} 1 = (n - 1)\) 
+</p>
+
+<p>
+Summation forumla 1
+\(\sum_{k=1}^u = u\) 
+</p>
+
+<p>
+if i = k + 2 and n = u + 1,
+then we know that the sum will be n - 1
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd8d02fb" class="outline-4">
+<h4 id="orgd8d02fb">d. \(\Sigma_{i = 3}^{n + 1} i\)</h4>
+<div class="outline-text-4" id="text-orgd8d02fb">
+<p>
+\(\sum_{i=3}^{n+1} i\)
+</p>
+
+<p>
+Summation formula 2
+</p>
+
+<p>
+\(\sum_{i=0}^{n} i= \frac{n(n+1)}{2}\)
+</p>
+
+<p>
+\(\sum_{i=3}^{n+1} i = \sum_{i=0}^{n+1} i - \sum_{i=0}^{2} i\)
+</p>
+
+<p>
+\(\frac{(n+1)(n+2)}{2} - 3 = \frac{(n+1)(n+2)-6}{2} = \frac{n^2 + 3n -4}{2}\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge1b830c" class="outline-4">
+<h4 id="orge1b830c">e. \(\Sigma_{i = 0}^{n - 1} i(i + 1)\)</h4>
+<div class="outline-text-4" id="text-orge1b830c">
+<p>
+\(\Sigma_{i = 0}^{n - 1} i(i + 1)\)
+</p>
+
+<p>
+\(\Sigma_{i = 0}^{n - 1} i^2 + \Sigma_{i = 0}^{n - 1 }i\)
+</p>
+
+<p>
+Summation forumla 3
+</p>
+
+<p>
+\(\sum_{i=0}^{n-1} i^2 = \frac{(n-1)(n)(2(n-1)+1)}{6}\)
+</p>
+
+<p>
+Summation forumla 2
+</p>
+
+
+<p>
+\(\sum_{i=0}^{n-1} i = \frac{(n-1)n}{2}\)
+</p>
+
+<p>
+\(  \frac{(n-1)(n)(2(n-1)+1)}{6} +  \frac{(n-1)n}{2}\)
+</p>
+
+<p>
+\(=\frac{(n^2-1)n}{3}\)
+</p>
+
+<p>
+Here is an example of a good answer for part <b>a</b>:
+</p>
+
+<p>
+\[1 + 3 + 5 + 7 + \cdots + 999 = \sum_{i = 1}^{500} (2i - 1) = \sum_{i = 1}^{500} 2i - \sum_{i = 1}^{500} 1
+ = 2 \frac{500 * 501}{2} - 500 = 250,000.\]
+</p>
+
+<p>
+(Or, by using the formula for the sum of the arithmetic series with
+\(a_1 = 1, a_n = 999, n = 500, \frac{(a_1 + a_n)n}{2} = \frac{(1 +
+   999)500}{2} = 250,000\).)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2afabc" class="outline-2">
+<h2 id="orge2afabc"><span class="done DONE">DONE</span> Exercise 2 on page 67</h2>
+<div class="outline-text-2" id="text-orge2afabc">
+<p>
+Find the order of growth of the following sums. Use the &Theta;(<i>g(n)</i>)
+notation with the simplest function <i>g(n)</i> possible.
+</p>
+</div>
+
+<div id="outline-container-orgdf3063c" class="outline-4">
+<h4 id="orgdf3063c"><span class="done DONE">DONE</span> a.* \(\Sigma_{i = 0}^{n - 1}\ (i^2 + 1)^2\)</h4>
+<div class="outline-text-4" id="text-orgdf3063c">
+<p>
+\[ \sum_{i = 0}^{n - 1} (i^2 + 1)^2 = \sum_{i = 0}^{n - 1}(i^4 + 2i^2 + 1) = \sum_{i = 0}^{n - 1} i^4 + 2 \sum_{i = 0}^{n - 1} i^2 + \sum_{i = 0}^{n - 1} 1 \in \Theta(n^5) + \Theta(n^3) + \Theta(n) = \Theta(n^5)\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6d96e97" class="outline-4">
+<h4 id="org6d96e97"><span class="done DONE">DONE</span> b.* \(\Sigma_{i =2}^{n - 1}\ \mbox{lg}\ i^2\)</h4>
+<div class="outline-text-4" id="text-org6d96e97">
+<p>
+\(\sum_{i=2}^{n-1}\ \mbox{lg}\ i^2 = 2\sum_{i=2}^{n-1 }\ \mbox{lg}\ i\)
+</p>
+
+<p>
+Rearrange to account for n - 1
+</p>
+
+<p>
+\[2\sum_{i=2}^{n-1 }\ \mbox{lg}\ i = 2\sum_{i=1}^n\ \mbox{lg}\ i - 2\mbox{lg}\ n\]
+</p>
+
+<p>
+\(\Theta(n\mbox{lg}n) - \Theta(\mbox{lg}\ n)\) 
+</p>
+
+<p>
+\(\in \Theta(n\mbox{log}\ n\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2585c1a" class="outline-4">
+<h4 id="org2585c1a"><span class="done DONE">DONE</span> c.* \(\Sigma_{i = 1}^{n}\ (i + 1)2^{i - 1}\)</h4>
+<div class="outline-text-4" id="text-org2585c1a">
+<p>
+\(\Sigma_{i = 1}^{n}\ (i2^{i - 1}) + \sum_{i=1}^n 2^{i-1}\)
+</p>
+
+<p>
+\(= \sum_{i=1}^n i2^{i} - n2^n\)
+</p>
+
+<p>
+\(= (n-1)2^{n+1} + 2 - n2^n\)
+</p>
+
+<p>
+&isin; &Theta;(n2<sup>n</sup>) + &Theta;(2<sup>n</sup>) &rarr; &Theta;(n2<sup>n</sup>)
+</p>
+
+<p>
+Here is an example of a good answer for part <b>a</b>:
+</p>
+
+<p>
+\[ \sum_{i = 0}^{n - 1} (i^2 + 1)^2 = \sum_{i = 0}^{n - 1}(i^4 + 2i^2 + 1) = \sum_{i = 0}^{n - 1} i^4 + 2 \sum_{i = 0}^{n - 1} i^2 + \sum_{i = 0}^{n - 1} 1 \in \Theta(n^5) + \Theta(n^3) + \Theta(n) = \Theta(n^5)
+\]
+\[(\mbox{or just} \sum_{i = 0}^{n - 1} (i^2 + i)^2 \approx \sum_{i = 0}^{n - 1} i^4 \in \Theta(n^5)).
+\]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org67bd6e4" class="outline-2">
+<h2 id="org67bd6e4"><span class="done DONE">DONE</span> Exercise 3 on page 76</h2>
+<div class="outline-text-2" id="text-org67bd6e4">
+<p>
+Consider the following recursive algorithm for computing the sum of
+the first <i>n</i> cubes: \(S(n) = 1^3 + 2^3 + ... + n^3.\)
+</p>
+
+<p class="verse">
+<b>Algorithm</b> <i>S(n)</i><br />
+&#xa0;&#xa0;<i>//</i> Input: A positive integer <i>n</i><br />
+&#xa0;&#xa0;<i>//</i> Output: The sum of the first <i>n</i> cubes<br />
+&#xa0;&#xa0;<b>if</b> <i>n = 1</i> <b>return</b> 1<br />
+&#xa0;&#xa0;<b>else return</b> <i>S(n − 1) + n * n * n</i><br />
+</p>
+
+<p>
+<b>a.</b> Set up and solve a recurrence relation for the number of times
+   the algorithm's basic operation is executed.
+</p>
+
+<p>
+Number of multiplications in the algorithm. 
+</p>
+
+<p>
+When n is 1, there are no multiplications so, M(1) = 0
+</p>
+
+<p>
+The last line shows us how many multiplications there are when M &ne; 1
+</p>
+
+<p>
+M(n) = M(n-1) + 2
+</p>
+
+<p>
+Solving:
+</p>
+
+<p>
+M(M(n-2) + 2) + 2 = M(n-2) + 4
+</p>
+
+<p>
+M((n-3) + 2) + 4 = M(n-3) + 6
+</p>
+
+<p>
+M((n-4) + 2) + 6 = M(n-4) + 8
+</p>
+
+<p>
+so 
+</p>
+
+<p>
+M(n) = M(n-k) + 2k
+</p>
+
+<p>
+M(1) + 2(n-1) = 2(n-1)
+</p>
+
+<p>
+<b>b.</b> How does this algorithm compare with the straightforward
+   nonrecursive algorithm for computing this sum?
+</p>
+
+<p>
+I couldn't find the nonrecursive algorithm in the book, but I imagine it
+looks something like the one in problem 4 on page 67, as it is similar to the 
+recursive one defined for this problem.
+</p>
+
+<p>
+I would imagine it would look somtheing like this:
+</p>
+
+<p>
+S &larr; 1 
+<i>/ if we start at one, we make it more efficient by
+/</i> elimintating 2 multiplications right off the bat because 
+// we know that 1<sup>n</sup> = 1 when n &ge; 0
+for i &larr; 2 to n do
+  S &larr; S + (i * i * i)
+return S
+</p>
+
+<p>
+The number of basic operations (multiplication) for this algorithm is 2.
+</p>
+
+<p>
+So &sum;<sub>i=2</sub><sup>n</sup> 2 = 2(n - 1)
+</p>
+
+<p>
+This is the same as the recursive algorithm. Although the number of operations
+is the same, I think that the iterative version would be better, because it will
+take up less memory than the recursive calls. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5cbe1c8" class="outline-2">
+<h2 id="org5cbe1c8"><span class="done DONE">DONE</span> Exercise 6 on page 83</h2>
+<div class="outline-text-2" id="text-org5cbe1c8">
+<p>
+The maximum values of the Java primitive types <b>int</b> and <b>long</b> are
+2<sup>31</sup> − 1 and 2<sup>63</sup> − 1, respectively. Find the smallest <i>n</i> for which
+the \(n\)th Fibonacci number is not going to fit in a memory
+allocated for
+</p>
+
+<p>
+Fib(n) = (&phi;<sup>n</sup> - &phi; hat<sup>n</sup>)/ &radic;5
+</p>
+
+<p>
+= \(\frac{(1+\sqrt{5})^n - (1 - \sqrt{5})^n)}{2^n \sqrt{5}}\)
+</p>
+
+<p>
+approximation given on page 81 = 
+\(F(n) = \frac{1}{\sqrt{5}}\phi^n\)
+</p>
+</div>
+
+<div id="outline-container-org839b690" class="outline-4">
+<h4 id="org839b690"><span class="done DONE">DONE</span> a.* the type <b>int</b>.</h4>
+<div class="outline-text-4" id="text-org839b690">
+<p>
+\((2^{31} - 1) < \frac{(1}{\sqrt{5})}\phi^n\)
+</p>
+
+<p>
+\(= (2^{31} - 1)\sqrt{5} < \phi^n\)
+</p>
+
+<p>
+\(= ln(\sqrt{5}(2^{31} - 1)) < nln\phi\)
+</p>
+
+<p>
+\(= \frac{ln(\sqrt{5}(2^{31} - 1))}{ln\phi}\)
+</p>
+
+<p>
+\(\approx 46.32529874 \rightarrow 47\)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org59b4947" class="outline-4">
+<h4 id="org59b4947"><span class="done DONE">DONE</span> b.* the type <b>long</b>.</h4>
+<div class="outline-text-4" id="text-org59b4947">
+<p>
+\((2^{63}- 1) < \frac{(1}{\sqrt{5})}\phi^n\)
+</p>
+
+<p>
+\(= (2^{63}- 1)\sqrt{5} < \phi^n\)
+</p>
+
+<p>
+\(= ln(\sqrt{5}(2^{63}- 1)) < nln\phi\)
+</p>
+
+
+<p>
+\(\approx 92.4187416342 \rightarrow 93\)
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgace7b5e" class="outline-2">
+<h2 id="orgace7b5e"><span class="todo TODO">TODO</span> Exercise 9 on page 84</h2>
+<div class="outline-text-2" id="text-orgace7b5e">
+<p>
+Prove the equality
+</p>
+
+<p>
+\[\left[ \begin{array}{cc} F(n - 1) & F(n)\\ F(n) & F(n + 1)\\ \end{array} \right]
+    = \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^n\ \mbox{for}\ n \ge 1.\]
+</p>
+
+<p>
+Hint: Use <a href="mathematical-induction.html">mathematical induction</a>.
+</p>
+
+<p>
+Part 1 of induction:
+</p>
+
+<p>
+We know from the definition of the Fibonacci function that when n = 1:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">F(0)</td>
+<td class="org-left">F(1)</td>
+<td class="org-left">=</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-left">F(1)</td>
+<td class="org-left">F(2)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+Part 2 of the induction requires we prove that 
+</p>
+
+<p>
+\[\left[ \begin{array}{cc} F(n) & F(n + 1)\\ F(n + 1) & F(n + 2)\\ \end{array} \right]
+    = \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^{n+1}\]
+</p>
+
+<p>
+So 
+</p>
+
+<p>
+\[ \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^{n+1} = \]  
+</p>
+
+<p>
+\[\left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^n * \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right] \]
+</p>
+
+<p>
+   Which can be rewritten with substitution using
+\[ \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right] \left[ \begin{array}{cc} F(n - 1) & F(n)\\ F(n) & F(n + 1)\\ \end{array} \right] \]
+</p>
+
+
+<p>
+Which then equals
+\[ \left[ \begin{array}{cc} F(n) & F(n + 1)\\ F(n + 1) & F(n + 2)\\ \end{array} \right]\]
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb01d35b" class="outline-2">
+<h2 id="orgb01d35b"><span class="todo TODO">TODO</span> Compare/Contrast Your Three Algorithms</h2>
+<div class="outline-text-2" id="text-orgb01d35b">
+<p>
+In a similar manner to how Levitin compared and contrasted three different GCD
+algorithms, evaluate using three different criteria the three different
+algorithms you created last week for &ldquo;breaking up&rdquo;.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc549524" class="outline-2">
+<h2 id="orgc549524"><span class="todo TODO">TODO</span> Analyze Your Three Algorithms</h2>
+<div class="outline-text-2" id="text-orgc549524">
+<p>
+Do a Big-Oh analysis of each of your three algorithms.
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgf60b7e0" class="outline-2">
+<h2 id="orgf60b7e0"><span class="done DONE">DONE</span> Day 1</h2>
+<div class="outline-text-2" id="text-orgf60b7e0">
+</div>
+
+<div id="outline-container-org485e10a" class="outline-3">
+<h3 id="org485e10a">Algorithm Analysis Framework</h3>
+<div class="outline-text-3" id="text-org485e10a">
+</div>
+<div id="outline-container-orgb277896" class="outline-4">
+<h4 id="orgb277896">Salient Points</h4>
+<div class="outline-text-4" id="text-orgb277896">
+<p>
+Time efficiency andy Space efficiency are the focus:
+   Measured as function of algorithm's input size
+</p>
+
+<p>
+How many times an algorithm's basic operation is executed?
+   Measures time efficiency
+</p>
+
+<p>
+How many extra memory units does the algorithm require?
+   Measures sapce efficiency
+</p>
+
+<p>
+Three different cases to distinguish performance with same input size
+   Best-case 
+   Worst-case
+   Average-case
+</p>
+
+<p>
+As input size grows to infinity, what is the algorithm's growth order?
+   This asymptotic analysis makes for a very blunt instrument
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org77f1757" class="outline-4">
+<h4 id="org77f1757">Asymptotic Notations and Basic Efficiency Classes</h4>
+<div class="outline-text-4" id="text-org77f1757">
+<p>
+Big-Oh
+T(n) curve size vs speed
+f(n) some curve
+</p>
+
+<p>
+The class of functions that grow no faster than g(n)
+</p>
+</div>
+
+
+<div id="outline-container-org414d77b" class="outline-5">
+<h5 id="org414d77b">Example</h5>
+<div class="outline-text-5" id="text-org414d77b">
+<p>
+T(n) = (n+1)<sup>2</sup> + 1
+</p>
+
+<p>
+f(n) = n<sup>2</sup>
+</p>
+
+<p>
+C = 4, k = 2
+</p>
+
+<p>
+Show: T(n) &le; 4f(n) for n &ge; 2
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orge4a9861" class="outline-4">
+<h4 id="orge4a9861">Find C and k</h4>
+<div class="outline-text-4" id="text-orge4a9861">
+<p>
+Produce witnesse k and C
+</p>
+
+<p>
+C -&gt; one more than the number of terms
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org870a0c0" class="outline-4">
+<h4 id="org870a0c0">Example</h4>
+<div class="outline-text-4" id="text-org870a0c0">
+<p>
+n<sup>49</sup> + 33n<sup>31</sup> + 23n<sup>20</sup> + 1 &le; 58n<sup>49</sup>
+</p>
+
+<p>
+C = 58
+k = 1
+</p>
+
+<p>
+(n<sup>49</sup> &le; 58n<sup>49</sup>) + (33n<sup>31</sup> &le; 58n<sup>49</sup>) + (23n<sup>20</sup> &le; 58n<sup>49</sup>) + (1 &le; 58n<sup>49</sup>)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3d6a374" class="outline-4">
+<h4 id="org3d6a374">Big-Omega</h4>
+<div class="outline-text-4" id="text-org3d6a374">
+<p>
+Is big-Oh but the opposite, providing a lower bound
+</p>
+</div>
+</div>
+
+<div id="outline-container-org479ca3b" class="outline-4">
+<h4 id="org479ca3b">Big-Theta</h4>
+<div class="outline-text-4" id="text-org479ca3b">
+<p>
+describes the "tight" bound
+Two constants that put it above and below f(n)
+</p>
+
+<p>
+Class of functions which grow at the same rate. 
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org15dbfc0" class="outline-3">
+<h3 id="org15dbfc0">Basic Classification</h3>
+</div>
+</div>
+
+<div id="outline-container-orgaeb0993" class="outline-2">
+<h2 id="orgaeb0993"><span class="done DONE">DONE</span> Day 2</h2>
+<div class="outline-text-2" id="text-orgaeb0993">
+</div>
+
+<div id="outline-container-org9bb691a" class="outline-3">
+<h3 id="org9bb691a">If Statements</h3>
+<div class="outline-text-3" id="text-org9bb691a">
+<p>
+Testing condition is O(1)
+O(f(n)) for true part
+O(g(n)) for false part
+O(max(f(n),g(n))
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbae8ae4" class="outline-3">
+<h3 id="orgbae8ae4">Function Calls</h3>
+<div class="outline-text-3" id="text-orgbae8ae4">
+<p>
+add O(h(n)) to g(n)
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Bryan Muller</p>
+<p class="date">Created: 2018-05-03 Thu 17:51</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,1011 @@
+#+TITLE: Weekly Assignment 01
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-05 Sat 13:13]
+| Headline                               |   Time |      |
+|----------------------------------------+--------+------|
+| *Total time*                           | *9:54* |      |
+|----------------------------------------+--------+------|
+| Exercise 1 on page 50                  |   0:19 |      |
+| Exercise 8 on page 51                  |   0:15 |      |
+| Exercise 3 on page 59                  |   0:34 |      |
+| Exercise 12 on page 61                 |   0:15 |      |
+| Exercise 1 on page 67                  |   1:38 |      |
+| Exercise 2 on page 67                  |   1:20 |      |
+| Exercise 3 on page 76                  |   0:25 |      |
+| Exercise 6 on page 83                  |   1:17 |      |
+| Exercise 9 on page 84                  |   0:24 |      |
+| Compare/Contrast Your Three Algorithms |   0:24 |      |
+| Analyze Your Three Algorithms          |   0:44 |      |
+| What I learned                         |   0:04 |      |
+| Class Notes                            |   2:15 |      |
+| \_  Day 1                              |        | 1:18 |
+| \_  Day 2                              |        | 0:57 |
+#+END:
+
+Collaborators: 
+Bryan Muller
+Quade Morrison
+Zach Delano
+Jonathon Manoa
+Matt Wyndham
+James Palmer
+
+
+  Please do the following tasks:
+  
+* DONE Exercise 1 on page 50
+  CLOSED: [2018-05-03 Thu 16:34]
+  :LOGBOOK:
+  CLOCK: [2018-05-01 Tue 20:38]--[2018-05-01 Tue 20:57] =>  0:19
+  :END:
+
+  For each of the following algorithms, indicate (i) a natural size metric
+  for its inputs; (ii) its basic operation; (iii) whether the basic operation count
+  can be different for inputs of the same size:
+
+*** DONE a.* computing the sum of \(n\) numbers
+    CLOSED: [2018-05-03 Thu 14:11]
+  
+  | (i)   | \(n\)                   |
+  | (ii)  | addition of two numbers |
+  | (iii) | no                      |
+  
+*** DONE b.* computing \(n!\)
+    CLOSED: [2018-05-03 Thu 14:11]
+
+  | (i)   | magnitude of n (see pg 43-44 in book) |
+  | (ii)  | multiplication of two integers         |
+  | (iii) | no                                     |
+
+*** DONE c.* finding the largest element in a list of \(n\) numbers
+    CLOSED: [2018-05-03 Thu 14:11]
+
+  | (i)   | \(n)\                     |
+  | (ii)  | Comparison of two numbers |
+  | (iii) | no                        |
+
+*** DONE d.* Euclid's algorithm
+    CLOSED: [2018-05-03 Thu 16:34]
+
+  | (i)   | the magnitude of the smaller integer value |
+  | (ii)  | modulus of two integers                   |
+  | (iii) | yes                                       |
+
+*** DONE e.* Sieve of Eratosthenes
+    CLOSED: [2018-05-03 Thu 14:11]
+
+  | (i)   | magnitude of n              |
+  | (ii)  | removal of number from list |
+  | (iii) | no                          |
+
+  Here is an example of a good answer for part *a*:
+
+  | (i)   | \(n\)                   |
+  | (ii)  | addition of two numbers |
+  | (iii) | no                      |
+
+* DONE Exercise 8 on page 51
+  CLOSED: [2018-05-01 Tue 21:13]
+  :LOGBOOK:
+  CLOCK: [2018-05-01 Tue 20:58]--[2018-05-01 Tue 21:13] =>  0:15
+  :END:
+
+  For each of the following functions, indicate how much the
+  function's value will change if its argument is increased fourfold.
+
+  *a.* \(log_2\ n\)
+  
+       Value change:  \(\frac{\log_2 4n}{\log_2 n} 
+                        = \log_2 4n - \log_2 n 
+                        = (\log_2 4 + \log_2 n) - \log_2 n 
+                        = 2\)
+
+  *b.* \(\sqrt{n}\)
+
+       Value change: \(\frac{\sqrt{4n}}{\sqrt{n}} 
+                       = \frac{2\sqrt{n}}{\sqrt{n}}
+                       = \frac{2}{1}
+                       = 2\)
+
+  *c.* \(n\)
+
+       Value change: \(\frac{4n}{n}
+                      = \frac{4}{1}
+                      = 4\)
+
+  *d.* \(n^2\)
+
+       Value change: \(\frac{(4n)^2}{n^2}
+                     = \frac{4^2 * n^2}{n^2}
+                     = 4^2
+                     = 16\)
+
+  *e.* \(n^3\)
+
+       Value change: \(\frac{(4n)^3}{n^3}
+                     = \frac{4^3 * n^3}{n^3}
+                     = 4^3
+                     = 64\)
+
+  *f.* \(2^n\)
+
+       Value change: \(\frac{2^{4n}}{2^n}
+                       = 2^{3n}\)
+
+  Here is an example of a good answer for part *a*:
+
+  \(log_2\ n\). Value change: \(\frac{\log_2 4n}{\log_2 n} = \log_2 4n - \log_2 n = (\log_2 4 + \log_2 n) - \log_2 n = 2\)
+
+* DONE Exercise 3 on page 59
+  CLOSED: [2018-05-03 Thu 17:28]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 17:17]--[2018-05-03 Thu 17:28] =>  0:11
+  CLOCK: [2018-05-01 Tue 21:13]--[2018-05-01 Tue 21:36] =>  0:23
+  :END:
+
+  For each of the following functions, indicate the class
+  \Theta(/g(n)/) the function belongs to. (Use the simplest /g(n)/
+  possible in your answers.)  Prove your assertions.
+
+*** DONE a.* \((n^2 + 1)^{10}\)
+    CLOSED: [2018-05-03 Thu 17:08]
+\[ \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{n^{20}} =
+   \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{(n^2)^{10}} =
+   \lim_{n \rightarrow \infty} \left( \frac{n^2 + 1}{n^2} \right)^{10} =
+   \lim_{n \rightarrow \infty} \left( 1 + \frac{1}{n^2} \right)^{10} = 1.
+\]
+ Or, informally: \((n^2 + 1)^{10} \approx (n^2)^{10} = n^{20} \in \Theta(n^{20})\)
+
+
+*** DONE b.* \(\sqrt{10n^2 + 7n + 3}\)
+    CLOSED: [2018-05-03 Thu 17:21]
+
+    \[\lim_{n\rightarrow\infty } \sqrt{\frac{10n^2 + 7n + 3}{n^2}} =
+      \lim_n\rightarrow\infty  \sqrt{10 + \frac{7}{n} + \frac{3}{n^2}} =
+      \sqrt{10}
+    \]
+
+    Because it's a constant, we know that \(\sqrt{10n^2 + 7n +3} \in \Theta(n)\)
+    
+*** DONE d.* \(2^{n + 1} + 3^{n - 1}\)
+    CLOSED: [2018-05-03 Thu 17:28]
+
+    3^{n-1} has more power than 2^{n-1}
+    so as n \rightarrow \infty, it will take over. 
+
+    2^{n+1} + 3^{n-1}\in \Theta(2^n) + \Theta(3^n) = \Theta(3^n)
+
+  Here is an example of a good answer for part *a*:
+
+ \((n^2 + 1)^{10}.\) To prove this is in \(\Theta(n^{20})\):
+\[ \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{n^{20}} =
+   \lim_{n \rightarrow \infty} \frac{(n^2 + 1)^{10}}{(n^2)^{10}} =
+   \lim_{n \rightarrow \infty} \left( \frac{n^2 + 1}{n^2} \right)^{10} =
+   \lim_{n \rightarrow \infty} \left( 1 + \frac{1}{n^2} \right)^{10} = 1.
+\]
+ Or, informally: \((n^2 + 1)^{10} \approx (n^2)^{10} = n^{20} \in \Theta(n^{20})\)
+
+* DONE Exercise 12 on page 61
+  CLOSED: [2018-05-01 Tue 22:01]
+  :LOGBOOK:
+  CLOCK: [2018-05-07 Mon 08:39]--[2018-05-07 Mon 09:16] =>  0:37
+  CLOCK: [2018-05-01 Tue 21:46]--[2018-05-01 Tue 22:01] =>  0:15
+  :END:
+
+  You are facing a wall that stretches infinitely in both directions. There is a
+  door in the wall, but you know neither how far away nor in which direction.
+  You can see the door only when you are right next to it. Design an algorithm
+  that enables you to reach the door by walking at most /O(n)/ steps where /n/
+  is the (unknown to you) number of steps between your initial position and the
+  door. (Hint: walk alternately right and left going each time exponentially
+  farther from your initial position.)
+
+
+
+   i \leftarrow 0
+
+   while true do
+      if (we pass the door) return i
+      else move (-2)^i steps
+      i \leftarrow i + 1
+      
+When (-2)^i > 0, move right
+When (-2)^i < 0, move left
+
+      ******1*******
+      *****1********
+      *******1******
+      ****1*********
+      ***********1**
+
+      etc
+
+** In Class Example
+   
+* DONE Exercise 1 on page 67
+  CLOSED: [2018-05-03 Thu 11:15]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 10:20]--[2018-05-03 Thu 11:15] =>  0:55
+  CLOCK: [2018-05-02 Wed 07:47]--[2018-05-02 Wed 08:30] =>  0:43
+  :END:
+
+  Compute the following sums.
+
+*** a. \(1 + 3 + 5 + 7 + \cdots + 999\)
+
+     If you don't know the odd number summation forumla, you can get a pretty good
+     approximation using a summation forumla 2:
+
+     \(\sum^n_{i=1}i \approx \frac{1}{2}n^2\) 
+     
+     with n = 999, this formula would give us the 
+     approximate value of (1 + 2 + 3 + 4 + ... + 999)
+     If we divide that value by two, would get the approximate
+     value of the desired sequence. 
+
+     \(\frac{1}{2}999^2 = 499000.5\)
+     \(\frac{499000.5}{2} = 249500.25\)
+
+     If we sum up the actual values using a lisp program, 
+     we find:
+
+#+BEGIN_SRC emacs-lisp
+  (loop for i from 1 to 999 by 2       
+        sum i)
+#+END_SRC     
+
+#+RESULTS:
+: 250000
+
+   Which is pretty close to the approximation we found.
+
+  \[1 + 3 + 5 + 7 + \cdots + 999 = \sum_{i = 1}^{500} (2i - 1) = \sum_{i = 1}^{500} 2i - \sum_{i = 1}^{500} 1
+ = 2 \frac{500 * 501}{2} - 500 = 250,000.\]
+(
+
+*** b. \(2 + 4 + 8 + 16 + \cdots + 1024\)
+
+       Sums of the powers of two minus 2^0
+
+       \[2 + 4 + 8 + 16 + ... + 2014 = \sum_{i=1}^10 2^i = 2^11 - 2\]
+
+       \(= 2048 - 2 = 2046\)
+
+*** c. \(\Sigma_{i = 3}^{n + 1} 1\)
+
+     \(\Sigma_{i = 3}^{n + 1} 1 = (n - 1)\) 
+
+     Summation forumla 1
+     \(\sum_{k=1}^u = u\) 
+     
+     if i = k + 2 and n = u + 1,
+     then we know that the sum will be n - 1
+     
+*** d. \(\Sigma_{i = 3}^{n + 1} i\)
+
+        \(\sum_{i=3}^{n+1} i\)
+
+        Summation formula 2
+
+        \(\sum_{i=0}^{n} i= \frac{n(n+1)}{2}\)
+
+         \(\sum_{i=3}^{n+1} i = \sum_{i=0}^{n+1} i - \sum_{i=0}^{2} i\)
+
+         \(\frac{(n+1)(n+2)}{2} - 3 = \frac{(n+1)(n+2)-6}{2} = \frac{n^2 + 3n -4}{2}\)
+
+*** e. \(\Sigma_{i = 0}^{n - 1} i(i + 1)\)
+
+        \(\Sigma_{i = 0}^{n - 1} i(i + 1)\)
+
+         \(\Sigma_{i = 0}^{n - 1} i^2 + \Sigma_{i = 0}^{n - 1 }i\)
+
+         Summation forumla 3
+
+         \(\sum_{i=0}^{n-1} i^2 = \frac{(n-1)(n)(2(n-1)+1)}{6}\)
+
+         Summation forumla 2
+
+         
+         \(\sum_{i=0}^{n-1} i = \frac{(n-1)n}{2}\)
+
+         \(  \frac{(n-1)(n)(2(n-1)+1)}{6} +  \frac{(n-1)n}{2}\)
+
+         \(=\frac{(n^2-1)n}{3}\)
+
+   Here is an example of a good answer for part *a*:
+
+   \[1 + 3 + 5 + 7 + \cdots + 999 = \sum_{i = 1}^{500} (2i - 1) = \sum_{i = 1}^{500} 2i - \sum_{i = 1}^{500} 1
+ = 2 \frac{500 * 501}{2} - 500 = 250,000.\]
+
+   (Or, by using the formula for the sum of the arithmetic series with
+   \(a_1 = 1, a_n = 999, n = 500, \frac{(a_1 + a_n)n}{2} = \frac{(1 +
+   999)500}{2} = 250,000\).)
+
+* DONE Exercise 2 on page 67
+  CLOSED: [2018-05-03 Thu 17:01]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 16:47]--[2018-05-03 Thu 17:01] =>  0:14
+  CLOCK: [2018-05-03 Thu 11:21]--[2018-05-03 Thu 12:27] =>  1:06
+  :END:
+
+  Find the order of growth of the following sums. Use the \Theta(/g(n)/)
+  notation with the simplest function /g(n)/ possible.
+
+*** DONE a.* \(\Sigma_{i = 0}^{n - 1}\ (i^2 + 1)^2\)
+    CLOSED: [2018-05-03 Thu 14:10]
+
+\[ \sum_{i = 0}^{n - 1} (i^2 + 1)^2 = \sum_{i = 0}^{n - 1}(i^4 + 2i^2 + 1) = \sum_{i = 0}^{n - 1} i^4 + 2 \sum_{i = 0}^{n - 1} i^2 + \sum_{i = 0}^{n - 1} 1 \in \Theta(n^5) + \Theta(n^3) + \Theta(n) = \Theta(n^5)\]
+
+*** DONE b.* \(\Sigma_{i =2}^{n - 1}\ \mbox{lg}\ i^2\)
+    CLOSED: [2018-05-03 Thu 14:10]
+
+\(\sum_{i=2}^{n-1}\ \mbox{lg}\ i^2 = 2\sum_{i=2}^{n-1 }\ \mbox{lg}\ i\)
+
+Rearrange to account for n - 1
+
+\[2\sum_{i=2}^{n-1 }\ \mbox{lg}\ i = 2\sum_{i=1}^n\ \mbox{lg}\ i - 2\mbox{lg}\ n\]
+
+\(\Theta(n\mbox{lg}n) - \Theta(\mbox{lg}\ n)\) 
+
+\(\in \Theta(n\mbox{log}\ n\)
+
+*** DONE c.* \(\Sigma_{i = 1}^{n}\ (i + 1)2^{i - 1}\)
+    CLOSED: [2018-05-03 Thu 17:01]
+
+ \(\Sigma_{i = 1}^{n}\ (i2^{i - 1}) + \sum_{i=1}^n 2^{i-1}\)
+
+ \(= \sum_{i=1}^n i2^{i} - n2^n\)
+
+ \(= (n-1)2^{n+1} + 2 - n2^n\)
+
+ \in \Theta(n2^n) + \Theta(2^n) \rightarrow \Theta(n2^n)
+
+  Here is an example of a good answer for part *a*:
+
+\[ \sum_{i = 0}^{n - 1} (i^2 + 1)^2 = \sum_{i = 0}^{n - 1}(i^4 + 2i^2 + 1) = \sum_{i = 0}^{n - 1} i^4 + 2 \sum_{i = 0}^{n - 1} i^2 + \sum_{i = 0}^{n - 1} 1 \in \Theta(n^5) + \Theta(n^3) + \Theta(n) = \Theta(n^5)
+\]
+\[(\mbox{or just} \sum_{i = 0}^{n - 1} (i^2 + i)^2 \approx \sum_{i = 0}^{n - 1} i^4 \in \Theta(n^5)).
+\]
+
+* DONE Exercise 3 on page 76
+  CLOSED: [2018-05-03 Thu 12:56]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 12:31]--[2018-05-03 Thu 12:56] =>  0:25
+  :END:
+
+  Consider the following recursive algorithm for computing the sum of
+  the first /n/ cubes: \(S(n) = 1^3 + 2^3 + ... + n^3.\)
+
+#+BEGIN_VERSE
+*Algorithm* /S(n)/
+  //// Input: A positive integer /n/
+  //// Output: The sum of the first /n/ cubes
+  *if* /n = 1/ *return* 1
+  *else return* /S(n − 1) + n * n * n/
+#+END_VERSE
+
+  *a.* Set up and solve a recurrence relation for the number of times
+     the algorithm's basic operation is executed.
+
+   Number of multiplications in the algorithm. 
+
+   When n is 1, there are no multiplications so, M(1) = 0
+
+   The last line shows us how many multiplications there are when M \ne 1
+
+   M(n) = M(n-1) + 2
+
+   Solving:
+
+   M(M(n-2) + 2) + 2 = M(n-2) + 4
+
+   M((n-3) + 2) + 4 = M(n-3) + 6
+   
+   M((n-4) + 2) + 6 = M(n-4) + 8
+
+   so 
+
+   M(n) = M(n-k) + 2k
+
+   M(1) + 2(n-1) = 2(n-1)
+
+  *b.* How does this algorithm compare with the straightforward
+     nonrecursive algorithm for computing this sum?
+
+     I couldn't find the nonrecursive algorithm in the book, but I imagine it
+     looks something like the one in problem 4 on page 67, as it is similar to the 
+     recursive one defined for this problem.
+
+     I would imagine it would look somtheing like this:
+
+     S \larr 1 
+     // if we start at one, we make it more efficient by
+     // elimintating 2 multiplications right off the bat because 
+     // we know that 1^n = 1 when n \ge 0
+     for i \larr 2 to n do
+       S \larr S + (i * i * i)
+     return S
+
+     The number of basic operations (multiplication) for this algorithm is 2.
+
+     So \sum_{i=2}^n 2 = 2(n - 1)
+
+     This is the same as the recursive algorithm. Although the number of operations
+     is the same, I think that the iterative version would be better, because it will
+     take up less memory than the recursive calls. 
+
+* DONE Exercise 6 on page 83
+  CLOSED: [2018-05-03 Thu 16:08]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 15:48]--[2018-05-03 Thu 16:08] =>  0:20
+  CLOCK: [2018-05-03 Thu 15:19]--[2018-05-03 Thu 15:44] =>  0:25
+  CLOCK: [2018-05-03 Thu 12:57]--[2018-05-03 Thu 13:29] =>  0:32
+  :END:
+
+  The maximum values of the Java primitive types *int* and *long* are
+  2^31 − 1 and 2^63 − 1, respectively. Find the smallest /n/ for which
+  the \(n\)th Fibonacci number is not going to fit in a memory
+  allocated for
+
+  Fib(n) = (\phi^n - \phi hat^n)/ \radic5
+
+  = \(\frac{(1+\sqrt{5})^n - (1 - \sqrt{5})^n)}{2^n \sqrt{5}}\)
+
+  approximation given on page 81 = 
+  \(F(n) = \frac{1}{\sqrt{5}}\phi^n\)
+
+*** DONE a.* the type *int*.
+    CLOSED: [2018-05-03 Thu 16:06]
+  
+    \((2^{31} - 1) < \frac{(1}{\sqrt{5})}\phi^n\)
+
+    \(= (2^{31} - 1)\sqrt{5} < \phi^n\)
+
+    \(= ln(\sqrt{5}(2^{31} - 1)) < nln\phi\)
+
+    \(= \frac{ln(\sqrt{5}(2^{31} - 1))}{ln\phi}\)
+    
+    \(\approx 46.32529874 \rightarrow 47\)
+
+
+*** DONE b.* the type *long*.
+    CLOSED: [2018-05-03 Thu 16:09]
+
+     \((2^{63}- 1) < \frac{(1}{\sqrt{5})}\phi^n\)
+
+     \(= (2^{63}- 1)\sqrt{5} < \phi^n\)
+
+     \(= ln(\sqrt{5}(2^{63}- 1)) < nln\phi\)
+
+     
+     \(\approx 92.4187416342 \rightarrow 93\)
+
+
+* DONE Exercise 9 on page 84
+  CLOSED: [2018-05-03 Thu 17:52]
+  :LOGBOOK:
+  CLOCK: [2018-05-03 Thu 17:32]--[2018-05-03 Thu 17:52] =>  0:20
+  CLOCK: [2018-05-03 Thu 15:44]--[2018-05-03 Thu 15:48] =>  0:04
+  :END:
+
+** Try 1
+   Prove the equality
+
+   \[\left[ \begin{array}{cc} F(n - 1) & F(n)\\ F(n) & F(n + 1)\\ \end{array} \right]
+     = \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^n\ \mbox{for}\ n \ge 1.\]
+
+    Hint: Use [[file:mathematical-induction.org][mathematical induction]].
+
+    Part 1 of induction:
+
+    We know from the definition of the Fibonacci function that when n = 1:
+
+    | F(0) | F(1) | = | 0 | 1 |
+    | F(1) | F(2) |   | 1 | 1 |
+ 
+
+    Part 2 of the induction requires we prove that 
+ 
+   \[\left[ \begin{array}{cc} F(n) & F(n + 1)\\ F(n + 1) & F(n + 2)\\ \end{array} \right]
+     = \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^{n+1}\]
+
+     So 
+
+     \[ \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^{n+1} = \]  
+    
+     \[\left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right]^n * \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right] \]
+  
+     Which can be rewritten with substitution using
+  \[ \left[ \begin{array}{cc} 0 & 1\\ 1 & 1\\ \end{array} \right] \left[ \begin{array}{cc} F(n - 1) & F(n)\\ F(n) & F(n + 1)\\ \end{array} \right] \]
+    
+
+  Which then equals
+  \[ \left[ \begin{array}{cc} F(n) & F(n + 1)\\ F(n + 1) & F(n + 2)\\ \end{array} \right]\]
+ 
+
+ Q.E.D :)
+
+
+
+    
+* DONE Compare/Contrast Your Three Algorithms
+  CLOSED: [2018-05-05 Sat 12:29]
+  :LOGBOOK:
+  CLOCK: [2018-05-05 Sat 11:49]--[2018-05-05 Sat 12:13] =>  0:24
+  :END:
+
+  In a similar manner to how Levitin compared and contrasted three different GCD
+  algorithms, evaluate using three different criteria the three different
+  algorithms you created last week for \ldquo{}breaking up\rdquo.
+  
+** Three Criteria
+
+*** Big-Oh
+    You can find the Big-Oh calculations in the next exercise :)
+    Algorithm 1: \in O(n)
+    Algorithm 2: \in O(n)
+    Algorithm 3: \in O(n)
+
+    So they are all O(n)
+*** Ease of computation by hand
+    This is a comparison of how difficult it would be to use each algorithm in
+    breaking up integers by hand, e.g. with pencil and paper. This assumes
+    reasonable values for A and B.
+
+   Algorithm 2 is absolutely the easiest to calculate by hand. In fact, it
+   requires almost no calculation at all. Just list the numbers from 1 to B-1,
+   and subtract ((B-1)(B))/2 from B, and you have the answer.
+
+   Personally I think that Algrithm 1 would be next. You can easly write out a
+   list of numbers on a whiteboard and manipulate them to get the desired
+   result. It will just take more time to do than Algorithm 1.
+
+   Algorithm 3 is definitely targeted at a computer implementation. The Set data
+   structure is easy to understand conceptually, but it would be unecessarily
+   cumbersome to use when you could get the same result as Algrithm 1 much
+   quicker.
+
+*** Type or results produced
+
+    Algorithm 1 will provide a well distributed range of unequal values. If you
+    are looking for pretty decent spread, this is the algorithm to use.
+
+    Both Algorithms 2 and 3 give you a heavily skewed set of unequal values.
+    They will always produce the smallest and largest pieces you could use to
+    break A into B unequal parts.
+  
+** Coded Algorithms
+*** Algorithm 1
+
+ #+BEGIN_SRC js :results output
+ function algorithm1(a, b) {
+     let x = Math.floor(a/b);
+     let list = new Array(b);
+     list.fill(x)
+
+     let y = Math.floor(b/2),
+         i = 0,
+         j = b - 1
+
+     while(y >= 0) {
+         console.log(list);
+         let k = list[i] - y;
+         list[i] = k;
+         list[j] = list[j] + y;
+         i++;
+         j--;
+         y--;
+     }
+
+     let lastIndex = list.length - 1;
+     list[lastIndex] = list[lastIndex] + (a % b);
+     let sum = list.reduce((x,t) => x + t)
+     console.log(list);
+     console.log(`target sum: ${a}`)
+     console.log(`sum of unequal parts: ${sum}`)
+     if(list.length === b && sum === a) {
+         console.log('success');
+         return true;
+     } else {
+         console.log('failure');
+         return false;
+     }
+ }
+
+ algorithm1(12,3)
+ #+END_SRC
+
+ #+RESULTS:
+ : [ 4, 4, 4 ]
+ : [ 3, 4, 5 ]
+ : [ 3, 4, 5 ]
+ : target sum: 12
+ : sum of unequal parts: 12
+ : success
+*** Algorithm 2
+
+   #+BEGIN_SRC emacs-lisp :results silent
+     (defun algorithm2 (a b)
+       (let ((list-of-nums (number-sequence 1 (- b 1))))
+         (setq list-of-nums (append list-of-nums (- a (apply '+ list-of-nums))))))
+   #+END_SRC
+ 
+   #+BEGIN_SRC emacs-lisp
+     (algorithm2 34 5)
+   #+END_SRC 
+
+   #+RESULTS:
+   : (1 2 3 4 . 24)
+*** Algorithm 3
+#+BEGIN_SRC js :results output
+function algorithm3(a, b) {
+    let stack = [];
+    let i = 1; 
+    stack.push(a);
+    do {
+        let x = stack.pop();
+        stack.push(i)
+        stack.push(x - i);
+        i++
+        console.log(stack)
+    } while (stack.length < b);
+    return stack
+}
+
+algorithm3(34, 4)
+#+END_SRC
+** Comparison 
+
+   Let's begin by thinking about the problem. We need to find a way to split an
+   integer A into B unequal pieces. Intuitively, we can split A into B pieces by
+   just dividing A by B. But how do we make sure they are unequal? Well, if we
+   imagine the B equal pieces of A in a list, we can start to manipulate them.
+   If we take an amount from the very first element in that list, and give it to
+   the last element, we have now greated two unique numbers without changing the
+   total sum of the elements of the list. We can continue to repeat this
+   procedure with the second item in the list, and the third, and so on until
+   every number has been changed. This is the idea behind algorithm 1. Find B
+   equal pieces of A, and then manipulate them until you have created a list of
+   unequal pieces. This is a nice algorithm because it gives us a nice spread of
+   unequal values, but it requires a lot of operations. Although these
+   operations may be simple, they do take time and can be difficult to work out
+   by hand. How could we make this problem easier?
+
+   Enter algorithm 2. Algorithm 2 is much simpler conceptually than algorithm 1.
+   If we need to break up A into B pieces, why don't we start counting up from 1
+   to A? When we've counted to B, stop and add whatever we need to the last
+   number to reach A. That is algorithm 2. Count from 1 to B - 1, sum those
+   numbers and subtract them from A. That result is then your Bth number.
+
+   This algorithm is very easy to understand, and is very fast for small Bs. One
+   drawback when compared to algorithm 1, is that it does not give us a nice
+   spread of unqual values. It will always start with
+   1,2,...,B-1,(A-sum(1,2,...,B-1)). That being said, if all you care about is
+   finding B unqual pieces with no preference for variety, this algorithm may be
+   best. It is so straightforward that you you don't even need a computer to do
+   it.
+   
+   Algorithm 3 is an attempt to somewhat improve algorithm 2, especially for
+   large As and Bs. What if instead of counting up and then figuring out how
+   much to add at the end, we subtracted those 1...B-1 values from A directly as
+   we iterate? This is the idea behind algirhtm 3. This sounds great, but how do
+   we keep track of the values we've subtracted and how much is left in A?
+   Algorithm 3 makes use of a Stack data structure to take care of this problem. 
+
+   The algorithm assumes that the remainder of A is always at the top of the
+   stack and works as follows. Looping n from 1...B-1, pop the top value of the
+   stack and store it in x, push n on the stack, then push x - i on the stack. 
+   This accomplishes almost the exact same thing as algorithm 2, but requires no
+   extra operations once we've reached B-1. At that point, the stack will be filled 
+   with B unequal values. 
+   
+   I personally like the use of the stack data structure in algorithm 3. The stack
+   is a very powerful tool used in many areas of computer science. The power it brings
+   to this modification of algorithm 2, is that the stack is entirely self contained. 
+   We are able to find the unequal pieces just by using basic stack operations.
+* DONE Analyze Your Three Algorithms
+  CLOSED: [2018-05-05 Sat 13:07]
+  :LOGBOOK:
+  CLOCK: [2018-05-05 Sat 12:33]--[2018-05-05 Sat 13:07] =>  0:34
+  CLOCK: [2018-05-03 Thu 18:35]--[2018-05-03 Thu 18:45] =>  0:10
+  :END:
+
+  Do a Big-Oh analysis of each of your three algorithms.
+
+** Algorithm 1
+
+*** Code
+ JavaScript example of the algorithm:
+
+ #+BEGIN_SRC js
+ function algorithm1(a, b) {
+     let x = Math.floor(a/b); // 1 (I'm treating this as integer division)
+     let list = new Array(b); // 1
+     list.fill(x) // 1
+
+     let y = Math.floor(b/2), // 1
+         i = 0, // 1
+         j = b - 1 // 1
+
+     while(y >= 0) { // n
+         console.log(list);
+         let k = list[i] - y; //2
+         list[i] = k; // 1
+         list[j] = list[j] + y; //2
+         i++; // 1
+         j--; // 1
+         y--; // 1
+     }
+
+     let lastIndex = list.length - 1; //1
+     list[lastIndex] = list[lastIndex] + (a % b); // 3
+
+     // check that we found the right answer
+     let sum = list.reduce((x,t) => x + t)
+     console.log(list);
+     console.log(`target sum: ${a}`)
+     console.log(`sum of unequal parts: ${sum}`)
+     if(list.length === b && sum === a) {
+         console.log('success');
+         return true;
+     } else {
+         console.log('failure');
+         return false;
+     }
+ }
+
+ algorithm1(34,4)
+ #+END_SRC
+
+*** Analysis
+
+    Function given inputs A and B which are integers.
+    Basic Operation: Addition/Subtraction 
+    Occurs 5 times each loop
+
+    Loops B/2 times so it will grow linearly with B.
+
+    NumSteps = f(n) = f(B/2)
+
+    Eight operations of constant time inside the while loop 
+    Nine operations outside the while loop so,
+
+    f(n) = 8n + 9
+
+    C = 17
+    k = 1
+
+    8n + 9 \le 17n
+
+    (8n \le 17n) + (9 \le 17n) 
+
+    These are both true, so f(n) \in O(n)
+    
+
+
+** Algorithm 2
+
+*** Code
+
+I rewrote this in procedural JavaScript because it is a bit easier to analyze :)
+#+BEGIN_SRC js :results output
+function algorithm2 (a, b) {
+   let parts = []; // 1
+   for(let i = 1; i < b; i++) { // n
+      parts.push(i); // 1
+   }
+
+   let sum = 0; // 1
+
+   parts.forEach(num => { // n - 1
+     sum += num; // 1
+   });
+
+   parts.push(a - sum); // 1
+   return parts;
+}
+
+console.log(algorithm2(34, 4))
+#+END_SRC
+
+#+RESULTS:
+: [ 1, 2, 3, 28 ]
+
+   #+BEGIN_SRC emacs-lisp :results silent
+     (defun algorithm2 (a b)
+       (let ((list-of-nums (number-sequence 1 (- b 1))))
+         (setq list-of-nums (append list-of-nums (- a (apply '+ list-of-nums))))))
+   #+END_SRC
+ 
+   #+BEGIN_SRC emacs-lisp
+     (algorithm2 34 5)
+   #+END_SRC 
+
+   #+RESULTS:
+   : (1 2 3 4 . 24)
+
+*** Analysis
+    
+    Function given inputs A and B which are integers.
+    Basic operation: Assignment/Addition
+    Both occur once in their loops
+
+    NumSteps = f(n) = f(b - 1)
+    
+    Two non-nested loops each looping n times
+
+    f(n) = n + n + 3 = 2n + 3
+
+    C = 5
+    k = 1
+
+    2n + 3 \le 5n
+
+    (2n \le 5n) + (3 \le 5n)
+
+    Both are true, so we know f(n) \in O(n)
+
+    
+    
+
+** Algorithm 3
+
+*** Code
+#+BEGIN_SRC js :results output
+function algorithm3(a, b) {
+    let stack = []; // 1
+    let i = 1;  // 1
+    stack.push(a); // 1
+    do {
+        let x = stack.pop(); // 1
+        stack.push(i) // 1
+        stack.push(x - i); // 2
+        i++ // 1
+        console.log(stack)
+    } while (stack.length < b); // n
+    return stack
+}
+
+algorithm3(34, 4)
+#+END_SRC
+
+*** Analysis
+
+    Function given inputs A and B which are integers.
+    Basic Operation: Assignment
+    Occurs 3 times each loop
+
+    NumSteps = f(n) = f(b - 1)
+    
+    f(n) = 5n + 3
+
+    C = 8
+    k = 1
+
+    5n + 3 \le 8n
+    
+    (5n \le 8n) + (3 \le 8n)
+
+    Both are true, so we can say that f(n) \in O(n)
+    
+
+* DONE What I learned
+  CLOSED: [2018-05-05 Sat 13:13]
+  :LOGBOOK:
+  CLOCK: [2018-05-05 Sat 13:09]--[2018-05-05 Sat 13:13] =>  0:04
+  :END:
+
+  There was a lot of material this week, and to be completely honest, I
+  struggled to swallow it all. I worked hard on it, and I think I have a firm
+  grasp of the concepts of how to analyize a function for big-Oh and order of
+  growth. I feel I have a basic understanding of recurrence relations, but I
+  definitely want to study them some more. One area that I could also work on is
+  proving things by induction. I had to get help from my group members to figure
+  that one out. I understand the concept of proving the predicate, but for some
+  reason it is hard for me to actually apply it. Perhaps it was just that
+  problem.
+
+  My thoughts on the course so far are positive. My only hope is that we start
+  to slow down a little bit so we can spend some significant time on some of
+  these topics. If the course continues at this pace, I am worried that I won't
+  be able to absorb as much as I would like.
+
+* DONE Class Notes 
+  CLOSED: [2018-05-05 Sat 13:09]
+** DONE Day 1
+   CLOSED: [2018-05-03 Thu 14:12]
+   :LOGBOOK:
+   CLOCK: [2018-04-30 Mon 09:30]--[2018-04-30 Mon 09:49] =>  0:19
+   CLOCK: [2018-04-30 Mon 08:31]--[2018-04-30 Mon 09:30] =>  0:59
+   :END:
+
+*** Algorithm Analysis Framework
+   
+**** Salient Points
+     Time efficiency andy Space efficiency are the focus:
+        Measured as function of algorithm's input size
+
+     How many times an algorithm's basic operation is executed?
+        Measures time efficiency
+
+     How many extra memory units does the algorithm require?
+        Measures sapce efficiency
+
+     Three different cases to distinguish performance with same input size
+        Best-case 
+        Worst-case
+        Average-case
+
+     As input size grows to infinity, what is the algorithm's growth order?
+        This asymptotic analysis makes for a very blunt instrument
+
+
+     
+**** Find C and k
+     Produce witnesse k and C
+
+     C -> one more than the number of terms
+
+
+
+**** Asymptotic Notations and Basic Efficiency Classes
+    
+     Big-Oh
+     T(n) curve size vs speed
+     f(n) some curve
+    
+     The class of functions that grow no faster than g(n)
+
+    
+***** Example
+
+      T(n) = (n+1)^2 + 1
+
+      f(n) = n^2
+
+      C = 4, k = 2
+
+      Show: T(n) \le 4f(n) for n \ge 2
+
+    
+**** Example
+
+     n^49 + 33n^31 + 23n^20 + 1 \le 58n^49
+
+     C = 58
+     k = 1
+
+     (n^49 \le 58n^49) + (33n^31 \le 58n^49) + (23n^20 \le 58n^49) + (1 \le 58n^49)
+
+    
+**** Big-Omega
+     Is big-Oh but the opposite, providing a lower bound
+
+**** Big-Theta
+     describes the "tight" bound
+     Two constants that put it above and below f(n)
+
+     Class of functions which grow at the same rate. 
+
+   
+** Basic Classification 
+
+** DONE Day 2
+   CLOSED: [2018-05-03 Thu 14:12]
+   :LOGBOOK:
+   CLOCK: [2018-05-02 Wed 08:33]--[2018-05-02 Wed 09:30] =>  0:57
+   :END:
+
+*** If Statements
+    Testing condition is O(1)
+    O(f(n)) for true part
+    O(g(n)) for false part
+    O(max(f(n),g(n))
+
+*** Function Calls
+    add O(h(n)) to g(n)
+   

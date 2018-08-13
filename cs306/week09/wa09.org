@@ -1,0 +1,165 @@
+#+TITLE: Weekly Assignment 09
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-29 Fri 17:37]
+| Headline                               |   Time |      |
+|----------------------------------------+--------+------|
+| *Total time*                           | *5:03* |      |
+|----------------------------------------+--------+------|
+| Explore a Special Type of Iterative... |   2:57 |      |
+| Write Your Preliminary Thoughts        |   2:06 |      |
+| \_  Thoughts                           |        | 2:06 |
+#+END:
+
+*Collaborators*
+Bryan Muller
+Timothy Steele
+Quade Morrison
+Adam Gerhing
+Jon Manoa
+Matt Wyndham
+Asa Skousen
+
+We met together and talked about potential ways to shrink the problem space.
+We also discussed exactly how the simulated annealing algorithm works, and how
+we may apply it to solve this problem.
+
+* DONE Explore a Special Type of Iterative Improvement Algorithm
+  CLOSED: [2018-06-29 Fri 15:11]
+  :LOGBOOK:
+  CLOCK: [2018-06-28 Thu 17:02]--[2018-06-28 Thu 17:42] =>  0:40
+  CLOCK: [2018-06-28 Thu 14:33]--[2018-06-28 Thu 16:50] =>  2:17
+  :END:
+
+  You are invited to apply what you\rsquo{}ve learned this semester to synthesize and
+  analyze algorithms for finding the mystery question. The goal is to do so by
+  creatively searching through a sentential solution space, combinatorially
+  explosive, vast in its extent.
+
+  Before opening the creative juices floodgates, consider the following excerpt
+  from an author who explores human creativity:
+
+** From /Count Down/ by Steve Olson
+
+#+BEGIN_QUOTE
+   The idea that creativity begins with the novel juxtaposition of ideas
+   immediately runs into one major objection. As soon as you consider more than
+   a few discrete items, the number of ways of combining those items becomes
+   very large [very fast...] That\rsquo{}s why a sentence exactly the same as this one
+   has almost certainly never before been written in all of human history. The
+   twenty-two words in that sentence can be recombined in more than one
+   sextillion ways (1,124,000,727,777,607,680,000 ways, to be exact). Only a
+   tiny fraction of those combinations will make any sense, but even this small
+   fraction must amount to many hundreds or thousands of different sentences.
+   The explosion of possible combinations is also the reason songwriters will
+   never run out of melodies --- and they have the extra advantages of being
+   able to vary the duration and volume of each note and the instrument on which
+   a note is played.
+#+END_QUOTE
+
+** More Reading to Ponder
+   :LOGBOOK:
+   CLOCK: [2018-06-28 Thu 17:02]--[2018-06-28 Thu 17:02] =>  0:00
+   :END:
+
+   To spark your imagination, another excerpt can be [[http://monoskop.org/images/9/9e/Pinker_Steven_Words_and_rules_the_ingredients_of_language_1999.Pdf][found here]]. (Just read
+   Chapter 1, /The Infinite Library/.)
+
+   Returning again to the mystery question, your remaining task is to discover
+   what it is by finding the right permutation of the right combination of 20
+   words from a superset of size 36. Presumably, you already found the right
+   20-word combination by exploiting several clues to shrink the solution space.
+   Reducing the permutation search space is one strategy, but a better way is to
+   \ldquo{}hill climb\rdquo your way to the optimal solution --- i.e., the right question!
+
+   To be specific, you are required to understand the [[http://www.nature.com/scientificamerican/journal/v276/n3/pdf/scientificamerican0397-121.pdf][Algorithm of the Gods]], and
+   use this special kind of iterative improvement algorithm in pursuit of the
+   correct permutation.
+
+   /Nature-Inspired Computing/ has also given us /Ant Colony Optimization/,
+   /Genetic Algorithms/, and a host of others. It is an amazing aspect of
+   algorithms (or living systems) that living systems seem to exhibit
+   algorithmic behavior. Here\rsquo{}s another quote along those lines:
+
+** From /How Mathematicians Think/ by William Byers
+
+#+BEGIN_QUOTE
+   One of the aspects of a living system is that it is creative. Life is
+   continually being confronted with problems and the necessity to resolve these
+   problems. Problems, in life, in art, and in science, are inevitable. Not only
+   can they not be avoided but they are the very things that spur development,
+   that spur evolution. The solutions that these problematic situations bring
+   forth are unpredictable, a priori. The solution to such problems often
+   involves an element that is entirely unexpected --- the creative element. A
+   creative solution is not mechanical --- it does not involve juggling a number
+   of predetermined elements according to predetermined rules. It involves the
+   emergence of a novel way of looking at the original situation. This new way
+   of seeing is often generated by very incompatible tendencies within the
+   original situation that made it problematic in the first place. This is the
+   essence of a living system as it is the essence of mathematics ---
+   nontrivial, creative, and alive.
+#+END_QUOTE
+
+* DONE Write Your Preliminary Thoughts
+  CLOSED: [2018-06-29 Fri 17:37]
+
+  Write a couple of paragraphs about how you will take what you learned
+  exploring this special type of iterative improvement algorithm (i.e., doing
+  the above task) and apply it to the task of finding the mystery question.
+
+  
+** Thoughts
+   :LOGBOOK:
+   CLOCK: [2018-06-29 Fri 15:11]--[2018-06-29 Fri 17:11] =>  2:00
+   CLOCK: [2018-06-28 Thu 17:42]--[2018-06-28 Thu 17:48] =>  0:06
+   :END:
+   
+   I think the biggest take away from the 'Infinite Library' article is just how
+   massive a task it is to construct the exact sentence we are looking for out
+   of those 20 words. When I went into this week, I was thinking about how I
+   could shrink the search space more. My initial thought was to build some kind
+   of grammar machine which would construct grammatically correct sentences out
+   of the provided words. This was similar in concept to what was describe in
+   the 'Infinite Library' reading. After finishing the reading and pondering
+   more, I realized that this still isn't the best solution to solving the
+   problem. This approach may help shrink the search space, but it would still
+   not be a super effective solution to the problem. 
+
+   It took me a bit to understand exactly what the concept of simulated
+   annealing entailed, but I think I am beginning to understand. The major
+   benefit that I see it providing over a grammar machine solution, is that it
+   handles getting stuck in potential local maximums/minimums. This is very
+   applicable to this problem, because we could get close with a certain
+   sentence configuration, only to get trapped in local max/min. 
+   
+   Here are my initial thoughts on how to apply simulated annealing to this
+   problem. We would start off with a randomized list of the words. During the
+   initial "heating" process, we would allow for large shuffles in words within
+   the sentence. As our algorithm "cools" we will begin to restrict the amount
+   and "size" of the word shifting. The only thing that I am still unsure about,
+   is how we measure the cost of the swapping to determine when to begin
+   cooling. I am assuming that we will be given a bit more information next week
+   on how determine the cost of trades. Of course, this is what I would consider
+   to be the key part of the whole algorithm, which makes it difficult to really
+   work on an implementation.
+
+   I am still wondering if we can combine this method with some sort of grammar
+   machine to help reduce the initial problem space before running it through the
+   simulated annealing, but I think that will also depend on how we measure the cost
+   of trades. I'm looking forward to working on an implementation of this. 
+
+
+* DONE What I learned
+  CLOSED: [2018-06-29 Fri 17:37]
+
+  I enjoyed the refresher on language and grammars from DM1 and DM2. I read up
+  on simulated annealing both in the provided materials and online. The most
+  useful sites are linked to below. My study was more focused on application
+  rather than theory, so I refer to my response above for more detail.
+
+
+http://mathworld.wolfram.com/SimulatedAnnealing.html
+http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/anneal.html
+http://www.aclweb.org/anthology/H92-1046

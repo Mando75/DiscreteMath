@@ -1,0 +1,81 @@
+#+TITLE: Prove the Correctness of Euclid's GCD Algorithm
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* The Beginner's Way
+
+  The central claim of Euclid's algorithm is that \(gcd(m, n) =
+  gcd(n, m\ \%\ n)\).
+
+  Recall the definition of /division/: an integer /a/ (not zero) /divides/ an
+  integer /b/ (or equivalently, /b/ is /divisible/ by /a/, or /a/ is a /divisor/
+  of /b/) if there is an integer /x/ such that \(b = ax.\)
+
+  Here's a Lemma (a /helper/ to the main proof):
+
+  For any pair of positive integers /m/ and /n/, if /d/ divides both /m/ and /n/
+  then /d/ also divides both /n/ and /r/, where \(r = m\ \%\ n.\)
+
+  Another way to write /r/ is /m - qn/ where /q/ is the /quotient/ (\(q
+  = \lfloor m / n \rfloor\)). Now ask:
+
+  1. Does /d/ divide /m/? (Yes, it's assumed in the premise of the lemma.)
+  2. Does /d/ divide /qn/? (Must prove that since /d/ divides /n/ (also assumed)
+     that /d/ divides a multiple of /n/.)
+  3. Does /d/ divide /m - qn/? (If it divides both /m/ and /qn/, that is?)
+
+  To prove the Lemma you must prove the answer to 2 and 3 is /yes/.
+
+  Show that /d/ divides /qn/ given /d/ divides /n/ as follows:
+
+  | /n/  | = | /dx/    | (Definition of division)            |
+  | /qn/ | = | /q(dx)/ | (Multiply both sides by /q/)        |
+  | /qn/ | = | /d(qx)/ | (Associative law of multiplication) |
+
+  Show that if /d/ divides /u/ and /d/ divides /v/, then /d/ also divides their
+  difference (/u - v/) as follows:
+
+  | /u/     | = | /ds/       | (Definition of division)                  |
+  | /v/     | = | /dt/       | (Definition of division)                  |
+  | /u - v/ | = | /ds - dt/  | (Equals subtracted from equals are equal) |
+  | /u - v/ | = | /d(s - t)/ | (Distributive law of multiplication)      |
+
+  Therefore /d/ divides /u - v/ by definition of division (since /s - t/ is an
+  integer).
+
+  Statements 2 and 3 have both been proved, therefore the Lemma (/d/ divides
+  both /m/, /n/ and /n/, /r/) is proved.
+
+  Since /d/ was arbitrarily chosen (it could be any divisor), the above
+  shows that /m/, /n/ and /n/, \(m\ \%\ n\) have *the same* (non-empty)
+  set of common divisors, which necessarily includes the largest
+  element in the set, which is the GCD.
+
+  QED
+
+* The Expert Way
+
+  Algorithm E (/Euclid's algorithm/). Given two positive integers /m/ and /n/,
+  find their greatest common divisor, i.e., the largest positive integer which
+  evenly divides both /m/ and /n/.
+
+  E1. [Find remainder.] Divide /m/ by /n/ and let /r/ be the remainder. (We will
+  have 0 \le r < n.)
+
+  E2. [Is it zero?] If /r/ = 0, the algorithm terminates; /n/ is the answer.
+
+  E3. [Interchange] Set /m/ \leftarrow /n/, /n/ \leftarrow /r/, and go back to
+  step E1.
+
+  After step E1, we have \(m = qn + r\) for some integer /q/. If /r/ = 0, then
+  /m/ is a multiple of /n/, and clearly in such a case /n/ is the greatest
+  common divisor of /m/ and /n/. If /r/ \ne 0, note that any number which
+  divides both /m/ and /n/ must divide /m/ - /qn/ = /r/, and any number which
+  divides both /n/ and /r/ must divide /qn/ + /r/ = /m/; so the set of divisors
+  of /m, n/ is the same as the set of divisors of /n, r/ and, in particular, the
+  /greatest/ common divisor of /m, n/ is the same as the greatest common divisor
+  of /n, r/. Therefore step E3 does not change the answer to the original
+  problem.
+
+  QED

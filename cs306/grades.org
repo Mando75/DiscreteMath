@@ -1,0 +1,81 @@
+#+TITLE: Grades
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+Here\rsquo{}s how grading in this class works. You start off with perfect performance,
+100%, 100 points on everything. You can only go down from there (but sometimes
+you can go up)! How do you go down? How do you lose points?
+
+First, when allowed, which is about every other assignment, you are encouraged
+to *appropriately* collaborate with your peers, so failure to do so is a major
+misstep that will cost you. Second, failure to report what you learned most
+likely means you missed learning something you otherwise could have, and will
+likewise cost you. Third, in general, the /harder/ you make it for me (or my
+grader) to read and assess your work, the /lower/ your score. So you can lose
+points by doing any of the following (which means you can *avoid* losing points
+by *NOT* exhibiting these behaviors):
+
+* Fail to collaborate
+
+  - Fail to identify your collaborators.
+  - Fail to identify the contribution of each of your collaborators.
+
+    What is *appropriate* collaboration? It is a \ldquo{}me lift thee and thee lift me,
+    and we both ascend together\rdquo phenomenon. Bad sharing/collaboration is
+    copying someone else\rsquo{}s work and submitting it as your own, to get \ldquo{}credit\rdquo
+    for doing some assigned task, while not getting the understanding doing the
+    task was meant to give you. This is academic (and plain old) dishonesty, the
+    repercussions for which range in severity from lowest to highest:
+
+    1. A zero on the assignment.
+    2. -100 on the assignment.
+    3. An automatic F in the course.
+    4. Referral to the Student Honor Office.
+    5. Dismissal from the University.
+
+* Fail to engage
+
+  - Fail to learn something new, or make no mention of what you learned.
+  - Fail to achieve something meaningful, or something you can build upon at a
+    later time.
+  - Be bored, unenthusiastic, show no evidence of a curious mind at work.
+
+* Fail to clearly show that you fulfilled a requirement
+
+  - Make no mention of the requirement in your report.
+  - Mention it, but fail to describe *how* your work fulfills that requirement.
+
+* Fail to track and report
+
+  - Fail to write more than a short paragraph.
+  - Fail to organize and structure your report with headings, subheadings, etc.
+  - Fail to use "plain old text" org-mode for organization and markup.
+  - Fail to track your time for each task marked TODO.
+  - Fail to change TODO to DONE when you finish the task.
+  - Fail to include an *up-to-date* clock summary report for all tasks.
+
+* Fail to take care
+
+  - Write shoddy sentences, strewn with /mechanical infelicities/
+    (e.g., misspelled words, grammatical errors, punctuation errors).
+  - Fail to take obvious steps to eliminate these pesky MIs:
+    - Spell-check your writing.
+    - Grammar-check your writing.
+    - Read your writing aloud (or better yet, have someone else read
+      it to you) to see how it sounds.
+    - Have someone who is good at English carefully proofread your
+      writing.
+
+* Reverse Incentive
+
+  About those MIs --- what does MI stand for? --- you are perhaps stressing
+  about this very easy (for most students) way to lose points. So let\rsquo{}s turn it
+  around. As long as you earn at least 50% on any given assignment, MIs will not
+  count against you. Instead, their absence will earn you bonus points!
+
+* Questions?
+
+  *Please come see me* if you have any questions/problems/issues to be resolved.
+  I abhor, despise, detest, hate, loathe, and rather dislike having discussions
+  about your grades *other than in person*.

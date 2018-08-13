@@ -1,0 +1,107 @@
+#+TITLE: Preparation Assessment 09
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-25 Mon 22:59]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:28* |
+|---------------------+--------|
+| Answer What is True | 1:28   |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-06-25 Mon 22:59]
+  :LOGBOOK:
+  CLOCK: [2018-06-25 Mon 21:31]--[2018-06-25 Mon 22:59] =>  1:28
+  :END:
+  - [X] I know that the iterative-improvement technique involves finding a
+    solution to an optimization problem by generating a sequence of feasible
+    solutions with improving values of the problem’s objective function.
+    
+    Opening paragraph of Chapter 10
+    
+  - [X] I know that each subsequent solution in such a sequence typically
+    involves a small, localized change in the previous feasible solution.
+
+    Opening paragraph of Chapter 10
+
+  - [X] I know that when no such change improves the value of the objective
+    function, the algorithm returns the last feasible solution as optimal and
+    stops.
+
+    Opening paragraph of Chapter 10
+
+  - [X] I know that important problems that can be solved exactly by
+    iterative-improvement algorithms include linear programming, maximizing the
+    flow in a network, and matching the maximum possible number of vertices in a
+    graph.
+
+    10.1: Linear Programming
+    10.2: Maximizing flow
+    10.3, 10.4: Bipartite matching
+  
+
+  - [X] I know that the simplex method is the classic method for solving the
+    general linear programming problem, and that it works by generating a
+    sequence of adjacent extreme points of the problem’s feasible region with
+    improving values of the objective function.
+
+    See Example 1 in section 10.2.
+
+    Extreme Point Theorem: "Any linear programming problem with a nonempty
+    bounded feasible region has an optimal solution; moreover, an optimal
+    solution can always be found at an extreme point of the problem's feasible
+    region." - pg 350
+
+    Simplex method:
+
+       *Requirements:*
+           * It must be a maximization problem
+           * All the constraints (except the nonnegativity constraints) must be
+             in the form of linear equations with nonnegative right-hand-sides.
+           * All the variables must be required to be nonnegative.
+
+
+       *Steps:*
+           0: Initialize
+           1: Optimality test
+           2: Find the pivot column/entering variables
+           3: Find departing variable
+           4: Use row reduction to form the next iteration of the tableau
+  
+  - [X] I know that the maximum-flow problem asks to find the maximum flow
+    possible in a network, a weighted directed graph with a source and a sink.
+
+    ShortestAugmentingPath(G) pg 366
+    
+    Max-Flow Min-Cut Theorem: The value of maximum flow in a network is equal to
+    the capacity of its minimum cut.
+
+    The value of any feasible flow in a network cannot exceed the capacity of
+    any cut in that network.
+  
+  - [X] I know that a maximum cardinality matching is the largest subset of
+    edges in a graph such that no two edges share the same vertex, and that for
+    a bipartite graph, it can be found by a sequence of augmentations of
+    previously obtained matchings.
+
+    A matching M is a maximum matching if and only if there exists no augmenting
+    path with respect to M.
+
+    Augmenting Path: an odd-length path that connects a free vertex in V with a
+    free vertex in U and which, unless it consists of a single edge, "zigs" from
+    a vertex in V to another vertex' mate in U, then "zags" back to V along the
+    uniquely defined edge from M, and so on until a free vertex in U is reached.
+
+    MaximumBipartiteMatching(G) pg 376
+
+  - [X] I know that the stable marriage problem is to find a stable matching
+    for elements of two n-element sets based on given matching preferences.
+
+    
+    
+  - [X] I know that the stable marriage problem always has a solution that can
+    be found by the Gale-Shapley algorithm.
+

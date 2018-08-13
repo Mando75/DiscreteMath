@@ -1,0 +1,64 @@
+#+TITLE:  Graph Searching Algorithms
+#+AUTHOR: Rick Neff
+#+EMAIL:  rick.neff@gmail.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP:   showeverything
+
+* Depth-First
+
+#+BEGIN_VERSE
+  *ALGORITHM* /DFS(G)/
+  //// Implements a depth-first search traversal of a given graph
+  //// Input: Graph /G = <V,E>/
+  //// Output: Graph /G/ with its vertices marked with consecutive integers
+  //// in the order they are first encountered by the DFS traversal
+  mark each vertex in /V/ with 0 as a mark of being "unvisited"
+  /count \leftarrow 0/
+  *for* each vertex /v/ in /V/ *do*
+      *if* /v/ is marked with 0
+          /dfs(v)/
+#+END_VERSE
+
+#+BEGIN_VERSE
+  /dfs(v)/
+  //// visits recursively all the unvisited vertices connected to vertex /v/
+  //// by a path and numbers them in the order they are encountered
+  /count \leftarrow count + 1/; mark /v/ with /count/
+  *for* each vertex /w/ in /V/ adjacent to /v/ *do*
+      *if* /w/ is marked with 0
+          /dfs(w)/
+#+END_VERSE
+
+* Breadth-First
+
+#+BEGIN_VERSE
+  *ALGORITHM* /BFS(G)/
+  //// Implements a breadth-first search traversal of a given graph
+  //// Input: Graph /G = <V,E>/
+  //// Output: Graph /G/ with its vertices marked with consecutive integers
+  //// in the order they are visited by the BFS traversal.
+  mark each vertex in /V/ with 0 as a mark of being "unvisited"
+  /count \leftarrow 0/
+  *for* each vertex /v/ in /V/ *do*
+      *if* /v/ is marked with 0
+          /bfs(v)/
+#+END_VERSE
+
+#+BEGIN_VERSE
+  /bfs(v)/
+  //// visits all the unvisited vertices connected to vertex /v/
+  //// by a path and numbers them in the order they are visited
+  /count \leftarrow count + 1/; mark /v/ with /count/ and initialize a queue with /v/
+  *while* the queue is not empty *do*
+      *for* each vertex /w/ in /V/ adjacent to the front vertex *do*
+          *if* /w/ is marked with 0
+              /count \leftarrow count + 1/; mark /v/ with /count/
+              add /w/ to the queue
+      remove the front vertex from the queue              
+#+END_VERSE
+
+* Practice
+
+  [[https://firstthreeodds.org/img/eleven-node-seventeen-edge-graph.png][Eleven Node Seventeen Edge Graph]]
+

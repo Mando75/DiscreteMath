@@ -1,0 +1,160 @@
+# #+TITLE: Preparation Assessment 07
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-12 Tue 18:05]
+| Headline                          |   Time |
+|-----------------------------------+--------|
+| *Total time*                      | *2:11* |
+|-----------------------------------+--------|
+| Answer What is True               |   0:58 |
+| Answer More Specifically About... |   1:13 |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-06-12 Tue 09:18]
+  :LOGBOOK:
+  CLOCK: [2018-06-12 Tue 09:16]--[2018-06-12 Tue 09:18] =>  0:02
+  CLOCK: [2018-06-11 Mon 21:25]--[2018-06-11 Mon 22:21] =>  0:56
+  :END:
+
+  - [X] I know why it is *false* to say that *dynamic programming* is better
+    than static programming (such as is taught in CS124 (or equivalent)).
+    
+
+
+  dynamic programming isn't comparable to static programming because it is not
+    a method used to provide instructions to a computer. Instead, it means "planning."
+
+  - [X] I know why it is *false* to say that applicability of dynamic
+    programming to an optimization problem requires the problem to satisfy the
+    /principle of suboptimality/: a suboptimal solution to any of its instances
+    must be made up of suboptimal solutions to its subinstances.
+
+    The /principle of optimality/: an optimal solution to any instance of an
+    optimization problem is composed of optimal solutions to its subinstances.
+
+  - [X] I know how to discover that one of the earliest applications of dynamic
+    programming is an algorithm that solves the traveling salesman problem in
+    time O(n^2 2^n).
+ 
+    "The Held–Karp algorithm, also called Bellman–Held–Karp algorithm, is a
+    dynamic programming algorithm proposed in 1962 independently by Bellman
+    and by Held and Karp to solve the Traveling Salesman Problem (TSP)." - Wikipedia
+
+    https://en.wikipedia.org/wiki/Held%E2%80%93Karp_algorithm
+
+    This is the same Bellman that introduced dynamic programming and the
+    principle of optimality.
+
+    https://medium.com/basecs/speeding-up-the-traveling-salesman-using-dynamic-programming-b76d7552e8dd
+
+  - [X] I know why it is *false* to say that solving a *continuous* knapsack
+    problem by a dynamic programming algorithm exemplifies an application of
+    this technique to difficult problems of combinatorial optimization.
+  - [X] I know how [[file:memory-functions.org][*memory functions*]] constitute a space-grabbing but
+    time-saving technique.
+
+    Solves the only the necessary subproblems, and those only once. 
+
+  - [X] I know how to compare *dynamic programming* with *divide & conquer* and
+    will prove it by putting an X in a table cell if the property is true:
+  |-----------------------------------+---------------------+------------------|
+  | Property                          | Dynamic Programming | Divide & Conquer |
+  |-----------------------------------+---------------------+------------------|
+  | Works bottom up                   | X                   |                  |
+  |-----------------------------------+---------------------+------------------|
+  | Works top down                    |                     | X                |
+  |-----------------------------------+---------------------+------------------|
+  | Divides problems into subproblems |   X                 | X                |
+  |-----------------------------------+---------------------+------------------|
+  | Subproblems may be overlapping    | X                   |                  |
+  |-----------------------------------+---------------------+------------------|
+  (/Bottom up/ means starting at smallest or simplest subproblem, /then/
+  combining subproblem solutions of increasing size until the solution of the
+  original problem is reached.)
+
+* DONE Answer More Specifically About Optimal Binary Search Trees
+  CLOSED: [2018-06-12 Tue 18:05]
+  :LOGBOOK:
+  CLOCK: [2018-06-12 Tue 15:18]--[2018-06-12 Tue 16:16] =>  0:58
+  CLOCK: [2018-06-12 Tue 09:18]--[2018-06-12 Tue 09:33] =>  0:15
+  :END:
+
+
+  - [X] I know how many /distinct/ binary search trees can be constructed for a
+    set of 4 orderable keys: A, B, C and D.
+    
+    14
+
+  - [X] I know how to draw all optimal BSTs for a set of 4 orderable keys.
+  - [X] I know how to label each tree I drew with its unique level-order
+    traversal (like ABCD). 
+  - [X] I will come prepared to reason about these labelings during class.
+  - [X] I know how to draw the optimal BST given 0.1, 0.2, 0.3, and 0.4 as the
+    probabilities of the four keys A, B, C, and D.
+  - [X] I know how to compute the average search cost for an optimal BST.
+
+    Build a table like the one in Figure 8.9. Once the upper triangle is filled, 
+    the top right corner "goal" location will hold the average search cost. 
+    
+  - [X] I will come prepared to reason about the recurrence relation for
+    counting the number of distinct BSTs with n nodes.
+
+
+* BSTs
+
+
+
+
+#+BEGIN_EXAMPLE 
+
+  1: ABCD      2:BACD           3:CADB      4:DABC
+  A               B                C          D
+   \             / \              / \        /
+    B           A   C            A   D      A
+     \               \            \          \
+      C               D            B          B
+       \                                       \
+        D                                       C
+
+
+  5:ACBD   6:BADC    7:CBDA   8:DACB  9:ABDC   10:DBAC 
+  A           B         C       D       A           D  
+   \         / \       / \     /         \         / 
+    C       A   D     B   D   A           B       B
+   / \         /     /         \           \     / \
+  B   D       C     A           C           D   A   C
+                               /           /
+                              B           C
+
+
+  11:ADBC    12:ADCB  13:DCAB    14:DCBA     
+   A           A         D          D
+    \           \       /          / 
+     D           D     C          C 
+    /           /     /          /
+   B           C     A          B  
+    \         /       \        / 
+     C        B         B      A
+
+
+#+END_EXAMPLE
+
+* That other part with the multiplication
+
+   1. x_0 * (x_1 * (x_2 * (x_3 * x_4)))
+   2. x_0 * (x_1 * ((x_2 * x_3) * x_4))
+   3. x_0 * ((x_1 * x_2) * (x_3 * x_4))
+   4. x_0 * ((x_1 * (x_2 * x_3)) * x_4)
+   5. x_0 * (((x_1 * x_2) * x_3) * x_4)
+   6. (x_0 * x_1) * (x_2 * (x_3 * x_4))
+   7. (x_0 * x_1) * ((x_2 * x_3) * x_4)
+   8. (x_0 * (x_1 * x_2)) * (x_3 * x_4)
+   9. ((x_0 * x_1) * x_2) * (x_3 * x_4)
+  10. ((x_0 * (x_1 * x_2)) * x_3) * x_4
+  11. (((x_0 * x_1) * x_2) * x_3) * x_4
+  12. ((x_0 * x_1) * (x_2 * x_3)) * x_4
+  13. (x_0 * ((x_1 * x_2) * x_3)) * x_4
+  14. (x_0 * (x_1 * (x_2 * x_3))) * x_4

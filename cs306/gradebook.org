@@ -1,0 +1,72 @@
+#+TITLE: Gradebook
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+On the master branch you may edit this file locally, but the grading branch on
+Github will contain your official scores.
+
+* Final Grade                                                         :crypt:
+  :PROPERTIES:
+  :CRYPTKEY: you17001@byui.edu
+  :END:
+:FINAL_GRADE:
+:END:
+
+** Scores
+On the grading branch, the official scores for all your assignments will be
+encrypted with your public key:
+
+#+tblname: grades-as-table
+| Grade Item    | Raw Score | Timeliness | Weight | Weighted Score | Date Due               |
+|---------------+-----------+------------+--------+----------------+------------------------|
+| [[file:week00/pa00.org][00 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-04-25 Wed 8:00>  |
+| [[file:week00/wa00.org][00 Assignment]] |    100.00 |       1.00 |    4.0 |             4. | <2018-04-28 Sat 18:00> |
+| [[file:week01/pa01.org][01 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-05-02 Wed 8:00>  |
+| [[file:week01/wa01.org][01 Assignment]] |    100.00 |       1.00 |    4.0 |             4. | <2018-05-05 Sat 18:00> |
+| [[file:week02/pa02.org][02 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-05-09 Wed 8:00>  |
+| [[file:week02/wa02.org][02 Assignment]] |    100.00 |       1.00 |    4.0 |             4. | <2018-05-12 Sat 18:00> |
+| [[file:week03/pa03.org][03 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-05-16 Wed 8:00>  |
+| [[file:week03/wa03.org][03 Assignment]] |    100.00 |       1.00 |    4.0 |             4. | <2018-05-19 Sat 18:00> |
+| [[file:week04/pa04.org][04 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-05-23 Wed 8:00>  |
+| [[file:week04/wa04.org][04 Assignment]] |    100.00 |       1.00 |    4.0 |             4. | <2018-05-26 Sat 18:00> |
+| [[file:week05/pa05.org][05 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-05-30 Wed 8:00>  |
+| [[file:week05/wa05.org][05 Assignment]] |    100.00 |       1.00 |    5.0 |             5. | <2018-06-02 Sat 18:00> |
+| [[file:week06/pa06.org][06 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-06-06 Wed 8:00>  |
+| [[file:week06/wa06.org][06 Assignment]] |    100.00 |       1.00 |    5.0 |             5. | <2018-06-09 Sat 18:00> |
+| [[file:week07/pa07.org][07 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-06-13 Wed 8:00>  |
+| [[file:week07/wa07.org][07 Assignment]] |    100.00 |       1.00 |    6.0 |             6. | <2018-06-16 Sat 18:00> |
+| [[file:week08/pa08.org][08 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-06-20 Wed 8:00>  |
+| [[file:week08/wa08.org][08 Assignment]] |    100.00 |       1.00 |    7.0 |             7. | <2018-06-23 Sat 18:00> |
+| [[file:week09/pa09.org][09 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-06-27 Wed 8:00>  |
+| [[file:week09/wa09.org][09 Assignment]] |    100.00 |       1.00 |    8.0 |             8. | <2018-06-30 Sat 18:00> |
+| [[file:week10/pa10.org][10 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-07-09 Mon 8:00>  |
+| [[file:week10/wa10.org][10 Assignment]] |    100.00 |       1.00 |    9.0 |             9. | <2018-07-07 Sat 18:00> |
+| [[file:week11/pa11.org][11 Assessment]] |    100.00 |       1.00 |    2.5 |            2.5 | <2018-07-11 Wed 8:00>  |
+| [[file:week11/wa11.org][11 Assignment]] |    100.00 |       1.00 |   10.0 |            10. | <2018-07-14 Sat 18:00> |
+#+tblfm: $5=$2*$3*$4/100   
+
+* What If Calculator
+  If you want to use this file as a what if calculator, follow these steps:
+
+  1. Edit the values you want to in the preceding table.
+  2. Put your cursor on the "#+tblfm:" line, then type ", ,".
+  3. Put your cursor somewhere in the code block below, then type ", ,".
+  4. Your "what if" grade will be displayed at the bottom of the file.
+
+#+NAME: compute-final-grade
+#+BEGIN_SRC emacs-lisp :var grades=grades-as-table
+  (setq weighted-percentage (apply '+ (mapcar 'fifth grades))
+        number (ceiling weighted-percentage)
+        tensDigit (/ number 10)
+        onesDigit (mod number 10)
+        index (min (max (- tensDigit 5) 0) 4)
+        letter (substring "FDCBA" index (+ index 1))
+        sign (if (<= onesDigit 2) "-" (if (>= onesDigit 7) "+"))
+        letter-grade (concat letter (if (and (< number 95) (>= number 60)) sign))
+        both (list (format "%2.2f" weighted-percentage) letter-grade))
+
+#+END_SRC
+
+#+RESULTS: compute-final-grade
+| 100.00 | A |

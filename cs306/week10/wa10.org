@@ -1,0 +1,345 @@
+#+TITLE: Weekly Assignment 10
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-07-07 Sat 01:05]
+| Headline                       |   Time |
+|--------------------------------+--------|
+| *Total time*                   | *6:33* |
+|--------------------------------+--------|
+| Find the Right Permutation ... |   5:32 |
+| What I Learned/Process         |   1:01 |
+#+END:
+
+*Collaborators*
+Quade Morrison
+James Palmer
+Matt Wyndham
+Bryan Muller
+Asa Skousen
+Timothy Steele
+Zach Delano
+
+See What I Learned for contributions
+
+* DONE Find the Right Permutation ...                                 
+  CLOSED: [2018-07-07 Sat 00:04]
+  :LOGBOOK:
+  CLOCK: [2018-07-05 Thu 15:23]--[2018-07-05 Thu 19:42] =>  4:19
+  CLOCK: [2018-07-03 Tue 22:23]--[2018-07-03 Tue 23:36] =>  1:13
+  :END:
+
+  ... and therefore the right question.
+
+  The code below attempts to answer the question: What is the right permutation
+  of the correct 20-word subset? It uses the /simulated annealing/ iterative
+  improvement algorithm to find the \ldquo{}lowest energy\rdquo state in the vast
+  configuration space of all possible permutations.
+
+  A \ldquo{}state\rdquo is a permutation of the 20 words, each word encoded as one of the
+  first twenty letters (a-t) of the alphabet.
+
+  Sort the 20 words in lexicographic order and then assign each a letter, in
+  order from a-t.
+
+  So, a state is a permutation of the string \ldquo{}abcdefghijklmnopqrst\rdquo.
+
+  Its energy is how \ldquo{}far\rdquo it is from the correct permutation.
+
+  Lowering its energy means getting closer to the correct permutation.
+
+  Use creative strategies to \ldquo{}move-from\rdquo a current state to a new state:
+
+  1. by swapping the letters at two randomly chosen positions, or
+  2. by doing the \ldquo{}Knuth shuffle\rdquo{}, or
+  3. you decide.
+
+#+BEGIN_SRC elisp :results silent
+      (require 'cl)
+      (require 'eww)
+
+      (defun char-word-alist ()
+        (quote ((?a . "a")
+                (?b . "any")
+                (?c . "appear")  
+                (?d . "be")
+                (?e . "digit")
+                (?f . "first")
+                (?g . "for")
+                (?h . "in")
+                (?i . "just")
+                (?j . "look")
+                (?k . "numbers")
+                (?l . "on")
+                (?m . "or")
+                (?n . "pattern")
+                (?o . "random")
+                (?p . "reason")
+                (?q . "ten")
+                (?r . "that")
+                (?s . "the")
+                (?t . "to")
+                )))
+
+      (defun word-string-to-perm (word-string)
+        (let ((words-as-list (split-string word-string " ")))
+          (mapconcat (lambda (x) (string (car (rassoc x (char-word-alist)))))
+                     words-as-list "")))
+
+      (defun perm-to-word-string (perm)
+        (mapconcat (lambda (x) (cdr (assoc x (char-word-alist)))) perm " "))
+
+      (defvar url-format-string "http://firstthreeodds.org/pdq?perm=%s")
+
+      (defun perm-distance-query (perm)
+        (add-function :filter-args (symbol-function 'message)
+        (lambda (&rest ignore) '("...")) '((name . replace-args-with-dots)))
+        (let ((temp-buffer
+               (url-retrieve-synchronously
+                (format url-format-string perm) t t))
+              (reply nil)
+              (content-length 0)
+              (end 0))
+          (remove-function (symbol-function 'message) 'replace-args-with-dots)
+          (with-current-buffer temp-buffer
+            (setq content-length
+                  (string-to-number (cdr (assoc "content-length" (eww-parse-headers))))
+                  end (point-max)
+                  reply (replace-regexp-in-string
+                         "\n" "" (buffer-substring (- end content-length) end))))
+          (kill-buffer temp-buffer)
+          reply))
+
+      (defun energy (state)
+        "Finds the energy of a permutation (state) by querying a web service."
+        (string-to-number (distance state)))
+
+      (defun random-01 ()
+        "Returns a random float between 0 and 1."
+        (/ (random most-positive-fixnum) (float most-positive-fixnum)))
+
+      (defun probability (energy new-energy temperature)
+        "Computes the probability of preferring new-energy to energy."
+        (if (< new-energy energy)
+            1.0
+          (exp (- (/ (- new-energy energy) temperature)))))
+
+      (defun knuth-shuffle (x)
+        (if (listp x)
+            (append (knuth-shuffle (apply 'vector x)) nil)
+          (loop for i from (1- (length x)) downto 1
+                do (rotatef (aref x i) (aref x (random i))))
+          x))
+
+      (defun swap-random (perm)
+        "Swaps a random character in perm with the next one adjacent to it,
+         wrapping from end to beginning."
+        (let* ((len (length perm))
+               (i1 (random len))
+               (i2 (% (1+ i1) len))
+               (i1letter (aref perm i1))
+               (i2letter (aref perm i2)))
+          (aset perm i1 i2letter)
+          (aset perm i2 i1letter)
+          perm))
+
+      (defun swap-really-random (perm)
+        "Swaps a random character in perm with another random,
+         maybe swap with itself, I don't care."
+         (let* ((len (length perm))
+                (i1 (random len))
+                (i2 (random len))
+                (i1letter (aref perm i1))
+                (i2letter (aref perm i2)))
+                (aset perm i1 i2letter)
+                (aset perm i2 i1letter)
+     perm))
+
+  (defun move-from (state)
+    (let ((x (random-01)))
+        (cond ((> x .7) (knuth-shuffle (copy-sequence state)))
+              ((> x .5) (swap-really-random (copy-sequence state)))
+              ((> x .3) (swap-random (reverse (copy-sequence state))))
+              (t (swap-random (copy-sequence state)))))))
+      ;(defun move-from (state temperature index)
+        ;(let ((to-shuffle (substring state index)))
+        ;  (progn
+       ;     (cond (;(> temperature 9000) (reverse (copy-sequence to-shuffle)))
+       ;           ((> temperature 7000)
+      ;             (setq to-shuffle (knuth-shuffle (reverse (copy-sequence to-shuffle))))) ; or swap-random, or ...
+     ;             ((> temperature 5000) (setq to-shuffle (knuth-shuffle (copy-sequence to-shuffle))))
+    ;              ((> temperature 3000) (setq to-shuffle (swap-random (reverse (copy-sequence to-shuffle)))))
+   ;               (t (setq to-shuffle (swap-random (copy-sequence to-shuffle)))))
+  ;          (concat (substring state 0 index) to-shuffle)))))
+
+      (defun simulate-annealing (initial-state initial-temperature cooling-rate)
+        "Performs simulated annealing based on the above functions and
+         passed-in initial state, initial temperature and cooling rate parameters."
+        (let* ((state (copy-sequence initial-state))
+               (temperature initial-temperature)
+               (energy (energy state)) ; initial energy
+               (best-state state) ; initial best state
+               (best-energy energy) ; initial best energy
+               (iterations 0)
+               new-state new-energy)
+          ;; Loop until system has cooled
+          (while (> temperature 1)
+            (setq new-state (move-from state)
+                  new-energy (energy new-state))
+
+            (when (> (probability energy new-energy temperature) (random-01))
+              (setq state new-state
+                    energy new-energy))
+
+            (when (< new-energy best-energy)
+              (setq best-state new-state
+                    best-energy new-energy))
+
+            ;; Count iterations
+            (incf iterations)
+            ;; Cool things down
+            (setq temperature (if (zerop best-energy) 1 (* temperature cooling-rate)))
+            (print best-state))
+
+          ;; Report best state, its energy and the number of iterations of the while loop
+          (list best-state best-energy iterations)))
+
+      (defun try-it (&optional initial-state initial-temperature cooling-rate)
+        "Executes the simulate-annealing function with (possibly) default values."
+        (or initial-state (setq initial-state "abcdefghijklmnopqrst"))
+        (or initial-temperature (setq initial-temperature 1000))
+        (or cooling-rate (setq cooling-rate .99))
+        (simulate-annealing initial-state initial-temperature cooling-rate))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun reverse-string (state)
+    (if (listp state)
+        (append (shift-string (apply 'vector state)) nil))
+    (mapconcat 'identity
+                       (loop for i from (1- (length state)) downto 0
+                             collect (byte-to-string (elt state i))) ""))
+
+#+END_SRC
+
+
+#+BEGIN_SRC elisp :results raw
+(try-it "bnhmpgsqekroacdfijlt" 10000 .99)
+#+END_SRC
+
+
+#+RESULTS:
+(bnhmpgsqekrlafjictdo 0 879)
+
+** Best so far...
+ (bnhltsrqpomkjigfedca 14899968439613 917)
+ (bnhmotsrqplkjigfedca 515550391613 917)
+ (bnhmpgstacdefijkloqr 813333188 917)
+ (bnhmpgsqeftrolkjidca 10404413 917)
+ (bnhmpgsqekrftoljidca 82493 917)
+ (bnhmpgsqekroacdfijlt 38468 917)
+ (bnhmpgsqekrlafjictdo 0 879)
+
+** Testing Functions  
+
+ #+BEGIN_SRC emacs-lisp
+   (perm-to-word-string "bnhmpgsqekrlafjictdo")
+ #+END_SRC
+
+ #+RESULTS:
+ : any pattern in or reason for the ten digit numbers that on a first look just appear to be random
+
+ #+BEGIN_SRC emacs-lisp
+   (word-string-to-perm "in just 
+ #+END_SRC
+* THE QUESTION
+
+bnhmpgsqekrlafjictdo
+
+Any pattern in or reason for the ten digit numbers that on first look just appear to be random?
+* DONE What I Learned/Process
+  CLOSED: [2018-07-07 Sat 01:05]
+  :LOGBOOK:
+  CLOCK: [2018-07-07 Sat 00:04]--[2018-07-07 Sat 01:05] =>  1:01
+  :END:
+  When I first started working on the problem this week, I went back and
+  reviewed some of the materials about simulated annealing. When I was looking
+  at the provided code, I noticed that the move-from function was only calling
+  the Knuth shuffle function. When I reread the materials, I was reminded that
+  when the temperature is high, we should potentially accept more drastic
+  changes. For this reason, I modified the move-from function to try larger
+  changes (such as knuth-shuffle) first. As the temperature decreased, move-from
+  will try less drastic changes.
+
+  That small change really helped start reducing the problem space, although I
+  did keep getting stuck in local minima. I added a couple more improvements on
+  my own (changing temperature ranges, adding the reverse), and eventually got
+  the first 'best' local minimum of 14899968439613.
+
+  At this point, I met up with the collaborators listed above. I shared with
+  them what I had done, and we discussed some strategies of how we could more
+  quickly reduce the problem space. A big help was to imagine the possible
+  states as a function graph on a Cartesian plane. Our overall strategy was to
+  traverse the graph, finding as many local minima as we could.
+
+  We noticed that when we found a local minimum, it would normally drop by at
+  least a factor of ten. We also noticed some trends within minimum states, such
+  as 'bn' always starting the string, and trailing letters being arranged in
+  alphabetical order. To get around this, we came up with three strategies.
+
+  First, when we found ourselves stuck in a local minimum, instead of trying to
+  keep digging deeper, we decided to try to climb out by finding a maximum. This
+  helped us rapidly get out of local minima and progress further down the
+  graph towards our solution.
+
+  Second, once several of us had noticed that we kept getting the same two
+  letters at the beginning of almost every local minimum, we concluded that they
+  must be correct. In order to more efficiently test the remaining letters, we
+  modified the move-from function again to allow us to lock a certain number of
+  letters in place, only shifting a substring of the remaining letters. This
+  also helped us lock in local minima and point us in the direction we needed to
+  climb to keep progressing.
+
+  Lastly, we realized that the shuffling functions we had were not doing enough
+  to get us out of the local minima in a timely fashion. We thought about
+  writing our own, but then decided that it would be better to implement true
+  randomness. We implemented this as follows: when we were trapped in a local
+  minimum, we locked the leading characters in place and shuffled the remaining
+  substring using the true randomizer from Random.org. We would then provide
+  this newly shuffled string as our initial state. This proved to be very
+  effective in helping us identify and escape the maxima and minima as we
+  traversed down the graph.
+
+  Using and refining this process eventually got us to the solution. We worked
+  as a team to work out these ideas. We also shared our local minima in order to
+  speed up the process of running the simulated annealing function. Ultimately,
+  this proved to be effective, as we were able to find the answer to the
+  question.
+
+  Final thought, I would love to see how you calculated the energy based on the 
+  state string.
+ 
+* Notes
+  
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun dtsort-3 (a b c)
+    (if (> a b)
+        (if (> a c)
+            (if (> b c)
+                (list a b c)
+              (list a c b))
+          (list c a b))
+      (if (> b c)
+          (if (> a c)
+              (list b a c)
+            (list b c a))
+        (list c b a))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (dtsort-3 1 5 9)
+#+END_SRC
+
+#+RESULTS:
+| 9 | 5 | 1 |

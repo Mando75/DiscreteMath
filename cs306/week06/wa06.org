@@ -1,0 +1,475 @@
+#+TITLE: Weekly Assignment 06
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-09 Sat 15:36]
+| Headline                          |   Time |
+|-----------------------------------+--------|
+| *Total time*                      | *3:45* |
+|-----------------------------------+--------|
+| Exercise 1 on page 274            |   0:24 |
+| Exercise 2 on page 274            |   0:17 |
+| Exercise 3 on page 275            |   0:05 |
+| Exercise 4 on page 275            |   0:08 |
+| Exercise 3 on page 279            |   0:30 |
+| Exercise 6 on page 279            |   0:37 |
+| Non-book Exercise                 |   0:18 |
+| Ponder AND PROVE Metacognitive... |   1:19 |
+| Ponder AND PROVE Ten Numbers      |   0:07 |
+#+END:
+
+
+* Collaborators
+Asa Skousen
+James Palmer
+Quade Morrison
+Bryan Müller
+Matt Wyndham
+Jonathon Manoa
+Adam Gehring
+Zach Delano
+Timothy Steele
+
+*Contributions*
+
+We all worked together as a group to solve the book problems and the birthday
+problem. There were several times where we disagreed, but we were always able to
+come to consensus.
+
+* DONE Exercise 1 on page 274
+  CLOSED: [2018-06-07 Thu 17:07]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 16:57]--[2018-06-07 Thu 17:07] =>  0:10
+  CLOCK: [2018-06-06 Wed 08:03]--[2018-06-06 Wed 08:17] =>  0:14
+  :END:
+
+  For the input 30, 20, 56, 75, 31, 19 and hash function h(K) = K mod 11
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun hash-function-1 (k)
+  "Returns the hash of k mod 11 where k is an integer"
+  (mod k 11))
+#+END_SRC
+
+
+  *a.* construct the open hash table.
+
+#+BEGIN_SRC emacs-lisp
+ (list '(30 20 56 75 31 19) (mapcar 'hash-function-1 '(30 20 56 75 31 19)))
+#+END_SRC
+
+#+RESULTS:
+| 30 | 20 | 56 | 75 | 31 | 19 |
+|  8 |  9 |  1 |  9 |  9 |  8 |
+
+| 0 |  1 | 2 | 3 | 4 | 5 | 6 | 7 |  8 |  9 | 10 |
+|---+----+---+---+---+---+---+---+----+----+----|
+|   |  \downarrow |   |   |   |   |   |   |  \downarrow |  \downarrow |    |
+|   | 56 |   |   |   |   |   |   | 19 | 20 |    |
+|   |    |   |   |   |   |   |   |  \downarrow |  \downarrow |    |
+|   |    |   |   |   |   |   |   | 30 | 31 |    |
+|   |    |   |   |   |   |   |   |    |  \downarrow |    |
+|   |    |   |   |   |   |   |   |    | 75 |    |
+
+  *b.* find the largest number of key comparisons in a successful
+   search in this table.
+
+   3 for number 75 
+
+  *c.* find the average number of key comparisons in a successful
+   search in this table.
+
+
+   \(1/6 + 1/6 + 1/6 + 2/3 + 2/3 + 3/6 = 10/6 \approx 1.66\) 
+   
+* DONE Exercise 2 on page 274
+  CLOSED: [2018-06-07 Thu 17:24]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 17:07]--[2018-06-07 Thu 17:24] =>  0:17
+  :END:
+
+  For the input 30, 20, 56, 75, 31, 19 and hash function h(K) = K mod 11
+
+#+BEGIN_SRC emacs-lisp
+  (list '(30 20 56 75 31 19) (mapcar 'hash-function-1 '(30 20 56 75 31 19)))
+#+END_SRC
+
+#+RESULTS:
+| 30 | 20 | 56 | 75 | 31 | 19 |
+|  8 |  9 |  1 |  9 |  9 |  8 |
+
+  *a.* construct the closed hash table.
+
+|  0 |  1 |  2 | 3 | 4 | 5 | 6 | 7 |  8 |  9 | 10 |
+|----+----+----+---+---+---+---+---+----+----+----|
+|    |    |    |   |   |   |   |   | 30 |    |    |
+|    |    |    |   |   |   |   |   | 30 | 20 |    |
+|    | 56 |    |   |   |   |   |   | 30 | 20 |    |
+|    | 56 |    |   |   |   |   |   | 30 | 20 | 75 |
+| 31 | 56 |    |   |   |   |   |   | 30 | 20 | 75 |
+| 31 | 56 | 19 |   |   |   |   |   | 30 | 20 | 75 |
+  
+
+  *b.* find the largest number of key comparisons in a successful search in this table.
+
+        6 for the number 8
+ 
+  *c.* find the average number of key comparisons in a successful search in this table.
+
+        14 total comparisons
+
+        1/6 + 1/6 + 1/6 + 2/6 + 3/6 + 6/6 = 14/6 \approx 2.33
+
+* DONE Exercise 3 on page 275
+  CLOSED: [2018-06-07 Thu 17:51]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 17:46]--[2018-06-07 Thu 17:51] =>  0:05
+  :END:
+
+  Why is it not a good idea for a hash function to depend on just one letter
+  (say, the first one) of a natural language word?
+
+  It means that of all the words, there will only be 26 possible hashes. Assuming that
+  the set of all possible entries is the English dictionary, there would be so many collisions
+  that the hash table would no longer be efficient.
+
+  There is also the problem of letter frequency. The distribution of letters in
+  words is not regular. Letters like 's' occur much more frequently than 'z'.
+  This would mean that the distribution of hashes would not necessarily be very
+  even (depending upon the language being used).
+
+* DONE Exercise 4 on page 275
+  CLOSED: [2018-06-07 Thu 17:59]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 17:51]--[2018-06-07 Thu 17:59] =>  0:08
+  :END:
+
+  Find the probability of all n keys being hashed to the same cell of a hash
+  table of size m if the hash function distributes keys evenly among all the
+  cells of the table.
+
+  Given n elements with table size 10
+
+  first insertion: (10/10)
+  second insertion: (1/10)
+  third insertion: (1/10)(1/10)...
+
+  \downarrow
+  1/m^{n-1} 
+
+* DONE Exercise 3 on page 279
+  CLOSED: [2018-06-09 Sat 14:44]
+  :LOGBOOK:
+  CLOCK: [2018-06-09 Sat 14:24]--[2018-06-09 Sat 14:44] =>  0:20
+  CLOCK: [2018-06-07 Thu 17:59]--[2018-06-07 Thu 18:09] =>  0:10
+  :END:
+
+  Find the minimum order of the B-tree that guarantees that the number of disk
+  accesses in searching in a file of 100 million records does not exceed 3.
+  Assume that the root's page is stored in main memory.
+
+
+  Using the tree height formula on pg 278:
+
+\(\lfloor log_{\lceil m/2 \rceil} \frac{n+1}{4}\rfloor + 1 \le 3
+
+   We know that n = 10000000, so solve find the smallest value of m that
+   satisfies the equation.
+
+   
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun pred (m)
+  "The above code in LISP form!!!"
+   (<= (+ 1 (floor (log (/ 100000001 4.0) (ceiling m 2.0)))) 3)) 
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; We know from the book that it must
+  ;; be greater than 250. See pg 278.
+  (loop for i from 250 to 1000
+        until (pred i)
+        finally return i)
+#+END_SRC
+
+#+RESULTS:
+: 585
+
+The answer is 585
+
+* DONE Exercise 6 on page 279
+  CLOSED: [2018-06-07 Thu 18:46]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 18:09]--[2018-06-07 Thu 18:46] =>  0:37
+  :END:
+
+  *a.* A /*top-down 2-3-4 tree*/ is a B-tree of order 4 with the following
+  modification of the /insert/ operation. Whenever a search for a leaf for a new
+  key encounters a full node (i.e., a node with three keys), the node is split
+  into two nodes by sending its middle key to the node's parent (or, if the full
+  node happens to be the root, the new root for the middle key is created).
+  Construct a top-down 2-3-4 tree by inserting the following list of keys in the
+  initially empty tree:
+
+  10, 6, 15, 31, 20, 27, 50, 44, 18.
+
+  Insert 10:
+
+#+BEGIN_EXAMPLE 
+             (10)
+#+END_EXAMPLE
+
+Insert 6:
+
+#+BEGIN_EXAMPLE  
+            (6)-(10)
+#+END_EXAMPLE
+
+Insert 15:
+
+#+BEGIN_EXAMPLE
+           (6)-(10)-(15)
+#+END_EXAMPLE
+
+Insert 31:
+
+#+BEGIN_EXAMPLE  
+            (10)
+           /    \
+          (6)  (15)-(31) 
+#+END_EXAMPLE
+
+Insert 20:
+
+#+BEGIN_EXAMPLE 
+           (10)
+           /  \
+          (6) (15)-(20)-(31)
+#+END_EXAMPLE
+
+Insert 27:
+
+#+BEGIN_EXAMPLE 
+          (10)-(20)
+         /    |    \
+       (6)   (15) (27)-(31)
+#+END_EXAMPLE
+
+Insert 50:
+
+#+BEGIN_EXAMPLE  
+       (10)-(20)
+      /    |    \
+     (6)  (15)  (27)-(31)-(50)
+#+END_EXAMPLE
+
+Insert 44
+
+#+BEGIN_EXAMPLE 
+     (10)-(20)-(31)
+    /   |     |    \
+  (6)  (15)  (27)  (44)-(50) 
+#+END_EXAMPLE
+
+Insert 18:
+
+#+BEGIN_EXAMPLE 
+        (20)
+       /    \
+    (10)     __ (31)
+    /   \        |    \
+(6)  (15)-(18) (27)  (44)-(50)
+#+END_EXAMPLE
+
+
+  *b.* What is the principal advantage of this insertion procedure compared with
+  the one used for 2-3 trees in Section 6.3? What is its disadvantage?
+
+The advantage of this method is the fact that if inserting into a full node, you
+are guaranteed that the parent node has room for the split node. This prevents a
+cascading split up the tree. This means you will only need to propagate one
+level up the tree.
+
+The disadvantage is that you could split a node tree unnecessarily. This means that
+we could end up with a tree that is taller than needed. For instance, the
+example in part *a* splits the tree one more time than necessary. We could have
+had a height of 2, but because we split the root node before inserting we have 
+a height of 3. 
+
+* DONE Non-book Exercise
+  CLOSED: [2018-06-07 Thu 17:44]
+  :LOGBOOK:
+  CLOCK: [2018-06-07 Thu 17:26]--[2018-06-07 Thu 17:44] =>  0:18
+  :END:
+
+  The birthday problem is implemented in the following code. Study it, then
+  answer the question, why does this code not give 23 as the answer?
+
+#+BEGIN_SRC elisp :results silent
+  (require 'cl)
+
+  (defun birthday-problem (&optional max-num)
+    (if (null max-num) (setq max-num 10000))
+    (let ((num-days-in-year 365)
+          (grand-sum 0) ;; 
+          (n 0)
+          A counter)0
+      (loop repeat max-num
+            do (setq A (make-vector num-days-in-year 0)
+                     counter 0)
+            (loop until (= 2 (elt A n))
+                  do (setq n (random num-days-in-year))
+                  (incf (elt A n))
+                  (incf counter))
+            (incf grand-sum counter))
+      (ceiling (/ grand-sum (float max-num)))))
+#+END_SRC
+
+  Call it with the default max-num of 10000:
+
+#+BEGIN_SRC emacs-lisp
+  (birthday-problem 150)
+#+END_SRC
+
+#+RESULTS:
+: 23
+
+This function is not just calculating the probability, it is actually simulating
+the scenario. The function loops max-num times and simulates finding people with
+matching birthdays each iteration. Each iteration, a vector A of 365 0s is
+created and a counter reset. A new loop is then entered which will randomly
+select an element from the vector A and increment that element and the counter.
+If that element is then equal to two, we have found two random people with the
+same birthday. The count of how many iterations it took before this occurred is
+added to the grand-sum, and after max-num iterations of this process, the function
+returns the average amount of people necessary before a matching birthday was found. 
+
+That is why the function does not always produce 23. Because with 23 people
+there is only a 50% chance of two individuals sharing the same birthday, this
+function will sometimes take more than that, increasing the amount of iterations
+necessary to find a match. Additionally, the function returns the ceiling of the
+average, which means that even if the average is 23.0000000000000000001, it will
+return the answer of 24. As you can see however, it is possible to get the
+answer 23. 
+
+
+* DONE Ponder AND PROVE Metacognitive Miscalibration
+  CLOSED: [2018-06-09 Sat 15:17]
+  :LOGBOOK:
+  CLOCK: [2018-06-09 Sat 14:50]--[2018-06-09 Sat 15:17] =>  0:27
+  CLOCK: [2018-06-08 Fri 20:50]--[2018-06-08 Fri 21:42] =>  0:52
+  :END:
+
+  Ponder more about the ramifications of the article /Prepare Your Mind For
+  Learning/ by Smith, Moores and Chang. Prove it has sunk deep into your mind by
+  writing a paragraph or two responding to the following two questions:
+
+  1. How has reading/pondering this article changed me?
+
+     I reread the article 2 times this week so that I had time to really try and
+     absorb the information. I really tried to focus on defining which type of learner
+     I am, and at what level of ignorance I would classify myself. 
+  
+     When it comes to Computer Science and programming, I think I would fall in
+     between a dabbler and an obsessive (an obsessive dabbler?). I have always
+     loved learning, especially about topics that I find very interesting. If I
+     find a new subject matter that piques my curiosity, I typically dive in
+     head first and try to absorb as much as I can. That being said, I generally
+     plateau or burn out rather quickly. I have experienced the burnout
+     described in the text several times, and it is not what I would call a
+     positive experience.
+
+     As I've grown older and more experienced, I do think that I have started to
+     understand the weaknesses in my learning approach. All three of the DM
+     classes that I've taken have really helped me in that aspect. I have found
+     them very enjoyable, but also very challenging. I have had to adapt my
+     approach to problem solving to meet the challenges presented to me. This
+     article has really brought those changes to light, and has been very
+     thought provoking. I have started to notice not only when I make statements
+     that indicate MM, but also in the language of those around me. I would be
+     lying if I said that I have completely changed my mindset and completed a
+     180^o shift in my level of ignorance. However, I think in the very least, I
+     am aware that I was often unaware of my own ignorance. I think this is a crucial 
+     first step to begin climbing the ladder of ignorance. 
+
+  2. How does this apply to the task of Week 03 reproduced below?
+
+     As I was thinking about which classification of learner I was when
+     attempting to solve the Ten Number problem from last week. I think that as
+     a group, we acted as hackers. We attempted to solve the problem with all
+     the tools in our tool box, and when it produced not results, we were
+     content to sit back satisfied with our efforts. We accepted that we would
+     need to learn more or gain a new insight before we were able to solve the
+     problem. That acceptance has pushed us towards a new learning approach,
+     that of mastery I hope. I know that I am on a plateau, and I am trying my best
+     to solidify the knowledge I have now to prepare me to gain the knowledge necessary
+     to solve this problem. 
+
+     Most things we learn are supported by the truths we already know. Although
+     I may not be able to make the connection from what we are learning now to
+     the presented problem, I am sure that it will serve as a base to build upon
+     until I finally am ready and equipped to tackle the problem.
+
+* DONE Ponder AND PROVE Ten Numbers
+  CLOSED: [2018-06-09 Sat 15:26]
+  :LOGBOOK:
+  CLOCK: [2018-06-09 Sat 15:19]--[2018-06-09 Sat 15:26] =>  0:07
+  :END:
+
+  | 8512388977 |
+  | 3879812591 |
+  | 8496958798 |
+  | 6127538570 |
+  | 5988858046 |
+  | 1153456347 |
+  | 4124112452 |
+  | 2771040826 |
+  | 8847666059 |
+  | 2727767664 |
+
+** What is The Question?
+   :LOGBOOK:
+   CLOCK: [2018-06-09 Sat 15:19]--[2018-06-09 Sat 15:19] =>  0:00
+   :END:
+
+   Whatever it is, it was inspired by the [[http://scriptures.lds.org/en/abr/fac_2][Book of Abraham, Facsimile No. 2, explanation of Figure 11]].
+
+   /If the student can find out these numbers, so let it be .../
+
+
+   I do not know what the question is, but I know what type of question would work best with 
+   the question answering hologram: yes or no questions (Type II). I know that I require more
+   knowledge before I will be properly equipped to answer this question. I also know that there
+   may be more types of questions revealed in the future which will help me gain that knowledge. 
+
+
+** Questions From Class
+
+ I. 1. What should we have to get further towards a solution?
+
+ II. 2. If we knew more numbers, would it help us more? 
+
+ II. 3 Is the Book of Abraham of any help? 
+
+ II. 4. Is their significance to there being 10 digits in 10 numbers?
+
+ II. 5. Are there any valuable ways of subsetting these numbers? 
+
+ I. 7. Should we be aware of or concerned with other representations of these numbers? 
+
+ I. 8. Is is treally just inspired by ... Or something else?
+
+ I. 9 Is there a direct link between the article and the 10 numbers? 
+
+ II. 10. Are we able at this time to determine what these numbers mean? 
+
+ II. 11. Should we be able to find a solution this week?
+
+
+
+ III. Mystery????
+ II. Yes or no questions
+ I. More complex questions. 
+
+

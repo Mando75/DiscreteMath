@@ -1,0 +1,148 @@
+#+TITLE: Memory Functions
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Fibonacci and C++
+
+#+BEGIN_SRC C++ :results output
+#include <ctime>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <sys/time.h>
+using namespace std;
+
+/*
+ * The famous fibonacci function, recursive version.
+ */
+long fibonacci(long n)
+{
+   if (n == 0 || n == 1)
+   {
+      return n;
+   }
+   else
+   {
+      return (fibonacci(n - 1) + fibonacci(n - 2));
+   }
+}
+
+void testFibonacci()
+{
+   clock_t start = clock();
+   long fib42 = fibonacci(42);
+   clock_t finish = clock();
+   cout << "\nTo compute fibonacci(42) = " << fib42
+        << "\nrecursively took\n\n"
+        << setprecision(5) << setw(4) << (finish - start) / (double) CLOCKS_PER_SEC
+        << " seconds.\n\n";
+   cout << "-------------------------\n" << endl;
+}
+
+long fibmem[100] = {0};
+
+/*
+ * A "memory-function" implementation of the fibonacci function.
+ */
+long memFuncFibonacci(long n)
+{
+   if (fibmem[n] == 0)
+   {
+      if (n == 0 || n == 1)
+      {
+         fibmem[n] = n;
+      }
+      else
+      {
+         fibmem[n] = (memFuncFibonacci(n - 1) + memFuncFibonacci(n - 2));
+      }
+   }
+   return fibmem[n];
+}
+
+void testMemFuncFibonacci()
+{
+   long double usec1;
+   long double usec2;
+   long double elapsed;
+   timeval start;
+   timeval finish;
+   long fib42;
+
+   gettimeofday(&start, NULL);
+   fib42 = memFuncFibonacci(42);
+   gettimeofday(&finish, NULL);
+   usec1 = (long double) (start.tv_sec) +
+      (long double) (start.tv_usec / 1000000.0f);
+   usec2 = (long double) (finish.tv_sec) +
+      (long double) (finish.tv_usec / 1000000.0f);
+   elapsed = usec2 - usec1;
+
+   cout.setf(ios::fixed);
+   cout << "To compute fibonacci(42) = " << fib42
+        << "\nwith a memory function took\n\n"
+        << setprecision(11) << setw(13) << elapsed
+        << " seconds.\n\n";
+   cout << "-------------------------\n" << endl;
+}
+
+/*
+ * Run tests.
+ */
+int main()
+{
+   testFibonacci();
+   testMemFuncFibonacci();
+}
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+To compute fibonacci(42) = 267914296
+recursively took
+
+2.4455 seconds.
+
+-------------------------
+
+To compute fibonacci(42) = 267914296
+with a memory function took
+
+0.00000000000 seconds.
+
+-------------------------
+#+end_example
+
+* What about ELisp?
+
+The Knapsack Problem example from 8.2 on page 294 and 295:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+
+  (setq Values [0 12 10 20 15] Weights [0 2 1 3 2] F (make-vector 5 nil))
+
+  (loop for i from 0 to 4
+        do (setf (aref F i) (make-vector 6 0)))
+
+  (loop for i from 1 to 4
+        do (loop for j from 1 to 5
+           do (setf (aref (aref F i) j) -1)))
+
+  (defun MFKnapsack (i j)
+    (let ((value 0))
+      (if (< (aref (aref F i) j) 0)
+          (progn
+            (setq value
+                  (if (< j (aref Weights i))
+                      (MFKnapsack (1- i) j)
+                    (max (MFKnapsack (1- i) j)
+                         (+ (aref Values i) (MFKnapsack (1- i) (- j (aref Weights i)))))))
+            (setf (aref (aref F i) j) value)))
+      (aref (aref F i) j)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (MFKnapsack 4 5)
+#+END_SRC

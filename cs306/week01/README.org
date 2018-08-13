@@ -1,0 +1,20 @@
+#+TITLE: README for Week 01
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* Chapter 1 Introduction 
+
+  Read the following by way of review:
+
+** [[file:introduction-to-algorithms.org][Introduction to Algorithms]]
+
+** [[file:algorithmic-problem-solving.org][Algorithmic Problem Solving]]
+
+** [[file:algorithmic-thinking.org][Algorithmic Thinking]]
+
+* Chapter 2 Fundamentals of the Analysis of Algorithm Efficiency
+
+** [[file:pa01.org][Preparation Assessment]] 
+
+** [[file:wa01.org][Weekly Assignment]]

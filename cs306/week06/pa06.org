@@ -1,0 +1,120 @@
+#+TITLE: Preparation Assessment 06
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-05 Tue 19:39]
+| Headline               |   Time |
+|------------------------+--------|
+| *Total time*           | *1:19* |
+|------------------------+--------|
+| Answer What is True    |   0:41 |
+| Answer Which Is Better |   0:36 |
+| Answer Why Better      |   0:02 |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-06-04 Mon 23:18]
+  :LOGBOOK:
+  CLOCK: [2018-06-04 Mon 22:37]--[2018-06-04 Mon 23:18] =>  0:41
+  :END:
+  You know what to do:
+
+  - [X] I know that *input enhancement* is the idea of preprocessing some or all
+    of a problem\rsquo{}s input, and storing the additional information obtained to
+    accelerate solving the problem afterward.
+  - [X] I know why it is *false* to say that the two principal resources of time
+    and space compete with each other in *all* design situations.
+    
+    - They can align to bring an algorithmic solution that minimizes both the
+      running time and the space consumed
+
+  - [X] I know why sorting by distribution counting is more efficient than
+    quicksort.
+
+    - pg 257
+     
+  - [X] I know why it is *false* to say that data compression is a typical
+    space-time tradeoff.
+
+    - pg 254
+
+  - [X] I know that *prestructuring* creates structures that allow faster and/or
+    more flexible access to data.
+  - [X] I know why it is *false* to say that these prestructured structures
+    typically use less space than otherwise required.
+
+    - uses *extra* space to facilitate a faster and/or more flexible access to
+      the data
+
+  - [X] I know that hashing enables, on average, constant-time searching,
+    insertion, and deletion.
+  - [X] I know how to answer the following question and am prepared to give a
+    good reason for my answer by referencing a real-world implementation of a
+    hash function:
+
+* DONE Answer Which Is Better
+  CLOSED: [2018-06-05 Tue 19:39]
+  :LOGBOOK:
+  CLOCK: [2018-06-05 Tue 19:13]--[2018-06-05 Tue 19:37] =>  0:24
+  CLOCK: [2018-06-04 Mon 23:23]--[2018-06-04 Mon 23:31] =>  0:08
+  CLOCK: [2018-06-04 Mon 23:19]--[2018-06-04 Mon 23:23] =>  0:04
+  :END: 
+
+  Which hash function is better for a key that is a character string? (The
+  parameter m is the modulus, the size of the hash table.)
+
+  - [ ] =hash-function-1=
+  - [X] =hash-function-2=
+
+#+BEGIN_SRC elisp :results silent
+    (require 'cl)
+
+    (defun hash-function-1 (key m)
+      (mod (loop for c across key sum c) m))
+
+    (defun hash-function-2 (key m)
+      (loop with h = 0
+            for c across key do (setq h (+ (* h 31) c))
+            finally return (mod h m)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq lowercase
+  '("ab" "bc" "cd" "dc" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z")
+  twentysix (make-list (length lowercase) 26))
+  
+  (list (mapcar* 'hash-function-1 lowercase twentysix)
+        (mapcar* 'hash-function-2 lowercase twentysix))
+#+END_SRC
+
+#+RESULTS:
+| 15 | 17 | 19 | 19 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 0 | 1 | 2 |
+| 15 | 17 | 19 | 19 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 0 | 1 | 2 |
+
+#+BEGIN_SRC emacs-lisp
+  (list (hash-function-1 "aa" 52)
+        (hash-function-2 "aa" 52))
+#+END_SRC
+
+#+RESULTS:
+| 38 | 36 |
+
+* DONE Answer Why Better
+  CLOSED: [2018-06-05 Tue 19:39]
+  :LOGBOOK:
+  CLOCK: [2018-06-05 Tue 19:37]--[2018-06-05 Tue 19:39] =>  0:02
+  :END:
+
+  Why is the hash function you chose better?
+
+  As far as my examination and testing showed, both functions should should
+  return identical values when given the same input of small size. They should
+  only begin to differ when the key is more than one character long. They only
+  begin to differ in value when character strings are greater than one character
+  long (with appropriate size included). 
+
+  I picked hash-function-2 as the better option because it will perform better
+  with larger keys. Although it may contain more operations than
+  hash-function-1, it has a better chance of creating unique hash values,
+  especially with larger values.

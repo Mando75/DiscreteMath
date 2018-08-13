@@ -1,0 +1,22 @@
+#+TITLE: README for Week 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* Chapter 2 Fundamentals of the Analysis of Algorithm Efficiency
+
+  Read the following by way of review:
+
+** [[https://firstthreeodds.org/17657741833134731255/algorithm-analysis-framework.pdf][Algorithm Analysis Framework]]
+
+** [[https://firstthreeodds.org/17657741833134731255/analyzing-recursive-algorithms.pdf][Analyzing Recursive Algorithms]]
+
+** [[file:compare-recursive-to-iterative.org][Compare Recursive to Iterative]]
+
+** [[file:empirical-analysis.org][Empirical Analysis]]
+
+* Chapter 3 Brute Force and Exhaustive Search
+
+** [[file:pa02.org][Preparation Assessment]]
+
+** [[file:wa02.org][Weekly Assignment]]

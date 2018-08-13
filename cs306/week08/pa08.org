@@ -1,0 +1,88 @@
+#+TITLE: Preparation Assessment 08
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-19 Tue 23:06]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:10* |
+|---------------------+--------|
+| Answer What is True | 1:10   |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-06-18 Mon 21:33]
+  :LOGBOOK:
+  CLOCK: [2018-06-19 Tue 23:00]--[2018-06-19 Tue 23:06] =>  0:06
+  CLOCK: [2018-06-18 Mon 20:28]--[2018-06-18 Mon 21:32] =>  1:04
+  :END:
+
+  - [X] I understand that the *greedy technique* suggests constructing a
+    solution to an optimization problem through a sequence of steps, each
+    expanding a partially constructed solution obtained so far, until a complete
+    solution to the problem is reached.
+
+    - pg 315, last paragraph
+
+  - [X] I know why it is *false* to say that on each step of a greedy algorithm,
+    the choice made must be *feasible*, *globally optimal*, and *irrevocable*.
+
+    *feasible* *locally optimal* *irrevocable*
+
+  - [X] I know why it is *false* to say that Prim\rsquo{}s and Kruskal\rsquo{}s algorithms are
+    two different greedy algorithms for constructing minimum spanning trees of
+    weighted *unconnected* graphs. 
+
+    Connected graphs. Also, you can't have a minimum spanning tree if the graph
+    is unconnected.
+
+  - [X] I know why it is *false* to say that the problem of scheduling *n* jobs
+    of unknown durations for execution by a single processor is ideal for
+    solution with a greedy algorithm.
+
+    An ideal solution to this problem but with *known* execution duration times
+    is ideal for a greedy algorithm.
+
+  - [X] I want to learn how a greedy algorithm can be used to find an optimal
+    set of *n* weights so that it would be possible to weigh on a balance scale
+    any integer load in the largest possible range from 1 to W, provided weights
+    can be put only on the free cup of the scale, or provided weights can be put
+    on both cups of the scale.
+
+    Exercise 9.1.8
+
+  - [X] I remember what a digraph is.
+
+    Directed Graph
+
+  - [X] I know that Dijkstra’s algorithm solves the single-source shortest-path
+    problem of finding shortest paths from a given vertex (the source) to all
+    the other vertices of a weighted graph or digraph.
+
+    pg 333-335
+
+  - [X] I know that Dijkstra\rsquo{}s algorithm works like Prim’s algorithm but
+    compares path lengths rather than edge lengths.
+
+  - [X] I know why Dijkstra’s algorithm always yields a correct solution for a
+    graph with nonnegative weights.
+
+    pg 333 second to last paragraph
+
+  - [X] I know that a Huffman tree is a binary tree that minimizes the weighted
+    path length from the root to the leaves of predefined weights.
+  - [X] I know that the most important application of Huffman trees is Huffman
+    codes.
+  - [X] I know that a Huffman code is an optimal prefix-free variable-length
+    encoding scheme that assigns bit strings to symbols based on their
+    frequencies in a given text.
+  - [X] I know that a Huffman code is created by a greedy construction of a
+    binary tree whose leaves represent the alphabet symbols and whose edges are
+    labeled with 0’s and 1’s.
+
+    I did a lot of Huffman coding things in DM2. 
+
+    See https://github.com/rmn97152/mul13001/blob/master/week08/wa08.org
+    and https://github.com/rmn97152/mul13001/blob/master/week09/wa09.org
+

@@ -1,0 +1,33 @@
+#+TITLE: Preparation Assessment 04 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers                                                   :crypt:
+  :PROPERTIES:
+  :CRYPTKEY: dm3pa04key
+  :END:
+-----BEGIN PGP MESSAGE-----
+
+hQIMA5IJj6yEABsHAQ//YTDUQh/NXmx9Xyh7nIiULa+drySf0NxrO1Q4jJPFl4+K
+bzES4rcKftAxYwhjAPTqJ+kIIUneiYLskH0NWfp+PCAzKvdhU++VlQCo7B1KeC7K
+Uw3srCFcUy5Mv3gPcB8RZMAhj5Ye7SuoudtmOSgOUl2vbPsijlzvuLZMmGlwffqO
+/vlzrlKF17FWsf2NyRsUvZNBFNDpa/VfSNER0uBCUKrb/s9WVX0hDDImj+SOcn3l
+P5f9H4LWIfNOcrvqEAkq3CmJnAoGFWRFIccYI8cuTBtFEACpbaTbEi17zRKhJSTg
+1nSQmZavAj4f1/thQBjo/zZ819Qp857dt3i2RaocSMWeULIzoq7XYgZJYF5GhYy1
+CYL7hXDOLbpFA34Nizuo1HYQWqmVUCmi79YoqregBcb5H2cQ3mCp6c6H2sAaUb7D
+QboI5U6ZwJZoEGkzDC0VfosR/Z+UQbjeAmASGbsc94Rx+Vz6k/EA2AA7S23cuYpj
+Qavl4/+YnQPa/O1ymEgn3cU/3bRmauIWDIRjsSjwYKlbl8EJ5Z0KXFYnWg+WAjcZ
+92lVhDYu2LOmXBjtuPAefdxtNk+p/irwwkMFtd0EaLmT4XWIlynjiMRS5iRW5TVp
+T1D9rwWYKlD8Zg6CyU+czPkR7iFtpCQCvKYS/rMMLE+OZaUnEzFrO6YE3wmecqHS
+wMsBkOL08+LTkAmsH7tYW6kzL9UXkFFBELOkA6bUTEa0R9p61kNx+WMNokm0yXix
+5xttXlZH43oGODALY9GZnunjZ2JBXcShxhj3YkVQoiQgJEwhxLAQp2O8BLrdqZ28
+dDSr3A33XOSBf7WrFp/xSHR2kgeUXwxCS60W0SN3vkneSQUCdagHgYA3ccON6Kqc
+mptMeHIl5tMDtvyipGmt4kaXZxxDEtc1BsLEf3XShQQFS9EqQjFS2l2cfJw62oPF
+EXKlTJroBUxxMvk3NHKW3ivlbNHH1bMVoVihQJYwjvt/o5jgUVgD6YIr2L2+tcNd
+Cjb+NKqyWF9WS4MOuPNzYEsNSqw21/bc9GnutjbooAyhoZIPNedQ4zA6KHkhy4J2
+jNnCbRQ6p6l4ZCHKe+F1ZsIR/X0X0HL/iCwfi5jXmjvFNxRMLEl1qn6k03SyBG3/
+jraThDo+XkMTwvtRvq6ElW6trL7ZEGIawq7FUdk1WcFvS4A5LbChmg1AN8UHiv2e
+NqGzVrW7v6PSrejO9w==
+=3/UA
+-----END PGP MESSAGE-----

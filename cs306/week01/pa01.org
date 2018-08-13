@@ -1,0 +1,122 @@
+#+TITLE: Preparation Assessment 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t ':t
+#+STARTUP: showeverything
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-01 Tue 20:06]
+| Headline                                    |   Time |      |
+|---------------------------------------------+--------+------|
+| *Total time*                                | *2:54* |      |
+|---------------------------------------------+--------+------|
+| Answer What is True                         |   2:14 |      |
+| Grasp Using Limits for Establishing...      |   0:40 |      |
+| \_  Fill in the blanks from your Chapter... |        | 0:03 |
+| \_  Be prepared to demonstrate this...      |        | 0:37 |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-04-30 Mon 21:58]
+  :LOGBOOK:
+  CLOCK: [2018-05-01 Tue 20:06]--[2018-05-01 Tue 20:06] =>  0:00
+  CLOCK: [2018-04-30 Mon 20:59]--[2018-04-30 Mon 21:57] =>  0:58
+  CLOCK: [2018-04-30 Mon 16:52]--[2018-04-30 Mon 17:32] =>  0:40
+  CLOCK: [2018-04-30 Mon 08:12]--[2018-04-30 Mon 08:48] =>  0:36
+  :END:
+
+  If you can truthfully assert any of the following, you know what to do.
+
+  - [X] I know that an algorithm's time efficiency is principally measured as a
+    function of its input size by counting the number of times its basic
+    operation is executed.
+  - [X] I understand why it is *false* to say that a *basic operation* of an
+    algorithm is the operation that contributes *least* toward the algorithm's
+    running time.
+  - [X] I understand that the established framework for analyzing an algorithm's
+    time efficiency is primarily grounded in the order of growth of the
+    algorithm's running time as its input size goes to infinity.
+  - [X] I will ponder the idea that the main tools for analyzing the time
+    efficiency of a nonrecursive algorithm are to set up a sum expressing the
+    number of executions of its basic operations and then to ascertain the sum's
+    order of growth.
+  - [X] I understand how the succinctness of a recursive algorithm may mask its
+    inefficiency.
+  - [X] I understand that there are several algorithms for computing the
+    Fibonacci numbers with drastically different efficiencies.
+  - [X] I will ponder the idea that the main tools for analyzing the time
+    efficiency of a recursive algorithm are to set up a recurrence relation
+    expressing the number of executions of its basic operations and then to
+    ascertain the solution's order of growth.
+  - [X] I know that *empirical analysis* is applicable to any algorithm.
+  - [X] I know why it is *false* to say that *Algorithm Visualization*, or the
+    use of images to convey useful information about algorithms, has three
+    principal variations.
+
+    research education
+
+  - [X] I discovered a web site devoted to algorithm visualization/animation.
+
+  visualgo
+
+
+* DONE Grasp Using Limits for Establishing Rate of Growth
+  CLOSED: [2018-04-30 Mon 20:27]
+
+** DONE Fill in the blanks from your Chapter 2 reading. 
+   CLOSED: [2018-04-30 Mon 17:35]
+   :LOGBOOK:
+   CLOCK: [2018-04-30 Mon 17:32]--[2018-04-30 Mon 17:35] =>  0:03
+   :END:
+
+   \[\lim_{n \rightarrow \infty} \frac{t(n)}{g(n)} = \left\{\begin{array}{rll}
+    0      & \rightarrow &\mbox{the order of growth of $t(n)$ /is smaller than/ the order of growth of $g(n)$}\\
+    c>0    & \rightarrow &\mbox{the order of growth of $t(n)$ /is the same as/ the order of growth of $g(n)$}\\
+    \infty & \rightarrow &\mbox{the order of growth of $t(n)$ /is larger than/ the order of growth of $g(n)$}\\
+     \end{array}\right.\]
+
+** DONE Be prepared to demonstrate this method for the three examples below.
+   CLOSED: [2018-04-30 Mon 20:27]
+   :LOGBOOK:
+   CLOCK: [2018-04-30 Mon 20:06]--[2018-04-30 Mon 20:27] =>  0:21
+   CLOCK: [2018-04-30 Mon 18:04]--[2018-04-30 Mon 18:20] =>  0:16
+   :END:
+   
+   \[\begin{array}{lcl}
+     t(n) & vs. & g(n) \\ \hline
+     10n  & & 2n^2 \\
+     n(n+1)/2 & & n^2 \\
+     \log_{b}n & & \log_{c}n 
+     \end{array}\]
+
+   Hint: L'H\ocirc{}pital's rule says:
+
+   \[\lim_{n \rightarrow \infty} \frac{t(n)}{g(n)} = \lim_{n \rightarrow \infty} \frac{t^{\prime}(n)}{g^{\prime}(n)}\]
+
+*** Example 1
+    \[lim_{n\rightarrow\infty}   \frac{10n}{2n^2}\]
+
+    \[lim_{n\rightarrow\infty} \frac{5}{x} \]
+
+    = 0
+
+    Growth order is smaller
+    
+*** Example 2
+    \[lim_{n\rightarrow\infty} \frac{n(n+1)/2}{n^2}\]
+
+    \[lim_{n\rightarrow\infty} \frac{(n^2 + n)/2}{n^2}\]
+
+    \[lim_{n\rightarrow\infty} \frac{n^2 + n}{2n^2} \]
+    
+    By rules of limits, \[lim_{n\rightarrow\infty} \frac{n^2 + n}{2n^2} \] = 1/2
+
+    Growth order is the same 
+    
+*** Example 3
+    \[lim_{n\rightarrow\infty} \frac{log_b n}{log_c n}\]
+
+    \[\frac{ln c}{ln b} \]
+
+
+    Growth order is the same
+    
+    

@@ -1,0 +1,117 @@
+#+TITLE: Preparation Assessment 04
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-22 Tue 20:55]
+| Headline                                |   Time |      |
+|-----------------------------------------+--------+------|
+| *Total time*                            | *2:39* |      |
+|-----------------------------------------+--------+------|
+| Answer What is True                     |   0:49 |      |
+| Extra credit problems                   |   1:50 |      |
+| \_  Exercise 10                         |        | 1:19 |
+| \_  Prove Coin Flip Recurrence Relation |        | 0:31 |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-05-22 Tue 09:08]
+  :LOGBOOK:
+  CLOCK: [2018-05-21 Mon 20:59]--[2018-05-21 Mon 21:48] =>  0:49
+  :END:
+
+  You know what to do:
+
+  - [X] I know why it is *false* to say that *divide-and-conquer* is a general
+    algorithm design technique that starts solving a problem's instance by
+    dividing it into several smaller instances, ideally of unequal size.
+  - [X] I know that [[file:the-master-theorem.org][the *Master Theorem*]] establishes the order of growth of the
+    solutions to the general recurrence *T(n) = aT(n/b) + f(n)* that the running
+    time of many divide-and-conquer algorithms satisfies.
+  - [X] In addition, I know why it is *false* to say that the Master Theorem
+    gives *explicit* solutions to this general recurrence.
+  - [X] I know that *mergesort* and *quicksort* are two divide-and-conquer
+    sorting algorithms both of whose best-case time efficiency is \ldquo{}linear
+    logarithmic\rdquo.
+  - [X] I know that *decrease-and-conquer* might be considered a degenerate case
+    of *divide-and-conquer*, but it is better to consider them as two different
+    design paradigms.
+  - [X] I know how to fill in the table below, that is, I can compare (by
+    matching the correct phrase with an X in the correct table cell, only one X
+    per each row and per each column) the orders of growth of two functions g(n)
+    and f(n) when the ratio of g(n) to f(n), (i.e., g(n)/f(n), in the limit as n
+    goes to infinity), approaches zero, or else some positive constant, or else
+    infinity.
+
+  #+ATTR_HTML: :border 2 :rules all :frame border
+  | /                                | <>               | <>                | <>                |
+  |----------------------------------+------------------+-------------------+-------------------|
+  | ratio of                         | g(n)             | g(n)              | g(n)              |
+  | g(n) to f(n) (i.e., g(n) / f(n)) | grows as fast as | grows faster than | grows slower than |
+  | approaches                       | f(n)             | f(n)              | f(n)              |
+  |----------------------------------+------------------+-------------------+-------------------|
+  | zero                             |                  |                   | X                 |
+  |----------------------------------+------------------+-------------------+-------------------|
+  | some positive constant           | X                |                   |                   |
+  |----------------------------------+------------------+-------------------+-------------------|
+  | infinity                         |                  | X                 |                   |
+  |----------------------------------+------------------+-------------------+-------------------|
+
+
+
+* DONE Extra credit problems
+  CLOSED: [2018-05-22 Tue 20:53]
+  
+** DONE Exercise 10 
+   CLOSED: [2018-05-22 Tue 20:23]
+   :LOGBOOK:
+   CLOCK: [2018-05-22 Tue 19:04]--[2018-05-22 Tue 20:23] =>  1:19
+   :END:
+
+   *a* Algorithm
+
+Assuming the fake coin is lighter:
+#+Begin_verse 
+//// ALGORITHM fcf(c, n)
+//// Finds the fake coin in a set of coins
+//// INPUT c = list of coins
+//// INPUT n = size of c
+//// OUTPUT f = index of the fake coin if any
+*if* n < 3
+   *return* min(w(c))
+*else*
+   *split* c into 3 subsets of equal size floor(n/3) c_1, c_2, c_3
+   r \leftarrow any remaining coins. (Size of r is  % 3)
+  *if* w(c_1) = w(c_2) = w(c_3)
+    fcf(r,(n%3))
+  *else* 
+    fcf(min(w(c_1), w(c_2), w(c_3)), floor(n/3)
+#+End_verse
+
+
+   *b* Recurrence Relation
+
+      W(floor(n/3)) + 1
+
+   *c* 
+
+   log_2 n / log_3 n = 1.6 
+
+   
+** DONE Prove Coin Flip Recurrence Relation
+   CLOSED: [2018-05-22 Tue 20:53]
+   :LOGBOOK:
+   CLOCK: [2018-05-22 Tue 20:23]--[2018-05-22 Tue 20:54] =>  0:31
+   :END:
+
+  Worst case:
+   W (n) = W (n/2) + 1 for n > 1, and n % 2 != 0
+   Best case:
+   W (1) = 0.
+
+   W (n) = W(n/2) + 1 
+
+   \rarr W (W(n/4) + 1) + 1) = W(W(n/4)) + 2
+   \rarr W (W (W (n/8))) + 3 
+
+   so W(n) = W(n/2^k) + k

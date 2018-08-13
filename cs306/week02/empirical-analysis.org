@@ -1,0 +1,346 @@
+#+TITLE:  Empirical Analysis
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* What is Empirical Analysis?
+
+  - /Empirical/ means based on experimental data, not on a theory.
+  - It means originating in or based upon observation or experience; capable of
+    being verified or disproved by observation or experiment;
+  - It is derived from observation, experience or experiment rather than from
+    conjecture, hypothesis or theory.
+
+  So, empirical information is based on perception with the five senses rather
+  than thinking and rationalism. In other words, it is based on /practical/
+  experience. It is often called /benchmarking/ (as, for example, in the
+  appendix by Russell and Norvig you will shortly see).
+
+** General Plan for Empirical Experimentation
+
+   1. Understand the experiment's purpose.
+   2. Decide on the efficiency metric *M* to be measured and the measurement
+      unit (an operation's count or a time unit).
+   3. Decide on characteristics of the input sample (its range, size, and so
+      on).
+   4. Prepare a program implementing the algorithm (or algorithms) for the
+      experimentation.
+   5. Generate a sample of inputs.
+   6. Run the algorithm (or algorithms) on the sample's inputs and record the
+      data observed.
+   7. Analyze the data obtained.
+
+   For example, the sample code below shows how C++ can be instrumented to
+   perform timing measurements on a couple of sorting algorithms. Refresh your
+   memory on how to [[http://orgmode.org/manual/Extracting-source-code.html#Extracting-source-code][tangle]] the code from this .org file to start experimenting
+   with it.
+
+** Sample Code
+
+#+BEGIN_SRC C++ :tangle random.h
+#include <cstdlib>
+#include <ctime>
+
+class Random
+{
+public:
+   /*********************************************************
+    *
+    *    FUNCTION: Random
+    *
+    *  PARAMETERS: None
+    *
+    *     PURPOSE: Random constructor.  Sets the random number
+    *              seed to the current time.  The srand function
+    *              is provided by the cstdlib library and time
+    *              by the ctime library.
+    *
+    *              Passing NULL to the time function returns
+    *              the current time (in clock ticks) and this
+    *              is then passed to the srand function.
+    *
+    *       USAGE: Creates a Random instance (r1) that is used
+    *              to generate random numbers.
+    *
+    *              Random r1;
+    *
+    *********************************************************/
+   Random()
+   {
+      srand((int) time(NULL));
+   }
+
+   /*********************************************************
+    *
+    *    FUNCTION: nextInt
+    *
+    *  PARAMETERS: low - smallest number in range
+    *              high - largest number in range
+    *
+    *     PURPOSE: This function does the following:
+    *                1. Generate a real number between 0 and 1
+    *                   by calling rand() and dividing by
+    *                   the constant RAND_MAX + 1
+    *                2. Scale this number to the appropriate range
+    *                   size (high - low)
+    *                3. Truncate the value to an integer
+    *                4. Translate the number to the appropriate
+    *                   starting point.
+    *
+    *        USAGE: Assuming Random object r1 has been created,
+    *               this creates one random number between 1 and 50.
+    *
+    *                  num = r1.nextInt(1, 50);
+    *
+    *********************************************************/
+   int nextInt(int low, int high)
+   {
+      double d  = (double) rand() / ((double) RAND_MAX + 1);
+      int k = (int) (d * (high - low + 1));
+      return (low + k);
+   }
+};
+#+END_SRC
+
+#+BEGIN_SRC C++ :tangle timesort.cpp
+#include <iostream>
+#include <iomanip>
+#include "random.h"
+using namespace std;
+
+// Demonstrates sort algorithm timing.
+
+/*********************************************************
+ *
+ *    FUNCTION: sort1
+ *
+ *  PARAMETERS: data - an array of integers
+ *              n    - number of elements in the array to sort
+ *
+ *********************************************************/
+void sort1(int data[], int n)
+{
+   bool notsorted = true;
+   int temp;
+   int i;
+
+   while (notsorted)
+   {
+      notsorted = false;
+      for (i = 0; i < n; ++i)
+      {
+         if (data[i] > data[i+1])
+         {
+            temp = data[i];
+            data[i] = data[i + 1];
+            data[i + 1] = temp;
+            notsorted = true;
+         }
+      }
+   }
+}
+
+#define LOOP_LIMIT 1000
+
+bool slowCompare(int a, int b)
+{
+   // change the loop limit up or down...
+//   for (int i = 0; i < LOOP_LIMIT; i++);
+   return (a < b);
+}
+
+/*********************************************************
+ *
+ *    FUNCTION: sort2
+ *
+ *  PARAMETERS: data[] - array of data to be sorted
+ *              left   - left index of array
+ *              right  - right index of array
+ *
+ *********************************************************/
+void sort2(int data[], int left, int right)
+{
+   int i;
+   int j;
+   int pivot;
+   int temp;
+
+   if (left <= right)
+   {
+      pivot = data[(left + right) / 2];
+
+      i = left;
+      j = right;
+      do
+      {
+         while (slowCompare(data[i], pivot))
+         {
+            i++;
+         }
+         while (slowCompare(pivot, data[j]))
+         {
+            j--;
+         }
+         if (i <= j)
+         {
+            temp = data[i];
+            data[i] = data[j];
+            data[j] = temp;
+            i++;
+            j--;
+         }
+      } while (i < j);
+      sort2(data, left, j);
+      sort2(data, i, right);
+   }
+}
+#ifdef STANDALONE
+int main()
+{
+  int size;         // --- size of array
+  int* array;       // --- array containing random integers
+  Random r;         // --- random number generator object
+  clock_t start;    // --- time when algorithm starts
+  clock_t finish;   // --- time when algorithm finishes
+
+  cout << " Size      Sort #1      Sort #2" << endl;
+
+  for (size = 10000; size <= 50000; size+= 5000)
+  {
+     // --- create array with 'size' random integers
+     array = new int[size];
+     for (int i = 0; i < size; ++i)
+     {
+        array[i] = r.nextInt(1, 500);
+     }
+     cout << setw(5) << size;
+
+     // --- Find out how much time for first sort
+     start = clock();
+     sort1(array, size);
+     finish = clock();
+     cout << setprecision(5) << setw(13) << (finish - start) / (double) CLOCKS_PER_SEC;
+
+     // --- recreate array with new set of random integers
+     delete [] array;
+     array = new int[size];
+     for (int i = 0; i < size; ++i)
+     {
+        array[i] = r.nextInt(1, 500);
+     }
+
+     // --- Find out how much time for second sort
+     start = clock();
+     sort2(array, 0, size);
+     finish = clock();
+     cout << setprecision(5) << setw(13) << (finish - start) / (double) CLOCKS_PER_SEC
+          << endl;
+
+     delete [] array;
+  }
+
+  return 0;
+}
+#endif
+#+END_SRC
+
+#+BEGIN_SRC C++ :tangle sort.cpp
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+extern void sort2(int data[], int left, int right);
+
+void displayArray(int array[], int size)
+{
+   for (int i = 0; i < size; i++)
+   {
+      cout << array[i] << " ";
+   }
+   cout << endl;
+}
+
+int main(int argc, char* argv[])
+{
+    int i = 0;
+    int size = 0;
+    int data;
+    if (argc > 1)
+    {
+        size = atoi(argv[1]);
+    }
+    int array[size];
+
+    while (cin >> data)
+    {
+        array[i++] = data;
+    }
+    sort2(array, 0, size);
+    displayArray(array, size);
+
+    return 0;
+}
+#+END_SRC
+
+#+BEGIN_SRC C++ :tangle feedsort.cpp
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+const int DEFAULT_SIZE = 10;
+
+void displayArray(int array[], int size)
+{
+   for (int i = 0; i < size; i++)
+   {
+      cout << array[i] << " ";
+   }
+   cout << endl;
+}
+
+bool isDuplicate(int array[], int x)
+{
+   for (int i = 0; i < x; i++)
+   {
+      if (array[i] == array[x])
+      {
+         return true;
+      }
+   }
+   return false;
+}
+
+int main(int argc, char* argv[])
+{
+   int size = DEFAULT_SIZE;
+   int maxValue = size + 1;
+   (int) ((float) rand() / RAND_MAX * maxValue);
+
+   if (argc == 2)
+   {
+      size = atoi(argv[1]);
+      maxValue = size + 1;
+   }
+   else if (argc == 3)
+   {
+      size = atoi(argv[1]);
+      maxValue = atoi(argv[2]);
+   }
+
+   int* array = new int[size];
+
+   srand(time(NULL));
+   for (int i = 0; i < size;)
+   {
+      array[i] = (int) ((float) rand() / RAND_MAX * maxValue);
+//      if (! isDuplicate(array, i)) // too slow for large size
+      {
+         i++;
+      }
+   }
+   displayArray(array, size);
+
+   return 0;
+}
+#+END_SRC

@@ -1,0 +1,147 @@
+#+TITLE: Algorithmic Problem Solving
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP:   showeverything
+
+* Fundamentals
+
+  What are the Fundamentals of Algorithmic Problem Solving?
+
+  - Choice of Algorithms
+  - Assurance of Correctness of Algorithms
+  - Analysis of Algorithms
+
+** Choice of Algorithms
+
+*** What is an Algorithm-choosing Algorithm?
+
+    1. Understand the Problem.
+    2. Decide on:
+       - computational means,
+       - exact vs. approximate solving,
+       - data structure(s),
+       - algorithm design technique
+    3. Design an Algorithm
+    4. Check Correctness
+       - If not correct go to step 2 or 3
+    5. Analyze the Algorithm
+       - If not /good enough/ go to step 2 or 3
+    6. Code the Algorithm
+
+
+** Analysis of Algorithms
+
+  Questions to answer when deciding /good enough?/:
+
+  - Which algorithm takes the least amount of time?
+  - Which one takes the least amount of memory?
+  - Which is the easiest to program?
+
+  Choose an algorithm that best suits the circumstances!
+
+** Example: Euclid's GCD Algorithm
+
+   The Greatest Common Divisor (GCD) of two nonnegative, not-both-zero integers
+   /m/ and /n/, denoted /gcd(m, n)/, is defined as the largest integer that
+   divides both /m/ and /n/ evenly, i.e., with a remainder of zero.
+
+** Algorithm Correctness
+
+   Once an algorithm has been specified, you have to prove its correctness.
+
+   E.g., prove the equality \(gcd(m, n) = gcd(n, m\ \%\ n)\) 
+   for every pair of positive integers /m/ and /n/.
+
+   You must prove that the algorithm yields the required result for
+   *every* legitimate input in a finite amount of time.
+
+   How do you [[file:prove-the-correctness-of-euclids-gcd-algorithm.org][prove the correctness of Euclid's GCD algorithm]]?
+
+   With some algorithms it's easy to develop a proof of correctness.
+
+   Some can be quite complex.
+
+   A common method for proving correctness is mathematical induction.
+
+   Tracing the algorithm's operation for a few specific inputs does not prove its correctness!
+
+   To prove an algorithm incorrect you only need one input that causes it to fail!
+
+** Algorithm Analysis
+
+  - Time efficiency --- how fast the algorithm runs.
+  - Space efficiency --- how much memory the algorithm needs.
+  - Simplicity
+    - like Beauty, often in the eye of the beholder.
+    - Which is simplest of the three /gcd/ algorithms?
+  - Generality 
+    - of the problem the algorithm solves
+    - of the range of inputs it accepts
+
+  Why do we care about simplicity and generality?
+
+  - Example: relative primeness
+  - Example: finding the median
+
+** Broad Categories of Problems
+
+*** Sorting
+
+*** Searching
+
+*** String Processing
+
+*** Graph Problems
+
+  - Oldest and most interesting areas of algorithms.
+  - Graphs model a wide variety of real-life applications:
+    - transportation and communications networks
+    - project scheduling
+    - games
+    - estimation of the World Wide Web's diameter (maximum number of links one
+      needs to follow to reach one Web page from another by the most direct
+      route between them).
+
+**** Easy Graph Problems
+    - Shortest Path
+    - Minimum Spanning Trees
+
+**** Hard Graph Problems
+    - Traveling Salesperson
+    - Graph-Coloring
+
+*** Combinatorial Problems
+
+*** Problems that ask to find a combinatorial object
+
+    - permutation
+    - combination (subset)
+    - power set (set of all subsets)
+
+**** Are the most difficult problems in computing.
+
+     - number of combinatorial objects typically grows extremely fast
+     - no known algorithms for solving most of these problems in an acceptable
+       amount of time
+     - most computer scientists believe that such algorithms do not exist.
+
+*** Geometric Problems
+
+**** Deal with points, lines, and polygons
+     
+     - closest-pair problem --- find the two closest points in a set of points.
+     - convex hull problem --- find the smalles convex polygon that would
+       include all the points of a given set.
+
+*** Numerical Problems
+
+**** Involve mathematical objects of a /continuous/ nature:
+
+     - solving equations
+     - solving systems of equations
+     - computing definite integrals
+     - evaluating functions
+
+     Most of these types of problems can be solved only approximately.
+
+     Why?

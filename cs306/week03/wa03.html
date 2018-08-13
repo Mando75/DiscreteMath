@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-22 Tue 18:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Weekly Assignment 03</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bryan Muller" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Weekly Assignment 03</h1>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Clock summary at <span class="timestamp-wrapper"><span class="timestamp">[2018-05-19 Sat 14:02]</span></span></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Headline</th>
+<th scope="col" class="org-right">Time</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Total time</b></td>
+<td class="org-right"><b>11:38</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Exercise 7 on page 149</td>
+<td class="org-right">0:23</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise Converting C to Elisp</td>
+<td class="org-right">0:13</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 1 on page 166</td>
+<td class="org-right">1:06</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise 12 on page 167</td>
+<td class="org-right">1:10</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Exercise Your Google-Fu</td>
+<td class="org-right">0:01</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Ponder Ten Numbers</td>
+<td class="org-right">6:39</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&ensp;&ensp;Observations:</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">0:48</td>
+</tr>
+
+<tr>
+<td class="org-left">Ponder Metacognitive Miscalibration</td>
+<td class="org-right">0:34</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Notes</td>
+<td class="org-right">1:32</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&ensp;&ensp;Day 1</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">1:32</td>
+</tr>
+</tbody>
+</table>
+
+
+
+<p>
+Worked with:
+</p>
+
+<p>
+James Palmer
+Asa Skousen
+Matt Wyndham
+Jon Manoa
+Quade Morrison
+Bryan Müller 
+Zach Delano
+Adam Gehring
+</p>
+
+<div id="outline-container-org6fabe50" class="outline-2">
+<h2 id="org6fabe50"><span class="done DONE">DONE</span> Exercise 7 on page 149</h2>
+<div class="outline-text-2" id="text-org6fabe50">
+<p>
+Write pseudocode for a recursive algorithm for generating all
+\(2^n\) bit strings of length <i>n</i>.
+</p>
+
+<p class="verse">
+<b>ALGORITHM</b> <i>genBitStrings(n, str)</i><br />
+<i>/</i> Recursively finds and prints all bit strings<br />
+<i>/</i> of length n<br />
+<br />
+<i>/</i> Input: Integer <i>n = A non-negative integer</i><br />
+<i>/</i> Input: String <i>str = An empty string /<br />
+//</i> Output: Prints a list of strings of size n<br />
+<i>/</i> each containing one of the possible bitstrings of size n<br />
+<br />
+<b>if</b> <i>n</i> is greater than <i>0</i><br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;<i>genBitString(n - 1, str + "0")</i><br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;<i>genBitString(n - 1, str + "1")</i><br />
+<b>else</b><br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;print <i>str</i><br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4f6027f" class="outline-2">
+<h2 id="org4f6027f"><span class="done DONE">DONE</span> Exercise Converting C to Elisp</h2>
+<div class="outline-text-2" id="text-org4f6027f">
+<p>
+Convert this C code for doing Russian Peasant Multiplication into
+elisp.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #bc6ec5;">#include</span><span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">stdio.h</span><span style="color: #4f97d7;">&gt;</span>
+
+<span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">main</span><span style="color: #4f97d7;">()</span>
+<span style="color: #4f97d7;">{</span>
+   <span style="color: #ce537a; font-weight: bold;">long</span> <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">a</span>,<span style="color: #7590db;">b</span>,<span style="color: #7590db;">rim</span>;
+   <span style="color: #ce537a; font-weight: bold;">long</span> <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">sum</span>=<span style="color: #a45bad;">0</span>;
+
+   printf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"ENTER MULTIPLICAND: "</span><span style="color: #bc6ec5;">)</span>;
+   scanf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"%ld"</span>,&amp;b<span style="color: #bc6ec5;">)</span>;
+   printf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"ENTER MULTIPLIER: "</span><span style="color: #bc6ec5;">)</span>;
+   scanf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"%ld"</span>,&amp;a<span style="color: #bc6ec5;">)</span>;
+   <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #bc6ec5;">(</span>b&gt;=<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span>
+   <span style="color: #bc6ec5;">{</span>
+      rim=b%<span style="color: #a45bad;">2</span>;
+      b=b/<span style="color: #a45bad;">2</span>;
+      <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #2d9574;">(</span>rim==<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">{</span>
+   sum=sum+a;
+   printf<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"%ld\n"</span>, sum<span style="color: #67b11d;">)</span>;
+      <span style="color: #2d9574;">}</span>
+      a=a*<span style="color: #a45bad;">2</span>;
+   <span style="color: #bc6ec5;">}</span>
+   printf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"%ld\n"</span>,sum<span style="color: #bc6ec5;">)</span>;
+   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">0</span>;
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+
+<p>
+Hint:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>n <span style="color: #67b11d;">(</span>string-to-number <span style="color: #b1951d;">(</span>read-from-minibuffer <span style="color: #2d9574;">"ENTER NUMBER: "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>* <span style="color: #a45bad;">2</span> n<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">russian-peasant</span> <span style="color: #bc6ec5;">()</span>
+   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>b <span style="color: #b1951d;">(</span>read-number <span style="color: #2d9574;">"ENTER MULTIPLICAND: "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>a <span style="color: #b1951d;">(</span>read-number <span style="color: #2d9574;">"ENTER MULTIPLIER: "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>sum <span style="color: #a45bad;">0</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>rim <span style="color: #a45bad;">0</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+         <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #67b11d;">(</span>&gt;= b <span style="color: #a45bad;">1</span><span style="color: #67b11d;">)</span>
+                <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> rim <span style="color: #b1951d;">(</span>mod b <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span>
+                      b <span style="color: #b1951d;">(</span>/ b <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+                 <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #b1951d;">(</span>= rim <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span> 
+                     <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">progn</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> sum <span style="color: #bc6ec5;">(</span>+ sum a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                            <span style="color: #4f97d7;">(</span>print sum<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+                 <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> a <span style="color: #b1951d;">(</span>* a <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+         <span style="color: #2d9574;">(</span>print sum<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>russian-peasant<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org93844a3" class="outline-2">
+<h2 id="org93844a3"><span class="done DONE">DONE</span> Exercise 1 on page 166</h2>
+<div class="outline-text-2" id="text-org93844a3">
+<p>
+<b>a.</b> If we measure an instance size of computing the greatest common
+divisor of <i>m</i> and <i>n</i> by the size of the second number <i>n</i>, by how
+much can the size decrease after one iteration of Euclid's
+algorithm
+</p>
+
+<p>
+<b>Answer</b>
+Euclid's GCD algorithm decreases by size m mod n each iteration. 
+The largest number that m mod n can be is n - 1 do to the nature of modular
+arithmetic, so the largest value Euclid's GCD algorithm can decrease 
+in one iteration is n - 1. Therefore, the Euclidean GCD can decrease
+by any integer value between 0 and n - 1.
+</p>
+
+<p>
+<b>b.</b> Prove that an instance size will always decrease at least by a
+factor of two after two successive iterations of Euclid's algorithm.
+</p>
+
+<p>
+<b>Answer</b>
+</p>
+
+<p>
+Given three iterations of the gcd, a b and c where
+</p>
+
+<p>
+\(GCD(m_1, n_1)\)
+</p>
+
+<p>
+\(GCD(m_2, n_2)\)
+</p>
+
+<p>
+\(GCD(m_3, n_3)\)
+</p>
+
+<p>
+Then m<sub>3</sub> = n<sub>2</sub> = m<sub>1</sub> mod n<sub>1</sub>.
+</p>
+
+<p>
+We know that when finding the GCD, m &gt; n. With this knowledge, we can 
+conclude that with this example, \(m_i > p_i\) where \(1 \le i \le 3\)
+</p>
+
+<p>
+To prove that the instance size decreases by a factor of two at least
+every two iterations, we must show that
+</p>
+
+<p>
+\(m_1 \mod n_1 \le \frac{m_1}{2}\)  
+</p>
+
+<p>
+We are now left with two cases. 
+</p>
+
+<p>
+Case 1:
+  \(n \le \frac{m}{2}\)
+</p>
+
+<p>
+Case 2:
+  \(n \gt \frac{m}{2} \)
+</p>
+
+<p>
+Given Case 1, we can determine that
+</p>
+
+<p>
+\((m \mod n) < n \le \frac{m}{2}\)
+</p>
+
+<p>
+Given Case 2, we can determine that
+</p>
+
+<p>
+\((m \mod n) = (m - n) < m - \frac{m}{2}\)
+</p>
+
+<p>
+These two cases guaruntee that every two iterations, the
+instance size will decrease <i>at least</i> by a factor of two.
+</p>
+
+<p>
+Example:
+</p>
+
+<p>
+<b>Tracing GCD part b</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>trace-gcd <span style="color: #a45bad;">34</span> <span style="color: #a45bad;">22</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+
+<p>
+Where \(r = m \mod n\)
+</p>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">m</th>
+<th scope="col" class="org-left">=</th>
+<th scope="col" class="org-right">n</th>
+<th scope="col" class="org-left">(m/n)</th>
+<th scope="col" class="org-left">+</th>
+<th scope="col" class="org-right">r</th>
+<th scope="col" class="org-right">m/2</th>
+<th scope="col" class="org-right">Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">34</td>
+<td class="org-left">=</td>
+<td class="org-right">21</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">13</td>
+<td class="org-right">17</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">21</td>
+<td class="org-left">=</td>
+<td class="org-right">13</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">8</td>
+<td class="org-right">10</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">=</td>
+<td class="org-right">8</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">5</td>
+<td class="org-right">6</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">=</td>
+<td class="org-right">5</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">=</td>
+<td class="org-right">3</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">=</td>
+<td class="org-right">2</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">=</td>
+<td class="org-right">1</td>
+<td class="org-left">(2)</td>
+<td class="org-left">+</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<div id="outline-container-org61db529" class="outline-2">
+<h2 id="org61db529"><span class="done DONE">DONE</span> Exercise 12 on page 167</h2>
+<div class="outline-text-2" id="text-org61db529">
+<p>
+<i>Flipping Pancakes</i>
+</p>
+
+<p>
+There are <i>n</i> pancakes all of different sizes that are stacked on
+top of each other. You are allowed to slip a flipper under one of
+the pancakes and flip over the whole stack above the flipper. The
+purpose is to arrange pancakes according to their size with the
+biggest at the bottom. (You can see a visualization of this puzzle
+on the <i>Interactive Mathematics Miscellany and Puzzles</i> site [Bog].)
+Design an algorithm for solving this puzzle.
+</p>
+
+<p>
+<b>Answer</b>
+</p>
+
+<p class="verse">
+<b>ALGORITHM</b> <i>pancakeFlip</i><br />
+<i>//</i> Sorts a stack of pancakes placing<br />
+<i>//</i> the largest pancake on the bottom<br />
+<i>//</i> and the smalelst on top<br />
+<br />
+<i>//</i> Input: Integer <i>n = A non-negative integer, number of pancakes</i><br />
+<i>//</i> Input: Array <i>pancakes = A list of unsorted "pancakes"</i><br />
+<i>//</i> Output: Array of sorted pancakes<br />
+<br />
+i &larr; 0<br />
+<b>while</b> <i>i</i> &lt; <i>n</i> <b>do</b><br />
+&#xa0;&#xa0;&#xa0;&#xa0;p &larr; index of largest unsorted pancake where index &gt; <i>i</i><br />
+&#xa0;&#xa0;&#xa0;&#xa0;<b>flip</b> all the pancakes from <i>p</i> to <i>n</i><br />
+&#xa0;&#xa0;&#xa0;&#xa0;<b>flip</b> all the pancakes from <i>i</i> to <i>n</i><br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgca5deaa" class="outline-2">
+<h2 id="orgca5deaa"><span class="done DONE">DONE</span> Exercise Your Google-Fu</h2>
+<div class="outline-text-2" id="text-orgca5deaa">
+<p>
+The only research paper published by a well-known individual was
+devoted to the pancakes flipping problem. Who is that individual?
+</p>
+
+<p>
+Bill Gates
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5286a13" class="outline-2">
+<h2 id="org5286a13"><span class="done DONE">DONE</span> Ponder Ten Numbers</h2>
+<div class="outline-text-2" id="text-org5286a13">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">8512388977</td>
+</tr>
+
+<tr>
+<td class="org-right">3879812591</td>
+</tr>
+
+<tr>
+<td class="org-right">8496958798</td>
+</tr>
+
+<tr>
+<td class="org-right">6127538570</td>
+</tr>
+
+<tr>
+<td class="org-right">5988858046</td>
+</tr>
+
+<tr>
+<td class="org-right">1153456347</td>
+</tr>
+
+<tr>
+<td class="org-right">4124112452</td>
+</tr>
+
+<tr>
+<td class="org-right">2771040826</td>
+</tr>
+
+<tr>
+<td class="org-right">8847666059</td>
+</tr>
+
+<tr>
+<td class="org-right">2727767664</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org63f628d" class="outline-3">
+<h3 id="org63f628d">What is The Question?</h3>
+<div class="outline-text-3" id="text-org63f628d">
+<p>
+Whatever it is, it was inspired by the <a href="http://scriptures.lds.org/en/abr/fac_2">Book of Abraham, Facsimile No. 2, explanation of Figure 11</a>.
+</p>
+
+<p>
+<i>If the student can find out these numbers, so let it be &#x2026;</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org91a5102" class="outline-3">
+<h3 id="org91a5102">Observations:</h3>
+<div class="outline-text-3" id="text-org91a5102">
+<p>
+They do not appear in OEIS.org
+</p>
+
+<p>
+If put into a 10x10 matrix, the row reduced echelon form is 
+the 10x10 identity matrix.
+</p>
+
+<p>
+None of them are Fibonacci numbers.
+</p>
+
+<p>
+The first two numbers are prime.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Number</th>
+<th scope="col" class="org-left">Prime?</th>
+<th scope="col" class="org-right">Binary</th>
+<th scope="col" class="org-left">Prime Factorization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">8512388977</td>
+<td class="org-left">Y</td>
+<td class="org-right">0111111011011000001011111101110001</td>
+<td class="org-left">8512388977</td>
+</tr>
+
+<tr>
+<td class="org-right">3879812591</td>
+<td class="org-left">Y</td>
+<td class="org-right">0011100111010000010011110111101111</td>
+<td class="org-left">3879812591</td>
+</tr>
+
+<tr>
+<td class="org-right">8496958798</td>
+<td class="org-left">N</td>
+<td class="org-right">0111111010011101010100110101001110</td>
+<td class="org-left">2 * 487 * 1381 * 6317</td>
+</tr>
+
+<tr>
+<td class="org-right">6127538570</td>
+<td class="org-left">N</td>
+<td class="org-right">0101101101001110101101000110001010</td>
+<td class="org-left">2 * 5 * 19 * 1087 * 29669</td>
+</tr>
+
+<tr>
+<td class="org-right">5988858046</td>
+<td class="org-left">N</td>
+<td class="org-right">0101100100111101101011100010111110</td>
+<td class="org-left">2 * 1861 * 1609043</td>
+</tr>
+
+<tr>
+<td class="org-right">1153456347</td>
+<td class="org-left">N</td>
+<td class="org-right">0001000100110000000101100011011011</td>
+<td class="org-left">3 * 181 * 2124229</td>
+</tr>
+
+<tr>
+<td class="org-right">4124112452</td>
+<td class="org-left">N</td>
+<td class="org-right">0011110101110100001111011001000100</td>
+<td class="org-left">2 * 2 * 1031028113</td>
+</tr>
+
+<tr>
+<td class="org-right">2771040826</td>
+<td class="org-left">N</td>
+<td class="org-right">0010100101001010101011101000111010</td>
+<td class="org-left">2 * 19 * 72922127</td>
+</tr>
+
+<tr>
+<td class="org-right">8847666059</td>
+<td class="org-left">N</td>
+<td class="org-right">1000001111010111001010101110001011</td>
+<td class="org-left">23 * 384681133</td>
+</tr>
+
+<tr>
+<td class="org-right">2727767664</td>
+<td class="org-left">N</td>
+<td class="org-right">0010100010100101100110111001110000</td>
+<td class="org-left">2 * 2 * 2 * 2 * 3 * 3 * 3 * 3 * 2104759</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Sum of numbers = 52629600330 The sum of numbers does not appear on the
+interent according to Google
+</p>
+
+<p>
+52629600330 % 7 = 6
+52629600330 % 11 = 10
+52629600330 % 17 = 16. 
+</p>
+
+<p>
+Our group spent a significant amount of time tryinig to solve this puzzle. We
+tried every avenue of approach we could think of.
+</p>
+
+<p>
+Adding digits, multiplying digits, GCDs, no mathematically
+functions/operations we threw at them seemed to do anything.
+</p>
+
+<p>
+Perhaps they are connected because they are not connected? 
+</p>
+
+<p>
+When all is said and down, I have pondered this puzzle for quite a while. I
+feel comfortable with the effort I have put in, despite the fact that I was
+unable to provide what I consider to be an adequate solution.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfbc3a2d" class="outline-2">
+<h2 id="orgfbc3a2d"><span class="done DONE">DONE</span> Ponder Metacognitive Miscalibration</h2>
+<div class="outline-text-2" id="text-orgfbc3a2d">
+<p>
+Read and think about the ramifications of the article <i>Prepare Your Mind For
+Learning</i> by Smith, Moores and Chang.
+</p>
+
+
+<p>
+I think this article provides a bit of relief to the previous problems. I thnk
+the last page applies very well to the situation I am in with the previous
+puzzle.
+</p>
+
+<p>
+I have come to the realization that I truly have no idea on how to solve the
+problem. All of the approaches that I normally use to tackle problems like
+these have worked; I have exhausted my toolbox. This has led me to question my
+knowledge.
+</p>
+
+<p>
+Through working with other classmates, I was able to learn some new avenues of
+approach as well as share my own. Even with this collaboration we were unable
+to make any headway on the problem. 
+</p>
+
+<p>
+Perhaps I am on the plateau, although I must confess, this class feels like
+the upward climb. 
+</p>
+
+<p>
+Perhaps the Question is not about the numbers. Perhaps the question is
+something along the lines of "Can you recognize the symptoms of MM in your
+thinking?" If so, my answer is a rounding yes. I am absolutely guilty of
+believing I know more than I actually do. Perhaps this problem was the wake up
+call I needed to reignite my metacognitive abilities.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org8e832d4" class="outline-2">
+<h2 id="org8e832d4">Notes</h2>
+<div class="outline-text-2" id="text-org8e832d4">
+</div>
+<div id="outline-container-org1e9b5e0" class="outline-3">
+<h3 id="org1e9b5e0">Day 1</h3>
+<div class="outline-text-3" id="text-org1e9b5e0">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">trace-gcd</span> <span style="color: #bc6ec5;">(</span>a b<span style="color: #bc6ec5;">)</span>
+<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">loop</span> with r = <span style="color: #a45bad;">0</span>
+      until <span style="color: #2d9574;">(</span>zerop b<span style="color: #2d9574;">)</span>
+      collect <span style="color: #2d9574;">(</span>list a '= b <span style="color: #67b11d;">(</span>list <span style="color: #b1951d;">(</span>/ a b<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> ' + <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> r <span style="color: #b1951d;">(</span>mod a b<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>/ a <span style="color: #a45bad;">2</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #b1951d;">(</span>&lt;= b <span style="color: #4f97d7;">(</span>/ a <span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span> <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">2</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      do <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> a b b r<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>trace-gcd <span style="color: #a45bad;">89</span> <span style="color: #a45bad;">40</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">89</td>
+<td class="org-left">=</td>
+<td class="org-right">56</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">33</td>
+<td class="org-right">44</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">56</td>
+<td class="org-left">=</td>
+<td class="org-right">33</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">23</td>
+<td class="org-right">28</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">33</td>
+<td class="org-left">=</td>
+<td class="org-right">23</td>
+<td class="org-left">(1)</td>
+<td class="org-left">+</td>
+<td class="org-right">10</td>
+<td class="org-right">16</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">23</td>
+<td class="org-left">=</td>
+<td class="org-right">10</td>
+<td class="org-left">(2)</td>
+<td class="org-left">+</td>
+<td class="org-right">3</td>
+<td class="org-right">11</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">=</td>
+<td class="org-right">3</td>
+<td class="org-left">(3)</td>
+<td class="org-left">+</td>
+<td class="org-right">1</td>
+<td class="org-right">5</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">=</td>
+<td class="org-right">1</td>
+<td class="org-left">(3)</td>
+<td class="org-left">+</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+number of digits of b times 5 is the upper bound of divisions needed by the gcd.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Bryan Muller</p>
+<p class="date">Created: 2018-05-22 Tue 18:49</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

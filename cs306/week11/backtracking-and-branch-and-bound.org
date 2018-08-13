@@ -1,0 +1,1422 @@
+#+TITLE: Backtracking and Branch-and-Bound
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Two Ways to Cope
+
+  Which of the following is/are true?
+
+1. Backtracking and branch-and-bound are two algorithm design
+   techniques for solving problems in which the number of choices
+   grows at least exponentially with their instance size. Both
+   techniques construct a solution one component at a time, trying to
+   terminate the process as soon as one can ascertain that no solution
+   can be obtained as a result of the choices already made. This
+   approach makes it possible to solve many large instances of NP-Hard
+   problems in an acceptable amount of time.
+
+2. Both backtracking and branch-and-bound employ, as their principal
+   mechanism, a /state-space tree/ --- a rooted tree whose nodes
+   represent partially-constructed solutions to the problem in
+   question. Both techniques terminate a node as soon as it can be
+   guaranteed that no solution to the problem can be obtained by
+   considering choices that correspond to the node\rsquo{}s descendants.
+
+3. A node in a state-space tree is said to be *promising* if it
+   corresponds to a partially-constructed solution that may still lead
+   to a complete solution; otherwise, it is called *nonpromising*.
+   Leaves represent either nonpromising dead ends or complete
+   solutions found by the algorithm.
+
+4. /Backtracking/ constructs its state-space tree in the
+   depth-first-search fashion in the majority of its applications. If
+   the sequence of choices represented by a current node of the
+   state-space tree can be developed further without violating the
+   problem\rsquo{}s constraints, it is done by considering the first
+   remaining legitimate option for the next component. Otherwise, the
+   method backtracks by undoing the last component of the partially
+   built solution and replacing it by the next alternative.
+
+5. /Branch-and-bound/ is an algorithm design technique that enhances
+   the idea of generating a state-space tree with the idea of
+   estimating the best value obtainable from a current node of the
+   decision tree: if such an estimate is not superior to the best
+   solution seen up to that point in the processing, the node is
+   eliminated from further consideration.
+
+** Answer
+
+   All of the statements are true. From your reading, you should be able to give
+   an example of a problem that can be solved by backtracking, and also give an
+   example of a problem that can be solved by branch-and-bound but *not* by
+   backtracking.
+
+* Examples
+
+#+BEGIN_SRC C++ :tangle subsetsumbt.cpp :var filename="subsetsum.in" :results output
+  /***********************************************************************
+   ,* Solve a supplied instance of the subset-sum problem
+   ,* via a backtracking search.
+   ,*
+   ,* Recall that in the subset-sum problem, we seek a subset of
+   ,* a given set of numbers whose total is a given number.
+   ,*
+   ,* The solution is the subset whose sum is that number.
+   ,**********************************************************************/
+  #include <cmath>
+  #include <iostream>
+  #include <fstream>
+  #include <sstream>
+  #include <vector>
+  #include <iomanip>
+  using namespace std;
+
+  class Number
+  {
+  private:
+     int mValue;
+
+  public:
+     Number(int pValue)
+     {
+        mValue  = pValue;
+     }
+     int getValue()  const { return mValue; }
+  };
+
+  ostream& operator<<(ostream& os, const Number& number)
+  {
+     os << "Number[" 
+        << number.getValue() << "]";
+     return os;
+  }
+
+  class SubsetSum
+  {
+  private:
+     int mNumberOfEvaluations;
+
+     int mTarget;
+
+     int mBestSolutionSeenSoFar;
+
+     vector<Number> mNumbers;
+
+     vector<Number> mBestNumbersSeenSoFar;
+
+     /******************************************
+      ,* feasible takes a candidate list of numbers,
+      ,* finds their combined total, and returns
+      ,* false if that exceeds the target,
+      ,* and returns true otherwise.
+      ,******************************************/
+     bool feasible(vector<Number> candidate)
+     {
+        int combinedTotal = 0;
+        for (int i = 0; i < candidate.size(); i++)
+        {
+           Number number = candidate[i];
+           combinedTotal += number.getValue();
+           if (combinedTotal > mTarget)
+           {
+              return false;
+           }
+        }
+        return true;
+     }
+
+     /******************************************
+      ,* updateBest takes a candidate list of numbers,
+      ,* finds their combined total, and if that
+      ,* value is exact, updates which value
+      ,* and candidate list are the best seen so far,
+      ,* and returns whether it was a valid solution.
+      ,******************************************/
+     bool updateBest(vector<Number> candidate)
+     {
+        mNumberOfEvaluations++;
+        int combinedTotal = 0;
+        for (int i = 0; i < candidate.size(); i++)
+        {
+           Number number = candidate[i];
+           combinedTotal += number.getValue();
+        }
+        if (combinedTotal == mTarget)
+        {
+           mBestSolutionSeenSoFar = combinedTotal;
+           mBestNumbersSeenSoFar = candidate;
+           return true;
+        }
+        else
+        {
+           return false;
+        }
+     }
+
+     /******************************************
+      ,* show reveals the solution.
+      ,******************************************/
+     void show()
+     {
+        int sum = 0;
+        cout << "\nSolution for a subset-sum\n";
+        cout << "problem with target " << mTarget << ":\n";
+        cout << setw(13) << "\nNumber Value\n";
+        cout << "---------------------------------\n";
+        for (int i = 0; i < mBestNumbersSeenSoFar.size(); i++)
+        {
+           Number number = mBestNumbersSeenSoFar[i];
+           sum += number.getValue();
+           cout << setw(13) << number.getValue() << endl;
+        }
+        cout << "---------------------------------\n";
+        cout << "Total:" << setw(7) << sum << endl;
+
+        double numTotalCandidates = pow(2.0, (double) mNumbers.size());
+        double savings =
+           (numTotalCandidates - mNumberOfEvaluations) / numTotalCandidates;
+        cout << "\nThis was found with " << mNumberOfEvaluations
+             << " evaluations\nof candidate solutions out of\n"
+             << "2^" << mNumbers.size() << " = "
+             << (int) numTotalCandidates
+             << " total candidates\n(subsets of numbers) for a savings\n"
+             << "over an exhaustive search of "
+             << setprecision(4) << savings * 100 << "%.\n";
+     }
+
+  public:
+     SubsetSum()
+     {
+        mNumberOfEvaluations = 0;
+        mBestSolutionSeenSoFar = 0;
+     }
+
+     /******************************************
+      ,* createSubsetSumFromFile reads subset-sum
+      ,* problem data in the following format:
+      ,*
+      ,* target
+      ,* <number value>
+      ,* ...
+      ,******************************************/
+     bool createSubsetSumFromFile(const char* file)
+     {
+        ifstream ifs(file);
+
+        if (ifs.fail())
+        {
+           return false;
+        }
+        else
+        {
+           int v;
+
+           if (ifs >> mTarget)
+           {
+              while (ifs >> v)
+              {
+                 Number number(v);
+                 mNumbers.push_back(number);
+              }
+              mBestSolutionSeenSoFar = mTarget;
+           }
+           return true;
+        }
+     }
+
+     /******************************************
+      ,* search creates an empty candidate
+      ,* list and calls backtrack with that
+      ,* candidate and level 0, then calls
+      ,* show.
+      ,******************************************/
+     void search()
+     {
+        vector<Number> candidate;
+        backtrack(candidate, 0);
+        show();
+     }
+
+     /******************************************
+      ,* backtrack recursively calls itself as
+      ,* it performs a search for the best set
+      ,* of numbers. Returns whether or not a
+      ,* solution was found.
+      ,******************************************/
+     bool backtrack(vector<Number> candidate, int level)
+     {
+        if (updateBest(candidate))
+        {
+           return true;
+        }
+        if (level < mNumbers.size())
+        {
+           Number levelth = mNumbers[level];
+           vector<Number> without; // without levelth number
+           without.assign(candidate.begin(), candidate.end());
+
+           if (feasible(without))
+           {
+              if (backtrack(without, level + 1))
+              {
+                 return true;
+              }
+           }
+
+           vector<Number> with;    // with levelth number
+           with.assign(candidate.begin(), candidate.end());
+           with.push_back(levelth); // herewith
+
+           if (feasible(with))
+           {
+              if (backtrack(with, level + 1))
+              {
+                 return true;
+              }
+           }
+        }
+        return false;
+     }
+  };
+
+  int main (int argc, char *argv[])
+  {
+    char* infilename = (char*) filename; argc = 2;
+
+     if (argc < 2)
+     {
+        cout << "Usage: " << argv[0] << " <filename.in>\n";
+        return 1;
+     }
+     // else infilename = argv[1];
+
+     SubsetSum subsetSum;
+
+     if (subsetSum.createSubsetSumFromFile(filename))
+     {
+        subsetSum.search();
+     }
+     else
+     {
+        cout << "Error - Could not open file: " << argv[1] << endl;
+     }
+
+     return 0;
+  }
+#+END_SRC
+
+#+BEGIN_SRC C++ :tangle knapsackbt.cpp :var filename="knapsack.in" :results raw
+  /***********************************************************************
+   ,* Solve a supplied instance of the knapsack problem
+   ,* via a backtracking search.
+   ,*
+   ,* Recall that in the knapsack problem, a knapsack
+   ,* of a given capacity W is to be filled with a subset
+   ,* of a given set of items with different weights and values.
+   ,*
+   ,* The optimal solution is the subset of highest total value,
+   ,* whose total weight does not exceed W.  This is an optimization
+   ,* problem that necessitates some constraint satisfaction while
+   ,* searching the solution space.
+   ,**********************************************************************/
+  #include <cmath>
+  #include <iostream>
+  #include <fstream>
+  #include <sstream>
+  #include <vector>
+  #include <iomanip>
+  using namespace std;
+
+  class Item
+  {
+  private:
+     int mNumber;
+     int mWeight;
+     int mValue;
+
+  public:
+     Item(int pNumber, int pWeight, int pValue)
+     {
+        mNumber = pNumber;
+        mWeight = pWeight;
+        mValue  = pValue;
+     }
+     int getNumber() const { return mNumber; }
+     int getWeight() const { return mWeight; }
+     int getValue()  const { return mValue; }
+  };
+
+  ostream& operator<<(ostream& os, const Item& item)
+  {
+     os << "Item[" << item.getNumber() << ", "
+        << item.getWeight() << ", "
+        << item.getValue() << "]";
+     return os;
+  }
+
+  class Knapsack
+  {
+  private:
+     int mNumberOfEvaluations;
+
+     int mCapacity;
+
+     int mBestValueSeenSoFar;
+
+     vector<Item> mItems;
+
+     vector<Item> mBestItemsSeenSoFar;
+
+     /******************************************
+      ,* feasible takes a candidate list of items,
+      ,* finds their combined weight, and returns
+      ,* false if that exceeds the knapsack capacity,
+      ,* and returns true otherwise.
+      ,******************************************/
+     bool feasible(vector<Item> candidate)
+     {
+        int combinedWeight = 0;
+        for (int i = 0; i < candidate.size(); i++)
+        {
+           Item item = candidate[i];
+           combinedWeight += item.getWeight();
+           if (combinedWeight > mCapacity)
+           {
+              return false;
+           }
+        }
+        return true;
+     }
+
+     /******************************************
+      ,* updateBest takes a candidate list of items,
+      ,* finds their combined value, and if that
+      ,* value is high enough, updates which value
+      ,* and candidate list are the best seen so far.
+      ,******************************************/
+     void updateBest(vector<Item> candidate)
+     {
+        mNumberOfEvaluations++;
+        int combinedValue = 0;
+        for (int i = 0; i < candidate.size(); i++)
+        {
+           Item item = candidate[i];
+           combinedValue += item.getValue();
+        }
+        if (combinedValue > mBestValueSeenSoFar)
+        {
+           mBestValueSeenSoFar = combinedValue;
+           mBestItemsSeenSoFar = candidate;
+        }
+     }
+
+     /******************************************
+      ,* showBest reveals the best solution.
+      ,******************************************/
+     void showBest()
+     {
+        int combinedWeight = 0;
+        cout << "\nBest (highest value) solution for\n";
+        cout << "a knapsack with " << mCapacity << " capacity:\n";;
+        cout << "\nItem #   Item Weight   Item Value\n";
+        cout << "---------------------------------\n";
+        for (int i = 0; i < mBestItemsSeenSoFar.size(); i++)
+        {
+           Item item = mBestItemsSeenSoFar[i];
+           combinedWeight += item.getWeight();
+           cout << setw(6) << item.getNumber()
+                << setw(13) << item.getWeight() 
+                << setw(13) << item.getValue() << endl;
+        }
+        cout << "---------------------------------\n";
+        cout << "Totals:" << setw(12) << combinedWeight
+             << setw(13) << mBestValueSeenSoFar << endl;
+
+        double numTotalCandidates = pow(2.0, (double) mItems.size());
+        double savings =
+           (numTotalCandidates - mNumberOfEvaluations) / numTotalCandidates;
+        cout << "\nThis was found with " << mNumberOfEvaluations
+             << " evaluations\nof candidate solutions out of\n"
+             << "2^" << mItems.size() << " = "
+             << (int) numTotalCandidates
+             << " total candidates\n(subsets of items) for a savings\n"
+             << "over an exhaustive search of "
+             << setprecision(4) << savings * 100 << "%.\n";
+     }
+
+  public:
+     Knapsack()
+     {
+        mNumberOfEvaluations = 0;
+        mBestValueSeenSoFar = 0;
+     }
+
+     /******************************************
+      ,* createKnapsackFromFile reads knapsack
+      ,* problem data in the following format:
+      ,*
+      ,* capacity
+      ,* <item #> <item weight> <item value>
+      ,* ...
+      ,******************************************/
+     bool createKnapsackFromFile(const char* file)
+     {
+        ifstream ifs(file);
+
+        if (ifs.fail())
+        {
+           return false;
+        }
+        else
+        {
+           int n;
+           int w;
+           int v;
+
+           if (ifs >> mCapacity)
+           {
+              while (ifs >> n >> w >> v)
+              {
+                 Item item(n, w, v);
+                 mItems.push_back(item);
+              }
+           }
+           return true;
+        }
+     }
+
+     /******************************************
+      ,* search creates an empty candidate
+      ,* list and calls backtrack with that
+      ,* candidate and level 0, then calls
+      ,* showBest.
+      ,******************************************/
+     void search()
+     {
+        vector<Item> candidate;
+        backtrack(candidate, 0);
+        showBest();
+     }
+
+     /******************************************
+      ,* backtrack recursively calls itself as
+      ,* it performs a search for the best set
+      ,* of items.
+      ,******************************************/
+     void backtrack(vector<Item> candidate, int level)
+     {
+        updateBest(candidate);
+        if (level < mItems.size())
+        {
+           Item levelth = mItems[level];
+           vector<Item> without; // without levelth item
+           without.assign(candidate.begin(), candidate.end());
+
+           if (feasible(without))
+           {
+              backtrack(without, level + 1);
+           }
+
+           vector<Item> with;    // with levelth item
+           with.assign(candidate.begin(), candidate.end());
+           with.push_back(levelth); // herewith
+
+           if (feasible(with))
+           {
+              backtrack(with, level + 1);
+           }
+        }
+     }
+  };
+
+  int main (int argc, char *argv[])
+  {
+    char* infilename = (char*) filename; argc = 2;
+
+     if (argc < 2)
+     {
+        cout << "Usage: " << argv[0] << " <filename.in>\n";
+        return 1;
+     }
+     // else infilename = argv[1];
+
+     Knapsack knapsack;
+
+     if (knapsack.createKnapsackFromFile(infilename))
+     {
+        knapsack.search();
+     }
+     else
+     {
+        cout << "Error - Could not open file: " << argv[1] << endl;
+     }
+   
+     return 0;
+  }
+#+END_SRC
+
+#+BEGIN_SRC C++ :tangle sudoku.cpp
+  /************************************************************
+   ,*  Play Sudoku by interacting with the user, or solve a
+   ,* board by forcing or backtracking.
+   ,************************************************************/
+  #include <cassert>
+  #include <cstring>
+  #include <fstream>
+  #include <iostream>
+  #include <iomanip>
+  using namespace std;
+
+  #define N 9
+  #define SRN 3
+  #define MAX 256
+  #define abs(x) ((x < 0) ? -x : x)
+  #define getSubgridOrigin(n) (n / SRN * SRN)
+
+  void getFilename(char fileName[], const char *prompt);
+  void showOptions();
+  void interact(int board[][N], bool readOnlyGreen, char *writeFileName);
+  bool readBoard(char fileName[], int board[][N]);
+  bool readGame(int board[][N], char *readFileName);
+  bool verifyBoard(int board[][N]);
+  bool writeBoard(char fileName[], int board[][N]);
+  bool writeGame(int board[][N], char *writeFileName);
+  void showBoard(int board[][N], bool readOnlyGreen);
+
+  bool getCoordinates(char square[], int board[][N], int &r, int &c,
+                      bool &readOnly, bool readOnlyGreen);
+
+  void editSquare(int board[][N], bool readOnlyGreen);
+  void showPossible(int board[][N], bool readOnlyGreen);
+  int  computeValues(int board[][N], int r, int c, bool possible[]);
+
+  void solveBoard(int board[][N]);
+  bool solved(int board[][N]);
+  bool solveBoardEasily(int board[][N]);
+  bool solveBoardByBacktracking(int board[][N], int row, int col);
+
+  long numCallsToSolveBoardByBacktracking = 0;
+
+  /****************************************************************
+   ,* MAIN
+   ,***************************************************************/
+  int main(int argc, char *argv[])
+  {
+     int board[N][N];
+
+  #ifdef EXTRA
+     bool readOnlyGreen = true;
+  #else
+     bool readOnlyGreen = false;
+  #endif   
+
+     char  readFileName[MAX] = "";
+     char writeFileName[MAX] = "";
+
+     if (argc >= 2)
+        strcpy(readFileName, argv[1]);
+     if (argc >= 3)
+        strcpy(writeFileName, argv[2]);
+
+     if (readGame(board, readFileName))
+     {
+        showOptions();
+
+        showBoard(board, readOnlyGreen);
+
+        interact(board, readOnlyGreen, writeFileName);
+     }
+
+  #ifdef SOLVE
+     cout << "numCallsToSolveBoardByBacktracking = "
+          << numCallsToSolveBoardByBacktracking << endl;
+  #endif
+     return 0;
+  }
+
+  /****************************************************************
+   ,* GET FILENAME
+   ,***************************************************************/
+  void getFilename(char fileName[], const char *prompt)
+  {
+     cout << prompt << " ";
+     cin >> fileName;
+  }
+
+  /****************************************************************
+   ,* SHOW OPTIONS
+   ,***************************************************************/
+  void showOptions()
+  {
+     cout << "Options:\n"
+          << "   ?  Show these instructions\n"
+          << "   D  Display the board\n"
+          << "   E  Edit one square\n"
+          << "   S  Show the possible values for a square\n"
+  #ifdef SOLVE
+          << "   F  Solve the board\n"
+  #endif
+          << "   Q  Save and Quit\n\n";
+  }
+
+  /****************************************************************
+   ,* INTERACT
+   ,***************************************************************/
+  void interact(int board[][N], bool readOnlyGreen, char* writeFileName)
+  {
+     char input = 'Q';
+
+     do
+     {
+        cout << "\n> ";
+        cin  >> input;
+
+        input = toupper(input);
+
+        switch (input)
+        {
+           case '?':
+              showOptions();
+              break;
+           case 'D':
+              showBoard(board, readOnlyGreen);
+              break;
+           case 'E':
+              editSquare(board, readOnlyGreen);
+              break;
+           case 'F':
+              solveBoard(board);
+              showBoard(board, readOnlyGreen);
+              break;
+           case 'S':
+              showPossible(board, readOnlyGreen);
+              break;
+           case 'Q':
+              writeGame(board, writeFileName);
+              break;
+           default:
+              cout << "ERROR: Invalid command\n";
+              break;
+        }
+     }
+     while (input != 'Q');
+  }
+
+  /****************************************************************
+   ,* READ GAME
+   ,***************************************************************/
+  bool readGame(int board[][N], char* readFileName)
+  {
+     char fileName[MAX];
+
+     if (strlen(readFileName) == 0)
+        getFilename(fileName, "Where is your board located?");
+     else
+        strcpy(fileName, readFileName);
+
+     return (readBoard(fileName, board));
+  }
+
+  /****************************************************************
+   ,* READ BOARD
+   ,***************************************************************/
+  bool readBoard(char fileName[], int board[][N])
+  {
+     ifstream fin(fileName);
+
+     if (fin.fail())
+     {
+        cerr << "ERROR: unable to read " << fileName << endl;
+        return false;
+     }
+     else
+     {
+        for (int r = 0; r < N; r++)
+        {
+           for (int c = 0; c < N; c++)
+           {
+              if (! (fin >> board[r][c]))
+              {
+                 fin.close();
+                 return false;
+              }
+           }
+        }
+        fin.close();
+        return verifyBoard(board);
+     }
+  }
+
+  /****************************************************************
+   ,* WRITE GAME
+   ,***************************************************************/
+  bool writeGame(int board[][N], char* writeFileName)
+  {
+     char fileName[MAX];
+     if (strlen(writeFileName) == 0)
+        getFilename(fileName, "What file would you like to write your board to:");
+     else
+        strcpy(fileName, writeFileName);
+
+     if (writeBoard(fileName, board))
+     {
+        cout << "Board written successfully\n";
+        return true;
+     }
+     else
+     {
+        cerr << "ERROR: unable to write " << fileName << endl;
+        return false;
+     }
+  }
+
+  /****************************************************************
+   ,* WRITE BOARD
+   ,***************************************************************/
+  bool writeBoard(char fileName[], int board[][N])
+  {
+     ofstream fout(fileName);
+
+     if (fout.fail())
+     {
+        return false;
+     }
+     else
+     {
+        for (int r = 0; r < N; r++)
+        {
+           for (int c = 0; c < N; c++)
+           {
+              fout << board[r][c] << " ";
+              if (c == 8)
+              {
+                 fout << endl;
+              }
+              if (fout.fail())
+              {
+                 fout.close();
+                 return false;
+              }
+           }
+        }
+        fout.close();
+        return true;
+     }
+  }
+
+  /****************************************************************
+   ,* SHOW BOARD
+   ,***************************************************************/
+  void showBoard(int board[][N], bool readOnlyGreen)
+  {
+     cout << "   A B C D E F G H I\n";
+     for (int r = 0; r < N; r++)
+     {
+        cout << (r + 1) << "  ";
+        for (int c = 0; c < N; c++)
+        {
+           int val = board[r][c];
+           if (val == 0)
+              cout << " ";
+           else if (val < 0)
+              cout << -val;
+           else if (readOnlyGreen)
+              cout << "\E[22;32m" << val << "\E[0m";
+           else
+              cout << val;
+
+           if (c % 3 == 2)
+              cout << ((c == 8) ? '\n' : '|');
+           else
+              cout << " ";
+        }
+        if (r == 2 || r == 5)
+           cout << "   -----+-----+-----\n";
+     }
+  }
+
+  /****************************************************************
+   ,* GET COORDINATES
+   ,***************************************************************/
+  bool getCoordinates(char square[3], int board[][N], int &r, int &c,
+                      bool &readOnly, bool readOnlyGreen)
+  {
+     r = -1;
+     c = -1;
+
+     cout << "What are the coordinates of the square: ";
+     cin  >> square;
+     char orig1 = square[0];
+     char orig2 = square[1];
+
+     char first = toupper(orig1);
+     char second = toupper(orig2);
+
+     if (isalpha(first))
+     {
+        c = first - 'A';
+        if ('1' <= second && second <= '9')
+        {
+           r = second - '1';
+        }
+        square[0] = first;
+        square[1] = second;
+     }
+     else
+     {
+        if ('1' <= first && first <= '9')
+        {
+           r = first - '1';
+        }
+        c = second - 'A';
+        square[0] = second;
+        square[1] = first;
+     }
+
+     if (0 <= r && r <= N && 0 <= c && c <= N)
+     {
+        if (board[r][c] <= 0)
+        {
+           return true;
+        }
+        else
+        {
+           readOnly = readOnlyGreen;
+           cout << "ERROR: Square '" << square << "' is "
+                << (readOnly ? "read-only" : "filled")
+                << endl;
+           return true;
+        }
+     }
+     else
+     {      
+        cout << "ERROR: Square '" << orig1 << orig2 << "' is invalid\n";
+        return false;
+     }
+  }
+
+  /****************************************************************
+   ,* DETECT READ-ONLY
+   ,* Returns true if any number in the board is negative, which
+   ,* indicates that the positive numbers are read-only.
+   ,* Returns false if no number in the board is negative.
+   ,***************************************************************/
+  bool detectReadOnly(int board[][N])
+  {
+     for (int r = 0; r < N; r++)
+     {
+        for (int c = 0; c < N; c++)
+        {
+           if (board[r][c] < 0)
+           {
+              return true;
+           }
+        }
+     }
+     return false;
+  }
+
+  /****************************************************************
+   ,* EDIT SQUARE
+   ,***************************************************************/
+  void editSquare(int board[][N], bool readOnlyGreen)
+  {
+     int r;
+     int c;
+     char square[] = "A1";
+     bool readOnly = false;
+     while (! getCoordinates(square, board, r, c, readOnly, readOnlyGreen))
+     {
+        ; // intentionally left empty
+     }
+     if (! readOnly)
+     {
+        int value;
+        bool possible[N + 1];
+
+        cout << "What is the value at '" << square << "': ";
+        cin >> value;
+
+  #ifdef EXTRA
+        if (value == 0)
+        {
+           board[r][c] = value;
+           return;
+        }
+  #endif
+
+        if (1 <= value && value <= N &&
+            (computeValues(board, r, c, possible) > 0) &&
+            possible[value])
+        {
+           board[r][c] = -value;
+        }
+        else
+        {
+           cout << "ERROR: Value '" << value
+                << "' in square '" << square
+                << "' is invalid\n";
+        }
+     }
+  }
+
+  /****************************************************************
+   ,* VERIFY BOARD
+   ,***************************************************************/
+  bool verifyBoard(int board[][N])
+  {
+     int numEachRow[N + 1];
+     int numEachCol[N + 1];
+     int numEachSubGrid[N + 1];
+
+     for (int r = 0; r < N; r++)
+     {
+        for (int i = 1; i <= N; i++)
+        {
+           numEachRow[i] = 0;
+        }
+
+        for (int c = 0; c < N; c++)
+        {
+           numEachRow[abs(board[r][c])]++;
+        }
+
+        for (int i = 1; i <= N; i++)
+        {
+           if (numEachRow[i] > 1)
+           {
+              cout << "ERROR: Duplicate value '"
+                   << i
+                   << "' in row "
+                   << (r + 1)
+                   << endl;
+
+              return false;
+           }
+        }
+     }
+
+     for (int c = 0; c < N; c++)
+     {
+        for (int i = 1; i <= N; i++)
+        {
+           numEachCol[i] = 0;
+        }
+
+        for (int r = 0; r < N; r++)
+        {
+           numEachCol[abs(board[r][c])]++;
+        }
+
+        for (int i = 1; i <= N; i++)
+        {
+           if (numEachCol[i] > 1)
+           {
+              cout << "ERROR: Duplicate value '" << i
+                   << "' in column "
+                   << (char) (c + 'A' - 1)
+                   << endl;
+
+              return false;
+           }
+        }
+     }
+
+     for (int rOffset = 0; rOffset < SRN; rOffset++)
+     {
+        for (int cOffset = 0; cOffset < SRN; cOffset++)
+        {
+           for (int i = 1; i <= N; i++)
+           {
+              numEachSubGrid[i] = 0;
+           }
+
+           int rOffending = -1;
+           int cOffending = -1;
+
+           for (int r = rOffset * SRN; r < (rOffset + 1) * SRN; r++)
+           {
+              for (int c = cOffset * SRN; c < (cOffset + 1) * SRN; c++)
+              {
+                 int index = abs(board[r][c]);
+                 numEachSubGrid[index]++;
+                 if (numEachSubGrid[index] > 1)
+                 {
+                    rOffending = getSubgridOrigin(r) + 1;
+                    cOffending = getSubgridOrigin(c) + 1;
+                 }
+              }
+           }
+
+           for (int i = 1; i <= N; i++)
+           {
+              if (numEachSubGrid[i] > 1)
+              {
+                 cout << "ERROR: Duplicate value '" << i
+                      << "' in inside square represented by '"
+                      << (char) (cOffending + 'A')
+                      << (rOffending + 1)
+                      << "'\n";
+
+                 return false;
+              }
+           }
+        }
+     }   
+     return true;
+  }
+
+  /****************************************************************
+   ,* SHOW POSSIBLE
+   ,***************************************************************/
+  void showPossible(int board[][N], bool readOnlyGreen)
+  {
+     int r;
+     int c;
+     bool possible[N + 1];
+     char square[] = "A1";
+     bool readOnly = false;
+     while (! getCoordinates(square, board, r, c, readOnly, readOnlyGreen))
+     {
+        ; // intentionally left empty
+     }
+     if (! readOnly)
+     {
+        cout << "The possible values for '" << square << "' are: ";
+
+        if (computeValues(board, r, c, possible) > 0)
+        {
+           bool putSeparator = false;
+
+           for (int i = 1; i <= N; i++)
+           {
+              if (possible[i])
+              {
+                 if (putSeparator)
+                 {
+                    cout << ", ";
+                 }
+                 else
+                 {
+                    putSeparator = true;
+                 }
+                 cout << i;
+              }
+           }
+           cout << endl;
+        }
+     }
+  }
+
+  /****************************************************************
+   ,* COMPUTE VALUES
+   ,***************************************************************/
+  int computeValues(int board[][N], int r, int c, bool possible[])
+  {
+     assert(0 <= r && r < N && 0 <= c && c < N);
+     int numPossible = 0;
+
+     for (int i = 0; i <= N; i++)
+     {
+        possible[i] = true;
+     }
+
+     for (int i = 0; i < N; i++)
+     {
+        possible[abs(board[r][i])] = false;
+        possible[abs(board[i][c])] = false;
+     }
+
+     int rOffset = getSubgridOrigin(r);
+     int cOffset = getSubgridOrigin(c);
+
+     for (int iRow = rOffset; iRow < rOffset + SRN; iRow++)
+     {
+        for (int iCol = cOffset; iCol < cOffset + SRN; iCol++)
+        {
+           possible[abs(board[iRow][iCol])] = false;
+        }
+     }
+
+     for (int i = 1; i <= N; i++)
+     {
+        if (possible[i])
+        {
+           numPossible++;
+        }
+     }
+     return numPossible;
+  }
+
+  bool isPossibleToPut(int board[][N], int row, int col, int n)
+  {
+     // for checking in the subgrid containing row, col
+     int rOffset = getSubgridOrigin(row);
+     int cOffset = getSubgridOrigin(col);
+
+     for (int i = 0; i < N; i++)
+     {
+        if (abs(board[row][i]) == n)
+        {
+           return false;
+        }
+        if (abs(board[i][col]) == n)
+        {
+           return false;
+        }
+        if (abs(board[rOffset + (i % SRN)][cOffset + (i / SRN)]) == n)
+        {
+           return false;
+        }
+     }
+     // not proven impossible, therefore proven possible
+     return true;
+  }
+
+  /****************************************************************
+   ,* SOLVE BOARD
+   ,***************************************************************/
+  void solveBoard(int board[][N])
+  {
+     if (solveBoardEasily(board))
+     {
+        cout << "Board solved:\n";
+     }
+     else
+     {
+        cout << "Not easily solved, trying again with backtracking...\n";
+        if (solveBoardByBacktracking(board, 0, 0))
+        {
+           cout << "Board solved:\n";
+        }
+     }
+  }
+
+  /****************************************************************
+   ,* SOLVE BOARD BY BACKTRACKING
+   ,* Algorithm: Backtrack(X[1..i])
+   ,* // Gives a template of a generic backtracking algorithm
+   ,* // Input: X[1..i] specifies first i promising components of
+   ,* //        a solution
+   ,* // Output: All the tuples representing the problem's solutions
+   ,* if X[1..i] is a solution Write X[1..i]
+   ,* else
+   ,*    for each element x in S_{i + 1} consistent with X[1..i]
+   ,*        and the problem's constraints
+   ,*      do
+   ,*         X[i + 1] <-- x
+   ,*         Backtrack(X[1..i + 1])
+   ,*
+   ,* To start this backtracking algorithm, call it for i = 0;
+   ,* X[1..0] represents the empty tuple.
+   ,***************************************************************/
+  bool solveBoardByBacktracking(int board[][N], int row, int col)
+  {
+     numCallsToSolveBoardByBacktracking++;
+     if (col >= 9)
+     {
+        col = 0;
+        ++row;
+        if (row >= 9)
+        {
+           return true; // no more rows or cols to fill
+        }
+     }
+
+     if (board[row][col] != 0) // pre-filled 
+     {
+        // try the next one
+        return solveBoardByBacktracking(board, row, col + 1);
+     }
+     else
+     {
+        for (int n = 1; n <= 9; n++)
+        {
+           if (isPossibleToPut(board, row, col, n))
+           {
+              board[row][col] = -n;
+
+              if (solveBoardByBacktracking(board, row, col + 1))
+              {
+                 return true;
+              }
+              else // undo and try the next n
+              {
+                 board[row][col] = 0;
+              }
+           }
+        }
+     }
+     // nothing possible at row, col
+     return false;
+  }
+
+  int findFirstPossible(bool possible[])
+  {
+     for (int i = 1; i <= N; i++)
+     {
+        if (possible[i])
+        {
+           return i;
+        }
+     }
+     return 0;
+  }
+
+  /****************************************************************
+   ,* SOLVED
+   ,* Returns true if no value in the board is 0, false otherwise.
+   ,***************************************************************/
+  bool solved(int board[][N])
+  {
+     for (int r = 0; r < N; r++)
+     {
+        for (int c = 0; c < N; c++)
+        {
+           if (board[r][c] == 0)
+           {
+              return false;
+           }
+        }
+     }
+     return true;
+  }
+
+  /****************************************************************
+   ,* SOLVE BOARD EASILY
+   ,***************************************************************/
+  bool solveBoardEasily(int board[][N])
+  {
+     bool possible[N + 1];
+     int numForced;
+
+     do
+     {
+        numForced = 0;
+
+        for (int r = 0; r < N; r++)
+        {
+           for (int c = 0; c < N; c++)
+           {
+              if (board[r][c] == 0 &&
+                  computeValues(board, r, c, possible) == 1)
+              {
+                 // here computeValues has guaranteed (via the == 1)
+                 // that only one value is possible, so
+                 // find that one value that's possible to go at r, c
+                 // and put it there (negating first)
+                 int p = findFirstPossible(possible);
+                 board[r][c] = -p;
+                 numForced++;
+              }
+           }
+        }
+     }
+     while (! solved(board) && numForced != 0);
+     return solved(board);
+  }
+#+END_SRC
+
+  If you're familiar with /make/, you can use the code block below (tangle it)
+  for a /Makefile/ database of how to build and run sudoku (as well as build
+  executables for knapsackbt and subsetsumbt, and input files to exercise them),
+  if you don't want to use the command line, or figure out the org-mode code
+  block evaluation method.
+
+#+BEGIN_SRC makefile :tangle Makefile
+sudoku: sudoku.cpp
+	g++ -DEXTRA -DSOLVE -g $< -o $@
+
+85: sudoku 85.txt
+	./$< 85.txt 85solved.txt
+
+90: sudoku 90.txt
+	./$< 90.txt 90solved.txt
+
+100: sudoku 100.txt
+	./$< 100.txt 100solved.txt
+
+100+: sudoku 100+.txt
+	./$< 100+.txt 100+solved.txt
+
+knapsackbt: knapsackbt.cpp
+	g++ -g $< -o $@
+
+subsetsumbt: subsetsumbt.cpp
+	g++ -g $< -o $@
+
+85.txt: Makefile 
+	grep '^#i' $< | cut -di -f2- > $@
+#i7 2 3 0 0 0 1 5 9
+#i6 0 0 3 0 2 0 0 8
+#i8 0 0 0 1 0 0 0 2
+#i0 7 0 6 5 4 0 2 0
+#i0 0 4 2 0 7 3 0 0
+#i0 5 0 9 3 1 0 4 0
+#i5 0 0 0 7 0 0 0 3
+#i4 0 0 1 0 3 0 0 6
+#i9 3 2 0 0 0 7 1 4
+
+90.txt: Makefile 
+	grep '^#j' $< | cut -dj -f2- > $@
+#j8 5 0 0 0 2 4 0 0
+#j7 2 0 0 0 0 0 0 9
+#j0 0 4 0 0 0 0 0 0
+#j0 0 0 1 0 7 0 0 2
+#j3 0 5 0 0 0 9 0 0
+#j0 4 0 0 0 0 0 0 0
+#j0 0 0 0 8 0 0 7 0
+#j0 1 7 0 0 0 0 0 0
+#j0 0 0 0 3 6 0 4 0
+
+100.txt: Makefile
+	grep '^#k' $< | cut -dk -f2- > $@
+#k0 0 0 0 0 0 0 0 0
+#k0 0 0 0 0 3 0 8 5
+#k0 0 1 0 2 0 0 0 0
+#k0 0 0 5 0 7 0 0 0
+#k0 0 4 0 0 0 1 0 0
+#k0 9 0 0 0 0 0 0 0
+#k5 0 0 0 0 0 0 7 3
+#k0 0 2 0 1 0 0 0 0
+#k0 0 0 0 4 0 0 0 9
+
+subsetsum.in: Makefile
+	grep '^#m' $< | cut -dm -f2- > $@
+#m5213
+#m364
+#m455
+#m819
+#m910
+#m1007
+#m1196
+#m1309
+#m1438
+#m1827
+#m1955
+
+knapsack.in: Makefile
+	grep '^#n' $< | cut -dn -f2- > $@
+#n101
+#n  1 94 85
+#n  2 6 26
+#n  3 16 48
+#n  4 92 21
+#n  5 49 22
+#n  6 37 95
+#n  7 57 43
+#n  8 15 45
+#n  9 46 55
+#n 10 22 52
+#n 11 91 9
+#n 12 59 1
+#n 13 67 22
+#n 14 98 94
+#n 15 7 38
+#n 16 44 74
+#n 17 34 15
+#n 18 66 82
+#n 19 94 67
+#n 20 93 84
+#+END_SRC

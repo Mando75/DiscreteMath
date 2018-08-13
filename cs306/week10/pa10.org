@@ -1,0 +1,58 @@
+#+TITLE: Preparation Assessment 10
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-07-01 Sun 22:36]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:09* |
+|---------------------+--------|
+| Answer What is True | 1:09   |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-07-01 Sun 22:34]
+  :LOGBOOK:
+  CLOCK: [2018-07-01 Sun 22:26]--[2018-07-01 Sun 22:34] =>  0:08
+  CLOCK: [2018-07-01 Sun 21:02]--[2018-07-01 Sun 21:37] =>  0:35
+  CLOCK: [2018-07-01 Sun 20:27]--[2018-07-01 Sun 20:53] =>  0:26
+  :END:
+
+
+pg 420
+
+  - [X] I know in what sense the power of algorithms is limited.
+
+    P vs NP?
+    If no efficient algorithm can be found, there is no realistic solution.
+    
+  - [X] I know that lower bounds (\Omega) to many problems are known, i.e., no
+    algorithm can undercut them.
+
+   This means that because we know the lower bound to the problem, we know what
+    efficiency class the best possible solution algorithm would be in. This
+    allows us to focus on algorithmic improvements in constant time.
+
+  - [X] I can give at least two examples of problems with known lower bounds.
+
+    - Generating all permutations of n distinct items \Omega(n!)
+    - Evaluating a polynomial of degree n \Omega(n)
+      pg 389
+
+  - [X] I know that some problems cannot be fully solved.
+
+    - The Halting Problem
+
+  - [X] I know that there are problems for which algorithms are *not known* to
+    exist.
+  - [X] I know that there are problems for which algorithms are *known not* to
+    exist.
+  - [X] I know that many problems are considered intractable, which means
+    infeasible to solve with current technology.
+  - [X] I know that numerical algorithms face the limiting effects of
+    truncation, roundoff, overflow, underflow and cancellation.
+ 
+    Limits of floating point numbers
+ 
+

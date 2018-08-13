@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-22 Tue 18:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Weekly Assignment 03 Key</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bryan Muller" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Weekly Assignment 03 Key</h1>
+
+<div id="outline-container-org3584724" class="outline-2">
+<h2 id="org3584724">Exemplary Answers&#xa0;&#xa0;&#xa0;<span class="tag"><span class="crypt">crypt</span></span></h2>
+<div class="outline-text-2" id="text-org3584724">
+</div>
+
+<div id="outline-container-org6d7b21d" class="outline-3">
+<h3 id="org6d7b21d">Exercise 7 on page 149</h3>
+<div class="outline-text-3" id="text-org6d7b21d">
+<p>
+Pseudocode for a recursive algorithm for generating all 2<sup>n</sup> bit strings of
+length n:
+</p>
+
+<p class="verse">
+<b>Algorithm</b> <i>BitstringsRec(n)</i><br />
+&#xa0;&#xa0;<i>//</i> Generates recursively all the bit strings of a given length<br />
+&#xa0;&#xa0;<i>//</i> Input: A positive integer <i>n</i><br />
+&#xa0;&#xa0;<i>//</i> Output: All bit strings of length n as contents of global array B[0..n-1]<br />
+&#xa0;&#xa0;<b>if</b> <i>n</i> = 0<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;print(B)<br />
+&#xa0;&#xa0;<b>else</b><br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;B[n - 1] &larr; 0; BitstringsRec(n - 1)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;B[n - 1] &larr; 1; BitstringsRec(n - 1)<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org6653c9e" class="outline-3">
+<h3 id="org6653c9e">Exercise Converting C to Elisp</h3>
+<div class="outline-text-3" id="text-org6653c9e">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>a <span style="color: #b1951d;">(</span>eval-minibuffer <span style="color: #2d9574;">"Enter Multiplicand as Lisp Expression: "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>b <span style="color: #b1951d;">(</span>eval-minibuffer <span style="color: #2d9574;">"Enter Multiplier as Lisp Expression: "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span>princ <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"%d\n"</span> <span style="color: #b1951d;">(</span>rpm a b<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">rpm</span> <span style="color: #bc6ec5;">(</span>a b<span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>rim <span style="color: #a45bad;">0</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>sum <span style="color: #a45bad;">0</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #67b11d;">(</span>&gt;= b <span style="color: #a45bad;">1</span><span style="color: #67b11d;">)</span>
+      <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> rim <span style="color: #b1951d;">(</span>% b <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span>
+            b <span style="color: #b1951d;">(</span>/ b <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+      <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #b1951d;">(</span><span style="color: #4f97d7;">(</span>= <span style="color: #a45bad;">1</span> rim<span style="color: #4f97d7;">)</span>
+             <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> sum <span style="color: #bc6ec5;">(</span>+ sum a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+             <span style="color: #4f97d7;">(</span>princ <span style="color: #bc6ec5;">(</span>format <span style="color: #2d9574;">"%d\n"</span> sum<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+      <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> a <span style="color: #b1951d;">(</span>* a <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    sum<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9b9bbf3" class="outline-3">
+<h3 id="org9b9bbf3">Exercise 1 on page 166</h3>
+<div class="outline-text-3" id="text-org9b9bbf3">
+<p>
+<b>a.</b> Since the algorithm uses the formula <i>gcd(m, n) = gcd(n, m mod
+n)</i>, the size of the new pair will be <i>m mod n</i>. Hence it can be any
+integer between 0 and <i>n - 1</i>. Thus, the size <i>n</i> can decrease by
+any number between 1 and <i>n</i>.
+</p>
+
+<p>
+<b>b.</b> Two consecutive iterations of Euclid's algorithm are performed
+according to the following formulas:
+</p>
+
+<p>
+<i>gcd(m, n) = gcd(n, r) = gcd(r, n mod r)</i> where <i>r = m mod n</i>.
+</p>
+
+<p>
+Need to show that \(n\ \mbox{mod}\ r \le n/2\). Consider two cases:
+\(r \le n/2\) and \(n/2 < r < n\). If \(r \le n/2\), then
+</p>
+
+<p>
+\(n\ \mbox{mod}\ r < r \le n/2.\)
+</p>
+
+<p>
+If \(n/2 < r < n\), then
+</p>
+
+<p>
+\(n\ \mbox{mod}\ r = n - r \le n/2,\)
+</p>
+
+<p>
+too.
+</p>
+</div>
+</div>
+<div id="outline-container-org5c12a72" class="outline-3">
+<h3 id="org5c12a72">Exercise 12 on page 167</h3>
+<div class="outline-text-3" id="text-org5c12a72">
+<p>
+Here is a decrease-and-conquer algorithm for solving this problem.
+Repeat the following until the problem is solved: Find the largest
+pancake that is out of order. (If there is none, the problem is
+solved.)  If it is not on the top of the stack, slide the flipper
+under it and flip to put the largest pancake on the top. Slide the
+flipper under the first-from-the-bottom pancake that is not in its
+proper place and flip to increase the number of pancakes in their
+proper place at least by one.
+</p>
+</div>
+</div>
+<div id="outline-container-orgadd8661" class="outline-3">
+<h3 id="orgadd8661">Exercise Your Google-Fu</h3>
+<div class="outline-text-3" id="text-orgadd8661">
+<p>
+Bill Gates is the well-known individual whose only published research paper
+was devoted to the pancakes flipping problem.
+</p>
+</div>
+</div>
+<div id="outline-container-orgeffd459" class="outline-3">
+<h3 id="orgeffd459">Ponder Ten Numbers</h3>
+<div class="outline-text-3" id="text-orgeffd459">
+<p>
+Some evidence is required that you actually pondered the ten numbers.
+</p>
+</div>
+</div>
+<div id="outline-container-org3739fb6" class="outline-3">
+<h3 id="org3739fb6">Ponder Metacognitive Miscalibration</h3>
+<div class="outline-text-3" id="text-org3739fb6">
+<p>
+Some evidence is required that you read and thought about the ramifications
+of the article <i>Prepare Your Mind For Learning</i> by Smith, Moores and Chang.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Bryan Muller</p>
+<p class="date">Created: 2018-05-22 Tue 18:47</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+#+TITLE: Weekly Assignment 09 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers                                                   :crypt:
+  :PROPERTIES:
+  :CRYPTKEY: dm3wa09key
+  :END:
+-----BEGIN PGP MESSAGE-----
+
+hQIMA7H591OiTHIuAQ//YLa+ipSd6QTG6JImqHkYt2sjLF0DEY3WlKexdyIrtXKc
+dAnNXOTOK0ZaLBpDUVX41AkfB+3GlhsM0pFFpKylGJo+Kcra5QGupprWeCnaSmyM
+kUGhXBaBZNhIBeXMx5Adqpd3nwcSui20X4i0zkTgHDhxVVxrfZmzw1kt4omDRuwv
+yQGOCZdaiTqo3vMlzWgrEMttxFSKaVw8zamCRNfyzoaNOeItow4JwsETi6Idh1Xb
+0QxauecpkKp7wIKuC9hQOCrspVdnENSqpqJXLebV/N/7qrfk6okGg587A0syFOkq
+SppbSo7abvLaziyDhEJLXBb9QlWz7q7d9f7cDbJO8aqXI0kJB+Qln/XHWYTXRlDm
+5j/idHyRm4GzL4WsnI3LucshTSZ+z0x30p1tm5uRPsZ6Osc0a9Csb4tEuUBEjiMi
+kg7kqgUxNaYrUCAsPU+Y1YqG2sDkitSAPOSz1RK44TqJFGXyIJzaWdCHS3VmIJyf
+8K3i7P6HPajghOHTPvkGhJebfeV+t0RmVwcKqlDzXqFEg353d9oxhD3Nbont1PGf
+PNEUkf96B1hUnLtndutVSe3791QnGeVLkIILie5ZxPCXNz7Oa67tCEWI3MGObbXM
+kFYc+h/OHe7ft66BPTx+YLoReWrcrJtvhOLwLV5MpS3mTCO8rZQVd62pPjuqfMDS
+6QFmhJc7uZSMoi1bQDGbzcNYt3Zrr6nEmOKUeW3bjY2AYcFydScY82r73kfcyQgu
+TySax/CWCNpx1LyJ5+wiYLpuzloBIrrG0eCMbUNnzpEKXYNlH1Z6Cb+UflMpmb2T
+EdH4YvdbVcEY9Pz/a0jqdo8ZjrE7oBvjzg/q9YLnVSLO1lP5S6zu2hYmBZteW0O/
+HyTh0AuKHmlFx/7wITqUWQB3YQEf0SmqqQVkO6tuzgX+bcBR6hm/CEIA7F7VSDQW
+Pm74IUOt/Ha3mIYz5oHr8sQKN/kicXapHl3T26kHEpj+YDCes9EKN0LK5qVEBzFQ
+viBJYJCW4w8WFDspf32S5dOeWhW62OJhYaxk6KTi5KUaQ23bHncuRnQmVRDGbvSc
+ML1ISXqcGOQLtDs/+lY3d9C9PgEF4Lh9J9XnV+DXpsgFJ4VnUeVL8mRwLNO0KW9P
+1S0sBuYOnfW1n+UxoXJM7SGaxkHNK7Z3JVgk3hrqeo35TJY+m5oCqtxF8nYPZEo4
+u6/dXFZk0KVNGjt6JOXYIobeefcEobxfxIHFQxm/8L3zS6mi5jiTkWob8mKeBoGx
+b9zpFLCevzc9Hp0vGg3w+zy0RziVfwtfNR9idDP38ffHD+aMyOQdCNF+SVNT+TSA
+uuaYKigZdQU7+IuV4UQwwkOU9YHzMf44I0bNFa8S89FdVi7FydXXWuch0SHbIY/U
+MbGqz4wP7bnH1bvHZZNmXLTAhGOtb45g1CqcAN7WfF0442xqlDoMm2NdbM16+9cu
+IBCMxNadSgj6qVmcvfFsj22Gv8YaaR12
+=eJPE
+-----END PGP MESSAGE-----

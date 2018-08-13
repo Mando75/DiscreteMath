@@ -1,0 +1,10 @@
+#+TITLE: Preparation Assessment 08 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers
+
+** Answer What is True
+
+   All thirteen boxes should be checked for full credit.

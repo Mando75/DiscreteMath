@@ -1,0 +1,447 @@
+#+TITLE: Weekly Assignment 00
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-04-26 Thu 22:32]
+| Headline                                |   Time |
+|-----------------------------------------+--------|
+| *Total time*                            | *5:02* |
+|-----------------------------------------+--------|
+| Exercise 4 on page 7                    |   1:41 |
+| Exercise 8 on page 8                    |   0:31 |
+| Exercise 12 on page 8                   |   0:34 |
+| Followup to Exercise 12 on page 8       |   0:10 |
+| Create Three Different Algorithms to... |   1:59 |
+| What I Learned                          |   0:07 |
+#+END:
+
+
+I worked with James Palmer, Adam Gehring, Matt Wyndham, and Jonathan Manoa.
+
+* DONE Exercise 4 on page 7
+  CLOSED: [2018-04-25 Wed 19:27]
+  :LOGBOOK:
+  CLOCK: [2018-04-25 Wed 15:29]--[2018-04-25 Wed 16:09] =>  0:40
+  CLOCK: [2018-04-25 Wed 08:38]--[2018-04-25 Wed 09:17] =>  0:39
+  CLOCK: [2018-04-25 Wed 19:05]--[2018-04-25 Wed 19:27] =>  0:22
+  :END:
+
+  Design an algorithm for computing \(\lfloor \sqrt{n} \rfloor\) for any
+  positive integer \(n\). Besides assignment and comparison, your algorithm may
+  only use the four basic arithmetical operations.
+
+*Hints from Br. Neff*
+Harron's forumla
+Structure and Interpretation of Computer Programs
+http://web.mit.edu/alexmv/6.037/sicp.pdf
+
+** Natural Language
+
+   You can find the floored square root of x by implementing a binary search of sorts. 
+   My algorithm is outlined below.
+
+   Find the square root of x:
+      
+   Step 1: Check if x is equal to 1 or 0. If true, return x, we have found the square root. 
+           If false, go to Step 2.
+   // Begin binary search
+   Step 2: Set B to 1, E to x / 2, and A to 0 .
+   Step 3: Find the middle value between A and B by setting M to \lfloor (A + B) / 2 \rfloor.
+   Step 4: Find the square of M by setting S to M * M.
+   Step 5: If S = x, return M; we have found the floored square root. 
+           If not, proceed to Step 6.
+   Step 6: If S < x, set B = M + 1 and A = M. Go to Step 8.
+   Step 7: Set E = M - 1.
+   Step 8: If B <= E, go to Step 3, otherwise proceed to Step 9.
+   Step 9: Return A.
+      
+** Coding Example
+   Here is an implementation of the above algorithm in JavaScript.
+
+ #+BEGIN_SRC js
+ function findRoot(x) {
+
+     // if x = 0 or 1, we have already found the square root. Return
+     if (x == 0 | x == 1) {
+         return x;
+     }
+    
+     // define our variables for a binary search
+     let begin = 1,
+         // we know that the square root of x must be <= x/2 if x > 1
+         end = Math.floor(x/2), 
+         answer = null;
+
+     // begin our binary search
+     while(begin <= end) {
+         // Find the middle value 
+         const middle = Math.floor((begin + end) / 2);
+
+         // get the square of the middle value
+         const sqr = middle * middle;
+
+         // if the square of the middle value is equal to the target, return the target
+         if (sqr === x) {
+             return middle;
+         }
+
+         // if the square is less than x, increase the value of middle and try again
+         // this new value of middle may be correct, so set it to answer.
+         if (sqr < x) {
+             begin = middle + 1;
+             answer = middle;
+         } else {
+         // if the square is greater than x, reduce middle
+             end = middle - 1;
+         }
+     }
+     return answer;
+ }
+ #+END_SRC
+
+** Thought Process
+   My first thought when approaching this problem was to brute force it. 
+   I would try every number from 1 to n and check if its square was the solution. 
+   As I was examining this method in my mind, I recalled that as long as n > 1, the
+   floored square root of n would be less than or equal to n/2. Thinking about halving 
+   n immediately brought the idea of a binary search to mind. I tried working it out in code,
+   which is how I came up with this solution. 
+* DONE Exercise 8 on page 8
+  CLOSED: [2018-04-25 Wed 19:58]
+  :LOGBOOK:
+  CLOCK: [2018-04-25 Wed 19:27]--[2018-04-25 Wed 19:58] =>  0:31
+  :END:
+  What does Euclid's algorithm do for a pair of numbers in which the first
+  number is smaller than the second one? What is the largest number of times
+  this can happen during the algorithm's execution on such an input?
+** Euclidean GCD Test
+This came from an exercise we did in DM1. This follow the iterative approach outlined in the reading.
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun euclid-gcd (m n)
+    (let ((x m) (y n) r)
+       (while (not (zerop y)) 
+          (print (list "m" x "n" y "r" r))
+          (setq r (mod x y) x y y r))
+        x))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results output
+  (euclid-gcd 4 4096)
+#+END_SRC
+
+#+RESULTS:
+: 
+: ("m" 4 "n" 4096 "r" nil)
+: 
+: ("m" 4096 "n" 4 "r" 4)
+
+#+BEGIN_SRC emacs-lisp :results output
+  (euclid-gcd 72 35)
+#+END_SRC
+
+#+RESULTS:
+: 
+: ("m" 72 "n" 35 "r" nil)
+: 
+: ("m" 35 "n" 2 "r" 2)
+: 
+: ("m" 2 "n" 1 "r" 1)
+
+** Observations 
+   When m < n, the first iteration of the algorithm will end up swapping the values of m and n
+   providing the next iteration with an input where m > n. This is because when m < n, m % n = m.
+   This will only ever happen once, as once m > n, the algorithm ensures that n will remain less than m. 
+
+   I find that this increases my appreciation for the Euclidean GCD algorithm. Ingrained in the very process
+   of the algorithm is a method to 'self-correct' in the event that inputs are provided in a less than ideal order. 
+   I think that is pretty amazing. 
+   
+* DONE Exercise 12 on page 8
+  CLOSED: [2018-04-26 Thu 17:14]
+:LOGBOOK:
+CLOCK: [2018-04-26 Thu 16:58]--[2018-04-26 Thu 17:14] =>  0:16
+CLOCK: [2018-04-25 Wed 19:58]--[2018-04-25 Wed 20:16] =>  0:18
+:END:
+  There are /n/ lockers in a hallway, numbered sequentially from 1 to /n/.
+  Initially, all the locker doors are closed. You make /n/ passes by the
+  lockers, each time starting with locker #1. On the /ith/ pass, /i/ = 1, 2,
+  ..., /n/, you toggle the door of every /ith/ locker: if the door is closed,
+  you open it; if it is open, you close it. After the last pass, which locker
+  doors are open and which are closed? How many of them are open?
+
+** Observations
+   :LOGBOOK:
+   CLOCK: [2018-04-26 Thu 17:07]--[2018-04-26 Thu 17:07] =>  0:00
+   :END:
+*** Desk Check by Hand
+    let n = 10
+    Start state = 0000000000
+    
+    i = 1
+    1111111111
+
+    i = 2
+    1010101010
+    
+    i = 3
+    1000111000
+    
+    i = 4
+    1001111100
+
+    i = 5
+    1001011101
+
+    i = 6
+    1001001101
+
+    i = 7
+    1001000101
+
+    i = 8
+    1001000001
+
+    i = 9
+    1001000011
+
+    i = 10
+    1001000010
+*** Patterns
+    The lockers which are left open are all squares, 1, 4, and 9.
+    I imagine that this pattern continues as n increases. 
+
+    Assuming this pattern holds, the number of doors open given n lockers, is \lfloor\radic n\rfloor
+    
+* DONE Followup to Exercise 12 on page 8
+  CLOSED: [2018-04-26 Thu 17:49]
+  :LOGBOOK:
+  CLOCK: [2018-04-26 Thu 17:15]--[2018-04-26 Thu 17:25] =>  0:10
+  :END:
+
+  Assuming you can make sense of it, how does the following code help in
+  answering the two questions posed in the /locker doors/ exercise?
+
+#+BEGIN_SRC elisp :results silent
+  (require 'cl) ; for loop
+
+  (setq doors (make-bool-vector 101 nil))
+
+  (defun flip-doors (n)
+    (loop for i from 0 below (length doors)
+          when (zerop (mod i n))
+          do (aset doors i (if (aref doors i) nil t))))
+
+  (defun flip-100 ()
+    (loop for i from 1 to 100 do (flip-doors i))
+    (substring (mapconcat (lambda (x) (if x "1" "0")) doors "") 1))
+#+END_SRC
+
+#+BEGIN_SRC elisp :results raw
+  (flip-100)
+#+END_SRC
+
+#+RESULTS:
+1001000010000001000000001000000000010000000000001000000000000001000000000000000010000000000000000001
+
+** Observations
+ 
+  The flip-doors function iterates over every element in the bool-vector doors, and flips the bit
+  if the index of that bit mod n = 0. 
+
+  The flip-100 loops from 1 to 100 passing n to the flip-doors function to modify the bool-vector doors.
+
+  You could expand this to a flip-n doors by doing the following:
+
+#+BEGIN_SRC emacs-lisp :results silent
+   (defun flip-n (n)
+    (loop for i from 1 to n do (flip-doors i))
+    (substring (mapconcat (lambda (x) (if x "1" "0")) doors "") 1))
+#+END_SRC
+
+  These functions help test our conclusions to the previous excercise letting us rapidly test rows of lockers
+  of size n. 
+
+* DONE Create Three Different Algorithms to Solve the Same Problem
+  CLOSED: [2018-04-26 Thu 22:22]
+  :LOGBOOK:
+  CLOCK: [2018-04-26 Thu 20:49]--[2018-04-26 Thu 21:36] =>  0:47
+  CLOCK: [2018-04-26 Thu 17:49]--[2018-04-26 Thu 19:01] =>  1:12
+  :END:
+
+  Given two positive numbers A and B, where A is greater than B, find a way to
+  /break up/ A into B unequal pieces.
+
+  For example, if A = 34 and B = 4, then four unequal pieces of A are 6, 7, 9
+  and 12. These are unequal because there are no duplicate numbers. They break
+  up (or sum up to) 34 because 6 + 7 + 9 + 12 = 34. The numbers representing the
+  pieces (e.g., 6, 7, 9 and 12) must be positive integers (1, 2, 3, etc.), which
+  excludes zero. Note that some pairs of numbers don't work, e.g., 5 and 3, so
+  be sure to error-check that case.
+
+  *hints*
+  Use summation forumulas
+
+** Observations and Limitations
+
+   I observed that in order for A to be broken into B unequal pieces, B must be less than \radic2A.
+   This was calculated from Summation Formula 2. in the book: \sum i from i = 1 to n. which sums to \approx .5n^2.
+   We can use this forumla to calculate the maximum number of smallest unique integers that can be added 
+   together before B would become to large to break up A into unequal pieces.
+
+   Thus, the following algorithms assume that given a pair of integers A and B, B < \radic2A. 
+  
+** Algorithm 1
+
+   Step 1: Let X = \lfloor A/B \rfloor and create a list of B Xs 
+       Example: 34 / 4 = 8. Make a list of 4 8s like so: (8 8 8 8)
+
+   Step 2: Let Y = \lfloor B/2 \rfloor 
+   Step 3: Let i = 0 representing the index of the first item in the list
+   Step 4: Let j = B - 1 representing an index of the last item in the list
+   Step 5: Let k = i - Y
+   Step 6: Set the value in i = k
+   Step 7: Set the value in j = j + k
+   Step 8: Increment i by one, decrement j by one, decrement y by one
+   Step 9: If Y >= 0, go to Step 5, otherwise, continue to Step 10
+   Step 10: Add A % B to the last item in the list
+
+   You have now have B unequal pieces. 
+
+   
+*** JavaScript Example
+
+#+BEGIN_SRC js :results output
+function algorithm1(a, b) {
+    let x = Math.floor(a/b);
+    let list = new Array(b);
+    list.fill(x)
+
+    let y = Math.floor(b/2),
+        i = 0,
+        j = b - 1
+
+    while(y >= 0) {
+        console.log(list);
+        let k = list[i] - y;
+        list[i] = k;
+        list[j] = list[j] + y;
+        i++;
+        j--;
+        y--;
+    }
+
+    let lastIndex = list.length - 1;
+    list[lastIndex] = list[lastIndex] + (a % b);
+    let sum = list.reduce((x,t) => x + t)
+    console.log(list);
+    console.log(`target sum: ${a}`)
+    console.log(`sum of unequal parts: ${sum}`)
+    if(list.length === b && sum === a) {
+        console.log('success');
+        return true;
+    } else {
+        console.log('failure');
+        return false;
+    }
+}
+
+algorithm1(34,4)
+#+END_SRC
+
+#+RESULTS:
+: [ 8, 8, 8, 8 ]
+: [ 6, 8, 8, 10 ]
+: [ 6, 7, 9, 10 ]
+: [ 6, 7, 9, 12 ]
+: target: 34
+: sum of unequal parts: 34
+: success
+
+
+** Algorithm 2
+
+   Step 1: List the numbers from 1 to B - 1. 
+   Step 2: Sum the numbers from Step 1. 
+   Step 3: Subtract this sum from A.
+   Step 4: Add the difference from Step 3 to the end of the list.
+
+   You have found B unequal parts of A.
+
+*** Emacs Lisp Example
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun algorithm2 (a b)
+     (let ((list-of-nums (number-sequence 1 (- b 1))))
+       (setq list-of-nums (append list-of-nums (- a (apply '+ list-of-nums))))))
+ #+END_SRC
+ 
+ #+BEGIN_SRC emacs-lisp
+   (algorithm2 34 5)
+ #+END_SRC 
+
+ #+RESULTS:
+ : (1 2 3 4 . 24)
+
+** Algorithm 3
+   
+   Step 1: Create an empty stack
+   Step 2: Let i = 1
+   Step 3: Push A onto the stack
+   Step 4: Pop the stack and store the value in x
+   Step 5: Push i onto the stack
+   Step 6: Push x - i onto the stack
+   Step 7: Increment i
+   Step 8: If the length of the stack is less than B, go to Step 4, otherwise, return the stack
+
+   You have found B unequal parts of A.
+
+*** JavaScript Example
+
+#+BEGIN_SRC js :results output
+function algorithm3(a, b) {
+    let stack = [];
+    let i = 1; 
+    stack.push(a);
+    do {
+        let x = stack.pop();
+        stack.push(i)
+        stack.push(x - i);
+        i++
+        console.log(stack)
+    } while (stack.length < b);
+    return stack
+}
+
+algorithm3(34, 4)
+#+END_SRC
+
+#+RESULTS:
+: [ 1, 33 ]
+: [ 1, 2, 31 ]
+: [ 1, 2, 3, 28 ]
+* DONE What I Learned
+  CLOSED: [2018-04-26 Thu 22:32]
+  :LOGBOOK:
+  CLOCK: [2018-04-26 Thu 22:25]--[2018-04-26 Thu 22:32] =>  0:07
+  :END:
+
+  Something that really stood out to me when working on the exercises this week, is 
+  that when approaching solving these algorithmic problems, I don't need to come up with
+  some brilliant new approach out of thin air. I realized that I need to build on the knowledge
+  I already have. 
+  
+  For example, the floored square root algorithm. I have used binary searches countless times, but
+  I never thought about using it to solve a mathematical problem like finding a square root. As I payed
+  attention to the patterns I was seeing when attempting to solve the problem, my brain recognized that
+  I already knew how to solve this problem, I just didn't know it. 
+
+  I think this will become a major theme in the course: algorithms build off of each other. By breaking
+  the problems into smaller chunks, it may be easier to identify problems we already know how to solve. 
+  We can then apply the algorithms we know and expand them. 
+
+  The other big thing I learned this week was an even greater appreciation for the Euclidean GCD algorithm.
+  I mentioned this previously in the workbook, but when I saw the pattern of "self-correction," it blew
+  my mind a little. I already thought it was an elegant algorithm, but this feature increased my respect
+  dramatically. 
+

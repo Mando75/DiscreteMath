@@ -1,0 +1,354 @@
+#+TITLE: Preparation Assessment 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* DONE Answer What is True
+  CLOSED: [2018-05-08 Tue 19:34]
+  :LOGBOOK:
+  CLOCK: [2018-05-07 Mon 21:30]--[2018-05-07 Mon 22:28] =>  0:58
+  :END:
+
+  If you can truthfully assert the following, you know what to do:
+
+  - [X] I know that /brute force/ is a straightforward approach to solving a
+    problem, usually directly based on the problem statement and definitions of
+    the concepts involved.
+  - [X] I understand that a first application of the brute-force approach often
+    results in an algorithm that can be improved with a modest amount of effort.
+  - [X] I know why it is *false* to say that a strength of the brute-force
+    approach is subpar algorithmic efficiency.
+  - [X] I understand that /exhaustive search/ is a brute-force approach to
+    combinatorial problems that suggests generating each and every combinatorial
+    object of the problem, selecting those of them that satisfy all the
+    constraints, and then finding a desired object.
+  - [X] I know why it is *false* to say that exhaustive search is practical for
+    all but very small instances of problems it can be applied to.
+  - [X] I will study the following simple examples of brute force and be
+    prepared to discuss them:
+    - Computing /a^n/, where /a/ is positive and /n/ is a nonnegative integer
+
+#+BEGIN_SRC emacs-lisp
+  (defun a-to-the-n (a n)
+    "Brute force of a^n"
+    (loop with product = 1
+          for i from 1 to n
+          do (setq product (* product a))
+          finally return product))
+
+  (a-to-the-n 2 10)
+#+END_SRC
+
+#+RESULTS:
+: 1024
+
+
+    - Computing /n!/
+
+#+BEGIN_SRC emacs-lisp
+(defun n-factorial (n)
+  "Brute force of n!"
+  (let ((product 1))
+     (loop for i from n downto 1
+       do (setq product (* product i)))
+       product))
+
+(n-factorial 19)
+;most-positive-fixnum
+#+END_SRC
+
+#+RESULTS:
+: 121645100408832000
+
+#+RESULT:
+: 2305843009213693951
+
+#+RESULT:
+: -2178784010250747904
+      
+    - Multiplying two /n/-by-/n/ matrices
+
+From the book:
+#+BEGIN_SRC js
+function multiplyMatrixSizeN(A, B, n) {
+    let C = new Array(n).fill(new Array(n).fill(0)); 
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            for (let k = 0; k < n; k++) {
+                C[i][j] = C[i][j] + (A[i][k] * B[k][j]);
+            }
+        }
+    }
+    return C;
+}
+#+END_SRC
+
+#+RESULTS:
+
+    - Selection sort
+
+From the book:
+#+BEGIN_SRC js :results output
+function selectionSort(A) {
+   for(let i = 0; i < A.length -1; i++) {
+      let min = i;
+      for (let j = i + 1; j < A.length; j++) {
+         if(A[j] < A[min]) {
+            min = j;
+         }
+         }
+         let temp = A[min];
+         A[min] = A[i];
+         A[i] = temp;
+      
+   }
+   return A;
+}
+
+console.log(selectionSort([1, 3, 4, 2, 7, 68, 5]))
+#+END_SRC
+
+#+RESULTS:
+: [ 1, 2, 3, 4, 5, 7, 68 ]
+
+    - Sequential search
+From the book: 
+#+BEGIN_SRC js :results output
+function sequentialSearch(A, K) {
+  let i = 0;
+  let n = A.length;
+  A.push(K);
+ 
+  while(A[i] != K) {
+     i++;
+  }
+  if(i<n)
+    return i
+  else return false
+}
+
+console.log(sequentialSearch([1, 3, 1, 5, 56, 34], 56));
+#+END_SRC
+
+#+RESULTS:
+: 4
+
+#+RESULT:
+: 4
+
+  - [X] I will look again at Exercise 12 on page 61 and be prepared to discuss
+    the note in the key that says that it is not difficult to improve the
+    multiplicative constant with a better algorithm.
+  - [X] I will look at both implementations of "The Mystery Algorithm" and be
+    prepared to discuss them.
+
+* DONE The Mystery Algorithm
+  CLOSED: [2018-05-08 Tue 19:33]
+  :LOGBOOK:
+  CLOCK: [2018-05-08 Tue 19:09]--[2018-05-08 Tue 19:33] =>  0:24
+  CLOCK: [2018-05-07 Mon 22:28]--[2018-05-07 Mon 22:31] =>  0:03
+  :END:
+  
+They calculate the prime factorization of numbers
+
+** The Elisp Version
+#+BEGIN_SRC emacs-lisp
+  (defun primeFactors (n)
+   (let ((k 0)
+         (tm '())
+         (p 1))
+     (while (zerop (% n 2))
+         (setq n (/ n 2)
+               k (1+ k)))
+     (if (not (zerop k))
+         (push (cons 2 k) tm))
+     (while (<= (* p p) n)
+         (setq p (+ p 2)
+               k 0)
+         (while (zerop (% n p))
+            (setq n (/ n p)
+                  k (1+ k)))
+         (if (not (zerop k))
+             (push (cons p k) tm)))
+     (if (not (= 1 n))
+         (push (cons n 1) tm))))
+     
+#+END_SRC
+
+#+RESULTS:
+: primeFactors
+
+#+BEGIN_SRC emacs-lisp :results raw
+(primeFactors 313)  
+#+END_SRC
+
+** The C++ Version
+#+BEGIN_SRC C++ :tangle mystery.cpp
+//
+// compile with g++ mystery.cpp -o mystery -lntl
+//
+#include <cstdlib>
+#include <cstring>
+#include <sstream>
+#include <map>
+#include <NTL/ZZ.h>
+using namespace std;
+using namespace NTL;
+
+string mystery(ZZ n)
+{
+   ostringstream ss;
+   ss << n << " = ";
+   map<ZZ, ZZ> answer;
+
+   ZZ zero = to_ZZ(0);
+   ZZ one = to_ZZ(1);
+   ZZ two = to_ZZ(2);
+   ZZ k = zero;
+
+   while (n % two == zero) // n is even
+   {
+      n /= two;
+      k++;
+   }
+
+   if (k != zero)
+   {
+      answer.insert(pair<ZZ, ZZ>(two, k));
+   }
+
+   ZZ p = one;
+
+   while (p * p <= n)
+   {
+      p += two;
+      k = zero;
+
+      while (n % p == zero)
+      {
+         n /= p;
+         k++;
+      }
+      if (k != zero)
+      {
+         answer.insert(pair<ZZ, ZZ>(p, k));
+      }
+   }
+   if (n != one)
+   {
+      answer.insert(pair<ZZ, ZZ>(n, one));
+   }
+   for (map<ZZ, ZZ>::const_iterator it = answer.begin();
+        it != answer.end(); it++)
+   {
+      ZZ key = (*it).first;
+      ss << key << "^" << answer[key] << "*";
+   }
+   string ans = ss.str();
+   return ans.substr(0, ans.size() - 1);
+}
+
+void output(ZZ n)
+{
+   cout << mystery(n) << endl;
+}
+
+int main(int argc, char** argv)
+{
+   for (int i = 1; i < argc; i++)
+   {
+      output(to_ZZ(argv[i]));
+   }
+   return 0;
+}
+#+END_SRC
+
+#+RESULTS:
+
+** The Java Version
+#+BEGIN_SRC java :tangle Mystery.java
+import java.math.BigInteger;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Mystery
+{
+   public static void main(String[] args)
+   {
+      for (String arg : args)
+      {
+         output(new BigInteger(arg));
+      }
+   }
+
+   public static void output(BigInteger n)
+   {
+      System.out.println(mystery(n));
+   }
+
+   public static String mystery(BigInteger n)
+   {
+      StringBuffer ans = new StringBuffer(n.toString());
+      ans.append(" = ");
+      BigInteger bi2 = new BigInteger("2");
+      Map<BigInteger, BigInteger> tm = new TreeMap<BigInteger, BigInteger>();
+      BigInteger k = BigInteger.ZERO;
+      while (!n.testBit(0)) // n is even
+      {
+         n = n.shiftRight(1);
+         k = k.add(BigInteger.ONE);
+      }
+      if (k.compareTo(BigInteger.ZERO) != 0)
+      {
+         tm.put(bi2, k);
+      }
+      BigInteger p = BigInteger.ONE;
+      while (p.multiply(p).compareTo(n) <= 0)
+      {
+         p = p.add(bi2);
+         k = BigInteger.ZERO;
+         while (n.mod(p).compareTo(BigInteger.ZERO) == 0)
+         {
+            n = n.divide(p);
+            k = k.add(BigInteger.ONE);
+         }
+         if (k.compareTo(BigInteger.ZERO) != 0)
+         {
+            tm.put(p, k);
+         }
+      }
+      if (n.compareTo(BigInteger.ONE) != 0)
+      {
+         tm.put(n, BigInteger.ONE);
+      }
+      for (BigInteger key : tm.keySet())
+      {
+         ans.append(key);
+         ans.append('^');
+         ans.append(tm.get(key));
+         ans.append('*');
+      }
+      return ans.toString().substring(0, ans.length() - 1);
+   }
+}
+#+END_SRC
+
+#+BEGIN_SRC elisp
+  (mapconcat (lambda (x) (concat "2^" (format "%d" x))) '(1 2 3) "*")
+#+END_SRC
+
+#+RESULTS:
+: 2^1*2^2*2^3
+
+* DONE Exercise 12 on page 61
+  CLOSED: [2018-05-08 Tue 19:34]
+  :LOGBOOK:
+  CLOCK: [2018-05-08 Tue 19:34]--[2018-05-08 Tue 19:34] =>  0:00
+  :END:
+  To aid in the discussion, please write your thoughts as you ponder the
+  algorithm and the note in the key:
+
+
+  We weren't given a key, but I believe that the algorithm I presented 
+  solves the problem the best way possible. 

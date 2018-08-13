@@ -1,0 +1,145 @@
+#+TITLE:  Introduction to Algorithms
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP:   showeverything
+
+* Why Study Algorithms?
+
+#+BEGIN_QUOTE
+  Two ideas lie gleaming on the jeweler's velvet. The first is the
+  calculus, the second, the algorithm.  The calculus and the rich body
+  of mathematical analysis to which it gave rise made modern science
+  possible; but it has been the algorithm that has made possible the
+  modern world.
+
+  --- David Berlinski, /The Advent of the Algorithm/, 2000
+#+END_QUOTE
+
+* Compelling Reasons and Limitations
+
+#+BEGIN_QUOTE
+  There are compelling reasons to study algorithms. To put it bluntly,
+  computer programs would not exist without algorithms. And with
+  computer applications becoming indispensable in almost all aspects
+  of our professional and personal lives, studying algorithms becomes
+  a necessity for more and more people.
+
+  Another reason for studying algorithms is their usefulness in
+  developing analytical skills. After all, algorithms can be seen as
+  special kinds of solutions to problems --- not answers but precisely
+  defined procedures for getting answers. Consequently, specific
+  algorithm design techniques can be interpreted as problem-solving
+  strategies that can be useful regardless of whether a computer is
+  involved.
+
+  Of course, the precision inherently imposed by algorithmic thinking
+  limits the kinds of problems that can be solved with an algorithm.
+
+  You will not find, for example, an algorithm for living a happy life
+  or becoming rich and famous.  On the other hand, this required
+  precision has an important educational advantage.
+
+  --- Anany Levitin, /Introduction to the Design and Analysis of
+  Algorithms/, 2012
+#+END_QUOTE
+
+* True Understanding
+
+  As one of the most prominent computer scientists in the history of
+  algorithmics put it:
+
+#+BEGIN_QUOTE
+  A person well-trained in computer science knows how to deal with
+  algorithms: how to construct them, manipulate them, understand them,
+  analyze them. This knowledge is preparation for much more than
+  writing good computer programs; it is a general-purpose mental tool
+  that will be a definite aid to the understanding of other subjects,
+  whether they be chemistry, linguistic, or music, etc.  The reason
+  for this may be understood in the following way:
+
+  It has often been said that a person does not really understand
+  something until after teaching it to someone else. Actually, a
+  person does not *really* understand something until after teaching
+  it to a *computer*, i.e., expressing it as an algorithm ....
+
+  An attempt to formalize things as algorithms leads to a much deeper
+  understanding than if we simply try to comprehend things in the
+  traditional way.
+
+  ---Donald Knuth, /Computer Science and its relation to mathematics/,
+  The American Mathematical Monthly, 81(4), 1974
+#+END_QUOTE
+
+* What is an algorithm?
+
+#+BEGIN_QUOTE
+  An algorithm is a sequence of unambiguous instructions for solving a
+  problem, i.e., for obtaining a required output from any legitimate
+  input in a finite amount of time.
+
+  --- Anany Levitin, page 3.
+#+END_QUOTE
+
+  Or, to be precise, an algorithm is a *finite* sequence of
+  unambiguous instructions, etc.
+
+* Example: Euclid's GCD Algorithm
+
+  The Greatest Common Divisor (GCD) of two nonnegative, not-both-zero
+  integers /m/ and /n/, denoted /gcd(m, n)/, is defined as the largest
+  integer that divides both /m/ and /n/ evenly, i.e., with a remainder
+  of zero.
+
+** Approach 1
+
+   Apply repeatedly the equality
+ 
+   /gcd(m, n) = gcd(n, m mod n)/ until /m/ mod /n/ is equal to 0.
+
+   Since /gcd(m, 0) = m/, then /m/ is the greatest common divisor of
+   /m/ and /n/.
+
+   Example: gcd(60, 24) = gcd(24, 12) = gcd(12, 0) = 12.
+
+   Now apply this algorithm to finding gcd(31415, 14142).
+
+   How do we know Euclid's algorithm will stop?
+
+   Is each step non-ambiguous?
+
+   Was the range of inputs specified?
+
+** Approach 2
+
+   1. Assign the value of /min(m, n)/ to /t/
+   2. Divide /m/ by /t/.  If the remainder of this division is 0, go
+      to step 3; otherwise go to step 4.
+   3. Divide /n/ by /t/.  If the remainder of this division is 0,
+      return the value of /t/ as the answer and stop; otherwise
+      proceed to step 4
+   4. Decrease the value of t by 1. Go to Step 2.
+
+   Apply this algorithm to finding gcd(31415, 14142).
+
+   What is wrong with this algorithm?
+
+** Approach 3
+
+   1. Find the prime factors of /m/.
+   2. Find the prime factors of /n/.
+   3. Identify all common factors in the two prime expansions found in
+      steps 1 and 2.
+   4. Compute the product of all the common factors and return it as
+      the greatest common divisor of /m/ and /n/.
+
+   Example: gcd(60, 24)
+
+   60 = 2 * 2 * 3 * 5
+
+   24 = 2 * 2 * 2 * 3
+
+   gcd(60, 24) = 2 * 2 * 3 = 12
+
+   Apply this algorithm to finding gcd(31415, 14142).
+
+   Problems with this algorithm?

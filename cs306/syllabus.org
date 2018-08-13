@@ -1,0 +1,129 @@
+#+TITLE: Syllabus
+#+AUTHOR: CS 306
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+* Catalog Description
+
+  What this course is about: /Algorithms and Complexity/
+
+  This course introduces formal techniques to support the design and
+  analysis of algorithms, focusing on both the underlying mathematical
+  theory and practical considerations of efficiency. Topics include
+  asymptotic complexity bounds, techniques of analysis, and
+  algorithmic strategies.
+
+* Objectives
+
+  - Become conversant with the topics and issues surrounding
+    algorithms and complexity. These include (but are not limited to):
+    - Basic algorithms analysis: Asymptotic analysis of upper and
+      average complexity bounds;
+    - Best, average, and worst case behaviors;
+    - Big-Oh, little-Oh, Big-Omega, and Big-Theta notation;
+    - Standard complexity classes;
+    - Empirical measurements of performance; time and space tradeoffs
+      in algorithms;
+    - Using recurrence relations to analyze recursive algorithms;
+    - Fundamental algorithmic strategies: brute-force; greedy; divide
+      and conquer; decrease and conquer; backtracking;
+    - Graph and tree algorithms: depth-and-breadth-first traversals;
+      shortest-path (Dijkstra's and Floyd's algorithms); minimum
+      spanning tree (Prim's and Kruskal's algorithms); topological
+      sort.
+
+  - Learn the techniques (i.e., acquire the "tools").
+    - Analyze and compare algorithms using Big-Oh, Big-Omega, and
+      Big-Theta.
+    - Describe and implement in a high-level language (e.g., lisp)
+      some or all of the following algorithmic techniques: Brute
+      Force, Divide/Decrease/Transform-and-Conquer, Greedy, Dynamic
+      Programming, Iterative Improvement and Backtracking.
+
+* Prerequisites
+
+  You must have successfully completed the following courses:
+
+  - CS 235 Data Structures
+  - CS 237 Discrete Mathematics I
+
+  You must have *some* working knowledge of:
+
+   - Procedural, Object-Oriented, and Functional Programming
+   - Basic data structures (sets, lists, maps, trees, graphs, etc.)
+   - Summation notation (\Sigma)
+   - Recurrence relations
+   - Limits
+   - Logarithms
+   - Matrices
+
+* Course Materials
+
+** Required Text
+
+   /Introduction to the Design and Analysis of Algorithms/
+
+   *Anany Levitin*
+
+   /Third Edition, 2012, Pearson/
+
+   ISBN: 9780132316811
+
+* Requirements
+
+  You are required to...
+
+  - attend class, as attendance and participation factor heavily into your
+    grade.
+  - read assigned portions of the course materials *before* the class
+    meeting when they will be discussed.
+  - do homework assignments to deepen your understanding of selected
+    topics.
+
+* Assessments
+
+  There will be weekly preparation assessments that you will take before class.
+  These will be on any current or previously discussed course content, to
+  encourage steady knowledge accumulation and retention.
+
+* Assignments
+
+  Homework assignments are of two types: Exercises and Problems.
+
+** Exercises
+
+   Exercises are individual and group learning activities that will require
+   either a small amount of preparation before class, or participation during
+   class, or both. Although time will be given during class, some time outside
+   of class may also be required.
+
+** Problems
+
+   Problems are weightier assignments that invite you to explore certain topics
+   in algorithms and complexity, as well as increase your algorithmic problem
+   solving prowess. All involve some writing in the form of a report on what you
+   learned.
+
+* Late Policy
+
+  Work is due as stated in [[file:schedule.org][the schedule]]. Late work is accepted *only if* the
+  reason is extraordinary, and acceptance is reached through private and
+  prolonged negotiation. And you must come talk to me in person --- NOT by
+  email, nor any other means of communication.
+
+* Grade Category Weighting
+
+   - Assignments: 70%
+   - Assessments: 30%
+     - This includes attendance and participation.
+     - Each unexcused absence will incur a 5% penalty. If you are absent six
+       times you will fail the class.
+     - If you are tardy (which means coming in after the prayer has begun) three
+       times, that counts as one absence.
+     - You must bring a laptop or other Internet-connectable (and tools-ready)
+       device to each class meeting.
+
+* Grade Calculating
+
+  Your weighted percentage will determine your final grade in a reasonably
+  standard way, as computed in the [[file:gradebook.org][gradebook.org]] course file.

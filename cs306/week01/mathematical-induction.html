@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-03 Thu 15:46 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mathematical Induction</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Rick Neff" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Mathematical Induction</h1>
+
+<div id="outline-container-org9d304a4" class="outline-2">
+<h2 id="org9d304a4">Empirical versus Mathematical Induction</h2>
+<div class="outline-text-2" id="text-org9d304a4">
+<blockquote>
+<p>
+Will the sun rise on January 1 next year? There is no way to be absolutely sure.
+It is always possible that the world will end before then by divine decree or by
+some natural calamity. &#x2026; The most we can say is that it is an excellent bet
+that on the next New Year's day, the sun will rise as usual. Our jump from a
+finite set of past sunrises to an infinite future set, or at least to a future
+set with a large number of elements, is an empirical induction.
+</p>
+
+<p>
+Mathematicians have an analogous technique known as mathematical induction or
+complete induction that also supports a jump from a finite set of cases to a
+larger or an infinite number of cases. Unlike empirical induction, the
+mathematical technique is entirely deductive. A "jump proof", as it is sometimes
+called, is as certain as any proof can be in mathematics.
+</p>
+
+<p>
+To prove something by mathematical induction we must first have a series of
+statements (usually an infinite series but not necessarily so) that can be put
+into a one-to-one correspondence with the positive integers. Second, we must
+establish that the statements are related to one another by &#x2026; the "hereditary
+property". If any statement is true, its successor &#x2014; the "next" statement &#x2014;
+is true. Third, we must show that the first statement is true. It then follows
+with iron certainty that all the statements are true.
+</p>
+
+<p>
+Jump proofs have been likened to a row of bricks or dominoes that are standing
+on end and all topple over when you unbalance the first one. [It's like] a pile
+of envelopes, each containing a note that says: "Open the next envelope, read
+the order and carry it out." If you are committed to obeying the order in the
+first envelope, you must open all the envelopes and obey all the orders.
+</p>
+
+<p>
+&#x2014; Martin Gardner
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org036e561" class="outline-2">
+<h2 id="org036e561">The Principle of Mathematical Induction</h2>
+<div class="outline-text-2" id="text-org036e561">
+<p>
+Verbose version:
+</p>
+
+<p class="verse">
+IF a proposition involving the positive integer N<br />
+&#xa0;&#xa0;&#xa0;can be proven to have the two properties:<br />
+<br />
+&#xa0;&#xa0;&#xa0;1) The proposition is true for N = 1, and<br />
+<br />
+&#xa0;&#xa0;&#xa0;2) IF K is any value of N<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;for which the proposition is true<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;THEN the proposition is also true<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;for the next value N = K + 1;<br />
+THEN the proposition is true<br />
+&#xa0;&#xa0;for all positive integral values of N.<br />
+</p>
+
+<p>
+Succinct version: \(P(1) \land \forall k(P(k) \rightarrow P(k + 1))] \rightarrow \forall nP(n)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8e3eea9" class="outline-2">
+<h2 id="org8e3eea9">Classic Example</h2>
+<div class="outline-text-2" id="text-org8e3eea9">
+<p>
+Use mathematical induction to prove that the sum
+of the first <i>n</i> odd positive integers is <i>n<sup>2</sup></i>.
+</p>
+
+<p>
+Let <i>P(n)</i> be the proposition \(\sum_{j=1}^n (2j - 1) = n^2\)
+</p>
+
+<p>
+<b>Basis Step:</b> <i>P(1)</i> is true since \(2 \cdot 1 - 1 = 1 = 1^2\)
+</p>
+
+<p>
+<b>Inductive Step:</b> Assume <i>P(k)</i> is true, that is
+</p>
+
+<p>
+\(\sum_{j=1}^k (2j - 1) = k^2,\) so then \(\sum_{j=1}^{k}(2j - 1) =
+2 \cdot 1 - 1 + 2 \cdot 2 - 1 + \ldots + 2 \cdot k - 1\)
+</p>
+
+<p>
+and to show <i>P(k)</i> &rarr; <i>P(k + 1)</i> (which completes the proof):
+\[
+\begin{array}{lll}
+\sum_{j=1}^{k + 1}(2j - 1)&=&\sum_{j=1}^k(2j - 1) + 2(k + 1) - 1\\
+&=& k^2 + 2(k + 1) - 1\\
+&=& k^2 + 2k + 2 - 1\\
+&=& k^2 + 2k + 1 = (k + 1)^2\\
+\end{array}\]
+QED
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0e89e5b" class="outline-2">
+<h2 id="org0e89e5b">Another Induction Proof (with a "non-one" basis step)</h2>
+<div class="outline-text-2" id="text-org0e89e5b">
+<p>
+Let <i>P(n)</i> be <i>2<sup>n</sup> &gt; n<sup>2</sup></i>. Prove <i>&forall; n&gt;4 P(n).</i>
+</p>
+
+<p>
+<b>Basis Step:</b> <i>P(5)</i> is true since <i>2<sup>5</sup> = 32 &gt; 25 = 5<sup>2</sup></i>
+</p>
+
+<p>
+<b>Inductive Step:</b> Assume <i>P(k)</i> is true, that is <i>2<sup>k</sup> &gt; k<sup>2</sup></i>.
+Then,
+\[\begin{array}{rll}
+ 2^{k+1} &=& 2 \cdot 2^k\\
+& & \\
+         &>& k^2 + k^2\\
+& & \\
+         &>& k^2 + 4k\ \mbox{(since /k > 4/)}\\
+& & \\
+         &>& k^2 + 2k + 1\\
+& & \\
+         &=& (k + 1)^2.\\
+ \end{array}
+\]
+QED
+</p>
+
+<p>
+Question: Which step above used <i>2<sup>k</sup> &gt; k<sup>2</sup></i> (the inductive hypothesis)?
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcd14300" class="outline-2">
+<h2 id="orgcd14300">You Try It</h2>
+<div class="outline-text-2" id="text-orgcd14300">
+<p>
+Let <i>P(n)</i> be the statement that <i>n! &lt; n<sup>n</sup></i>, where \(n \in \mathbf Z^{+}, n > 1\).
+</p>
+
+<p>
+What is the statement <i>P(2)</i>?
+</p>
+
+<p>
+Just plug in <i>n = 2</i>: <i>P(2)</i> is the statement <i>2! &lt; 2<sup>2</sup></i>.
+</p>
+
+<p>
+Show that <i>P(2)</i> is true, completing the basis step of the proof.
+</p>
+
+<p>
+Since <i>2! = 2</i> and <i>2<sup>2</sup> = 4</i>, this is the true statement <i>2 &lt; 4</i>.
+</p>
+
+<p>
+What is the inductive hypothesis? It is the statement <i>k! &lt; k<sup>k</sup></i>.
+</p>
+
+<p>
+What do you need to prove in the inductive step?
+</p>
+
+<p>
+You need to prove that for each <i>k &ge; 2</i> that <i>P(k)</i> implies
+<i>P(k + 1)</i>.  In other words, show that assuming the inductive
+hypothesis (<i>k! &lt; k<sup>k</sup></i>) you can prove that <i>(k + 1)! &lt; (k + 1)<sup>k + 1</sup></i>.
+</p>
+
+<p>
+Complete the inductive step.
+</p>
+
+<p>
+\((k + 1)! = (k + 1)k! < (k + 1)k^k < (k + 1)(k + 1)^k = (k + 1)^{k + 1}\)
+</p>
+
+<p>
+Having completed both the basis step and the inductive step, by the
+PMI, the statement is true for every \(n \in \mathbf Z^{+}, n > 1\).
+</p>
+
+<p>
+QED
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4770384" class="outline-2">
+<h2 id="org4770384">Try Another One</h2>
+<div class="outline-text-2" id="text-org4770384">
+<p>
+Find a formula for \(\frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} +
+\cdots + \frac{1}{n(n + 1)}\) by examining the values of this
+expression for small values of <i>n</i>.
+</p>
+
+<p>
+By computing the first few sums and getting the answers 1/2, 2/3,
+and 3/4, it's easy to guess that the sum is \(n/(n + 1)\).
+</p>
+
+<p>
+Prove this formula works for all \(n \in \mathbf Z^{+}\) using the PMI.
+</p>
+
+<p>
+<b>BASE:</b> It is true for <i>n = 1</i>, since there is just one term, 1/2.
+</p>
+
+<p>
+<b>IHOP:</b> Suppose that \(\frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \cdots +
+\frac{1}{k(k + 1)} = \frac{k}{k + 1}\)
+</p>
+
+<p>
+<b>GOAL:</b> You must now show that \[\left[
+  \frac{1}{1 \cdot 2} + \frac{1}{2 \cdot 3} + \cdots + \frac{1}{k(k +
+    1)}\right] + \frac{1}{(k + 1)(k + 2)} = \frac{k + 1}{k + 2}\]
+</p>
+
+<p>
+Use the IHOP and do the algebra, reaching the desired expression:
+</p>
+
+<p>
+\(\frac{k}{k + 1} + \frac{1}{(k + 1)(k + 2)} = \frac{k^2 + 2k + 1}{(k + 1)(k + 2)} = \frac{k + 1}{k + 2}\)
+</p>
+
+<p>
+QED
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4a82e1c" class="outline-2">
+<h2 id="org4a82e1c">Another Example</h2>
+<div class="outline-text-2" id="text-org4a82e1c">
+<p>
+Let <i>P(n)</i> be <i>2<sup>n</sup> &gt; n<sup>4</sup></i>. (Or, <i>n<sup>4</sup> &lt; 2<sup>n</sup></i>.)
+</p>
+
+<p>
+Prove <i>&forall; n&gt;16 P(n)</i>.
+</p>
+
+<p>
+<b>Basis step:</b> <i>P(17)</i> is true since <i>2<sup>17</sup> = 131072 &gt; 83521 = 17<sup>4</sup>.</i>
+</p>
+
+<p>
+<b>Inductive step:</b>
+</p>
+
+<p>
+Assume <i>P(j)</i> is true.
+</p>
+
+<p>
+(Note the switch to using <i>j</i> rather than <i>k</i> &#x2014; the point being that it
+doesn't matter what variable name you use.)
+</p>
+
+<p>
+Then it follows that \[\begin{array}{rll}(j + 1)^4 &=& j^4 + 4j^3 + 6j^2 + 4j + 1\\
+                                    &<& j^4 + 4j^3 + 6j^3 + 4j^3 + 2j^3\\
+                                    &=& j^4 + 16j^3\\
+		  		    &<& j^4 + j^4\ (\mbox{since}\ 16 < j)\\
+				    &=& 2j^4\\
+				    &<& 2 \cdot 2^j\ \mbox{(by the inductive hypothesis)}\\
+				    &=& 2^{j+1},\ \mbox{as desired}.\end{array}\]
+</p>
+
+<p>
+QED
+</p>
+
+<p>
+You should be able to generalize this to prove that \(\exists k\ \forall p\
+\forall n>k\ (2^n > n^p).\)
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Rick Neff</p>
+<p class="date">Created: 2018-05-03 Thu 15:46</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

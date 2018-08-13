@@ -1,0 +1,69 @@
+#+TITLE: Preparation Assessment 00
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-04-24 Tue 16:49]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *0:51* |
+|---------------------+--------|
+| Answer What is True | 0:51   |
+#+END:
+
+
+Please do the following: 
+
+* DONE Answer What is True
+  CLOSED: [2018-04-24 Tue 16:48]
+  :LOGBOOK:
+  CLOCK: [2018-04-24 Tue 15:57]--[2018-04-24 Tue 16:48] =>  0:51
+  :END:
+
+  If you can truthfully assert that you did any of the following, put an X in
+  the box. (With Spacemacs bindings, putting the cursor anywhere on the line and
+  typing , , (two commas) will toggle the X for you.)
+
+  - [X] I obtained the textbook. 
+  - [X] I read the Preface, the Table of Contents, and Appendix A.
+  - [X] I read Chapter 1 sections 1, 2 and 3, and skimmed section 4.
+
+* DONE Answer What is True About My Grasp of My Textbook Reading So Far
+  CLOSED: [2018-04-24 Tue 16:48]
+
+  - [X] I know what criterion most classic algorithms satisfy.
+  - [X] I know what systematically interrupts the narrative flow of the
+    textbook.
+  - [X] I know to be on the lookout for exercises versus problems, because the
+    chapter exercises in the textbook are not marked with a difficulty level.
+  - [X] I know where the textbook provides hints to all the exercises.
+  - [X] I know the properties of logarithms.
+  - [X] I know the important summation formulas.
+
+* DONE Determine Step Out Of Order
+  CLOSED: [2018-04-24 Tue 16:48]
+
+  Which step is out of order in the following *algorithm design and
+  analysis* algorithm?
+
+  - [ ] Decide on: computational means, exact vs. approximate solving, data
+    structure(s), algorithm design technique.
+  - [ ] Design an algorithm.
+  - [X] Understand the problem.
+  - [ ] Prove correctness of the algorithm.
+  - [ ] Analyze the algorithm.
+  - [ ] Code the algorithm.
+
+* DONE Identify the Most Difficult 
+  CLOSED: [2018-04-24 Tue 16:48]
+
+  Problems of which of the following types are the most difficult to solve?
+
+  - [ ] Sorting
+  - [ ] Searching
+  - [ ] String Processing
+  - [ ] Graph problems
+  - [X] Combinatorial problems
+  - [ ] Geometric problems
+  - [ ] Numerical problems

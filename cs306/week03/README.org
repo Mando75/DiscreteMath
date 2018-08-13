@@ -1,0 +1,16 @@
+#+TITLE: README for Week 03
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+* Chapter 3 Brute Force
+
+  Read the following by way of review:
+
+** [[file:graph-searching-algorithms.org][Graph Searching Algorithms]]
+
+* Chapter 4 Decrease and Conquer
+
+** [[file:pa03.org][Preparation Assessment]]
+
+** [[file:wa03.org][Weekly Assignment]]

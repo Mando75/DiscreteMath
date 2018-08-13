@@ -1,0 +1,138 @@
+#+TITLE: Preparation Assessment 03
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-16 Wed 07:55]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:47* |
+|---------------------+--------|
+| Answer What is True | 1:47   |
+#+END:
+
+
+* DONE Answer What is True
+  CLOSED: [2018-05-16 Wed 07:55]
+  :LOGBOOK:
+  CLOCK: [2018-05-15 Tue 19:53]--[2018-05-15 Tue 20:00] =>  0:07
+  CLOCK: [2018-05-15 Tue 09:23]--[2018-05-15 Tue 09:31] =>  0:08
+  CLOCK: [2018-05-14 Mon 22:33]--[2018-05-14 Mon 22:33] =>  0:00
+  CLOCK: [2018-05-14 Mon 21:34]--[2018-05-14 Mon 22:33] =>  0:59
+  CLOCK: [2018-05-14 Mon 08:44]--[2018-05-14 Mon 09:17] =>  0:33
+  :END:
+
+  You know what to do:
+
+  - [X] I know that /decrease-and-conquer/ is a general algorithm design
+    technique based on exploiting a relationship between a solution to a given
+    instance of a problem and a solution to a smaller instance of the same
+    problem.
+  - [X] I can give a common example of each of the three major variations of the
+    decrease-and-conquer technique.
+    | Type                        | Example       |
+    |-----------------------------+---------------|
+    | Decrease by Constant        | Finding a^n    |
+    | Decrease by Constant Factor | Binary Search |
+    | Variable size decrease      | Euclidean GCD |
+   
+  - [X] I know that *insertion-sort*'s notable advantage is good performance on
+    almost-sorted arrays.
+  - [X] I know that the *topological sorting problem* for a directed graph has a
+    solution if and only if the graph has no directed cycles.
+  - [X] I know that an application of topological sorting is resolving symbol
+    dependencies in linkers.
+  - [X] I know that a *dag* is a directed acyclic graph.
+  - [X] I know that the *decrease-by-one* technique is a natural approach to
+    developing algorithms for generating elementary combinatorial objects.
+  - [X] I know that *binary search* is the most important and well-known example
+    of a *decrease-by-a-constant-factor* algorithm.
+  - [X] I know why the Euclidean GCD algorithm is an excellent example of a
+    *decrease-by-a-variable-size* algorithm.
+  - [X] I am confident that I can work through and eventually understand the
+    proof to be shown in class that the complexity of the Euclidean GCD
+    algorithm is logarithmic.
+  - [X] I know how to order the seven Big-Oh efficiency classes shown below
+    from *fastest growing* reference function (first) to *slowest growing*
+    reference function (last):
+         | Given Order     | Correct Order   |
+         | 1. *O(log n)*   | 1. *O(n!)*      |
+         | 2. *O(n!)*      | 2. *O(2^n)*     |
+         | 3. *O(n)*       | 3. *O(n^2)*     |
+         | 4. *O(1)*       | 4. *O(nlog(n))* |
+         | 5. *O(2^n)*     | 5. *O(n)*       |
+         | 6. *O(n log n)* | 6. *O(log(n))*  |
+         | 7. *O(n^2)*     | 7. *O(1)*       |
+         |                 |                 |
+  - [X] I know given a *O(n^3)* algorithm whose running time for a problem of
+    size 100,000 is 10 seconds what its running time would be for a problem of
+    size 150,000.
+
+    33
+  - [X] I know given a *O(1)* algorithm whose running time for a problem of size
+    100,000 is 10 seconds what its running time would be for a problem of size
+    200,000.
+  - [X] I will experiment with the two elisp functions shown below for small
+    inputs to gain an understanding of how they work; and I will come prepared
+    to compare and contrast the two algorithms in class.
+
+#+BEGIN_SRC elisp :results silent
+  (defun bitstrings-rec (n &optional B)
+    (setq B (if (null B) (make-vector n 0) B))
+    (if (zerop n) (prog1 t (princ (format "%s\n" B)))
+      (let ((index (1- n)))
+        (aset B index 0)
+        (bitstrings-rec index B)
+        (aset B index 1)
+        (bitstrings-rec index B))))
+
+  (defun generate-subsets (all-values)
+    (if (null all-values)
+        (list nil)
+      (let ((first-element (first all-values))
+            (selected-values (generate-subsets (rest all-values))))
+        (append selected-values
+                (mapcar (lambda (subset)
+                          (cons first-element subset))
+                        selected-values)))))
+#+END_SRC
+
+
+Generate all bitstrings of size n
+
+#+BEGIN_SRC emacs-lisp :results output
+ (bitstrings-rec 3)
+#+END_SRC
+
+#+RESULTS:
+: [0 0 0]
+: [1 0 0]
+: [0 1 0]
+: [1 1 0]
+: [0 0 1]
+: [1 0 1]
+: [0 1 1]
+: [1 1 1]
+
+Generate all subsets of list x
+#+BEGIN_SRC emacs-lisp
+  (generate-subsets '(1 2 3 4))
+#+END_SRC
+
+#+RESULTS:
+| 4 |   |   |   |
+| 3 |   |   |   |
+| 3 | 4 |   |   |
+| 2 |   |   |   |
+| 2 | 4 |   |   |
+| 2 | 3 |   |   |
+| 2 | 3 | 4 |   |
+| 1 |   |   |   |
+| 1 | 4 |   |   |
+| 1 | 3 |   |   |
+| 1 | 3 | 4 |   |
+| 1 | 2 |   |   |
+| 1 | 2 | 4 |   |
+| 1 | 2 | 3 |   |
+| 1 | 2 | 3 | 4 |

@@ -1,0 +1,501 @@
+#+TITLE: Weekly Assignment 11
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-07-14 Sat 00:58]
+| Headline                 |   Time |
+|--------------------------+--------|
+| *Total time*             | *8:25* |
+|--------------------------+--------|
+| Finish What You Started  |   7:56 |
+| What I Learned           |   0:23 |
+| Move From Predicted Lock |   0:06 |
+#+END:
+
+*Collaborators*
+Bryan Muller
+Asa Skousen
+Adam Gehring
+James Palmer
+Jonathan Manoa
+Matt Wyndham
+Zach Delano
+
+We mostly just brainstormed ideas on how we could apply randomness and
+cleverness to improve the results of our simulated annealing function. It was
+during our brainstorming session that I first had the idea that eventually
+turned into the prediction locking move-from function. Although it was not the
+correct way to approach a truly simulated annealing solution, the brainstorming
+session did help get the cogs turning in the right direction. 
+
+* DONE Finish What You Started
+  CLOSED: [2018-07-13 Fri 02:01]
+  :LOGBOOK:
+  CLOCK: [2018-07-13 Fri 23:17]--[2018-07-13 Fri 23:43] =>  0:26
+  CLOCK: [2018-07-13 Fri 14:25]--[2018-07-13 Fri 15:00] =>  0:35
+  CLOCK: [2018-07-13 Fri 02:07]--[2018-07-13 Fri 02:12] =>  0:05
+  CLOCK: [2018-07-13 Fri 01:43]--[2018-07-13 Fri 02:01] =>  0:18
+  CLOCK: [2018-07-13 Fri 01:43]--[2018-07-13 Fri 01:43] =>  0:00
+  CLOCK: [2018-07-12 Thu 21:25]--[2018-07-13 Fri 01:43] =>  4:18
+  CLOCK: [2018-07-12 Thu 17:17]--[2018-07-12 Thu 19:31] =>  2:14
+  :END:
+
+  And more efficiently, besides! Evaluate the code block below *after*
+  evaluating the first code block in the [[file:../week10/wa10.org][wa10.org]] file. By so doing you will
+  avoid the bottleneck of querying a slow web server to calculate the energy of
+  a state!
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun factorial (n)
+    "Calculates n!, but only up to 19! due to most-positive-fixnum
+     being less than 20!."
+    (if (< n 2) 1 (* n (factorial (1- n)))))
+
+  (defun rank (y)
+    "Calculates the lexicographical rank of a given string of n
+    letters (a permutation)."
+    (if (zerop (length y))
+        0
+      (let ((x0 (elt y 0))
+            (xs (subseq y 1)))
+        (+ (rank xs)
+           (* (loop for x across xs count (< x x0))
+              (factorial (length xs)))))))
+
+  (defun distance (perm)
+    "Calculates the difference between the given permutation's rank
+    and the rank of the correct permutation."
+    (let ((rank-of-correct-permutation 200831837313463612))
+      (abs (- (rank perm) rank-of-correct-permutation))))
+
+  (defun energy (state)
+    "Defines a permutation's energy as its distance."
+    (distance state))
+#+END_SRC
+
+  NOTE: You *MUST NOT CHANGE* the parameters to the move-from function, e.g., by
+  adding temperature. It defeats the whole strategy of simulated annealing to
+  make moving from state to state depend on the current temperature, or any
+  other parameter other than the current state. You *CAN* get to a zero-energy
+  state (i.e., the correct permutation) by just using a combination of
+  randomness and cleverness in your new-and-improved move-from function.
+
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (try-it "abcdefghijklmnopqrst" 100000 .99)
+#+END_SRC
+
+#+RESULTS:
+Best results with: 
+
+*Knuth Shuffle*
+(bnhmpgsqekrlafjictdo 0 2892)
+(bnhmpgsqekrlafjictdo 0 2988)
+(bnhmpgsqekrlafjictdo 0 3481)
+(bnhmpgsqekrlafjictdo 0 4406)
+
+
+*Weighted Random Shuffle*
+(bnhmpgsqekrlafjictdo 0 5168)
+(bnhmpgsqekrlafjictdo 0 8970)
+
+*My "Cheating" Move-from with predicted locking & weighted shuffling*
+(bnhmpgsqekrlafjictdo 0 1706)
+(bnhmpgsqekrlafjictdo 0 2648)
+(bnhmpgsqekrlafjictdo 0 3055)
+(bnhmpgsqekrlafjictdo 0 4120)
+(bnhmpgsqekrlafjictdo 0 4293)
+
+
+: Target
+: bnhmpgsqekrlafjictdo
+
+
+
+#+RESULTS:
+
+* Move From Random Lock
+  
+This is the correct method for simulated annealing. The function will shuffle
+random substrings of the permutation. The function selects a random index of
+the permutation, and shuffles everything to the right of that index. This helps
+keep the permutation within the same "neighborhood" as the previous state. This
+is advantageous for climbing out of local minima.  
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun move-from (perm)
+    (let* ((to-lock (random (length perm)))
+          (to-shuffle (substring perm to-lock)))
+      (concat (substring perm 0 to-lock) (knuth-shuffle (copy-sequence to-shuffle)))))
+#+END_SRC
+
+* What I Learned
+  :LOGBOOK:
+  CLOCK: [2018-07-14 Sat 00:35]--[2018-07-14 Sat 00:58] =>  0:23
+  :END:
+
+This week was quite the learning experience for me. The instructions said to use
+a "combination of randomness and cleverness" to improve the simulated annealing
+process. I really took this to heart, and set out to create a really clever
+solution. Instead of diving into writing code, I spent several hours just
+thinking through possible solutions, sometimes with my collaborators, sometimes
+not. This pondering is what eventually led me to try the approach of predicting
+how many characters were already correct, and then shuffling the rest. I know
+this may have not been the correct way to do solve the problem (it is not truly
+simulated annealing), I definitely learned more from it than what my actual
+solution turned out to be.
+
+I was thinking about how to approach the problem, and one thing I remembered
+from last week was that I noticed dramatic drops in distance every time we got a
+character in the correct position. I figured this was due to lexicographical
+ordering (which was correct). This led me to theorize that if I could calculate
+the distance a given state was from the correct position, I could estimate the
+number of leading characters I had in the correct position. I could then lock
+those in place and shuffle the rest of the list. Although a straightforward
+idea, I quickly realized that it was difficult to predict how many characters
+were in the correct position based solely upon how far away a given state was
+from the correct ordering. To compensate for this, I added in some leeway into
+my locking function. This meant that it only started locking characters in place
+after we were certain that we had found at least 3 or 4 in the correct position.
+Even then, it would only lock the first one until we had progressed further down
+the string.
+
+This was working, but I figured I could make it even better. I realized that my
+algorithm was reliant upon getting the correct character in its position at the
+front of the string for it to work quickly. If it never got the first couple
+characters in their positions, it would get stuck. I decided to attempt to write
+a shuffling function that would randomly swap items, but would slightly prefer
+swapping characters at the beginning of the string. This idea eventually turned
+into my weighted-random-shuffle. It may not be the prettiest piece of code at
+the moment, but I am very proud of the method I devised to take the weighting
+into account when randomly selecting an element to swap. Yes, it is only a
+pseudo-random swap, but it provides a more "intelligent" way to get items in the
+correct place at the beginning of the string. This shuffle ended up
+complementing my distance-estimating-locking move-from function very well. I
+think that there is a good chance that I might need to use it again in a future
+project, and I'm thankful that I had the opportunity to try solving a problem
+which led me to such a solution.
+
+No, it was not truly simulated annealing, but I am still happy and proud of the
+resulting algorithm I got back from my pondering and planning. During the whole
+process, I was always running into roadblocks that I had to think through before
+proceeding. I am happy that I was able to apply what I have learned this semester
+in creating an algorithm of my own!
+
+* Move From Predicted Lock
+  :LOGBOOK:
+  CLOCK: [2018-07-14 Sat 00:29]--[2018-07-14 Sat 00:35] =>  0:06
+  :END:
+
+*NOTE* 
+
+This is not my final solution, but I am proud of my work constructing this
+method even if it was an invalid solution. It was a challenge to get working
+correctly, but it works very well. 
+
+This modified move-from function attempts to predict how close we are to the
+correct solution. Based upon this prediction, it may or may not lock several
+characters at the front of the permutation and only shuffle the remaining
+substring. This helps find the correct permutation rather quickly, as it reduces
+the probability of making incorrect swaps after we already have a character in
+its correct position within the permutation. The key to this strategy is to get
+the correct characters in beginning of the shuffled substring quickly. This
+allows us to lock more characters in place and approach the solution more
+rapidly. To assist in getting the correct character in the leading positions, I
+wrote a weighted-random-shuffle which pseudo-randomly shuffles a permutation
+while giving preference to swapping values towards the beginning of the
+substring.
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun move-from (perm)
+    (let* ((dist (distance perm))
+          (order (get-order dist))
+          (to-lock (get-num-locked order))
+          (to-shuffle (substring perm to-lock)))
+      (if (<= to-lock 0) 
+          (weighted-random-shuffle (copy-sequence perm))
+        (concat (substring perm 0 to-lock) (weighted-random-shuffle (copy-sequence to-shuffle))))))
+
+
+  (defun get-order (distance)
+     (floor (log distance 10)))
+
+  (defun get-num-locked (order)
+   (- 20 (+ 6 order)))
+
+
+#+END_SRC
+
+* My Shuffle Functions 
+
+** Modified swap-random
+   First shuffle function I built. It is a modified swap-random. The only
+   difference between the two is that this version swaps more than 2 letters on
+   each pass. It is not very efficient, and did not work as well as I had hoped.
+   I did not end up using it in my solution.
+ #+BEGIN_SRC emacs-lisp :results silent
+    (defun my-shuffle (perm)
+      (let* ((len (length perm))
+              (i1 (random len))
+              (i2 (% (1+ i1) len))
+              (i1letter (aref perm i1))
+              (i2letter (aref perm i2)))
+        (loop for i from 0 to (length perm) by 2
+              do (progn
+                   (aset perm i1 i2letter)
+                   (aset perm i2 i1letter)
+                   (setq i1 (random len)
+                         i2 (% (1+ i1) len)
+                         i1letter (aref perm i1)
+                         i2letter (aref perm i2))))
+           perm))
+ #+end_src
+
+** Weighted pseudo-random shuffle
+
+    This is a pseudo-random shuffling algorithm that can be used with weighted
+    values. Given a permutation, it will generate a weight for each index. When
+    pseudo-randomly selecting an item from the list, the algorithm ends up
+    slightly favoring the higher weighted items. This was useful for my initial
+    solution, because it allowed me to have a higher chance of shuffling the
+    correct letter into the front of the string. Because the goal of that method
+    was to lock as many leading characters as I could, this pseudo-random
+    weighted shuffle improved the speed of finding the correct permutation. This
+    is due to the fact that it had a higher chance of moving the correct letter
+    into the front of the shuffled substring.
+
+ #+begin_src emacs-lisp :results silent
+
+   (defun weighted-random-shuffle (perm)
+     "Given a permutation as a sequence, this function will pseudo-randomly shuffle the sequence,
+     while favoring swapping items at the beginning of the permutation"
+     (let* ((len (length perm))
+            (index -1)
+            (weights (mapcar (lambda (x)
+                               (progn (incf index)
+                                      (cons index (- len index)))) perm))
+            (sum-weights (reduce (lambda (x y) (+ x (cdr y))) weights :initial-value 0))
+            (random (floor (* (random-01) (1+ sum-weights))))
+            (i1 (get-weighted-random-index weights random))
+            (i2 (% (1+ i1) len))
+            (i1letter (aref perm i1))
+            (i2letter (aref perm i2)))
+       (loop for i from 0 to len by 2
+             do (progn
+                  (aset perm i1 i2letter)
+                  (aset perm i2 i1letter)
+                  (setq random (generate-random-weighted-number sum-weights)
+                        i1 (get-weighted-random-index weights random)
+                        i2 (random len)
+                        i1letter (aref perm i1)
+                        i2letter (aref perm i2))))
+       perm))
+
+   (defun get-weighted-random-index (weights random)
+     (loop for i in weights
+           do (setq random (- random (cdr i)))
+           when (<= random 0)
+           return (car i)))
+
+   (defun generate-random-weighted-number (sum-of-weights)
+     (floor (* (random-01) (1+ sum-of-weights))))
+
+ #+END_SRC
+
+** Next permutation function
+
+This was a function that I wrote to try and find the "next permutation." It does
+permute the string, but not randomly. It always produces the same next results.
+It may be handy for future projects, but it didn't work out for this problem. 
+
+#+BEGIN_SRC emacs-lisp
+  (next-perm "abcdefghijklmnopqrst" 6)
+#+END_SRC
+
+#+RESULTS:
+: rmcdtjnkaifegpbsqlho
+
+ #+BEGIN_SRC emacs-lisp 
+ ;  (loop for i from 0 to 15
+;      collect (list (next-perm "abcdefghijklmnopqrst" i)))
+ #+END_SRC
+
+ #+RESULTS:
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+ | aihbfodckgjpesmnrtlq |
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun next-perm (perm &optional nth)
+     (let ((k (distance perm))
+           (n (length perm))
+           (itm1-index nil)
+           (itm1 nil)
+           (itm2-index nil)
+           (itm2 nil))
+       (while (not (zerop n))
+         (setq itm1-index (/ k (factorial (1- n)))
+               itm1 (aref perm itm1-index)
+               itm2-index (1- n)
+               itm2 (aref perm itm2-index)
+               k (- k (* itm1-index (factorial (1- n))))
+               n (1- n))
+         (aset perm itm1-index itm2)
+         (aset perm itm2-index itm1))
+       (if (and nth (not (zerop nth)))
+           (next-perm perm (1- nth))
+         perm)))
+ #+END_SRC
+
+* Code from Week 10
+#+BEGIN_SRC elisp :results silent
+    (require 'cl)
+    (require 'eww)
+
+    (defun char-word-alist ()
+      (quote ((?a . "a")
+              (?b . "any")
+              (?c . "appear")  
+              (?d . "be")
+              (?e . "digit")
+              (?f . "first")
+              (?g . "for")
+              (?h . "in")
+              (?i . "just")
+              (?j . "look")
+              (?k . "numbers")
+              (?l . "on")
+              (?m . "or")
+              (?n . "pattern")
+              (?o . "random")
+              (?p . "reason")
+              (?q . "ten")
+              (?r . "that")
+              (?s . "the")
+              (?t . "to")
+              )))
+
+    (defun word-string-to-perm (word-string)
+      (let ((words-as-list (split-string word-string " ")))
+        (mapconcat (lambda (x) (string (car (rassoc x (char-word-alist)))))
+                   words-as-list "")))
+
+    (defun perm-to-word-string (perm)
+      (mapconcat (lambda (x) (cdr (assoc x (char-word-alist)))) perm " "))
+
+    (defvar url-format-string "http://firstthreeodds.org/pdq?perm=%s")
+
+    (defun perm-distance-query (perm)
+      (add-function :filter-args (symbol-function 'message)
+      (lambda (&rest ignore) '("...")) '((name . replace-args-with-dots)))
+      (let ((temp-buffer
+             (url-retrieve-synchronously
+              (format url-format-string perm) t t))
+            (reply nil)
+            (content-length 0)
+            (end 0))
+        (remove-function (symbol-function 'message) 'replace-args-with-dots)
+        (with-current-buffer temp-buffer
+          (setq content-length
+                (string-to-number (cdr (assoc "content-length" (eww-parse-headers))))
+                end (point-max)
+                reply (replace-regexp-in-string
+                       "\n" "" (buffer-substring (- end content-length) end))))
+        (kill-buffer temp-buffer)
+        reply))
+
+    (defun random-01 ()
+      "Returns a random float between 0 and 1."
+      (/ (random most-positive-fixnum) (float most-positive-fixnum)))
+
+    (defun probability (energy new-energy temperature)
+      "Computes the probability of preferring new-energy to energy."
+      (if (< new-energy energy)
+          1.0
+        (exp (- (/ (- new-energy energy) temperature)))))
+
+    (defun knuth-shuffle (x)
+      (if (listp x)
+          (append (knuth-shuffle (apply 'vector x)) nil)
+        (loop for i from (1- (length x)) downto 1
+              do (rotatef (aref x i) (aref x (random i))))
+        x))
+
+    (defun swap-random (perm)
+      "Swaps a random character in perm with the next one adjacent to it,
+       wrapping from end to beginning."
+      (let* ((len (length perm))
+             (i1 (random len))
+             (i2 (% (1+ i1) len))
+             (i1letter (aref perm i1))
+             (i2letter (aref perm i2)))
+        (aset perm i1 i2letter)
+        (aset perm i2 i1letter)
+        perm))
+
+    (defun move-from (state)
+  (swap-random (copy-sequence state)))
+
+    (defun simulate-annealing (initial-state initial-temperature cooling-rate)
+      "Performs simulated annealing based on the above functions and
+       passed-in initial state, initial temperature and cooling rate parameters."
+      (let* ((state (copy-sequence initial-state))
+             (temperature initial-temperature)
+             (energy (energy state)) ; initial energy
+             (best-state state) ; initial best state
+             (best-energy energy) ; initial best energy
+             (iterations 0)
+             new-state new-energy)
+        ;; Loop until system has cooled
+        (while (> temperature 1)
+          (setq new-state (move-from state)
+                new-energy (energy new-state))
+
+          (when (> (probability energy new-energy temperature) (random-01))
+            (setq state new-state
+                  energy new-energy))
+
+          (when (< new-energy best-energy)
+            (setq best-state new-state
+                  best-energy new-energy))
+
+          ;; Count iterations
+          (incf iterations)
+          ;; Cool things down
+          (setq temperature (if (zerop best-energy) 1 (* temperature cooling-rate)))
+          (print best-state))
+
+        ;; Report best state, its energy and the number of iterations of the while loop
+        (list best-state best-energy iterations)))
+
+    (defun try-it (&optional initial-state initial-temperature cooling-rate)
+      "Executes the simulate-annealing function with (possibly) default values."
+      (or initial-state (setq initial-state "abcdefghijklmnopqrst"))
+      (or initial-temperature (setq initial-temperature 1000))
+      (or cooling-rate (setq cooling-rate .99))
+      (simulate-annealing initial-state initial-temperature cooling-rate))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun reverse-string (state)
+    (if (listp state)
+        (append (shift-string (apply 'vector state)) nil))
+    (mapconcat 'identity
+                       (loop for i from (1- (length state)) downto 0
+                             collect (byte-to-string (elt state i))) ""))
+
+#+END_SRC

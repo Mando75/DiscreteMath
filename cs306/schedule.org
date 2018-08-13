@@ -1,0 +1,35 @@
+#+TITLE: Schedule
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+  Simple. Regular. Predictable. Such is this semester\rsquo{}s schedule.
+
+  There are assignments of ever-increasing weight due every week except the last
+  week, which is really only one day (the second and last Testing Day).
+
+  The 00 Assignment is due Saturday, April 28th, 2018, at 6:00 PM MDT. Every
+  assignment thereafter is also due by 6:00 PM MDT on Saturday. A grace period
+  of up to 6 hours will be granted, but the points earned will be diminished by
+  a \ldquo{}Timeliness\rdquo factor that is factored into the weighted score for each
+  assignment, as shown in the [[file:gradebook.org][gradebook.org]] file. This factor is initially 1.0,
+  but decreases as a function of elapsed time starting at the 6:00 hour and
+  ending at midnight, or the submission time, whichever comes first. If the
+  submission time is midnight or later, the factor drops to zero. Provision may
+  be made on occasion for a factor that is greater than one, rewarding early
+  submissions.
+
+  A similar mechanism governs preparation assessments, with the following
+  differences:
+
+  - Preparation assessments are weighted equally, each at 2.5% of the total
+    grade.
+  - With one exception, each week\rsquo{}s PA is due by 8:00 AM MST (class starting
+    time) on Wednesday. The PA for Week 10 will be due on the Monday following
+    the July 4th holiday, which lands on a Wednesday this year.
+
+  Reading [[https://www.amazon.com/Introduction-Design-Analysis-Algorithms-3rd/dp/0132316811][the textbook]] is another regular activity you are tasked with. There
+  are twelve chapters and essentially twelve full weeks in the semester. That\rsquo{}s
+  easily one chapter per week, but the breadth and depth with which we will
+  study chapter material will vary. More details will be available in each
+  week\rsquo{}s preparation assessment.

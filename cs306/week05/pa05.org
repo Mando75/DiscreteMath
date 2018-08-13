@@ -1,0 +1,62 @@
+#+TITLE: Preparation Assessment 05
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-27 Sun 22:27]
+| Headline            | Time   |
+|---------------------+--------|
+| *Total time*        | *1:31* |
+|---------------------+--------|
+| Answer What is True | 1:31   |
+#+END:
+
+* DONE Answer What is True
+  CLOSED: [2018-05-27 Sun 22:26]
+  :LOGBOOK:
+  CLOCK: [2018-05-27 Sun 22:19]--[2018-05-27 Sun 22:26] =>  0:07
+  CLOCK: [2018-05-27 Sun 16:05]--[2018-05-27 Sun 16:58] =>  0:53
+  CLOCK: [2018-05-27 Sun 15:12]--[2018-05-27 Sun 15:43] =>  0:31
+  :END:
+
+  You know what to do:
+
+  - [X] I know that an algorithm's time efficiency is principally measured as a
+   function of its input size by counting the number of times its basic
+   operation is executed.
+  - [X] I know that the *Master Theorem* establishes the order of growth of the
+    solutions to the general recurrence *T(n) = aT(n/b) + f(n)* that the running
+    time of many divide-and-conquer algorithms satisfies.
+  - [X] In addition, I know why it is *false* to say that the Master Theorem
+    gives *explicit* solutions to this general recurrence.
+    
+    - Establishes a solution's growth to within an unknown multiplicative constant.
+
+  - [X] I know why it is *false* to say that *transform-and-conquer* is a group
+    of general problem-solving techniques based on the idea of transformation to
+    a problem that is harder to solve.
+
+    - Transforms the problem to be more amenable to solution.
+
+  - [X] I know why it is *false* to say that there are two principal variations
+    of the transform-and-conquer strategy: *instance simplification* and
+    *representation change*.
+
+    - There are three:
+        *instance simplification*
+        *representation change*
+        *problem reduction*
+  - [X] I know that list presorting and Gaussian elimination are examples of
+    instance simplification.
+  - [X] I know that heaps are most important for the efficient implementation
+    of /priority queues/.
+  - [X] I know in what sense Horner's rule for polynomial evaluation has useful
+    by-products.
+  - [X] I know why it is not quite true to say that the *fast Fourier transform
+    (FFT)* algorithm is one of the most important algorithmic discoveries of all
+    time.
+     - *some* also it is complex
+  - [X] I know in what sense Professor X solved his problem by *reduction*.
+
+    - He recreated the steps his wife used to make tea.
+

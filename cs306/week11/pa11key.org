@@ -1,0 +1,19 @@
+#+TITLE: Preparation Assessment 11 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers
+
+** Prepare to Study Backtracking
+
+   Some statement is required that you did the reading and are prepared to
+   discuss it.
+
+** Answer What is True
+
+   All twenty boxes should be checked for full credit.
+
+** Move From Obtain To Retain
+
+   All five boxes should be checked for full credit.

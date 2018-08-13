@@ -1,0 +1,276 @@
+#+TITLE: Preparation Assessment 11
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-07-15 Sun 21:17]
+| Headline                      |   Time |
+|-------------------------------+--------|
+| *Total time*                  | *1:46* |
+|-------------------------------+--------|
+| Prepare to Study Backtracking |   0:37 |
+| Answer What is True           |   1:09 |
+#+END:
+
+  Prepare for your future by learning how to learn efficiently and effectively.
+
+* DONE Prepare to Study Backtracking
+  CLOSED: [2018-07-15 Sun 15:50]
+  :LOGBOOK:
+  CLOCK: [2018-07-15 Sun 15:29]--[2018-07-15 Sun 15:50] =>  0:21
+  CLOCK: [2018-07-15 Sun 15:12]--[2018-07-15 Sun 15:28] =>  0:16
+  CLOCK: [2018-07-15 Sun 15:12]--[2018-07-15 Sun 15:12] =>  0:00
+  :END:
+
+  Read about [[file:backtracking-and-branch-and-bound.org][backtracking-and-branch-and-bound.org]] and come prepared to discuss
+  it. (Also read Levitin Chapter 12 sections 1 and 2.)
+
+* DONE Answer What is True
+  CLOSED: [2018-07-15 Sun 21:17]
+  :LOGBOOK:
+  CLOCK: [2018-07-15 Sun 20:48]--[2018-07-15 Sun 21:17] =>  0:29
+  CLOCK: [2018-07-15 Sun 17:28]--[2018-07-15 Sun 18:01] =>  0:33
+  CLOCK: [2018-07-15 Sun 15:50]--[2018-07-15 Sun 15:57] =>  0:07
+  :END:
+
+  - [X] I know what the *FULL* definition of /algorithm/ is.
+
+  : An algorithm is a sequence of unambiguous instructions for solving a
+  : problem, i.e., for obtaining a required output for any legitimate input in
+  : a finite amount of time.
+
+  - [X] I know how an algorithm\rsquo{}s time efficiency is principally measured.
+
+    : Placing an algoritm into a time efficiency class (\Omega, \Theta, and \Omicron classes) based
+    : on the number of times the algorithm's basic operation is executed.
+
+  - [X] I know how to define and recognize the /basic operation/ of an algorithm.
+
+    : The operation contributing the most to the total running time.
+
+  - [X] I know what the established framework for analyzing an algorithm\rsquo{}s time
+    efficiency is primarily grounded in.
+
+    : Both time and space efficiencies are measured as functions of the algorithm’s
+    : input size.
+
+    : Time efficiency is measured by counting the number of times the algorithm’s
+    : basic operation is executed. Space efficiency is measured by counting the
+    : number of extra memory units consumed by the algorithm.
+
+
+    : The efficiencies of some algorithms may differ significantly for inputs of the
+    : same size. For such algorithms, we need to distinguish between the worst-case,
+    : average-case, and best-case efficiencies.
+    
+    : The framework’s primary interest lies in the order of growth of the algorithm’s
+    : running time (extra memory units consumed) as its input size goes to infinity.
+
+  - [X] I know how to analyze a given algorithm, and find its Big-Oh, Big-Omega
+    and Big-Theta classes.
+
+    pg. 47
+    
+  - [X] I know what the differences are between the basic efficiency classes.
+
+    pg: 59
+    
+  - [X] I know what techniques can be used to advantage when comparing orders
+    of growth of functions.
+
+    : limits, Master's Theorem, etc.
+
+  - [X] I know what /running time as a function of n/ means.
+
+    : As the value of /n/ changes, how does running time change?
+    : Does it grow longer? Does it become faster? Does it stay the same?
+    : /running time as a function of n/ means describing an algorithm's running
+    : time as a function, and classifying the output of that function.
+
+  - [X] I know how to recognize the running times of various algorithms,
+    described in different ways.
+  - [X] I know the basic properties of logarithms.
+
+    log_{a}1 = 0
+    log_{a}a = 1
+    log_{a}x^y = ylog_{a}x
+    log_{a}xy = log_{a}x + log_{a}y
+    log_{a}x/y =  log_{a} x - log_{a}y
+    a^log_{x}b = x^{log_b a
+    log_{a}x = \frac{log_b x}{log_b a} = log_a b * blog_b x
+
+  - [X] I know the basics of graph searching algorithms.
+
+    : Depth-first
+    : Breadth-first
+    : Minimum spanning trees
+
+  - [X] I know what specific algorithms are in which broad categories.
+
+    : Brute Force / Exhaustive Search
+    : Decrease and Conquer
+    :    Insertion Sort
+    : Divide and Conquer
+    :    Mergesort
+    : Transform and Conquer
+    :    Gaussian Elimination
+    : Dynamic Programming
+    :    Warshall's and Floyd's Algorithms
+    : Greedy Algorithms
+    :    Prim's Algorithm
+    :    Kruskal's Algorithm
+    : Iterative Improvement
+    :    Simplex Method
+
+  - [X] I know the basics of optimal binary search trees.
+
+    : Average number of comparisons in a search is the smallest possible. 
+
+  - [X] I know the basics of hashing.
+
+    : Section 7.3
+    : Open hash table (Separate Chaining)
+    : Closed hash table (Open addressing)
+
+
+  - [X] I know the basic types of space-time tradeoffs.
+
+    : Input enhancement
+    : prestructuring
+    : dynamic programming
+
+  - [X] I know how information-theoretic arguments are based on the amount of
+    information an algorithm must produce.
+
+    : Information-theoretic arguments are based upon decision trees
+
+  - [X] I know the central idea behind decision-tree theory.
+
+    : Section 11.2
+    : Decision trees allow us to the path our algorithm takes to produce
+    : it's output.
+    : Each node in the tree represents a decision comparison.
+    : Each edge in the tree represents a decision.
+
+    : All yes answers on one side, all no answers on the other side
+
+    : "The central idea behind this model lies in the observation that a tree
+    :  with a given number of leaves, which is dictated by the number of possible 
+    :  outcomes, has to be tall enough to have that many leaves.
+ 
+  - [X] I know the basic ideas of complexity theory.
+
+    : P - Polynomial time
+    : NP - Non-deterministic polynomial time
+    : Does P = NP?
+    
+  - [X] I know the basic similarities and differences between the complexity
+    classes P, NP, NP-Complete and NP-Hard.
+
+    : P = Problem can be solved in polynomial time e.g., O(n^2)
+    :     Decision problems (yes/no)
+
+    : NP = Decision problems whose randomly guessed solutions can be verified in 
+    :      polynomial time.
+
+    : NP-Complete = Any other problem in NP can be reduced to it in polynomial time
+
+    : NP-Hard = No polynomial-time algorithm is known for any NP-Hard problem. 
+
+  - [X] I know what the basic ideas of numerical analysis are.
+
+    : Numerical analysis is a branch of computer science dealing with solving
+    : continuous mathematical problems. Two types of errors occur in solving a
+    : majority of such problems: truncation error and round-off error. Truncation
+    : errors stem from replacing infinite objects by their finite approximations.
+    : Round-off errors are due to inaccuracies of representing numbers in a digital
+    : computer
+
+* DONE Move From Obtain To Retain
+  CLOSED: [2018-07-15 Sun 21:17]
+
+  You made several broad assertions above. Make a few more in order to retain
+  what you have learned this semester.
+
+  I truthfully assert that I will do the following in the days, weeks and months
+  ahead:
+
+  - [X] Periodically review the things I have learned.
+  - [X] Read Elder Bednar\rsquo{}s 2006 talk on seeking learning by faith, and note how
+    his helix analogy invokes discrete versus continuous.
+  - [X] Watch Carol Dweck\rsquo{}s TED talk about the growth mindset.
+  - [X] Cultivate a growth mindset about learning.
+  - [X] Assiduously apply the gersy principle ongoingly.
+
+
+
+* Notes from Monday class
+
+*to achieve the degree of concentration required to follow a moderately involved
+sequence of inferences.*
+
+
+*The Halting Problem*
+
+P - Polynomial time
+NP - Nondeterministic polynomial time 
+
+* Extra Exercises 11.3
+11.3
+1,3,4,5,6,9,10,12
+
+** 11.1
+   We could make a decision tree for the every possible chess move from that
+   point in the game. Although the tree would be very large, it would eventually
+   terminate. So I would say yes, the problem is decidable.
+
+** 11.3
+   a. 
+
+:    *---*---*
+:    |  /|\  |
+:    | / | \ |
+:    |/  |  \|
+:    *---*---*
+
+   b. 
+:        *
+:       / \
+:      /   \
+:     *     * 
+:      \   /
+:       \ /
+:        *
+:       / \
+:      *   *
+
+   c. 
+:      *--*
+:      |  |
+:      *--*
+   d.
+:     *---*
+:     |\  |
+:     | * |
+:     |  \|
+:     *---*
+
+** 11.4       
+   This is a question that is \in NP...
+   I didn't have time to solve it! :)
+
+   a. 3?
+   b. 3?
+   c. 5?
+
+** 11.5
+   Is the graph bipartite?
+https://www.geeksforgeeks.org/bipartite-graph 
+
+** 11.6
+   
+** 11.9
+
+** 11.10
+
+** 11.12

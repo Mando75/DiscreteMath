@@ -1,0 +1,695 @@
+#+TITLE: Weekly Assignment 09
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-23 Sat 11:03]
+| Headline                                 |   Time |
+|------------------------------------------+--------|
+| *Total time*                             | *6:30* |
+|------------------------------------------+--------|
+| Collaborators                            |   0:09 |
+| Recall Binary Search                     |   0:44 |
+| Reason About a Variant of Binary Search  |   0:52 |
+| Exercise 3 on page 322                   |   0:16 |
+| Exercises Finding Minimum Spanning Trees |   1:57 |
+| Try An Implementation                    |   0:43 |
+| Find the Right 20-Combination of...      |   1:39 |
+| What I learned                           |   0:10 |
+#+END:
+
+* DONE Collaborators
+  CLOSED: [2018-06-23 Sat 10:48]
+  :LOGBOOK:
+  CLOCK: [2018-06-23 Sat 10:03]--[2018-06-23 Sat 10:12] =>  0:09
+  :END:
+
+Matt Wyndham
+Bryan Muller
+Asa Skousen
+Quade Morrison
+Timothy Steele
+Andrew Payson
+Jonathon Manoa
+Zach Delano
+Adam Gerhing
+Jacob Alldredge
+
+Matt and I worked through the 2nd problem. I was a little confused on what I
+needed to do, but Matt was able to explain the weighted edges portion of the
+problem, and then it made a lot of sense.
+
+Matt, Asa, Quade, Timothy, Jonathon, Zach, Adam, and I then worked out the rest
+of the problems together, with the exception of the last one. I worked the last
+one out on my own, but I did compare my findings with Quade and Jacob. We both
+got the same 20 words, so I feel confident that they are correct. 
+
+* DONE Recall Binary Search
+  CLOSED: [2018-06-20 Wed 09:16]
+  :LOGBOOK:
+  CLOCK: [2018-06-20 Wed 08:34]--[2018-06-20 Wed 09:16] =>  0:42
+  CLOCK: [2018-06-18 Mon 08:18]--[2018-06-18 Mon 08:20] =>  0:02
+  :END:
+   What is the largest number of comparisons made by a binary search in
+   searching for a key in the following array?
+
+   [3 14 27 31 39 42 55 70 74 81 85 93 98]
+
+   - [ ]  12
+   - [ ]  13
+   - [ ]  3
+   - [X]  4
+   
+
+** Confirmation:
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun binary-search (n list-to-search left right count)
+     "A recursive binary search"
+     (let* ((m (/ (+ left right) 2))
+           (elemnt (elt list-to-search m)))
+       (cond ((= n elemnt) (list n m count))
+             ((< right left) (list n nil count))
+             ((< n elemnt) (binary-search n list-to-search left (1- m) (1+ count)))
+             (t (binary-search n list-to-search (1+ m) right (1+ count))))))
+
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp
+
+(setq binary-search-list  '(3 14 27 31 39 42 55 70 74 81 85 93 98))
+   (append (list '(n position comparisons)) 
+           (mapcar (lambda (x) 
+                     (binary-search x binary-search-list 0
+                     (1- (length binary-search-list)) 1))
+                     binary-search-list))
+                  
+ #+END_SRC
+
+ #+RESULTS:
+ |  n | position | comparisons |
+ |  3 |        0 |           3 |
+ | 14 |        1 |           4 |
+ | 27 |        2 |           2 |
+ | 31 |        3 |           4 |
+ | 39 |        4 |           3 |
+ | 42 |        5 |           4 |
+ | 55 |        6 |           1 |
+ | 70 |        7 |           3 |
+ | 74 |        8 |           4 |
+ | 81 |        9 |           2 |
+ | 85 |       10 |           4 |
+ | 93 |       11 |           3 |
+ | 98 |       12 |           4 |
+
+ 
+
+* DONE Reason About a Variant of Binary Search
+  CLOSED: [2018-06-21 Thu 17:12]
+  :LOGBOOK:
+  CLOCK: [2018-06-21 Thu 17:04]--[2018-06-21 Thu 17:12] =>  0:08
+  CLOCK: [2018-06-20 Wed 20:29]--[2018-06-20 Wed 21:13] =>  0:44
+  :END:
+   Binary search divides a list into two equal halves and searches only the
+   correct half. Suppose there is a search algorithm that divides the list into
+   a 1/4-sized portion and a 3/4-sized portion. You would expect this search
+   algorithm to find the element sought faster than binary search when the item
+   is in the 1/4-sized portion more often than it\rsquo{}s in the 3/4-sized portion.
+   How many times as often?
+
+   - [ ] half as often
+   - [ ] twice as often
+   - [ ] three times as often
+   - [X] four times as often
+
+   (Note that there is arguably more than one \ldquo{}correct\rdquo answer. But there is one
+   answer that is strictly speaking better than the other three when thinking in
+   terms of weighted-path-length, as you are invited to do.)
+
+   
+** Reasoning
+ 
+Example search tree:
+
+#+BEGIN_VERSE
+                root             
+                / \
+               n1  n2
+              /  \
+             n3  n4
+            /  \
+           n5   n6
+#+END_VERSE 
+
+If our target node is n2, what weight must it have to end up on the right side
+ahead of the other nodes?
+
+Example search tree with weights:
+
+#+BEGIN_VERSE
+                root
+               /    \
+              3      4
+             / \
+            2   1
+           / \
+          1   1
+#+END_VERSE
+
+So our target node's weight must be 4 times that of the other nodes.
+
+* DONE Exercise 3 on page 322
+  CLOSED: [2018-06-20 Wed 08:34]
+  :LOGBOOK:
+  CLOCK: [2018-06-20 Wed 08:18]--[2018-06-20 Wed 08:34] =>  0:16
+  :END:
+  Consider the problem of scheduling n jobs of known durations t_1, t_2, \dots, t_n for
+  execution by a single processor. The jobs can be scheduled in any order, one
+  job at a time. You want to find a schedule that minimizes the total time spent
+  by all the jobs in the system. (The time spent by one job in the system is the
+  sum of the time spent by this job in waiting plus the time spent on its
+  execution.) Design a greedy algorithm for this problem. Does the greedy
+  algorithm always yield an optimal solution?
+
+  t_1 + (t_1 + t_2)
+     + (t_1 + t_2 + t_3)
+     + (t_1 + t_2 + ... + t_n)
+
+  \sum_{i=0}^n (n-i)*t_n
+
+  So ordering the jobs in *decreasing* order of execution length would provide
+  the optimal job queue.
+
+
+* DONE Exercises Finding Minimum Spanning Trees
+  CLOSED: [2018-06-21 Thu 22:06]
+  :LOGBOOK:
+  CLOCK: [2018-06-21 Thu 21:23]--[2018-06-21 Thu 22:06] =>  0:43
+  CLOCK: [2018-06-21 Thu 17:15]--[2018-06-21 Thu 17:55] =>  0:40
+  CLOCK: [2018-06-20 Wed 21:13]--[2018-06-20 Wed 21:45] =>  0:32
+  CLOCK: [2018-06-20 Wed 16:19]--[2018-06-20 Wed 16:21] =>  0:02
+  :END:
+  Apply Prim\rsquo{}s and Kruskal\rsquo{}s algorithms to find minimum spanning trees of two
+  graphs.
+
+  Prim\rsquo{}s and Kruskal\rsquo{}s algorithms are not hard, once you understand them. The
+  two algorithms are almost identical, the only real difference being in the set
+  of edges available for inclusion in the tree at each step. In Prim\rsquo{}s
+  algorithm, only those edges that are adjacent to edges already in the tree
+  (and not completing simple cycles) may be added (so that, as a result, all the
+  intermediate stages are trees). In Kruskal\rsquo{}s algorithm, any edge that does not
+  complete a simple cycle may be added (so that the intermediate stages may be
+  forests and not trees). When applicable, use lexicographical order to break
+  ties. List the edges in the order chosen by each algorithm, and find the total
+  weight.
+
+** First Graph
+   Here is the first graph:
+
+   [[https://firstthreeodds.org/mstgraphs/mstgraph1.png]]
+
+*** MST using Prim's Algorithm
+
+ #+Begin_verse
+
+ a   b---c  e-f w1  
+ | /     |  f-c w3
+ |/      |  e-h w3
+ d   e---f  h-i w2
+     |      c-b w4
+     |      b-d w3
+ g---h---i  d-a w2
+            h-g w4
+ #+end_verse
+Total weight = 1 + 2(2) + 3(3) + 2(4) = 22
+
+
+ We solved this problem on the whiteboard. Here is a step by step solution:
+
+ https://photos.app.goo.gl/dcJero3wyjBPGBnZ8
+
+ We selected e as our starting node. As such, both Prim and Kruskal's algorithms
+ produced the same optimal MST.
+
+*** MST using Kruskal's algorithm
+
+ #+Begin_verse
+            e-f w1
+ a   b---c  a-d w2     
+ | /     |  h-i w2
+ |/      |  d-b w3
+ d   e---f  c-f w3
+     |      e-h w3
+     |      b-c w4
+ g---h---i  g-h w4
+
+ #+end_verse
+
+Total Weight = 1 + 2(2) + 3(3) + 2(4) = 22
+
+ We solved this on the whiteboard. Here is a solution with the steps included
+ next to the graph:
+
+ https://photos.app.goo.gl/bsDBoAakVVgku7Q28
+
+** Second Graph
+   :LOGBOOK:
+   CLOCK: [2018-06-21 Thu 21:23]--[2018-06-21 Thu 21:23] =>  0:00
+   :END:
+   Here is the second graph:
+
+   [[https://firstthreeodds.org/mstgraphs/mstgraph2.png]]
+
+
+*** MST using Prim's algorithm
+
+#+begin_verse
+                      a-b w1   h-g w2
+|--a---b---c---d--|   a-e w1   m-n w2
+|  |           |  |   a-m w2   n-o w2
+|  e---f   g---h  |   b-c w2   p-l w2
+|  |   |          |   c-d w1   f-j w3
+|  i   j   k---l  |   d-h w1   l-k w3
+|              |  |   d-p w2
+|--m---n---o   p--|   e-f w2
+                      e-i w2
+#+end_verse
+
+Total Weight: 4(1) + 9(2) + 2(3) = 28
+
+We solved this problem on the whiteboard. We picked node a as our starting point.
+
+Here is a picture of the worked graph:
+
+https://photos.app.goo.gl/1N8Zi9avJPHcMi8JA
+
+Zach Delano has a video of us solving it.
+
+*** MST using Kruskal's algorithm
+
+#+Begin_verse
+ |-----------------|  a-b w1   e-i w2
+  --a---b   c---d--   a-e w1   o-h w2
+  / |           | \   c-d w1   l-p w2
+ |  e---f   g---h  |  d-h w1   m-n w2
+ |  |   |          |  a-d w2   n-o w2
+ |  i   j   k---l  |  a-m w2   f-j w3
+ |              |  |  d-p w2   l-k w3
+ |--m---n---o   p--|  e-f w2
+#+end_verse
+
+Total weight = 4(1) + 9(2) + 2(3) = 28
+
+We solved this problem on the whiteboard. Here is a worked solution with a step
+by step selection: https://photos.app.goo.gl/JsyUVTzQx4M58bsN9
+
+Here is a video of us working the solution: https://photos.app.goo.gl/HhpHtcyPcB5BBZRe6
+
+** Other Algorithms
+   Are there other methods for finding minimum spanning trees, in addition to
+   these two algorithms?
+
+   There are several other greedy algorithms for finding MST's, including
+      Boruvka's Algorithm
+      Reversed Kruskal's Algorithm
+
+   In addition to these greedy algorithms, there are some algorithms which run
+   in linear time under the right circumstances. 
+
+   See https://en.wikipedia.org/wiki/Minimum_spanning_tree#Algorithms for more
+   details.
+
+* DONE Try An Implementation
+  CLOSED: [2018-06-21 Thu 18:38]
+  :LOGBOOK:
+  CLOCK: [2018-06-21 Thu 17:55]--[2018-06-21 Thu 18:38] =>  0:43
+  :END:
+   of Floyd\rsquo{}s algorithm for finding the shortest paths between all pairs of
+   nodes of a graph given its weight matrix as an org-mode table, where the
+   number 19 represents infinity:
+
+#+BEGIN_SRC emacs-lisp 
+  (defun floyds-all-pairs-shortest-paths (D)
+    (let ((n (length D)))
+      (loop for k from 0 below n do
+            (loop for i from 0 below n do
+                  (loop for j from 0 below n do
+                        (setf (nth j (nth i D))
+                              (min (nth j (nth i D))
+                                   (+ (nth k (nth i D))
+                                      (nth j (nth k D)))))))))
+    D)
+#+END_SRC
+
+#+RESULTS:
+: floyds-all-pairs-shortest-paths
+
+#+tblname: weight-matrix-as-table
+|  0 |  2 | 19 |  1 |  8 |
+|  6 |  0 |  3 |  2 | 19 |
+| 19 | 19 |  0 |  4 | 19 |
+| 19 | 19 |  2 |  0 |  3 |
+|  3 | 19 | 19 | 19 |  0 |
+
+#+BEGIN_SRC emacs-lisp :var weight-matrix=weight-matrix-as-table
+  (floyds-all-pairs-shortest-paths weight-matrix)
+#+END_SRC
+
+#+RESULTS:
+|  0 |  2 | 3 | 1 | 4 |
+|  6 |  0 | 3 | 2 | 5 |
+| 10 | 12 | 0 | 4 | 7 |
+|  6 |  8 | 2 | 0 | 3 |
+|  3 |  5 | 6 | 4 | 0 |
+
+  Is the algorithm correctly implemented?
+
+  
+
+  Yes it is. We checked it against the algorithm provided on Wikipedia and other
+  sites. Instead of checking if (nth j (nth i D)) > (+ (nth k (nth i D)) (nth j (nth k D))),
+  this implementation just takes the min of the two values. This accomplishes the same thing. 
+
+  We also worked it out by hand, and checked it against a correct implementation in C++.
+
+  Here is a properly working Floyd's algorithm from GeeksForGeeks written
+  in C++:
+** C++ Example
+ #+BEGIN_SRC C++
+ // C Program for Floyd Warshall Algorithm
+ #include<stdio.h>
+
+ // Number of vertices in the graph
+ #define V 5
+
+ /* Define Infinite as a large enough value. This value will be used
+ for vertices not connected to each other */
+ #define INF 99999
+
+ // A function to print the solution matrix
+ void printSolution(int dist[][V]);
+
+ // Solves the all-pairs shortest path problem using Floyd Warshall algorithm
+ void floydWarshall (int graph[][V])
+ {
+	 /* dist[][] will be the output matrix that will finally have the shortest 
+	 distances between every pair of vertices */
+	 int dist[V][V], i, j, k;
+
+	 /* Initialize the solution matrix same as input graph matrix. Or 
+	 we can say the initial values of shortest distances are based
+	 on shortest paths considering no intermediate vertex. */
+	 for (i = 0; i < V; i++)
+		 for (j = 0; j < V; j++)
+			 dist[i][j] = graph[i][j];
+
+	 /* Add all vertices one by one to the set of intermediate vertices.
+	 ---> Before start of an iteration, we have shortest distances between all
+	 pairs of vertices such that the shortest distances consider only the
+	 vertices in set {0, 1, 2, .. k-1} as intermediate vertices.
+	 ----> After the end of an iteration, vertex no. k is added to the set of
+	 intermediate vertices and the set becomes {0, 1, 2, .. k} */
+	 for (k = 0; k < V; k++)
+	 {
+		 // Pick all vertices as source one by one
+		 for (i = 0; i < V; i++)
+		 {
+			 // Pick all vertices as destination for the
+			 // above picked source
+			 for (j = 0; j < V; j++)
+			 {
+				 // If vertex k is on the shortest path from
+				 // i to j, then update the value of dist[i][j]
+				 if (dist[i][k] + dist[k][j] < dist[i][j])
+					 dist[i][j] = dist[i][k] + dist[k][j];
+			 }
+		 }
+	 }
+
+	 // Print the shortest distance matrix
+	 printSolution(dist);
+ }
+
+ /* A utility function to print solution */
+ void printSolution(int dist[][V])
+ {
+	 printf ("The following matrix shows the shortest distances"
+			 " between every pair of vertices \n");
+	 for (int i = 0; i < V; i++)
+	 {
+		 for (int j = 0; j < V; j++)
+		 {
+			 if (dist[i][j] == INF)
+				 printf("%7s", "INF");
+			 else
+				 printf ("%7d", dist[i][j]);
+		 }
+		 printf("\n");
+	 }
+ }
+
+ // driver program to test above function
+ int main()
+ {
+	 int graph[V][V] = { {0, 2, INF, 1, 8},
+						 {6, 0, 3,2, INF},
+						 {INF, INF, 0, 4, INF},
+						 {INF, INF, 2,0, 3},
+						 {3, INF, INF, INF, 0}
+					 };
+
+	 // Print the solution
+	 floydWarshall(graph);
+	 return 0;
+ }
+
+ #+END_SRC
+
+ |   0 |         2 |      3 |     1 |   4 |
+ |   6 |         0 |      3 |     2 |   5 |
+ |  10 |        12 |      0 |     4 |   7 |
+ |   6 |         8 |      2 |     0 |   3 |
+ |   3 |         5 |      6 |     4 |   0 |
+** We also worked it by hand
+
+| a | d | e | = | 4 |    |    |
+| b | d | e | = | 5 |    |    |
+| c | d | e | a | = | 10 |    |
+| c | d | e | a | b |  = | 12 |
+| c | d | e | = | 7 |    |    |
+| d | e | a | = | 6 |    |    |
+| d | e | a | b | = |  8 |    |
+| e | a | b | = | 5 |    |    |
+| e | a | d | c | = |  6 |    |
+| e | a | d | = | 4 |    |    |
+
+
+* DONE Find the Right 20-Combination of Words in The Question    
+  CLOSED: [2018-06-21 Thu 23:41]
+  :LOGBOOK:
+  CLOCK: [2018-06-21 Thu 22:43]--[2018-06-21 Thu 23:41] =>  0:58
+  CLOCK: [2018-06-21 Thu 22:07]--[2018-06-21 Thu 22:27] =>  0:20
+  CLOCK: [2018-06-20 Wed 16:21]--[2018-06-20 Wed 16:42] =>  0:21
+  :END:
+  Your task is to figure out how to use the following code in your ongoing quest
+  for The Question:
+
+#+BEGIN_SRC elisp :results silent
+  (require 'cl)
+
+  (defun word-size-frequencies-match (subset-of-words)
+    (let* ((letter-counts (make-vector 20 0))
+           (frequencies (make-vector 8 0))
+           (target [0 1 5 4 3 2 3 2]))
+      (loop for word in subset-of-words
+            for i from 0
+            do (aset letter-counts i (length word)))
+      (loop for i from 1 to 7
+            do (aset frequencies i
+                     (loop for n across letter-counts count (= i n))))
+      (equal frequencies target)))
+
+  (defun has-exactly-77-letters (subset-of-words)
+    (= 77 (apply '+ (mapcar 'length subset-of-words))))
+
+  (defun is-good-candidate-subset (subset-of-words)
+    (and (word-size-frequencies-match subset-of-words)
+         (has-exactly-77-letters subset-of-words)))
+
+  (defun word-list ()
+    "Thirty-six words, some twenty-word subset of which is the right one."
+    (quote ("digit"
+            "is"
+            "be"
+            "perhaps"
+            "to"
+            "just"
+            "a"
+            "product"
+            "two"
+            "any"
+            "numbers"
+            "or"
+            "pattern"
+            "pieces"
+            "first"
+            "and"
+            "five"
+            "reason"
+            "appear"
+            "on"
+            "inside"
+            "short"
+            "long"
+            "third"
+            "look"
+            "it"
+            "ten"
+            "half"
+            "that"
+            "for"
+            "alone"
+            "of"
+            "in"
+            "chunks"
+            "random"
+            "the")))
+
+  (defun choose-random-twenty-from-word-list ()
+    (let ((twenty-list nil)
+          (random-word nil)
+          (the-list (word-list)))
+      (loop until (= 20 (length twenty-list))
+            do (setq random-word (nth (random 35) the-list))
+            (unless (member random-word twenty-list)
+              (setq twenty-list (cons random-word twenty-list))))
+      twenty-list))
+
+  (defun find-a-few-good-candidates (&optional n)
+    (if (null n) (setq n 20000000))
+    (let ((filename "good-candidates.txt"))
+      (with-temp-buffer
+        (and (file-readable-p filename) (insert-file-contents filename))
+        (loop repeat n
+              do (let ((random-twenty (choose-random-twenty-from-word-list)))
+                   (when (is-good-candidate-subset random-twenty)
+                     (insert (mapconcat 'identity random-twenty " "))
+                     (insert "\n"))))
+        (write-file filename))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(choose-random-twenty-from-word-list)  
+#+END_SRC
+
+#+RESULTS:
+| random | pieces | digit | alone | or | appear | to | of | be | perhaps | just | half | ten | product | is | that | short | third | for | two |
+
+#+BEGIN_SRC elisp :results silent
+  (require 'eww)
+
+  (defun lcd-get-query (counts-as-string)
+    (let* ((url-request-method "GET")
+           (url (format "http://firstthreeodds.org/lcdq?counts=%s" counts-as-string))
+           (temp-buffer (url-retrieve-synchronously url t t))
+           (distance nil))
+      (with-current-buffer temp-buffer
+        (unwind-protect
+            (let* ((headers (eww-parse-headers))
+                   (content-length (string-to-number (cdr (assoc "content-length" headers))))
+                   (end (point-max)))
+              (setq distance
+                    (string-to-number (buffer-substring-no-properties (- end content-length) end))))
+          (kill-buffer temp-buffer)))
+      distance))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(lcd-get-query "8202721241112883084A200010")  
+#+END_SRC
+
+#+RESULTS:
+: 0
+
+
+#+BEGIN_VERSE  
+"8202721241112883084A200010"
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#+END_VERSE
+
+** Choosing the words: 
+
+ :   a: There is 1 one letter word. This is the only option. 
+ :   any: There is 1 'y' that must be used. This is the only word with a 'y'.
+ :   digit: There is 1 'g' that must be used. This is the only word with a 'g'.
+ :   just: There is 1 'j' that must be used. This is the only word with a 'j'. 
+ :   look: There is 1 'k' that must be used. This is the only valid word with a 'k' 
+ :                                          ('chunks' is eliminated because there are no c's)
+ :   numbers: There is 1 'u' after selecting previous words. This is the only one word left with a 'u'.
+ :   be: There is 1 letter 'b' left. This is the only word left with a 'b'. 
+ :   random: There is 1 letter 'm' left. This is the only word left with an 'm'.
+ :   appear: There are 3 p's left. Appear must be used for all three to be used. 
+ :                                 (Pattern and perhaps would give 2, plus appear would put us over)
+ :   that: There must be one more 4 letter word. This is the only valid 4 letter word left. 
+ :   ten, the, for: There must be three more 3 letter words. These are the only valid 3 letter words left.
+ :   pattern: There must be one more 7 letter word. This is the only valid 7 letter word left.
+ :   first: There must be one more 5 letter word. This is the only valid 5 letter word left.
+ :   reason: There must be one more 6 letter word. This is the only valid 6 letter word left. 
+ :   on, to, or: There must be three more o's used. These are the only words with o's in them. 
+ :   in: The only valid word left. 
+
+
+My calculated word list:
+
+#+Begin_verse 
+a
+or
+on
+in
+to
+be
+any
+for
+the
+ten
+that
+just
+look
+first
+digit
+appear
+random
+reason
+pattern
+numbers
+#+end_verse
+
+** Testing found word list
+Running some verification using the provided code:
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (setq selected-words '("a" "or" "on" "in" "to" "be" "any" "for" "the" "ten" "that" "just" "look" "first" "digit" "appear" "random" "reason" "pattern" "numbers"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (is-good-candidate-subset selected-words)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+
+* DONE What I learned
+  CLOSED: [2018-06-23 Sat 11:03]
+  :LOGBOOK:
+  CLOCK: [2018-06-23 Sat 10:53]--[2018-06-23 Sat 11:03] =>  0:10
+  :END:
+
+This week was a lot of application of the things in the book, which I really
+liked. A lot of it seemed like a bit of review from DM2, which was also really
+nice. Talking about Huffman coding inspired me to start working on my own
+general purpose Huffman coding library (in JavaScript). I also really enjoyed
+working through narrowing down the 20 words. It was a fun puzzle, and I'm
+excited to see what the final result will be. I just hope that it's worth all
+the effort. ;)
+

@@ -1,0 +1,476 @@
+#+TITLE: Weekly Assignment 05
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-06-02 Sat 16:55]
+| Headline                             |   Time |
+|--------------------------------------+--------|
+| *Total time*                         | *4:01* |
+|--------------------------------------+--------|
+| Exercise not-in-book                 |   1:20 |
+| Exercise 7 on page 206               |   0:37 |
+| Apply Linear Algebra Methods to a... |   0:09 |
+| Exercise 3 on page 216               |   0:45 |
+| Exercise 10 on page 240              |   0:15 |
+| Exercise 9 on page 249               |   0:51 |
+| What I learned                       |   0:04 |
+#+END:
+
+* Collaborators:
+
+Matt Wyndham
+Adam Gehring
+Asa Skousen
+Bryan Muller
+Timothy Steele
+James Palmer
+Quade Morrison
+
+*Contributions*
+We all worked together on solving the recurrence relation in the first exercise.
+
+We all worked together on Exercise 7, although some of us came up with different
+algorithms.
+
+Matt and I worked together on solving the Linear Algebra problems.
+
+* DONE Exercise not-in-book
+  CLOSED: [2018-05-31 Thu 20:19]
+  :LOGBOOK:
+  CLOCK: [2018-05-31 Thu 20:15]--[2018-05-31 Thu 20:19] =>  0:04
+  CLOCK: [2018-05-31 Thu 17:03]--[2018-05-31 Thu 18:19] =>  1:16
+  :END:
+
+  Here is a straightforward implementation of a min-max algorithm in a familiar
+  language:
+
+#+BEGIN_SRC C++
+  void sMinMax(int* a, int n, int& min, int& max)
+  {
+     min = max = a[0];
+     for (int i = 1; i < n; i++)
+     {
+        if (a[i] < min) min = a[i];
+        if (a[i] > max) max = a[i];
+     }  
+  }
+#+END_SRC
+
+  What is its efficiency?
+
+  The divide-and-conquer recurrence relation for the number of
+  comparisons in the min-max algorithm (shown below in elisp) is:
+
+  T(n) = 2T(n/2) + 2, T(2) = 1.
+
+  Or, in alternate notation:
+
+  a_n = 2a_{n/2} + 2, a_2 = 1.
+
+  Solve this recurrence relation using telescoping. Include the comparison
+  table, like you did last week. Then answer this question:
+
+  Do each of the following two implementations work the same, and provide the
+  same evidence of a slightly-more-efficient-than-straightforward efficiency?
+
+#+BEGIN_SRC C++
+  void rMinMax(int* a, int i, int j, int& min, int& max)
+  {
+     if (i == j)
+        min = max = a[i];
+     else
+     {
+        int mid = (i + j) / 2;
+        int min1, max1;
+
+        rMinMax(a, i, mid, min, max);
+        rMinMax(a, mid + 1, j, min1, max1);
+
+        if (min < min1) min = min1;
+        if (max > max1) max = max1;
+     }
+  }
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun compare-min (p1 p2)
+    (if (< (car p1) (car p2))
+        (car p1)
+      (car p2)))
+
+  (defun compare-max (p1 p2)
+    (if (> (cdr p1) (cdr p2))
+        (cdr p1)
+      (cdr p2)))
+
+  (defun r-min-max (array i j)
+    (if (= i (1- j)) ;; base case
+        (let ((e1 (aref array i))
+              (e2 (aref array j)))
+          (if (< e1 e2)
+              (cons e1 e2) (cons e2 e1)))
+      ;; else recurse
+      (let* ((mid (/ (+ i j) 2))
+             (mm1 (r-min-max array i mid))
+             (mm2 (r-min-max array (1+ mid) j)))
+        (cons (compare-min mm1 mm2) (compare-max mm1 mm2)))))
+#+END_SRC
+
+#+RESULTS:
+: r-min-max
+
+#+BEGIN_SRC emacs-lisp
+  (r-min-max [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16] 0 15)
+#+END_SRC
+
+** Work
+
+*** Solving Recurrence Relation
+    \(a_2 = 1)\
+
+ | a_n       | = | 2a_{n/2}     | + |  2 |  
+ | 2a_{n/2}    | = | 2^2 a_{n/2^2} | + | 2^2 |  
+ | 2^2a_{n/2^2} | = | 2^3 a_{n/2^3} | + | 2^3 | 
+ | 2^{3}a_{n/2^3} | = | 2^{4}a_{n/2^4}  | + | 2^4 |
+ \downarrow
+ \downarrow
+ \downarrow
+ | a_n | = | 2^{k-1} | + |  2^{k} | - |  2 |   |   |
+ | a_n | = | 2^k   | * | 2^-1 | + | 2^k | - | 2 |
+ | a_n | = | n/2  | + |   n | - |  2 |   |   |
+ | a_n | = | 3/2n | - |   2 |   |    |   |   |
+
+   
+
+ a_n = 3/2(n) - 2
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun recurrence-relation (n)
+     (if (= 2 n) 1
+     (+ (* 2 (recurrence-relation (/ n 2))) 2)))
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp :results silent
+   (defun test-solved (n)
+     (- (* (/ 3.0 2) n) 2)) 
+
+ (setq max-lisp-eval-depth 10000)
+ #+END_SRC
+
+ #+BEGIN_SRC emacs-lisp
+     (loop for i in '(2 4 8 16 32 64)
+      collect (recurrence-relation i))
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 | 4 | 10 | 22 | 46 | 94 |
+
+ #+BEGIN_SRC emacs-lisp
+   (mapcar 'test-solved '(2 4 8 16 32 64))
+ #+END_SRC
+
+ #+RESULTS:
+ | 1.0 | 4.0 | 10.0 | 22.0 | 46.0 | 94.0 |
+
+ #+BEGIN_SRC emacs-lisp
+   (append (list '("recurrence relation" "Solved Recurrence Relation"))
+            (let ((powers-of-2 (mapcar (lambda (i) (expt 2 i)) (number-sequence 1 20)))
+                  (list-row (lambda (n) (list (test-solved n) (recurrence-relation n)))))
+             (mapcar list-row powers-of-2)))
+ #+END_SRC
+
+ #+RESULTS:
+ | recurrence relation | Solved Recurrence Relation |
+ |                 1.0 |                          1 |
+ |                 4.0 |                          4 |
+ |                10.0 |                         10 |
+ |                22.0 |                         22 |
+ |                46.0 |                         46 |
+ |                94.0 |                         94 |
+ |               190.0 |                        190 |
+ |               382.0 |                        382 |
+ |               766.0 |                        766 |
+ |              1534.0 |                       1534 |
+ |              3070.0 |                       3070 |
+ |              6142.0 |                       6142 |
+ |             12286.0 |                      12286 |
+ |             24574.0 |                      24574 |
+ |             49150.0 |                      49150 |
+ |             98302.0 |                      98302 |
+ |            196606.0 |                     196606 |
+ |            393214.0 |                     393214 |
+ |            786430.0 |                     786430 |
+ |           1572862.0 |                    1572862 |
+
+
+ According to the Master Theorem, this recurrence relation is \in \Theta(n)
+
+*** Comparing
+
+    The recursive implementation is slightly better than the 
+    iterative version, because its base case requires only one comparison. 
+    The base case of the iterative version requires 2 comparisons. 
+
+    The complexity of the recursive algorithm is (3/2)n, while that of the iterative
+    is 2n. (3/2)n is slightly better than 2n. 
+* DONE Exercise 7 on page 206
+  CLOSED: [2018-05-31 Thu 21:01]
+  :LOGBOOK:
+  CLOCK: [2018-05-31 Thu 20:24]--[2018-05-31 Thu 21:01] =>  0:37
+  :END:
+
+  You have an array of n numbers and a number s. Find out whether the array
+  contains two elements whose sum is s. (For example, for the array 5, 9, 1, 3
+  and s = 6, the answer is yes, but for the same array and s = 7, the answer is
+  no.) Design an algorithm for this problem with a better than quadratic time
+  efficiency.
+** Work 
+
+This can be accomplished by presorting the array with any algorithm with
+O(nlog(n)) complexity. We then loop over each element /x/ of the presorted array
+and execute a binary search to find /s - x/. If the value returned from binary
+search is not null or the same index value of x, then we have found two elements
+which sum to s.
+
+We can break the algorithm into three parts with their Big O complexities:
+    * Presorting - O(nlog(n)) (Assuming a good algorithm is used)
+    * Looping through the array - O(n)
+    * Binary Search - O(nlog(n))
+This means that the algorithm will be \in O(nlog(n)) which is better than
+quadratic time.
+
+
+#+Begin_Verse
+*Algorithm* g(arr, s)
+/// Finds to if two elements in array arr sum to s
+
+/// Input: Array /arr = A presorted array of numbers/
+/// Input: Number /s = the target sum/
+/// Output: True if two elements of arr sum to s
+            False if no two elements of arr sum to s
+/i \larr 0/
+/length \larr length of arr/
+*while* i < length
+   /index \larr binarySearch(arr, s - arr[i])/
+   *if* /index/ != /null/ *and* /index/ != /i/
+       *return* true  
+   *else*
+       *continue*
+*return* false
+#+End_Verse
+
+* DONE Apply Linear Algebra Methods to a Simple Problem
+  CLOSED: [2018-05-31 Thu 19:06]
+  :LOGBOOK:
+  CLOCK: [2018-05-31 Thu 20:06]--[2018-05-31 Thu 20:15] =>  0:09
+  :END:
+
+  Read the provided introduction to [[file:matrix-inversion.org][matrix inversion]] and solve the problem in
+  that file in the hinted-at prescribed way.
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun swap-rows (matrix i j)
+  "Replaces swaps row i and j and returns the modified matrix"
+     (let ((ith-row (nth i matrix))
+           (jth-row (nth j matrix)))
+      (setf (nth j matrix) ith-row)
+      (setf (nth i matrix) jth-row)
+      matrix))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun scale-row (matrix i k)
+   (setf (nth i matrix) (mapcar (lambda (x) (* k x)) (nth i matrix)))
+   matrix)
+    
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun scale-and-sum-rows (matrix i j scalar)
+  "Scales row i by scalar and adds it to row j"
+    (let* ((scaled-row (mapcar (lambda (x) (* x scalar)) (nth i matrix)))
+           (new-row (mapcar* (lambda (x y) (+ x y)) (nth j matrix) scaled-row)))
+           (setf (nth j matrix) new-row)
+      matrix))
+#+END_SRC
+
+#+RESULTS:
+: scale-and-sum-rows
+
+#+BEGIN_SRC emacs-lisp
+  (scale-and-sum-rows '((1 2) (3 4)) 0 1 -3)
+#+END_SRC
+
+#+RESULTS:
+| 1 |  2 |
+| 0 | -2 |
+
+* DONE Exercise 3 on page 216
+  CLOSED: [2018-05-31 Thu 19:04]
+  :LOGBOOK:
+  CLOCK: [2018-05-31 Thu 18:19]--[2018-05-31 Thu 19:04] =>  0:45
+  :END:
+
+  Now solve the system of Problem 1 (on the same page) by computing the inverse
+  of its coefficient matrix and then multiplying it by the right-hand side
+  vector.
+
+
+#+BEGIN_SRC emacs-lisp 
+  (setq matrix-augmented '((1 1 1 1 0 0) (2 1 1 0 1 0) (1 -1 3 0 0 1)))
+#+END_SRC
+
+#+RESULTS:
+| 1 |  1 | 1 | 1 | 0 | 0 |
+| 2 |  1 | 1 | 0 | 1 | 0 |
+| 1 | -1 | 3 | 0 | 0 | 1 |
+
+** Finding the inverse
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-and-sum-rows matrix-augmented 0 1 -2)
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 |  1 |  1 |  1 | 0 | 0 |
+ | 0 | -1 | -1 | -2 | 1 | 0 |
+ | 1 | -1 |  3 |  0 | 0 | 1 |
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-and-sum-rows matrix-augmented 0 2 -1)
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 |  1 |  1 |  1 | 0 | 0 |
+ | 0 | -1 | -1 | -2 | 1 | 0 |
+ | 0 | -2 |  2 | -1 | 0 | 1 |
+
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-and-sum-rows matrix-augmented 1 0 1)
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 |  0 |  0 | -1 | 1 | 0 |
+ | 0 | -1 | -1 | -2 | 1 | 0 |
+ | 0 | -2 |  2 | -1 | 0 | 1 |
+
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-and-sum-rows matrix-augmented 1 2 -2)
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 |  0 |  0 | -1 |  1 | 0 |
+ | 0 | -1 | -1 | -2 |  1 | 0 |
+ | 0 |  0 |  4 |  3 | -2 | 1 |
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-row matrix-augmented 1 -1)
+ #+END_SRC
+
+ #+RESULTS:
+ | 1 | 0 | 0 | -1 |  1 | 0 |
+ | 0 | 1 | 1 |  2 | -1 | 0 |
+ | 0 | 0 | 4 |  3 | -2 | 1 |
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-row matrix-augmented 2 .25)
+ #+END_SRC
+
+ #+RESULTS:
+ |   1 |   0 |   0 |   -1 |    1 |    0 |
+ |   0 |   1 |   1 |    2 |   -1 |    0 |
+ | 0.0 | 0.0 | 1.0 | 0.75 | -0.5 | 0.25 |
+
+
+ #+BEGIN_SRC emacs-lisp
+   (scale-and-sum-rows matrix-augmented 2 1 -1)
+ #+END_SRC
+
+ #+RESULTS:
+ |   1 |   0 |   0 |   -1 |    1 |     0 |
+ | 0.0 | 1.0 | 0.0 | 1.25 | -0.5 | -0.25 |
+ | 0.0 | 0.0 | 1.0 | 0.75 | -0.5 |  0.25 |
+
+
+ So the inverse matrix is 
+
+#+tblname: inverted-matrix
+ |   -1 |   1 |    0 |
+ | 1.25 | -.5 | -.25 |
+ |  .75 | -.5 |  .25 |
+
+#+BEGIN_SRC emacs-lisp :results raw
+  (mapcar 'floor (matrix-mult-by-vector '((-1 1 0) (1.25 -.5 -.25) (.75 -.5 .25)) '(2 3 8)))
+#+END_SRC
+
+#+RESULTS:
+(1 -1 2)
+
+
+
+
+
+* DONE Exercise 10 on page 240
+  CLOSED: [2018-05-31 Thu 21:17]
+  :LOGBOOK:
+  CLOCK: [2018-05-31 Thu 21:02]--[2018-05-31 Thu 21:17] =>  0:15
+  :END:
+
+  Is it a good idea to use a general-purpose polynomial-evaluation algorithm
+  such as Horner’s rule to evaluate the polynomial
+
+  p(n) = x^n + x^{n - 1} + \cdots + x + 1?
+
+  This polynomial forms a geometric series which means that it may
+  be more efficient to evaluate x^{n+1} than to use Horner's rule.
+
+  It is very similar to the problem presented on page 236 with calculating a^n
+  when x = a. It could be more efficient to simply calculate x^{n+1}.
+
+\rightarrow \(\frac{x^{n+1} - 1}{x-1}\) if /x/ \ne 1
+
+  \(n + 1\) if /x/ = 1
+
+
+
+
+* DONE Exercise 9 on page 249
+  CLOSED: [2018-05-31 Thu 22:08]
+  :LOGBOOK:
+  CLOCK: [2018-06-02 Sat 15:23]--[2018-06-02 Sat 16:05] =>  0:42
+  CLOCK: [2018-05-31 Thu 21:59]--[2018-05-31 Thu 22:08] =>  0:09
+  :END:
+
+  The graph-coloring problem is usually stated as the vertex-coloring problem:
+  Assign the smallest number of colors to vertices of a given graph so that no
+  two adjacent vertices are the same color. Consider the *edge-coloring*
+  problem: Assign the smallest number of colors possible to edges of a given
+  graph so that no two edges with the same endpoint are the same color. Explain
+  how the edge-coloring problem can be reduced to a vertex-coloring problem.
+
+
+** Solution
+
+   Map the edges of the given graph to the nodes of a new graph. Connect all the
+   nodes on the new graph that map to edges with shared termination points on
+   the original graph. If you can solve the vertex-coloring problem for this new
+   graph, you will have solved the edge-coloring problem on the given graph.
+
+* DONE What I learned
+  CLOSED: [2018-06-01 Fri 22:15]
+  :LOGBOOK:
+  CLOCK: [2018-06-01 Fri 22:11]--[2018-06-01 Fri 22:15] =>  0:04
+  :END:
+
+   What stood out to me the most this week was the importance of working with
+   team members to solve problems. I have had a very busy week with traveling
+   and illness, which impacted my learning abilities pretty significantly. I am
+   grateful that I was able to work with collaborators who care about
+   understanding the concepts and not just finding the answer. We took the time
+   to really walk through the problems and made sure we all understood how we
+   got to the solution before moving on. That helped my out greatly, as my
+   mental faculties were not up to their usual snuff. It was a great reminder of
+   how important it is to work with your peers to help further your learning.
+

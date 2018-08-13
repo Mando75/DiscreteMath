@@ -1,0 +1,66 @@
+#+TITLE: Algorithmic Thinking
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP:   showeverything
+
+* Two Titans
+
+** Donald Knuth
+
+#+BEGIN_QUOTE
+  Computer Science and Engineering is a field that attracts a
+  different kind of thinker. I believe that one who is a natural
+  computer scientist thinks algorithmically. Such people are
+  especially good at dealing with situations where different rules
+  apply in different cases; they are individuals who can rapidly
+  change levels of abstraction, simultaneously seeing things "in the
+  large" and "in the small." --- Donald Knuth, as quoted in
+  J. Hartmanis /On computational complexity and the nature of computer
+  science/ published in the /Communications of the ACM 37/, 10
+  (1994), 39.
+#+END_QUOTE
+
+** Edgar Allan Poe
+
+#+BEGIN_QUOTE
+  I have often thought how interesting a magazine paper might be
+  written by any author who would---that is to say, who
+  could---detail, step by step, the processes by which any one of his
+  compositions attained its ultimate point of completion. Why such a
+  paper has never been given to the world, I am much at a loss to
+  say---but, perhaps, the authorial vanity has had more to do with the
+  omission than any one other cause.
+
+  Most writers---poets in especial---prefer having it understood that
+  they compose by a species of fine frenzy---an ecstatic
+  intuition---and would positively shudder at letting the public take
+  a peep behind the scenes, at the elaborate and vacillating crudities
+  of thought---at the true purposes seized only at the last
+  moment---at the innumerable glimpses of idea that arrived not at the
+  maturity of full view---at the fully-matured fancies discarded in
+  despair as unmanageable---at the cautious selections and
+  rejections---at the painful erasures and interpolations---in a word,
+  at the wheels and pinions---the tackle for scene-shifting---the
+  step-ladders, and demon-traps---the cock's feathers, the red paint
+  and the black patches, which, in ninety-nine cases out of a hundred,
+  constitute the properties of the literary /histrio/.
+
+  I am aware, on the other hand, that the case is by no means common,
+  in which an author is at all in condition to retrace the steps by
+  which his conclusions have been attained. In general, suggestions,
+  having arisen pell-mell are pursued and forgotten in a similar
+  manner.
+
+  For my own part, I have neither sympathy with the repugnance alluded
+  to, nor, at any time, the least difficulty in recalling to mind the
+  progressive steps of any of my compositions, and, since the interest
+  of an analysis or reconstruction [...] is quite independent of any
+  real or fancied interest in the thing analysed, it will not be
+  regarded as a breach of decorum on my part to show the /modus
+  operandi/ by which some one of my own works was put together.  I
+  select /The Raven/ as most generally known.  It is my design to
+  render it manifest that no one point in its composition is referable
+  either to accident or intuition--- that the work proceeded
+  [... How?] --- Edgar Allan Poe, /The Philosophy of Composition/.
+#+END_QUOTE
+

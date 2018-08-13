@@ -1,0 +1,479 @@
+#+TITLE: Weekly Assignment 02
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+#+BEGIN: clocktable :maxlevel 2 :scope file
+#+CAPTION: Clock summary at [2018-05-12 Sat 15:44]
+| Headline                                    |   Time |      |
+|---------------------------------------------+--------+------|
+| *Total time*                                | *8:15* |      |
+|---------------------------------------------+--------+------|
+| What Is The Answer?                         |   6:45 |      |
+| \_  Come up with two better ways than...    |        | 1:03 |
+| \_  Write high-level pseudocode for your... |        | 0:46 |
+| Notes                                       |   1:30 |      |
+| \_  Day 1                                   |        | 1:30 |
+#+END:
+
+* Collaborators
+  Bryan Muller
+  James Palmer
+  Adam Gehring
+  Matt Wyndam
+  Jonathon Manoa
+  Zach Delano
+  Jose Dia
+  Timothy Steele
+  
+* What Is The Answer?
+  :LOGBOOK:
+  CLOCK: [2018-05-10 Thu 16:58]--[2018-05-10 Thu 21:54] =>  4:56
+  :END:
+
+  In this new version of Scrabble ...
+
+  - Letter values are all positive integers (zero not allowed).
+  - Each vowel has a different numeric value.
+  - Each consonant has a different numeric value.
+  - A vowel can have the same value as a consonant.
+  - Word scores are computed by adding up the vowel values, adding up the
+    consonant values, and multiplying these two sums together.
+
+  So given these word scores ...
+
+  | PLUM  | = |  36 |   |   | PLUME   | = | 48 |   |   | MELT  | = |  15 |
+  | ROME  | = |  98 |   |   | SAVE    | = | 51 |   |   | WEST  | = |  20 |
+  | LAME  | = |  18 |   |   | PLANE   | = | 39 |   |   | VIPER | = | 150 |
+  | PIPER | = | 110 |   |   | OUT     | = | 81 |   |   | GREET | = |  40 |
+  | MELBA | = |  51 |   |   | WESTERN | = | 70 |   |   | PAPER | = |  66 |
+
+  ... what is the score of the following compound word?
+
+  [[https://www.lds.org/scriptures/tg/problem-solving?lang=eng&letter=p][PROBLEMSOLVING]] = 986
+
+A: 2
+B: 11
+E: 1
+G: 1
+I: 4
+L: 2
+M: 4
+N: 5
+O: 6
+P: 6
+R: 10
+S: 3
+T: 9
+U: 3
+V: 14
+W: 8
+
+** DONE Come up with two better ways than brute force to find the answer
+   CLOSED: [2018-05-11 Fri 13:54]
+
+*** Solution 1
+    :LOGBOOK:
+    CLOCK: [2018-05-10 Thu 22:58]--[2018-05-10 Thu 23:36] =>  0:38
+    :END:
+    Create a map M using letters as keys, and containing a set of all possible
+    valid numeric values for each letter.
+
+    For each word, let its value equal W. Find all possible factor pairs (e.g.
+    x * y = z) of z. Use Summation Formula 2 to verify that factor x can be
+    partitioned into v unequal parts and y partitioned into c unequal parts
+    (where v is the number of vowels and c is the number of consonants in the
+    word). If a pair of factors does not satisfy those requirements, discard
+    them.
+
+    For each pair of valid factors x and y, find all possible partitions of size
+    v and c respectively. Take this set of possible partitions and for each
+    letter v_1, v_2 ...v_n and c_1, c_2, ... c_n, replace the set of possible values
+    for v_n and c_n with the intersection of the existing set of possible values and the
+    set of possible partitions for v_n and c_n.
+
+    Continue this process with each word until the set of possible values for each
+    letter has been reduced to one. 
+
+**** Example worked by hand: 
+
+    PLUM
+
+    set of possible values for:
+    P: {1,2,3,...,20}
+    L: {1,2,3,...,20}
+    U: {1,2,3,...,20}
+    M: {1,2,3,...,20}
+    E: {1,2,3,...,20}
+
+    W = 36
+
+    set V: {U E} size = 2
+    set C: {P L M} size = 3
+    
+    Factor pairs of 36:
+    | x |  y |   |  x | y |
+    |---+----+---+----+---|
+    | 1 | 36 |   | 36 | 1 |
+    | 2 | 18 |   | 18 | 2 |
+    | 3 | 12 |   | 12 | 3 |
+    | 4 |  9 |   |  9 | 4 |
+    | 6 |  6 |   |  6 | 6 |
+
+    Now for each pair, check if x can be broken into size(V) unequal partitions
+    and y into size(C) unequal partitions:
+
+    | pair  | valid |   | pair  | valid |
+    |-------+-------+---+-------+-------|
+    | 1, 36 | f     |   | 36, 1 | f     |
+    | 2, 18 | f     |   | 18, 2 | f     |
+    | 3, 12 | t     |   | 12, 3 | f     |
+    | 4, 9  | t     |   | 9, 4  | f     |
+    | 6, 6  | t     |   | 6, 6  | t     |
+    
+    Discard all invalid pairs. This leaves the following pairs:
+    | 3 | 12 |
+    | 4 |  9 |
+    | 6 |  6 |
+    
+    Find all possible unequal partitions:
+    
+    Possible values for the letters in V
+
+    A: 3 B: 2
+    unequal partions: {1, 2}
+    reduce to a set of unique values: e.g. {1,2} = X
+    
+    Possible values for the letters in C
+    
+    A: 12 B: 3
+    unequal partitions: {1,2,9}, {3,4,5}, {6,4,2}, etc
+    reduce to a set of unique values: e.g. {1, 2, 3, 4, 5, 6, 9...} = Y
+
+    replace P with P \cap Y
+    replace L with L \cap Y
+    replace U with U \cap X
+    replace M with M \cap Y
+
+    Continue in this fashion for each word until the set of possible values for 
+    each letter is 1.
+
+    If every word has been processed, but there are still more than one possible
+    values for at least one letter, loop through the possible values in a
+    similar fashion to the method given until a valid solution is found.
+    
+
+*** Solution 2
+    :LOGBOOK:
+    CLOCK: [2018-05-11 Fri 16:23]--[2018-05-11 Fri 16:48] =>  0:25
+    :END:
+
+    Is an improvement upon the pure brute force algorithm provided. It would probably still be classified
+    as a brute force algorithm, but I would consider it a 'smart' brute force. By this I mean that we try 
+    to optimize the brute force solver by elminating as many incorrect values as we can. This is mainly 
+    accomplished by providing a check before each for loop begins its nested for loops. By checking if
+    a given value for the iterator breaks the established rules of the game, we can eliminate a huge number
+    of iterations that we know will never provide a correct answer. In this way, we improve the average efficiency
+    of the algorithm. I believe that the worse case scenario would be the same, but on average this algorithm would run
+    much faster. 
+
+    The other major change, is returning from the function if a solution is
+    found. The current brute force function continues execution even after a
+    solution is found. This means that the best and worse case scenarios for the
+    running time of the provided algorithm are the same. Regardless of when it
+    finds the solution, it will continue running through all possible values of
+    the letters. By adding a return statement when a solution is found, it
+    improves the best case scenario for the running time dramatically.
+
+
+    The final change is to fix the MI in the second to last nested for loop. 
+    This for loop is iterating with V, but is increasing the value of U. This MI means that
+    the provided algorithm will, in most cases, never find a valid solution and run for infinity. 
+
+*** Brute Force Code
+#+BEGIN_SRC C++ :tangle problemsolving.cpp
+   #include <iostream>
+   using namespace std;
+
+   int A = 0;
+   int B = 0;
+   int C = 0;
+   int D = 0;
+   int E = 0;
+   int F = 0;
+   int G = 0;
+   int H = 0;
+   int I = 0;
+   int J = 0;
+   int K = 0;
+   int L = 0;
+   int M = 0;
+   int N = 0;
+   int O = 0;
+   int P = 0;
+   int Q = 0;
+   int R = 0;
+   int S = 0;
+   int T = 0;
+   int U = 0;
+   int V = 0;
+   int W = 0;
+   int X = 0;
+   int Y = 0;
+   int Z = 0;
+
+   bool solvesIt()
+   {
+       return (((P + L + M) * (U) == 36) &&
+               ((R + M) * (O + E) == 98) &&
+               ((L + M) * (A + E) == 18) &&
+               ((P + P + R) * (I + E) == 110) &&
+               ((M + L + B) * (E + A) == 51) &&
+               ((P + L + M) * (U + E) == 48) &&
+               ((S + V) * (A + E) == 51) &&
+               ((P + L + N) * (A + E) == 39) &&
+               ((T) * (O + U) == 81) &&
+               ((W + S + T + R + N) * (E + E) == 70) &&
+               ((M + L + T) * (E) == 15) &&
+               ((W + S + T) * (E) == 20) &&
+               ((V + P + R) * (I + E) == 150) &&
+               ((G + R + T) * (E + E) == 40) &&
+               ((P + P + R) * (A + E) == 66));
+   }
+
+   void printSolution()
+   {
+       cout << "A = " << A << endl;
+       cout << "E = " << E << endl;
+       cout << "I = " << I << endl;
+       cout << "O = " << O << endl;
+       cout << "U = " << U << endl;
+       cout << "B = " << B << endl;
+       cout << "G = " << G << endl;
+       cout << "L = " << L << endl;
+       cout << "M = " << M << endl;
+       cout << "N = " << N << endl;
+       cout << "P = " << P << endl;
+       cout << "R = " << R << endl;
+       cout << "S = " << S << endl;
+       cout << "T = " << T << endl;
+       cout << "V = " << V << endl;
+       cout << "W = " << W << endl;
+       cout << "\nPROBLEMSOLVING = "
+            << ((P + R + B + L + M + S + L + V + N + G) *
+                (O + E + O + I)) << endl;
+   }
+
+   int main()
+   {
+       for (A = 1; A < 20; A++)
+           for (E = 1; E < 20; E++)
+               for (I = 1; I < 20; I++)
+                   for (O = 1; O < 20; O++)
+                       for (U = 1; U < 20; U++)
+                           for (B = 1; B < 20; B++)
+                               for (G = 1; G < 20; G++)
+                                   for (L = 1; L < 20; L++)
+                                       for (M = 1; M < 20; M++)
+                                           for (N = 1; N < 20; N++)
+                                               for (P = 1; P < 20; P++)
+                                                   for (R = 1; R < 20; R++)
+                                                       for (S = 1; S < 20; S++)
+                                                           for (T = 1; T < 20; T++)
+                                                               for (V = 1; V < 20; U++)
+                                                                   for (W = 1; W < 20; W++)
+                                                                       if (solvesIt()) printSolution();
+
+       return 0;
+   }
+ #+END_SRC
+
+** DONE Write high-level pseudocode for your two ways
+   CLOSED: [2018-05-11 Fri 16:30]
+   :LOGBOOK:
+   CLOCK: [2018-05-11 Fri 13:55]--[2018-05-11 Fri 13:55] =>  0:00
+   :END:
+
+   
+*** Solution 1 pseudocode
+    :LOGBOOK:
+    CLOCK: [2018-05-11 Fri 13:55]--[2018-05-11 Fri 14:21] =>  0:26
+    :END:
+
+#+BEGIN_EXAMPLE 
+    let M = Map(Letter:Set(1,2,...,20)
+
+    let Words = Map(Word: [*value*, [*vowels*], [*consonants*]])
+    
+    for each word in Words:
+       let W = word[0]
+       let factorPairs = findFactorPairs(W)
+       let validPairs = []
+       
+       for each pair in factorPairs:
+          if(validFactors(pair, word))
+             push pair -> validPairs
+       
+       for each pair in validPairs:
+          partionsV = findUnequalPartions(pair[x], word[*vowels*].size)
+          partionsC = findUnequalPartions(pair[y], word[*consonants*].size)
+          for each vowel in word:
+             M:vowel = M:vowel \cap partionsV
+          for each consonant in word:
+             M:consonant = M:consonant \cap partionsC
+          
+    return M         
+
+#+END_EXAMPLE    
+
+*** Solution 2 pseudocode
+    :LOGBOOK:
+    CLOCK: [2018-05-11 Fri 14:21]--[2018-05-11 Fri 14:41] =>  0:20
+    :END:
+Here is the modified source code...
+#+BEGIN_SRC C++
+#include <iostream>
+   using namespace std;
+
+   int A = 1;
+   int B = 1;
+   int C = 1;
+   int D = 1;
+   int E = 1;
+   int F = 1;
+   int G = 1;
+   int H = 1;
+   int I = 1;
+   int J = 1;
+   int K = 1;
+   int L = 1;
+   int M = 1;
+   int N = 1;
+   int O = 1;
+   int P = 1;
+   int Q = 1;
+   int R = 1;
+   int S = 1;
+   int T = 1;
+   int U = 1;
+   int V = 1;
+   int W = 1;
+   int X = 1;
+   int Y = 1;
+   int Z = 1;
+
+   bool solvesIt()
+   {
+       return (((P + L + M) * (U) == 36) &&
+               ((R + M) * (O + E) == 98) &&
+               ((L + M) * (A + E) == 18) &&
+               ((P + P + R) * (I + E) == 110) &&
+               ((M + L + B) * (E + A) == 51) &&
+               ((P + L + M) * (U + E) == 48) &&
+               ((S + V) * (A + E) == 51) &&
+               ((P + L + N) * (A + E) == 39) &&
+               ((T) * (O + U) == 81) &&
+               ((W + S + T + R + N) * (E + E) == 70) &&
+               ((M + L + T) * (E) == 15) &&
+               ((W + S + T) * (E) == 20) &&
+               ((V + P + R) * (I + E) == 150) &&
+               ((G + R + T) * (E + E) == 40) &&
+               ((P + P + R) * (A + E) == 66));
+   }
+
+   void printSolution()
+   {
+       cout << "A = " << A << endl;
+       cout << "E = " << E << endl;
+       cout << "I = " << I << endl;
+       cout << "O = " << O << endl;
+       cout << "U = " << U << endl;
+       cout << "B = " << B << endl;
+       cout << "G = " << G << endl;
+       cout << "L = " << L << endl;
+       cout << "M = " << M << endl;
+       cout << "N = " << N << endl;
+       cout << "P = " << P << endl;
+       cout << "R = " << R << endl;
+       cout << "S = " << S << endl;
+       cout << "T = " << T << endl;
+       cout << "V = " << V << endl;
+       cout << "W = " << W << endl;
+       cout << "\nPROBLEMSOLVING = "
+            << ((P + R + B + L + M + S + L + V + N + G) *
+                (O + E + O + I)) << endl;
+   }
+
+   int main()
+   {
+       for (A = 1; A < 20; A++)
+           for (E = 1; E < 20; E++)
+               if(E == A)
+                  continue;
+               for (I = 1; I < 20; I++)
+                   if(I == A || I == E)
+                      continue;
+                   for (O = 1; O < 20; O++)
+                       if(O == A || O == E || O ==I)
+                          continue;
+                       for (U = 1; U < 20; U++)
+                           if(U == A || U == E || U == I || U == O)
+                             continue;
+                           for (B = 1; B < 20; B++)
+                               for (G = 1; G < 20; G++)
+                                   if(G == B)
+                                      continue;
+                                   for (L = 1; L < 20; L++)
+                                       if(L == B || L == G)
+                                          continue;
+                                       for (M = 1; M < 20; M++)
+                                           if(M == B || M == G || M == L)
+                                              continue;
+                                           for (N = 1; N < 20; N++)
+                                               if(N == B || N == G || N == L || N == M)
+                                                 continue;
+                                               for (P = 1; P < 20; P++)
+                                                   if(P == B || P == G || P == L || P == M || P == N)
+                                                      continue;
+                                                   for (R = 1; R < 20; R++)
+                                                       if(R == B || R == G || R == L ||
+                                                          R == M || R == N || R == P)
+                                                          continue;
+                                                       for (S = 1; S < 20; S++)
+                                                          if(S == B || S == G || S == L ||
+                                                             S == M || S == N || S == P)
+                                                             continue;
+                                                           for (T = 1; T < 20; T++)
+                                                               if(T == B || T == G || T == L || 
+                                                                  T == M || T == N || T == P || 
+                                                                  T == S)
+                                                                  continue;
+                                                               for (V = 1; V < 20; V++) 
+                                                                  // fix the MI U++ to V++ so 
+                                                                  // the loop will actualy exit
+                                                                  if(V == B || V == G || V == L || 
+                                                                     V == M || V == N || V == P || 
+                                                                     V == S || V == T)
+                                                                   for (W = 1; W < 20; W++)
+                                                                       if(W == B || W == G || W == L || 
+                                                                          W == M || W == N || W == P || 
+                                                                          W == S || W == T || W == V)
+                                                                          continue;
+                                                                       if (solvesIt()) {
+                                                                          printSolution();
+                                                                          return 1; 
+                                                                       }
+
+       return 0;
+   }
+
+
+#+END_SRC   
+    
+* Notes 
+
+** Day 1
+   :LOGBOOK:
+   CLOCK: [2018-05-07 Mon 08:04]--[2018-05-07 Mon 09:34] =>  1:30
+   :END:
+
+   

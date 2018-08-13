@@ -1,0 +1,34 @@
+#+TITLE: README for Algorithms and Complexity (aka DM3 aka CS 306)
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything
+
+  Welcome to Algorithms and Complexity!
+
+* Course Metamaterial
+
+   [[file:syllabus.org][syllabus.org]]
+
+   [[file:schedule.org][schedule.org]]
+
+   [[file:grades.org][grades.org]]
+
+   [[file:gradebook.org][gradebook.org]]
+
+* Course Material
+
+   [[file:~/goo/byui/classes/cs306/textbook/Design%20&%20Analysis%20of%20Algorithms.pdf][The Textbook]]
+
+   - [[file:week00/README.org][Week 00]]
+   - [[file:week01/README.org][Week 01]]
+   - [[file:week02/README.org][Week 02]]
+   - [[file:week03/README.org][Week 03]]
+   - [[file:week04/README.org][Week 04]]
+   - [[file:week05/README.org][Week 05]]
+   - [[file:week06/README.org][Week 06]]
+   - [[file:week07/README.org][Week 07]]
+   - [[file:week08/README.org][Week 08]]
+   - [[file:week09/README.org][Week 09]]
+   - [[file:week10/README.org][Week 10]]
+   - [[file:week11/README.org][Week 11]]
+

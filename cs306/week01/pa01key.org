@@ -1,0 +1,40 @@
+#+TITLE: Preparation Assessment 01 Key
+#+LANGUAGE: en
+#+OPTIONS: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+#+STARTUP: showeverything entitiespretty
+
+* Exemplary Answers                                                   :crypt:
+  :PROPERTIES:
+  :CRYPTKEY: dm3pa01key
+  :END:
+-----BEGIN PGP MESSAGE-----
+
+hQIMA/jhZO6ixv0LAQ/9FdyPzQr9UFa+ZpvrwRWigRRRsO1aHA4MmoyAMs+UTwzK
+qHc5eDdp1wmrGveX+JsiTYdWdRRcoJ6CQJv9FriiMgMRwyT9UAO1vj5aZtkHKo51
+0FTdPZV0srVs88mHeehH2Ut5xqCOySdaNRvfeky0bW71UImQnU+1ZgT5pdYUXVTE
+N3N5/wx0JUTtvC3O3DOEfSa/RhYyPtmk7n1YB32hEiL6Vt1Eq2+0CmYsONdbLvKz
+yhH+P3v67irvtLHG6gCIz6YDpkR2SEDjeMm6l4buuxOOuXPf7JXoU2dbApAGjEew
+g/L11YnjKEq2S/Ek1PJj9Gu1Z/lqSetcUKtc7z0Rr/F3xejBZYqpGS4ISz4YPoLe
+rgA14/nOaCHdg34HKtwfoET2c2WlUU318owGvNRcnXJPaZ9fATfTEtIEpYNEC5MR
+7YG0plrJT4IfnNc92K2ASoPdmv555VR0OjUnabjdI1BfCRgKfSLMZ0NVSaBpgzC9
+e305oQWatY4hmOgVmjzTp5zCgtXZlCZvNvcffqdoz2yPL9mNZyvAh7yionL8jJp/
+PDxaKFaPpTv64qNGs/b4KVeGZoBHf0Ynf6sL7DAAsAthKm6kS0oN/VrwojauIDOL
+qcJo9vC8goj9U1MZTkn0SR2HFbEc0tW8+7Pwqk2/KgPxZtbm6eFM3+1koS4ts63S
+6QEAyfNsRxgcXjq1mKAa7gVAArC8iWbwur/o5h3b9dMEBnFkOpd7uUl7RasVbBey
+CFjm29pezeDZ/vRHz5OphgoWoJHEl+/Z+DP/SnCwcozlHu8wZjEqBhQNI6X7rnTw
+5Ay7lMP0an0dA/2mpRRsJrmPIs7kGh35SFO9VMWvuqPQDwiXT2R/cp9o+BMNCuII
+myeDKsdpGeEfRXMF2g0gpAg0oubL2NlYRo8j5/hJjRi+rGBIeZUBmzvq5P2u1ots
+iimQC2Sq4Y1ZVEYQNxAm0H1nROlOykzGNOa2XAnYlHC1zHK+taEDTc/JgMjk/0Pi
+mq7QA5HhB1rzYqiwt1saLIb915TEkC6OwTKhjfVReEKgKEliH71YblW/PKT4kErW
+tNWWV/Uh67ZDl6Bs8CppyW7Mo24GoK/cOeclVmTIlJz9r8pyAfkkfp5uCxkGn1Ii
+Yc0WfISFNPbm4BNONQUkeJFmVj2THQE9FhCuxXFEokWXl88H7if7aU9rx0c8IxEk
+iIlbZ2Boi96JkFQpETei5oQ0wfLBhVI8xuwA9CgrGYDxLKXWf078Tj/cN1P4slPY
+YY3ZHv6MdMFSQ0R1BKgwKuPgOHuj8GYDrdC8UwNVEJpqeg93HDWYQ77BoGSNDw+P
+ToCx7BqKPFvMPor7FYUYjwRYZsa7sHZuZdhAQWXEfpafwBWYWo8rMP0n8rMVbO59
+KmMJ+HgXu1Ft1jpDPwyI0f32VCkEFaXt5hioA3WR113PvsNhOEpudDG/x+aORRX3
+s5aCBnZwTKZsyXvcRJfRxnzTINfb3qLGHb7HtVamgxUzI0+1O/tUSfY1BDCtYraC
+q2p42LoxUT4gclVTesLTj2R2eClKc1oOeNWvdgCecald7GyvJQLk88VzOIAR/ayo
++2KwxDqpxsQekPc84yUtDcEGy5lIRgbiv5F3XCu8oDcCLc892wp3//USEElLnJko
+uyz539ki3Mw=
+=LijB
+-----END PGP MESSAGE-----
